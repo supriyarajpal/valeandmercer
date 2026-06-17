@@ -36,7 +36,7 @@ export default function BuyingSection() {
   const innerY = useTransform(imageProgress, [0, 1], isMobile ? ['0%', '0%'] : ['8%', '-8%'])
 
   return (
-    <section ref={sectionRef} style={{ background: 'transparent', padding: 'var(--section-y) var(--gutter)' }}>
+    <section ref={sectionRef} style={{ background: '#EFECE6', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 64, alignItems: 'center' }}>
         <motion.div
           ref={imageRef}
