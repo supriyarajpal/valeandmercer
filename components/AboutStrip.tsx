@@ -25,7 +25,7 @@ const services = [
 
 export default function AboutStrip() {
   return (
-    <section style={{ background: 'transparent', padding: 'var(--section-y) var(--gutter)' }}>
+    <section style={{ background: '#EFECE6', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <Reveal y={28} amount={0.2}>
           <div style={{ marginBottom: 64, maxWidth: 720 }}>
