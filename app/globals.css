@@ -41,12 +41,7 @@ html {
   background: var(--c-bg);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  overflow-x: hidden;
 }
-
-/* Smooth scroll for programmatic anchor jumps. User wheel/touch is
-   native browser behaviour for reliability across devices. */
-html { scroll-behavior: smooth; }
 
 body {
   background: transparent;

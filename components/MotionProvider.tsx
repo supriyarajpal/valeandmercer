@@ -40,7 +40,9 @@ export default function MotionProvider({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
-    window.scrollTo(0, 0)
+    // No explicit scrollTo here — it races with the user's first wheel/touch
+    // input. Browser already loads at scroll 0 on fresh visits, and the
+    // 'manual' flag stops auto-restore on future refreshes.
     const t = setTimeout(() => setFirstLoad(false), reduceMotion ? 0 : 800)
     return () => clearTimeout(t)
   }, [reduceMotion])
