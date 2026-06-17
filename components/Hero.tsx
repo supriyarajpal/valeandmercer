@@ -95,9 +95,9 @@ export default function Hero() {
         }}
       />
 
-      {/* Layer 2 — content block. Top group (eyebrow + headline) sits
-          just under the nav; bottom group (divider + tagline) sits just
-          above the CTA row. Space-between distributes the gap. */}
+      {/* Layer 2 — content block. Everything (eyebrow, headline, divider,
+          subtitle, tagline) sits as one cluster at the bottom, just above
+          the CTA row. flex-end pushes the cluster down. */}
       <motion.div
         style={{
           position: 'relative',
@@ -105,7 +105,7 @@ export default function Hero() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
+          justifyContent: 'flex-end',
           width: '100%',
           padding: 'clamp(96px, 11vh, 140px) clamp(20px, 4vw, 40px) 24px',
           y: l2,
@@ -125,17 +125,13 @@ export default function Hero() {
               <span className="eyebrow" style={{ color: 'rgba(239,236,230,0.9)', textShadow: '0 1px 10px rgba(40,35,28,0.85)' }}>Est. London</span>
             </motion.div>
 
-            <h1 style={{ color: '#EFECE6', margin: 0, fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
+            <h1 style={{ color: '#EFECE6', margin: '0 0 1.6rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
               <HeroLine text="Where" delay={ENTER_DELAY + 0.05} />
               <HeroLine text="homes" delay={ENTER_DELAY + 0.18} italic gold />
               <HeroLine text="find their" delay={ENTER_DELAY + 0.31} />
               <HeroLine text="people" delay={ENTER_DELAY + 0.44} />
             </h1>
-          </div>
-        </div>
 
-        <div style={{ width: '100%', maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ maxWidth: 640 }}>
             <motion.div
               initial={reduce ? false : { scaleX: 0 }}
               animate={{ scaleX: 1 }}

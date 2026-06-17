@@ -142,7 +142,7 @@ export default function GetInTouch() {
                   </StaggerItem>
                   <StaggerItem>
                     <label style={lab}>Message</label>
-                    <textarea rows={2} placeholder="Tell us what you are looking for..." style={{ ...inp, resize: 'none', lineHeight: 1.6 }} value={form.message}
+                    <textarea rows={1} placeholder="Tell us what you are looking for..." style={{ ...inp, resize: 'none', lineHeight: 1.5 }} value={form.message}
                       onChange={e => setForm({ ...form, message: e.target.value })}
                       onFocus={e => (e.currentTarget.style.borderColor = '#A0845C')}
                       onBlur={e => (e.currentTarget.style.borderColor = '#C8C0B4')} />
