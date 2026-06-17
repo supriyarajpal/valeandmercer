@@ -67,10 +67,10 @@ export default function GetInTouch() {
             {/* Headline arrives LAST — like a welcome sign you see when
                 you pull into a town. Slow, deliberate, large. */}
             <motion.h2
-              initial={reduce ? false : { opacity: 0, y: 28 }}
+              initial={reduce ? false : { opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 1.3, delay: 0.85, ease: EASE }}
+              transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
               style={{ color: '#28231C', marginBottom: 28, fontSize: 'clamp(40px, 6vw, 72px)' }}
             >
               Let us find your <span style={{ color: '#A0845C', fontStyle: 'italic' }}>next chapter</span>

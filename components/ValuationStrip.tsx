@@ -35,20 +35,12 @@ export default function ValuationStrip() {
         alignItems: 'center',
       }}
     >
-      {/* Background layer fades to transparent at the bottom edge, so
-          the section bleeds into the atmosphere instead of hard-cutting. */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to bottom, #28231C 0%, #28231C 86%, rgba(40,35,28,0) 100%)',
-          zIndex: 0,
-        }}
-      />
       <style dangerouslySetInnerHTML={{ __html: KEN_BURNS_CSS }} />
 
-      {/* Ken Burns background — independent of scroll. Pure CSS. */}
+      {/* Solid dark cocoon — hard edges. The merging into neighbour
+          sections is handled by dark fades in those sections, so the
+          boundary is dark→dark with no visible lighter strip. */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: '#28231C', zIndex: 0 }} />
       <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
         <div className="vm-ken-burns" style={{ position: 'absolute', inset: '-6%' }}>
           <img
@@ -58,7 +50,7 @@ export default function ValuationStrip() {
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', opacity: 0.45 }}
           />
         </div>
-        <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(40,35,28,0.55) 0%, rgba(40,35,28,0.7) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(40,35,28,0.55) 0%, rgba(40,35,28,0.7) 100%)' }} />
       </div>
 
       <motion.div
@@ -77,10 +69,10 @@ export default function ValuationStrip() {
         {/* Big cinematic headline — forces a pause */}
         <h2 style={{
           color: '#EFECE6',
-          fontSize: 'clamp(64px, 12vw, 180px)',
-          lineHeight: 0.92,
+          fontSize: 'clamp(44px, 8vw, 108px)',
+          lineHeight: 0.95,
           marginBottom: 36,
-          letterSpacing: '-0.03em',
+          letterSpacing: '-0.025em',
           textShadow: '0 4px 32px rgba(40,35,28,0.55)',
         }}>
           <DriftWord text="What" delay={0.0} fromX={-32} />{' '}

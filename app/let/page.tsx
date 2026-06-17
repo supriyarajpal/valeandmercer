@@ -21,7 +21,7 @@ export default function LetPage() {
           image="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=2000&q=85"
           imageAlt="London letting"
         >
-          <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(44px, 7vw, 84px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
+          <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
             <HeroLine text="Let your property" delay={1.05} />
             <HeroLine text="to tenants who" delay={1.18} />
             <HeroLine text="treat it like home." delay={1.31} italic gold />

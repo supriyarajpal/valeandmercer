@@ -40,7 +40,7 @@ export default function Footer() {
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '64px 20px 28px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
           <Stagger as="div" stagger={0.08}>
             <StaggerItem>
-              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 24, fontWeight: 300, letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: 16, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
                 <span style={{ color: 'rgba(239,236,230,0.9)' }}>VALE</span>
                 <span style={{ color: '#A0845C' }}> &amp; </span>
                 <span style={{ color: 'rgba(239,236,230,0.95)' }}>MERCER</span>
@@ -52,7 +52,7 @@ export default function Footer() {
               </p>
             </StaggerItem>
             <StaggerItem>
-              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 19, fontStyle: 'italic', color: 'rgba(239,236,230,0.42)', marginBottom: 22 }}>
+              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 16, fontStyle: 'italic', color: 'rgba(239,236,230,0.42)', marginBottom: 20 }}>
                 London, handled with care.
               </p>
             </StaggerItem>

@@ -47,9 +47,9 @@ export default function Hero() {
       ref={ref}
       style={{
         position: 'relative',
-        minHeight: '100vh',
-        // No fixed height — let content expand on short viewports so
-        // nothing overlaps. Section is at least viewport-tall.
+        // 100dvh = dynamic viewport height: shrinks when mobile browser
+        // chrome is visible so 100vh doesn't leak below the fold.
+        minHeight: '100dvh',
         overflow: 'hidden',
         background: '#28231C',
         display: 'flex',
@@ -68,7 +68,14 @@ export default function Hero() {
         }}
       >
         <img
-          src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=2000&q=90"
+          src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1600&q=85"
+          srcSet="
+            https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&q=80 800w,
+            https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&q=82 1200w,
+            https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1600&q=85 1600w,
+            https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=2000&q=85 2000w
+          "
+          sizes="100vw"
           alt="London"
           loading="eager"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
@@ -100,7 +107,7 @@ export default function Hero() {
           flexDirection: 'column',
           justifyContent: 'center',
           width: '100%',
-          padding: 'clamp(120px, 14vh, 180px) 40px clamp(160px, 22vh, 220px)',
+          padding: 'clamp(120px, 14vh, 180px) clamp(20px, 4vw, 40px) 24px',
           y: l2,
           opacity: contentOpacity,
           willChange: 'transform, opacity',
@@ -118,7 +125,7 @@ export default function Hero() {
               <span className="eyebrow" style={{ color: 'rgba(239,236,230,0.9)', textShadow: '0 1px 10px rgba(40,35,28,0.85)' }}>Est. London</span>
             </motion.div>
 
-            <h1 style={{ color: '#EFECE6', marginBottom: '1.8rem', fontSize: 'clamp(56px, 8vw, 112px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
+            <h1 style={{ color: '#EFECE6', marginBottom: '1.8rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
               <HeroLine text="Where" delay={ENTER_DELAY + 0.05} />
               <HeroLine text="homes" delay={ENTER_DELAY + 0.18} italic gold />
               <HeroLine text="find their" delay={ENTER_DELAY + 0.31} />
@@ -153,19 +160,17 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Layer 3 — CTA. Lives at the bottom of the flex column so it
-          never overlaps with content on short viewports. */}
+      {/* Layer 3 — CTA. In flex flow under the content, never absolute.
+          That way the content and the CTA can't overlap on any viewport,
+          regardless of headline height or mobile browser chrome. */}
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: ENTER_DELAY + 0.85, ease: EASE }}
         style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 88,
-          padding: '0 40px',
+          position: 'relative',
           zIndex: 11,
+          padding: '0 clamp(20px, 4vw, 40px) clamp(56px, 10vh, 96px)',
           opacity: ctaOpacity,
           willChange: 'opacity',
         }}

@@ -94,7 +94,7 @@ export default function ValuationsPage() {
               <span className="eyebrow" style={{ color: '#A0845C' }}>Free Valuation</span>
             </motion.div>
 
-            <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(48px, 7vw, 92px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
+            <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(38px, 5.8vw, 72px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
               <HeroLine text="Book your free" delay={1.05} />
               <HeroLine text="valuation" delay={1.18} italic gold />
             </h1>

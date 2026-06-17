@@ -49,6 +49,9 @@ export default function Navbar() {
   useEffect(() => setMenuOpen(false), [pathname])
 
   const isLight = !scrolled && !isDarkHero
+  // Lighter blur radius on mobile — backdrop-filter is GPU-expensive on
+  // integrated/mobile graphics. Slightly bumped bg opacity compensates.
+  const navBlur = scrolled ? (mobile ? 'blur(10px)' : 'blur(20px) saturate(160%)') : 'none'
   const logoColor = scrolled ? 'rgba(239,236,230,0.95)' : isDarkHero ? 'rgba(239,236,230,0.9)' : 'rgba(40,35,28,0.85)'
   const linkColor = scrolled ? 'rgba(239,236,230,0.82)' : isDarkHero ? 'rgba(239,236,230,0.78)' : 'rgba(40,35,28,0.7)'
   const btnBorder = isLight ? '1px solid rgba(40,35,28,0.25)' : '1px solid rgba(239,236,230,0.35)'
@@ -75,15 +78,15 @@ export default function Navbar() {
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
           background: navBg,
-          backdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
+          backdropFilter: navBlur,
+          WebkitBackdropFilter: navBlur,
           boxShadow: navShadow,
           transition: 'background 0.5s var(--ease-out-soft), box-shadow 0.5s var(--ease-out-soft), backdrop-filter 0.5s',
         }}
       >
         <div style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
           <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }}>
-            <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 300, letterSpacing: '0.24em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
+            <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 18, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
               Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
             </Link>
           </motion.div>

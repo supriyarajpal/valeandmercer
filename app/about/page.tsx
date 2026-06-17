@@ -58,7 +58,7 @@ export default function AboutPage() {
                 <div style={{ width: 32, height: 1, background: '#A0845C' }} />
                 <span className="eyebrow" style={{ color: '#A0845C' }}>Our Story</span>
               </motion.div>
-              <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(44px, 7vw, 84px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
+              <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
                 <HeroLine text="Home is not just" delay={1.05} />
                 <HeroLine text="a place." delay={1.18} />
                 <HeroLine text="It is a feeling." delay={1.31} italic gold />

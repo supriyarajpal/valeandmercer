@@ -5,6 +5,7 @@ import { ReactLenis, useLenis } from 'lenis/react'
 import { usePathname } from 'next/navigation'
 import AtmosphereLayer from './AtmosphereLayer'
 import GrainOverlay from './GrainOverlay'
+import { useIsMobile } from './useDepthParallax'
 
 // True only during the initial page load while the curtain is showing.
 // Flips to false after the curtain has fully parted. Consumers (Hero,
@@ -31,6 +32,7 @@ function ScrollReset() {
 export default function MotionProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const reduceMotion = useReducedMotion()
+  const isMobile = useIsMobile()
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
@@ -39,9 +41,10 @@ export default function MotionProvider({ children }: { children: React.ReactNode
     return () => clearTimeout(t)
   }, [reduceMotion])
 
-  return (
-    <FirstLoadContext.Provider value={firstLoad}>
-    <ReactLenis root options={{ lerp: 0.085, duration: 1.35, smoothWheel: true, syncTouch: false }}>
+  // Curtain + page transitions + atmosphere/grain. Shared between mobile
+  // and desktop — only the Lenis wrapper differs.
+  const content = (
+    <>
       <ScrollReset />
       <AtmosphereLayer />
       <GrainOverlay />
@@ -51,7 +54,6 @@ export default function MotionProvider({ children }: { children: React.ReactNode
             key="curtain"
             style={{ position: 'fixed', inset: 0, zIndex: 9999, pointerEvents: 'none', overflow: 'hidden' }}
           >
-            {/* Top half — exits upward */}
             <motion.div
               initial={{ y: 0 }}
               animate={{ y: 0 }}
@@ -59,7 +61,6 @@ export default function MotionProvider({ children }: { children: React.ReactNode
               transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
               style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }}
             />
-            {/* Bottom half — exits downward */}
             <motion.div
               initial={{ y: 0 }}
               animate={{ y: 0 }}
@@ -68,7 +69,6 @@ export default function MotionProvider({ children }: { children: React.ReactNode
               style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }}
             />
 
-            {/* Logo lockup — centered between the two panels */}
             <motion.div
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
@@ -84,13 +84,12 @@ export default function MotionProvider({ children }: { children: React.ReactNode
                 gap: 18,
               }}
             >
-              {/* Wordmark */}
               <motion.span
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  fontFamily: 'var(--font-serif, Cormorant Garamond, Georgia, serif)',
+                  fontFamily: 'Cormorant Garamond, Georgia, serif',
                   fontSize: 'clamp(20px, 2.4vw, 28px)',
                   fontWeight: 300,
                   letterSpacing: '0.32em',
@@ -103,7 +102,6 @@ export default function MotionProvider({ children }: { children: React.ReactNode
                 Vale <span style={{ color: '#A0845C', fontStyle: 'italic' }}>&amp;</span> Mercer
               </motion.span>
 
-              {/* Gold hairline that draws across */}
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
@@ -117,13 +115,12 @@ export default function MotionProvider({ children }: { children: React.ReactNode
                 }}
               />
 
-              {/* Tagline */}
               <motion.span
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  fontFamily: 'var(--font-sans, "DM Sans", sans-serif)',
+                  fontFamily: '"DM Sans", system-ui, sans-serif',
                   fontSize: 10,
                   letterSpacing: '0.32em',
                   textTransform: 'uppercase',
@@ -136,6 +133,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
           </div>
         )}
       </AnimatePresence>
+
       <motion.div
         key={pathname}
         initial={reduceMotion ? false : { opacity: 0, y: 8 }}
@@ -144,7 +142,20 @@ export default function MotionProvider({ children }: { children: React.ReactNode
       >
         {children}
       </motion.div>
-    </ReactLenis>
+    </>
+  )
+
+  return (
+    <FirstLoadContext.Provider value={firstLoad}>
+      {isMobile ? (
+        // Mobile: native scroll. Lenis can intercept touch on certain
+        // iOS Safari builds even with syncTouch:false. Native is reliable.
+        content
+      ) : (
+        <ReactLenis root options={{ lerp: 0.085, duration: 1.35, smoothWheel: true, syncTouch: false }}>
+          {content}
+        </ReactLenis>
+      )}
     </FirstLoadContext.Provider>
   )
 }

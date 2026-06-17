@@ -21,7 +21,7 @@ export default function SellPage() {
           image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=2000&q=85"
           imageAlt="London property"
         >
-          <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(44px, 7vw, 84px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
+          <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
             <HeroLine text="Sell your home" delay={1.05} />
             <HeroLine text="for what it is" delay={1.18} />
             <HeroLine text="truly worth." delay={1.31} italic gold />

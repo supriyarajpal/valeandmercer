@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -87,9 +89,9 @@ h1, h2, h3 {
   line-height: 1.05;
 }
 
-h1 { font-size: clamp(48px, 7vw, 96px); }
-h2 { font-size: clamp(36px, 5vw, 68px); }
-h3 { font-size: clamp(22px, 2.4vw, 32px); }
+h1 { font-size: clamp(40px, 6vw, 76px); }
+h2 { font-size: clamp(28px, 4.2vw, 52px); }
+h3 { font-size: clamp(20px, 2.2vw, 28px); }
 
 p { line-height: 1.75; }
 
