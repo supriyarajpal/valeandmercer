@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ReactLenis, useLenis } from 'lenis/react'
 import { usePathname } from 'next/navigation'
@@ -22,9 +22,19 @@ const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : use
 function ScrollReset() {
   const pathname = usePathname()
   const lenis = useLenis()
+  // Track the previous path so we only reset on ACTUAL navigation.
+  // Without this, the effect re-fires when Lenis initialises (lenis
+  // dep flips from undefined → instance), snapping the user back to 0
+  // if they've already started scrolling — which felt like "scroll
+  // doesn't work, takes 3-4 tries."
+  const prevPath = useRef<string | null>(null)
   useIsoLayoutEffect(() => {
-    if (lenis) lenis.scrollTo(0, { immediate: true })
-    else window.scrollTo(0, 0)
+    if (prevPath.current === pathname) return
+    if (prevPath.current !== null) {
+      if (lenis) lenis.scrollTo(0, { immediate: true })
+      else window.scrollTo(0, 0)
+    }
+    prevPath.current = pathname
   }, [pathname, lenis])
   return null
 }
@@ -37,6 +47,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
+    window.scrollTo(0, 0)
     const t = setTimeout(() => setFirstLoad(false), reduceMotion ? 0 : 800)
     return () => clearTimeout(t)
   }, [reduceMotion])
