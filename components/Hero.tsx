@@ -125,7 +125,7 @@ export default function Hero() {
               <span className="eyebrow" style={{ color: 'rgba(239,236,230,0.9)', textShadow: '0 1px 10px rgba(40,35,28,0.85)' }}>Est. London</span>
             </motion.div>
 
-            <h1 style={{ color: '#EFECE6', marginBottom: '1.8rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
+            <h1 style={{ color: '#EFECE6', marginBottom: '3rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
               <HeroLine text="Where" delay={ENTER_DELAY + 0.05} />
               <HeroLine text="homes" delay={ENTER_DELAY + 0.18} italic gold />
               <HeroLine text="find their" delay={ENTER_DELAY + 0.31} />
@@ -136,7 +136,7 @@ export default function Hero() {
               initial={reduce ? false : { scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: ENTER_DELAY + 0.55, ease: EASE }}
-              style={{ width: 44, height: 1, background: '#A0845C', marginBottom: '1.6rem', transformOrigin: 'left center' }}
+              style={{ width: 44, height: 1, background: '#A0845C', marginBottom: '2.4rem', transformOrigin: 'left center' }}
             />
 
             <motion.p
