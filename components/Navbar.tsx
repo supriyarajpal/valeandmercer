@@ -1,15 +1,27 @@
-﻿'use client'
+'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { motion, AnimatePresence, useReducedMotion, type Variants } from 'framer-motion'
+import { useFirstLoad } from '@/components/MotionProvider'
+
+const links = [
+  { label: 'Lettings', href: '/let' },
+  { label: 'New Homes', href: '/buy' },
+  { label: 'About', href: '/about' },
+  { label: 'Blog', href: '/blog' },
+]
+
+const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations']
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [mobile, setMobile] = useState(true)
   const pathname = usePathname()
+  const reduce = useReducedMotion()
+  const firstLoad = useFirstLoad()
 
-  const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations']
   const isDarkHero = darkHeroPages.includes(pathname)
 
   useEffect(() => {
@@ -18,58 +30,124 @@ export default function Navbar() {
     checkSize()
     checkScroll()
     window.addEventListener('resize', checkSize)
-    window.addEventListener('scroll', checkScroll)
+    window.addEventListener('scroll', checkScroll, { passive: true })
     return () => {
       window.removeEventListener('resize', checkSize)
       window.removeEventListener('scroll', checkScroll)
     }
   }, [])
 
-  const isLight = !scrolled && !isDarkHero
-  const logoColor = scrolled ? 'rgba(239,236,230,0.9)' : isDarkHero ? 'rgba(239,236,230,0.85)' : 'rgba(40,35,28,0.5)'
-  const linkColor = scrolled ? 'rgba(239,236,230,0.8)' : isDarkHero ? 'rgba(239,236,230,0.7)' : 'rgba(40,35,28,0.5)'
-  const btnBorder = isLight ? '1px solid rgba(40,35,28,0.2)' : '1px solid rgba(239,236,230,0.3)'
-  const hamburgerColor = isLight ? 'rgba(40,35,28,0.5)' : 'rgba(239,236,230,0.85)'
-  const navBg = scrolled ? 'rgba(40,35,28,0.55)' : 'transparent'
+  useEffect(() => {
+    if (menuOpen) {
+      document.documentElement.style.overflow = 'hidden'
+    } else {
+      document.documentElement.style.overflow = ''
+    }
+    return () => { document.documentElement.style.overflow = '' }
+  }, [menuOpen])
 
-  const links = [
-    {label:'Lettings',href:'/let'},
-    {label:'New Homes',href:'/buy'},
-    {label:'About',href:'/about'},
-    {label:'Blog',href:'/blog'},
-  ]
+  useEffect(() => setMenuOpen(false), [pathname])
+
+  const isLight = !scrolled && !isDarkHero
+  const logoColor = scrolled ? 'rgba(239,236,230,0.95)' : isDarkHero ? 'rgba(239,236,230,0.9)' : 'rgba(40,35,28,0.85)'
+  const linkColor = scrolled ? 'rgba(239,236,230,0.82)' : isDarkHero ? 'rgba(239,236,230,0.78)' : 'rgba(40,35,28,0.7)'
+  const btnBorder = isLight ? '1px solid rgba(40,35,28,0.25)' : '1px solid rgba(239,236,230,0.35)'
+  const hamburgerColor = isLight ? 'rgba(40,35,28,0.75)' : 'rgba(239,236,230,0.9)'
+  const navBg = scrolled ? 'rgba(40,35,28,0.78)' : 'transparent'
+  const navShadow = scrolled ? '0 1px 0 rgba(239,236,230,0.06), 0 8px 24px rgba(0,0,0,0.18)' : 'none'
+
+  const enterDelay = reduce ? 0 : firstLoad ? 1.4 : 0.05
+  const container: Variants = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.08, delayChildren: enterDelay } },
+  }
+  const item: Variants = {
+    hidden: { opacity: 0, y: -10 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  }
 
   return (
     <>
-      <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:100,background:navBg,backdropFilter:scrolled?'blur(20px) saturate(160%)':'none',WebkitBackdropFilter:scrolled?'blur(20px) saturate(160%)':'none',transition:'all 0.4s ease'}}>
-        <div style={{padding:'18px 20px',display:'flex',alignItems:'center',justifyContent:'space-between',maxWidth:'1280px',margin:'0 auto'}}>
-          <Link href='/' style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'16px',fontWeight:300,letterSpacing:'0.2em',textTransform:'uppercase',color:logoColor,textDecoration:'none',flexShrink:0,lineHeight:1.2,transition:'color 0.4s ease'}}>
-            Vale <span style={{color:'#A0845C'}}>&</span> Mercer
-          </Link>
+      <motion.nav
+        initial={reduce ? false : { y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: reduce ? 0 : firstLoad ? 1.35 : 0, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
+          background: navBg,
+          backdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
+          boxShadow: navShadow,
+          transition: 'background 0.5s var(--ease-out-soft), box-shadow 0.5s var(--ease-out-soft), backdrop-filter 0.5s',
+        }}
+      >
+        <div style={{ padding: '18px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
+          <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }}>
+            <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 300, letterSpacing: '0.24em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
+              Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
+            </Link>
+          </motion.div>
+
           {mobile ? (
-            <button onClick={()=>setMenuOpen(!menuOpen)} style={{background:'transparent',border:'none',cursor:'pointer',padding:'6px',display:'flex',flexDirection:'column',gap:'5px',flexShrink:0}} aria-label='Menu'>
-              <span style={{display:'block',width:'24px',height:'1.5px',background:hamburgerColor,transition:'all 0.3s',transform:menuOpen?'rotate(45deg) translate(4px,5px)':'none'}} />
-              <span style={{display:'block',width:'24px',height:'1.5px',background:hamburgerColor,transition:'all 0.3s',opacity:menuOpen?0:1}} />
-              <span style={{display:'block',width:'24px',height:'1.5px',background:hamburgerColor,transition:'all 0.3s',transform:menuOpen?'rotate(-45deg) translate(4px,-5px)':'none'}} />
-            </button>
+            <motion.button
+              onClick={() => setMenuOpen(v => !v)}
+              initial={reduce ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.4, delay: enterDelay, ease: 'easeOut' }}
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 6, display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0 }}
+              aria-label="Menu"
+              aria-expanded={menuOpen}
+            >
+              <span style={{ display: 'block', width: 24, height: 1.5, background: hamburgerColor, transition: 'transform 0.4s, background 0.4s', transform: menuOpen ? 'rotate(45deg) translate(4px,5px)' : 'none' }} />
+              <span style={{ display: 'block', width: 24, height: 1.5, background: hamburgerColor, transition: 'opacity 0.3s, background 0.4s', opacity: menuOpen ? 0 : 1 }} />
+              <span style={{ display: 'block', width: 24, height: 1.5, background: hamburgerColor, transition: 'transform 0.4s, background 0.4s', transform: menuOpen ? 'rotate(-45deg) translate(4px,-5px)' : 'none' }} />
+            </motion.button>
           ) : (
-            <div style={{display:'flex',alignItems:'center',gap:'24px'}}>
-              {links.map((link)=>(
-                <Link key={link.href} href={link.href} style={{fontSize:'11px',letterSpacing:'0.12em',textTransform:'uppercase',color:linkColor,textDecoration:'none',transition:'color 0.4s ease'}}>{link.label}</Link>
+            <motion.div variants={container} initial="hidden" animate="show" style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+              {links.map(link => (
+                <motion.div key={link.href} variants={item}>
+                  <Link href={link.href} className="link-underline" style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
-              <Link href='/valuations' style={{fontSize:'11px',letterSpacing:'0.12em',textTransform:'uppercase',border:btnBorder,color:linkColor,padding:'9px 16px',textDecoration:'none',transition:'all 0.4s ease'}}>Book Valuation</Link>
-            </div>
+              <motion.div variants={item}>
+                <Link href="/valuations" style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', border: btnBorder, color: linkColor, padding: '9px 16px', transition: 'all 0.5s var(--ease-out-soft)' }}>
+                  Book Valuation
+                </Link>
+              </motion.div>
+            </motion.div>
           )}
         </div>
-      </nav>
-      {mobile && menuOpen && (
-        <div style={{position:'fixed',inset:0,zIndex:99,background:'rgba(40,35,28,0.97)',backdropFilter:'blur(20px)',WebkitBackdropFilter:'blur(20px)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',gap:'22px',padding:'20px'}}>
-          <button onClick={()=>setMenuOpen(false)} style={{position:'absolute',top:'16px',right:'20px',background:'transparent',border:'none',cursor:'pointer',color:'rgba(239,236,230,0.5)',fontSize:'32px',lineHeight:1,fontFamily:'sans-serif'}}>x</button>
-          {[...links,{label:'Book Valuation',href:'/valuations'}].map((link)=>(
-            <Link key={link.label} href={link.href} onClick={()=>setMenuOpen(false)} style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'30px',fontWeight:300,color:'#EFECE6',textDecoration:'none',letterSpacing:'0.04em',textAlign:'center'}}>{link.label}</Link>
-          ))}
-        </div>
-      )}
+      </motion.nav>
+
+      <AnimatePresence>
+        {mobile && menuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            style={{ position: 'fixed', inset: 0, zIndex: 99, background: 'rgba(40,35,28,0.97)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
+          >
+            <motion.div
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
+              initial="hidden"
+              animate="show"
+              style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 22, padding: 20 }}
+            >
+              {[...links, { label: 'Book Valuation', href: '/valuations' }].map(link => (
+                <motion.div key={link.label} variants={item}>
+                  <Link href={link.href} onClick={() => setMenuOpen(false)} style={{ fontFamily: 'var(--font-serif)', fontSize: 32, fontWeight: 300, color: '#EFECE6', letterSpacing: '0.03em', textAlign: 'center' }}>
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

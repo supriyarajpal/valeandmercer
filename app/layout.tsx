@@ -1,7 +1,23 @@
-﻿import type { Metadata, Viewport } from 'next'
-import './globals.css'
+import type { Metadata, Viewport } from 'next'
+import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import Script from 'next/script'
-import PageTransition from '@/components/PageTransition'
+import MotionProvider from '@/components/MotionProvider'
+import './globals.css'
+
+const serif = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-serif',
+})
+
+const sans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  display: 'swap',
+  variable: '--font-sans',
+})
 
 export const metadata: Metadata = {
   title: 'Vale and Mercer - London Residential',
@@ -11,13 +27,12 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <head>
         <Script
           id="Cookiebot"
@@ -28,9 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <PageTransition>
-          {children}
-        </PageTransition>
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   )

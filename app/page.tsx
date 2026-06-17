@@ -1,4 +1,4 @@
-﻿import Navbar from '@/components/Navbar'
+import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import TickerStrip from '@/components/TickerStrip'
 import FeaturedProperties from '@/components/FeaturedProperties'

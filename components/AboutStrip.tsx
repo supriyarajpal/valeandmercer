@@ -1,37 +1,54 @@
-﻿import Link from 'next/link'
+'use client'
+import Link from 'next/link'
+import { motion, useReducedMotion } from 'framer-motion'
+import { Reveal } from '@/components/Reveal'
+
+const EASE = [0.22, 1, 0.36, 1] as const
+
+const services = [
+  {
+    title: 'Lettings',
+    href: '/let',
+    desc: 'The right tenant is worth waiting for. We reference properly, vet thoroughly, and only put forward people we would be comfortable with ourselves.',
+  },
+  {
+    title: 'New Homes',
+    href: '/buy',
+    desc: 'The best properties rarely wait. We keep our clients informed before anything reaches the open market.',
+  },
+  {
+    title: 'Student Lets',
+    href: '/rent',
+    desc: 'Your first home in London is a big deal. Clear communication, no hidden costs, and someone who actually picks up the phone.',
+  },
+]
 
 export default function AboutStrip() {
-  const css = '@media(min-width:600px){.about-services{grid-template-columns:repeat(3,1fr)!important}}'
   return (
-    <section style={{background:'#EFECE6',padding:'80px 20px',borderTop:'0.5px solid #DDD7CC'}}>
-      <style dangerouslySetInnerHTML={{__html:css}} />
-      <div style={{maxWidth:'1280px',margin:'0 auto'}}>
-        <div style={{marginBottom:'40px',maxWidth:'640px'}}>
-          <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'10px'}}>Who We Are</p>
-          <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,44px)',fontWeight:300,color:'#28231C',lineHeight:1.1,marginBottom:'14px'}}>
-            Every home has a story.<br/>
-            <span style={{color:'#A0845C',fontStyle:'italic'}}>We help write the next chapter.</span>
-          </h2>
-          <p style={{fontSize:'14px',lineHeight:2.1,color:'#6B6258',marginBottom:'18px'}}>
-            We started Vale and Mercer because London deserved an agency that actually listened.
-          </p>
-          <p style={{fontSize:'14px',lineHeight:2.1,color:'#6B6258',marginBottom:'24px'}}>
-            Small enough that nothing falls through the cracks. Experienced enough that nothing needs to.
-          </p>
-          <Link href="/about" style={{fontSize:'11px',letterSpacing:'0.16em',textTransform:'uppercase',color:'#A0845C',textDecoration:'none',borderBottom:'1px solid #A0845C',paddingBottom:'2px'}}>Meet the team</Link>
-        </div>
-        <div className="about-services" style={{display:'grid',gridTemplateColumns:'1fr',gap:'2px',background:'#C8C0B4'}}>
-          {[
-            {title:'Lettings',href:'/let',desc:'The right tenant is worth waiting for. We reference properly, vet thoroughly, and only put forward people we would be comfortable with ourselves.'},
-            {title:'New Homes',href:'/buy',desc:'The best properties rarely wait. We keep our clients informed before anything reaches the open market.'},
-            {title:'Student Lets',href:'/rent',desc:'Your first home in London is a big deal. Clear communication, no hidden costs, and someone who actually picks up the phone.'},
-          ].map((s)=>(
-            <Link key={s.title} href={s.href} style={{textDecoration:'none',display:'block',background:'#EFECE6',padding:'28px 24px'}}>
-              <div style={{width:'18px',height:'1px',background:'#A0845C',marginBottom:'14px'}} />
-              <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>{s.title}</h3>
-              <p style={{fontSize:'13px',lineHeight:1.8,color:'#6B6258',marginBottom:'12px'}}>{s.desc}</p>
-              <span style={{fontSize:'10px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#A0845C',borderBottom:'1px solid #A0845C',paddingBottom:'1px'}}>Find out more</span>
+    <section style={{ background: 'transparent', padding: 'var(--section-y) var(--gutter)' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <Reveal y={28} amount={0.2}>
+          <div style={{ marginBottom: 64, maxWidth: 720 }}>
+            <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Who We Are</p>
+            <h2 style={{ color: '#28231C', marginBottom: 24 }}>
+              Every home has a story.<br />
+              <span style={{ color: '#A0845C', fontStyle: 'italic' }}>We help write the next chapter.</span>
+            </h2>
+            <p style={{ fontSize: 15, lineHeight: 2, color: '#28231C', opacity: 0.78, marginBottom: 14 }}>
+              We started Vale and Mercer because London deserved an agency that actually listened.
+            </p>
+            <p style={{ fontSize: 15, lineHeight: 2, color: '#28231C', opacity: 0.78, marginBottom: 28 }}>
+              Small enough that nothing falls through the cracks. Experienced enough that nothing needs to.
+            </p>
+            <Link href="/about" className="link-underline" style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A0845C' }}>
+              Meet the team <span aria-hidden style={{ marginLeft: 6 }}>→</span>
             </Link>
+          </div>
+        </Reveal>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+          {services.map((s, i) => (
+            <ArcCard key={s.title} index={i} {...s} />
           ))}
         </div>
       </div>
@@ -39,5 +56,48 @@ export default function AboutStrip() {
   )
 }
 
-
-
+// Arc entrance — translateY from below + slight rotate that eases to 0.
+// Each card arrives along a small arc, like settling into place.
+function ArcCard({ title, href, desc, index }: { title: string; href: string; desc: string; index: number }) {
+  const reduce = useReducedMotion()
+  const direction = index % 2 === 0 ? -1 : 1
+  return (
+    <motion.div
+      initial={reduce ? false : { opacity: 0, y: 56, rotate: direction * 1.2 }}
+      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.95, delay: 0.08 + index * 0.13, ease: EASE }}
+      style={{ willChange: 'transform, opacity' }}
+    >
+      <Link
+        href={href}
+        className="card-lift"
+        style={{
+          display: 'block',
+          background: '#FFFFFF',
+          padding: '36px 32px',
+          borderRadius: 10,
+          border: '0.5px solid rgba(40,35,28,0.06)',
+          boxShadow: '0 1px 0 rgba(40,35,28,0.02), 0 18px 36px -22px rgba(40,35,28,0.2)',
+          height: '100%',
+        }}
+        onMouseEnter={e => {
+          const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
+          if (arrow) arrow.style.transform = 'translateX(6px)'
+        }}
+        onMouseLeave={e => {
+          const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
+          if (arrow) arrow.style.transform = 'translateX(0)'
+        }}
+      >
+        <div style={{ width: 22, height: 1, background: '#A0845C', marginBottom: 20 }} />
+        <h3 style={{ color: '#28231C', marginBottom: 14, fontSize: 24 }}>{title}</h3>
+        <p style={{ fontSize: 13.5, lineHeight: 1.85, color: '#6B6258', marginBottom: 20 }}>{desc}</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 16, borderTop: '0.5px solid #DDD7CC' }}>
+          <span style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A0845C' }}>Find out more</span>
+          <span data-arrow style={{ color: '#A0845C', fontSize: 13, transition: 'transform 0.4s var(--ease-out-soft)' }} aria-hidden>→</span>
+        </div>
+      </Link>
+    </motion.div>
+  )
+}
