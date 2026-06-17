@@ -1,11 +1,9 @@
 'use client'
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ReactLenis, useLenis } from 'lenis/react'
 import { usePathname } from 'next/navigation'
 import AtmosphereLayer from './AtmosphereLayer'
 import GrainOverlay from './GrainOverlay'
-import { useIsMobile } from './useDepthParallax'
 
 // True only during the initial page load while the curtain is showing.
 // Flips to false after the curtain has fully parted. Consumers (Hero,
@@ -21,28 +19,23 @@ const useIsoLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : use
 
 function ScrollReset() {
   const pathname = usePathname()
-  const lenis = useLenis()
-  // Track the previous path so we only reset on ACTUAL navigation.
-  // Without this, the effect re-fires when Lenis initialises (lenis
-  // dep flips from undefined → instance), snapping the user back to 0
-  // if they've already started scrolling — which felt like "scroll
-  // doesn't work, takes 3-4 tries."
+  // Only reset on actual route changes. On initial mount we just record
+  // the path so the user's scroll input isn't snapped back to 0 by an
+  // effect that fires before they've had a chance to scroll.
   const prevPath = useRef<string | null>(null)
   useIsoLayoutEffect(() => {
     if (prevPath.current === pathname) return
     if (prevPath.current !== null) {
-      if (lenis) lenis.scrollTo(0, { immediate: true })
-      else window.scrollTo(0, 0)
+      window.scrollTo(0, 0)
     }
     prevPath.current = pathname
-  }, [pathname, lenis])
+  }, [pathname])
   return null
 }
 
 export default function MotionProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const reduceMotion = useReducedMotion()
-  const isMobile = useIsMobile()
   const [firstLoad, setFirstLoad] = useState(true)
 
   useEffect(() => {
@@ -52,10 +45,11 @@ export default function MotionProvider({ children }: { children: React.ReactNode
     return () => clearTimeout(t)
   }, [reduceMotion])
 
-  // Curtain + page transitions + atmosphere/grain. Shared between mobile
-  // and desktop — only the Lenis wrapper differs.
-  const content = (
-    <>
+  // Native scroll everywhere. No Lenis. Browser wheel/touch smoothness
+  // is reliable across devices; Lenis introduced race conditions
+  // between its init phase and the user's first scroll input.
+  return (
+    <FirstLoadContext.Provider value={firstLoad}>
       <ScrollReset />
       <AtmosphereLayer />
       <GrainOverlay />
@@ -153,20 +147,6 @@ export default function MotionProvider({ children }: { children: React.ReactNode
       >
         {children}
       </motion.div>
-    </>
-  )
-
-  return (
-    <FirstLoadContext.Provider value={firstLoad}>
-      {isMobile ? (
-        // Mobile: native scroll. Lenis can intercept touch on certain
-        // iOS Safari builds even with syncTouch:false. Native is reliable.
-        content
-      ) : (
-        <ReactLenis root options={{ lerp: 0.12, duration: 0.8, smoothWheel: true, syncTouch: false, wheelMultiplier: 1.1 }}>
-          {content}
-        </ReactLenis>
-      )}
     </FirstLoadContext.Provider>
   )
 }
