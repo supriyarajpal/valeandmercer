@@ -79,12 +79,12 @@ export default function AboutPage() {
           <div style={{ maxWidth: 760, margin: '0 auto' }}>
             <Reveal y={28} amount={0.25}>
               <p style={{ fontSize: 16, lineHeight: 2.1, color: '#6B6258', marginBottom: 24 }}>
-                Vale &amp; Mercer exists for clients who care not only about the outcome, but about the way the process is handled. We are a team, working closely, keeping clients informed with clarity and discretion, and managing the detail properly in the background.
+                Whether you are a landlord, a tenant, a first-time buyer or someone who has done this before and wants it done properly this time, the standard should be the same. Attentive, straight, and personal from first call to final key.
               </p>
             </Reveal>
             <Reveal y={28} delay={0.1} amount={0.25}>
               <p style={{ fontSize: 16, lineHeight: 2.1, color: '#6B6258' }}>
-                Whether you are a landlord, a tenant, a first-time buyer or someone who has done this before and wants it done properly this time — the standard should be the same. Attentive, straight, and personal from first call to final key.
+                Vale &amp; Mercer exists for clients who care not only about the outcome, but about the way the process is handled. We are a team, working closely, keeping clients informed with clarity and discretion, and managing the detail properly in the background.
               </p>
             </Reveal>
           </div>
@@ -140,7 +140,7 @@ export default function AboutPage() {
 function HeroLine({ text, delay, italic, gold }: { text: string; delay: number; italic?: boolean; gold?: boolean }) {
   const reduce = useReducedMotion()
   return (
-    <span style={{ display: 'block', overflow: 'hidden' }}>
+    <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.16em' }}>
       <motion.span
         initial={reduce ? false : { y: '110%' }}
         animate={{ y: 0 }}

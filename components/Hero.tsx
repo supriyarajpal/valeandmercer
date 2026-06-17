@@ -140,7 +140,7 @@ export default function Hero() {
               initial={reduce ? false : { scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: ENTER_DELAY + 0.55, ease: EASE }}
-              style={{ width: 44, height: 1, background: '#A0845C', marginBottom: '1.4rem', transformOrigin: 'left center' }}
+              style={{ width: 32, height: 1, background: '#A0845C', marginBottom: '1.4rem', transformOrigin: 'left center' }}
             />
 
             <motion.p
