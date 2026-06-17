@@ -37,7 +37,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
-    const t = setTimeout(() => setFirstLoad(false), reduceMotion ? 0 : 1250)
+    const t = setTimeout(() => setFirstLoad(false), reduceMotion ? 0 : 800)
     return () => clearTimeout(t)
   }, [reduceMotion])
 
@@ -58,14 +58,14 @@ export default function MotionProvider({ children }: { children: React.ReactNode
               initial={{ y: 0 }}
               animate={{ y: 0 }}
               exit={{ y: '-100%' }}
-              transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
               style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }}
             />
             <motion.div
               initial={{ y: 0 }}
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
-              transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+              transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
               style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }}
             />
 
@@ -138,7 +138,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
         key={pathname}
         initial={reduceMotion ? false : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut', delay: firstLoad ? 1.25 : 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut', delay: firstLoad ? 0.8 : 0 }}
       >
         {children}
       </motion.div>
@@ -152,7 +152,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
         // iOS Safari builds even with syncTouch:false. Native is reliable.
         content
       ) : (
-        <ReactLenis root options={{ lerp: 0.085, duration: 1.35, smoothWheel: true, syncTouch: false }}>
+        <ReactLenis root options={{ lerp: 0.12, duration: 0.8, smoothWheel: true, syncTouch: false, wheelMultiplier: 1.1 }}>
           {content}
         </ReactLenis>
       )}

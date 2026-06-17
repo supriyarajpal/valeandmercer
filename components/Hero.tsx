@@ -15,7 +15,7 @@ export default function Hero() {
 
   // On first paint we sync with the curtain split (1.4s). On client-side
   // navigation back to home, there's no curtain — fire immediately.
-  const ENTER_DELAY = firstLoad ? 1.4 : 0.1
+  const ENTER_DELAY = firstLoad ? 0.9 : 0.1
 
   // Single scroll progress bound to the hero. Progress = 0 when the
   // hero is fully in view at page top; = 1 when scrolled fully past.

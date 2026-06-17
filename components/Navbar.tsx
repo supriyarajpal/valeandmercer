@@ -59,7 +59,7 @@ export default function Navbar() {
   const navBg = scrolled ? 'rgba(40,35,28,0.78)' : 'transparent'
   const navShadow = scrolled ? '0 1px 0 rgba(239,236,230,0.06), 0 8px 24px rgba(0,0,0,0.18)' : 'none'
 
-  const enterDelay = reduce ? 0 : firstLoad ? 1.4 : 0.05
+  const enterDelay = reduce ? 0 : firstLoad ? 0.9 : 0.05
   const container: Variants = {
     hidden: {},
     show: { transition: { staggerChildren: 0.08, delayChildren: enterDelay } },
@@ -74,7 +74,7 @@ export default function Navbar() {
       <motion.nav
         initial={reduce ? false : { y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: reduce ? 0 : firstLoad ? 1.35 : 0, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.6, delay: reduce ? 0 : firstLoad ? 0.85 : 0, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
           background: navBg,
