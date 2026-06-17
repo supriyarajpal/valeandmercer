@@ -95,9 +95,9 @@ export default function Hero() {
         }}
       />
 
-      {/* Layer 2 — content block. Centered vertically within the
-          remaining flex space below the nav. Padding-top is the nav
-          safe zone; padding-bottom keeps space above the CTA row. */}
+      {/* Layer 2 — content block. Top group (eyebrow + headline) sits
+          just under the nav; bottom group (divider + tagline) sits just
+          above the CTA row. Space-between distributes the gap. */}
       <motion.div
         style={{
           position: 'relative',
@@ -105,9 +105,9 @@ export default function Hero() {
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           width: '100%',
-          padding: 'clamp(120px, 14vh, 180px) clamp(20px, 4vw, 40px) 24px',
+          padding: 'clamp(96px, 11vh, 140px) clamp(20px, 4vw, 40px) 24px',
           y: l2,
           opacity: contentOpacity,
           willChange: 'transform, opacity',
@@ -119,31 +119,35 @@ export default function Hero() {
               initial={reduce ? false : { opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: ENTER_DELAY, ease: EASE }}
-              style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: '2rem' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: '1.6rem' }}
             >
               <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
               <span className="eyebrow" style={{ color: 'rgba(239,236,230,0.9)', textShadow: '0 1px 10px rgba(40,35,28,0.85)' }}>Est. London</span>
             </motion.div>
 
-            <h1 style={{ color: '#EFECE6', marginBottom: '3rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
+            <h1 style={{ color: '#EFECE6', margin: 0, fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
               <HeroLine text="Where" delay={ENTER_DELAY + 0.05} />
               <HeroLine text="homes" delay={ENTER_DELAY + 0.18} italic gold />
               <HeroLine text="find their" delay={ENTER_DELAY + 0.31} />
               <HeroLine text="people" delay={ENTER_DELAY + 0.44} />
             </h1>
+          </div>
+        </div>
 
+        <div style={{ width: '100%', maxWidth: 1280, margin: '0 auto' }}>
+          <div style={{ maxWidth: 640 }}>
             <motion.div
               initial={reduce ? false : { scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: ENTER_DELAY + 0.55, ease: EASE }}
-              style={{ width: 44, height: 1, background: '#A0845C', marginBottom: '2.4rem', transformOrigin: 'left center' }}
+              style={{ width: 44, height: 1, background: '#A0845C', marginBottom: '1.4rem', transformOrigin: 'left center' }}
             />
 
             <motion.p
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: ENTER_DELAY + 0.6, ease: EASE }}
-              style={{ fontSize: 15, lineHeight: 2, color: 'rgba(239,236,230,0.95)', marginBottom: 8, maxWidth: 460, textShadow: '0 2px 18px rgba(40,35,28,0.9), 0 1px 3px rgba(40,35,28,0.6)' }}
+              style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(239,236,230,0.95)', marginBottom: 6, maxWidth: 460, textShadow: '0 2px 18px rgba(40,35,28,0.9), 0 1px 3px rgba(40,35,28,0.6)' }}
             >
               London&rsquo;s finest neighbourhoods, handled personally.
             </motion.p>
@@ -152,7 +156,7 @@ export default function Hero() {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: ENTER_DELAY + 0.72, ease: EASE }}
-              style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.7, color: '#A0845C', marginBottom: 0, maxWidth: 460, fontStyle: 'italic', textShadow: '0 1px 16px rgba(40,35,28,0.9)' }}
+              style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.5, color: '#A0845C', marginBottom: 0, maxWidth: 460, fontStyle: 'italic', textShadow: '0 1px 16px rgba(40,35,28,0.9)' }}
             >
               Let&rsquo;s get you moving.
             </motion.p>
