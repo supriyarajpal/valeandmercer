@@ -213,7 +213,7 @@ export default function Hero() {
 function HeroLine({ text, delay, italic, gold }: { text: string; delay: number; italic?: boolean; gold?: boolean }) {
   const reduce = useReducedMotion()
   return (
-    <span style={{ display: 'block', overflow: 'hidden' }}>
+    <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.16em', marginBottom: '-0.16em' }}>
       <motion.span
         initial={reduce ? false : { y: '110%' }}
         animate={{ y: 0 }}
