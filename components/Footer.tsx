@@ -22,9 +22,23 @@ const legalItems = [
 ]
 
 const linkStyle: React.CSSProperties = {
-  fontSize: 12.5,
-  color: 'rgba(239,236,230,0.55)',
-  letterSpacing: '0.02em',
+  fontSize: 13,
+  color: 'rgba(239,236,230,0.72)',
+  letterSpacing: '0.03em',
+}
+
+const eyebrowRow: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 12,
+  marginBottom: 18,
+}
+
+const eyebrowRule: React.CSSProperties = {
+  width: 22,
+  height: 1,
+  background: '#A0845C',
+  flexShrink: 0,
 }
 
 export default function Footer() {
@@ -37,30 +51,30 @@ export default function Footer() {
       transition={{ duration: 1.4, ease: EASE }}
       style={{ background: '#28231C', color: '#EFECE6', transformOrigin: 'center bottom', willChange: 'transform, opacity' }}
     >
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '64px 20px 28px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '72px 20px 32px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 56 }}>
           <Stagger as="div" stagger={0.08}>
             <StaggerItem>
-              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 300, letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ color: 'rgba(239,236,230,0.9)' }}>VALE</span>
+              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 300, letterSpacing: '0.26em', textTransform: 'uppercase', marginBottom: 18, display: 'flex', alignItems: 'center', gap: 5 }}>
+                <span style={{ color: 'rgba(239,236,230,0.95)' }}>VALE</span>
                 <span style={{ color: '#A0845C' }}> &amp; </span>
-                <span style={{ color: 'rgba(239,236,230,0.95)' }}>MERCER</span>
+                <span style={{ color: 'rgba(239,236,230,0.98)' }}>MERCER</span>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <p style={{ fontSize: 13, lineHeight: 1.75, color: 'rgba(239,236,230,0.6)', marginBottom: 14, maxWidth: 280 }}>
+              <p style={{ fontSize: 14, lineHeight: 1.85, color: 'rgba(239,236,230,0.72)', marginBottom: 18, maxWidth: 290 }}>
                 Lettings, new homes and student lets across London.
               </p>
             </StaggerItem>
             <StaggerItem>
-              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 16, fontStyle: 'italic', color: 'rgba(239,236,230,0.42)', marginBottom: 18 }}>
+              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 18, fontStyle: 'italic', color: 'rgba(239,236,230,0.58)', marginBottom: 22, letterSpacing: '0.01em' }}>
                 London, handled with care.
               </p>
             </StaggerItem>
             <StaggerItem>
-              <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.08)', paddingTop: 12 }}>
-                <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginBottom: 8 }}>
-                  <div style={{ background: '#fff', padding: '5px 9px', display: 'inline-flex', alignItems: 'center' }}>
-                    <svg width="56" height="20" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.1)', paddingTop: 16 }}>
+                <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginBottom: 10 }}>
+                  <div style={{ background: '#fff', padding: '6px 10px', display: 'inline-flex', alignItems: 'center' }}>
+                    <svg width="60" height="22" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="0" y="8" width="6" height="26" fill="#333" />
                       <rect x="9" y="14" width="6" height="20" fill="#9B59B6" />
                       <rect x="18" y="19" width="6" height="15" fill="#C39BD3" />
@@ -69,7 +83,7 @@ export default function Footer() {
                     </svg>
                   </div>
                 </a>
-                <p style={{ fontSize: 11, color: 'rgba(239,236,230,0.4)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: 11.5, color: 'rgba(239,236,230,0.55)', lineHeight: 1.75 }}>
                   Member of Property Redress Scheme<br />
                   <span style={{ color: '#A0845C' }}>Membership No: PRS058796</span>
                 </p>
@@ -79,10 +93,13 @@ export default function Footer() {
 
           <Stagger as="div" stagger={0.05}>
             <StaggerItem>
-              <p className="eyebrow" style={{ fontSize: 11, color: '#A0845C', marginBottom: 14 }}>Navigate</p>
+              <div style={eyebrowRow}>
+                <span style={eyebrowRule} />
+                <p className="eyebrow" style={{ fontSize: 11, color: '#A0845C', margin: 0, letterSpacing: '0.22em' }}>Navigate</p>
+              </div>
             </StaggerItem>
             <StaggerItem>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {navItems.map(item => (
                   <Link key={item.label} href={item.href} className="link-underline" style={linkStyle}>
                     {item.label}
@@ -94,32 +111,35 @@ export default function Footer() {
 
           <Stagger as="div" stagger={0.05}>
             <StaggerItem>
-              <p className="eyebrow" style={{ fontSize: 11, color: '#A0845C', marginBottom: 14 }}>Contact</p>
+              <div style={eyebrowRow}>
+                <span style={eyebrowRule} />
+                <p className="eyebrow" style={{ fontSize: 11, color: '#A0845C', margin: 0, letterSpacing: '0.22em' }}>Contact</p>
+              </div>
             </StaggerItem>
             <StaggerItem>
-              <div style={{ marginBottom: 10 }}>
-                <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(239,236,230,0.4)', marginBottom: 4 }}>Email</div>
-                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 12.5, color: 'rgba(239,236,230,0.65)' }}>
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.22em', color: 'rgba(239,236,230,0.5)', marginBottom: 6 }}>Email</div>
+                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 13, color: 'rgba(239,236,230,0.78)', letterSpacing: '0.01em' }}>
                   info@valeandmercer.co.uk
                 </a>
               </div>
             </StaggerItem>
             <StaggerItem>
               <div>
-                <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(239,236,230,0.4)', marginBottom: 4 }}>Registered Office</div>
-                <p style={{ fontSize: 12.5, color: 'rgba(239,236,230,0.55)', lineHeight: 1.7 }}>124 City Road, London EC1V 2NX</p>
+                <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.22em', color: 'rgba(239,236,230,0.5)', marginBottom: 6 }}>Registered Office</div>
+                <p style={{ fontSize: 13, color: 'rgba(239,236,230,0.7)', lineHeight: 1.75 }}>124 City Road, London EC1V 2NX</p>
               </div>
             </StaggerItem>
           </Stagger>
         </div>
 
-      <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.08)', padding: '18px 20px', maxWidth: 1280, margin: '0 auto' }}>
-        <p style={{ fontSize: 12, color: 'rgba(239,236,230,0.4)', marginBottom: 14, lineHeight: 1.8 }}>
-          2026 Vale and Mercer Ltd. Company No: 17212434. Registered in England and Wales. ICO No: ZC155397. AML Supervised by HMRC. Client Money Protection: Vale and Mercer Ltd is a member of an approved Client Money Protection scheme.
+      <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.1)', padding: '22px 20px 28px', maxWidth: 1280, margin: '0 auto' }}>
+        <p style={{ fontSize: 12, color: 'rgba(239,236,230,0.55)', marginBottom: 16, lineHeight: 1.85 }}>
+          2026 Vale and Mercer Ltd. Company No: 17212434. Registered in England and Wales. ICO No: ZC155397. AML Supervised by HMRC.
         </p>
-        <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap', alignItems: 'center' }}>
           {legalItems.map(item => (
-            <Link key={item.label} href={item.href} className="link-underline" style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.18em', color: 'rgba(239,236,230,0.45)' }}>
+            <Link key={item.label} href={item.href} className="link-underline" style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(239,236,230,0.6)' }}>
               {item.label}
             </Link>
           ))}

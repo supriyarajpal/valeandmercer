@@ -87,7 +87,7 @@ export default function BuyingSection() {
               <StaggerItem key={point} as="li">
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '6px 0', borderBottom: '0.5px solid rgba(40,35,28,0.15)' }}>
                   <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#A0845C', flexShrink: 0, marginTop: 8 }} />
-                  <span style={{ fontSize: 14, color: '#28231C', lineHeight: 1.45 }}>{point}</span>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'rgba(40,35,28,0.72)', lineHeight: 1.45 }}>{point}</span>
                 </div>
               </StaggerItem>
             ))}
