@@ -30,7 +30,7 @@ export default function ValuationStrip() {
         padding: 'var(--section-y) var(--gutter)',
         position: 'relative',
         overflow: 'hidden',
-        minHeight: '90vh',
+        minHeight: '90dvh',
         display: 'flex',
         alignItems: 'center',
       }}

@@ -30,12 +30,21 @@ export default function GetInTouch() {
     border: 'none',
     borderBottom: '1px solid #C8C0B4',
     color: '#28231C',
-    fontSize: 15,
-    padding: '12px 0',
+    fontSize: 16,
+    padding: '14px 0',
+    minHeight: 48,
     outline: 'none',
     width: '100%',
     fontFamily: 'var(--font-sans)',
-    transition: 'border-color 0.4s var(--ease-out-soft)',
+    transition: 'border-color 0.4s var(--ease-out-soft), background 0.3s var(--ease-out-soft)',
+  }
+  const focusOn = (el: HTMLElement) => {
+    el.style.borderColor = '#A0845C'
+    el.style.background = 'rgba(160,132,92,0.06)'
+  }
+  const focusOff = (el: HTMLElement) => {
+    el.style.borderColor = '#C8C0B4'
+    el.style.background = 'transparent'
   }
   const lab: React.CSSProperties = {
     fontSize: 9,
@@ -104,36 +113,36 @@ export default function GetInTouch() {
               ) : (
                 <Stagger as="div" stagger={0.07} style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
                   <StaggerItem>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 18 }}>
+                    <div className="form-name-row">
                       <div>
                         <label style={lab}>First name</label>
                         <input type="text" placeholder="James" style={inp} value={form.firstName}
                           onChange={e => setForm({ ...form, firstName: e.target.value })}
-                          onFocus={e => (e.currentTarget.style.borderColor = '#A0845C')}
-                          onBlur={e => (e.currentTarget.style.borderColor = '#C8C0B4')} />
+                          onFocus={e => focusOn(e.currentTarget)}
+                          onBlur={e => focusOff(e.currentTarget)} />
                       </div>
                       <div>
                         <label style={lab}>Last name</label>
                         <input type="text" placeholder="Sutton" style={inp} value={form.lastName}
                           onChange={e => setForm({ ...form, lastName: e.target.value })}
-                          onFocus={e => (e.currentTarget.style.borderColor = '#A0845C')}
-                          onBlur={e => (e.currentTarget.style.borderColor = '#C8C0B4')} />
+                          onFocus={e => focusOn(e.currentTarget)}
+                          onBlur={e => focusOff(e.currentTarget)} />
                       </div>
                     </div>
                   </StaggerItem>
                   <StaggerItem>
                     <label style={lab}>Email</label>
-                    <input type="email" placeholder="your@email.com" style={inp} value={form.email}
+                    <input type="email" inputMode="email" autoComplete="email" placeholder="your@email.com" style={inp} value={form.email}
                       onChange={e => setForm({ ...form, email: e.target.value })}
-                      onFocus={e => (e.currentTarget.style.borderColor = '#A0845C')}
-                      onBlur={e => (e.currentTarget.style.borderColor = '#C8C0B4')} />
+                      onFocus={e => focusOn(e.currentTarget)}
+                      onBlur={e => focusOff(e.currentTarget)} />
                   </StaggerItem>
                   <StaggerItem>
                     <label style={lab}>I am interested in</label>
-                    <select style={{ ...inp, appearance: 'none' }} value={form.interest}
+                    <select className="field-select" style={{ ...inp, appearance: 'none' }} value={form.interest}
                       onChange={e => setForm({ ...form, interest: e.target.value })}
-                      onFocus={e => (e.currentTarget.style.borderColor = '#A0845C')}
-                      onBlur={e => (e.currentTarget.style.borderColor = '#C8C0B4')}>
+                      onFocus={e => focusOn(e.currentTarget)}
+                      onBlur={e => focusOff(e.currentTarget)}>
                       <option>Renting a property</option>
                       <option>Selling my property</option>
                       <option>A valuation</option>
@@ -142,10 +151,10 @@ export default function GetInTouch() {
                   </StaggerItem>
                   <StaggerItem>
                     <label style={lab}>Message</label>
-                    <textarea rows={1} placeholder="Tell us what you are looking for..." style={{ ...inp, resize: 'none', lineHeight: 1.5 }} value={form.message}
+                    <textarea rows={3} placeholder="Tell us what you are looking for..." style={{ ...inp, resize: 'vertical', lineHeight: 1.5, minHeight: 96 }} value={form.message}
                       onChange={e => setForm({ ...form, message: e.target.value })}
-                      onFocus={e => (e.currentTarget.style.borderColor = '#A0845C')}
-                      onBlur={e => (e.currentTarget.style.borderColor = '#C8C0B4')} />
+                      onFocus={e => focusOn(e.currentTarget)}
+                      onBlur={e => focusOff(e.currentTarget)} />
                   </StaggerItem>
                   {status === 'error' && (
                     <p style={{ fontSize: 13, color: '#c0392b' }}>Something went wrong. Please try again.</p>
@@ -182,7 +191,8 @@ function SubmitButton({ onClick, status }: { onClick: () => void; status: 'idle'
         fontSize: 11,
         letterSpacing: '0.2em',
         textTransform: 'uppercase',
-        padding: '18px 28px',
+        padding: '20px 28px',
+        minHeight: 56,
         border: 'none',
         cursor: disabled ? 'wait' : 'pointer',
         width: '100%',

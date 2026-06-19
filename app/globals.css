@@ -132,6 +132,26 @@ a { color: inherit; text-decoration: none; }
 }
 .card-lift:hover { transform: translateY(-4px); }
 
+/* Form: name row collapses to single column on narrow screens so
+   First/Last name fields don't get cramped under 360px viewports. */
+.form-name-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+@media (max-width: 560px) {
+  .form-name-row { grid-template-columns: 1fr; }
+}
+
+/* Custom chevron for native selects — appearance:none hides the
+   default arrow on every platform, so we draw our own. */
+.field-select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5L6 6.5L11 1.5' stroke='%239A9188' stroke-width='1.2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  padding-right: 24px !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

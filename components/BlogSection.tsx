@@ -108,7 +108,7 @@ function BlogCard({ post, index }: { post: typeof posts[number]; index: number }
             <span style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#A0845C' }}>{post.category}</span>
             <span style={{ fontSize: 10, color: '#9A9188' }}>{post.readTime}</span>
           </div>
-          <h3 style={{ color: '#28231C', marginBottom: 12, fontSize: 22, lineHeight: 1.2 }}>{post.title}</h3>
+          <h3 style={{ color: '#28231C', marginBottom: 12, fontSize: 'clamp(18px, 4vw, 22px)', lineHeight: 1.25 }}>{post.title}</h3>
           <p style={{ fontSize: 13, lineHeight: 1.85, color: '#6B6258', marginBottom: 18 }}>{post.excerpt}</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 14, borderTop: '0.5px solid #DDD7CC' }}>
             <span style={{ fontSize: 10, color: '#9A9188', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{post.date}</span>

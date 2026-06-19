@@ -115,17 +115,7 @@ export default function Hero() {
       >
         <div style={{ width: '100%', maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ maxWidth: 640 }}>
-            <motion.div
-              initial={reduce ? false : { opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: ENTER_DELAY, ease: EASE }}
-              style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: '1.6rem' }}
-            >
-              <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
-              <span className="eyebrow" style={{ color: 'rgba(239,236,230,0.9)', textShadow: '0 1px 10px rgba(40,35,28,0.85)' }}>Est. London</span>
-            </motion.div>
-
-            <h1 style={{ color: '#EFECE6', margin: '0 0 1.6rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 0.95, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
+            <h1 style={{ color: '#EFECE6', margin: '0 0 1.6rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 1.2, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
               <HeroLine text="Where" delay={ENTER_DELAY + 0.05} />
               <HeroLine text="homes" delay={ENTER_DELAY + 0.18} italic gold />
               <HeroLine text="find their" delay={ENTER_DELAY + 0.31} />
@@ -246,7 +236,8 @@ function ArrowLink({ href, label, primary }: { href: string; label: string; prim
         color: primary ? '#28231C' : 'rgba(239,236,230,0.9)',
         background: primary ? '#EFECE6' : 'transparent',
         border: primary ? '1px solid #EFECE6' : '1px solid rgba(239,236,230,0.35)',
-        padding: '15px 24px',
+        padding: '18px 26px',
+        minHeight: 48,
         overflow: 'hidden',
         transition: 'color 0.4s var(--ease-out-soft), border-color 0.4s var(--ease-out-soft)',
       }}

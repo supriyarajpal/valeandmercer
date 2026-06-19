@@ -86,10 +86,14 @@ export default function Navbar() {
       >
         <div style={{ padding: '18px var(--gutter)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
-          <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6 }}>
             <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 18, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
               Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
             </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
+              <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
+            </div>
           </motion.div>
 
           {mobile ? (
@@ -98,7 +102,7 @@ export default function Navbar() {
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: enterDelay, ease: 'easeOut' }}
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 6, display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0 }}
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 10, display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0, minWidth: 44, minHeight: 44, alignItems: 'flex-end', justifyContent: 'center' }}
               aria-label="Menu"
               aria-expanded={menuOpen}
             >
@@ -144,7 +148,7 @@ export default function Navbar() {
             >
               {[...links, { label: 'Book Valuation', href: '/valuations' }].map(link => (
                 <motion.div key={link.label} variants={item}>
-                  <Link href={link.href} onClick={() => setMenuOpen(false)} style={{ fontFamily: 'var(--font-serif)', fontSize: 32, fontWeight: 300, color: '#EFECE6', letterSpacing: '0.03em', textAlign: 'center' }}>
+                  <Link href={link.href} onClick={() => setMenuOpen(false)} style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 6.5vw, 32px)', fontWeight: 300, color: '#EFECE6', letterSpacing: '0.03em', textAlign: 'center', display: 'inline-block', padding: '8px 12px' }}>
                     {link.label}
                   </Link>
                 </motion.div>
