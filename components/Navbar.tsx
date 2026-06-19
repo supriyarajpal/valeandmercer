@@ -97,7 +97,7 @@ export default function Navbar() {
                 alignItems: 'center',
                 gap: 14,
                 marginLeft: 32,
-                marginTop: scrolled ? 0 : 20,
+                marginTop: scrolled ? 0 : 32,
                 opacity: scrolled ? 0 : 1,
                 maxHeight: scrolled ? 0 : 24,
                 transform: scrolled ? 'translateY(-6px)' : 'translateY(0)',

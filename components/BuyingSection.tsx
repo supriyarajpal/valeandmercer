@@ -64,20 +64,20 @@ export default function BuyingSection() {
           <SlowReveal delay={0}><p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Our Services</p></SlowReveal>
 
           <SlowReveal delay={0.05}>
-            <h2 style={{ color: '#4A4036', marginBottom: 20 }}>
+            <h2 style={{ fontSize: 'clamp(28px, 5vw, 46px)', color: '#4A4036', marginBottom: 20 }}>
               For landlords who care<br />and tenants who deserve<br />
               <span style={{ color: '#A0845C', fontStyle: 'italic' }}>better than average.</span>
             </h2>
           </SlowReveal>
 
           <SlowReveal delay={0.55}>
-            <p style={{ fontSize: 14, lineHeight: 1.95, color: '#4A4036', opacity: 0.78, marginBottom: 18, maxWidth: 520 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.95, color: '#4A4036', opacity: 0.78, marginBottom: 18, maxWidth: 520 }}>
               The right tenant doesn&rsquo;t happen by accident. It happens because we took the time to understand what you actually need.
             </p>
           </SlowReveal>
 
           <SlowReveal delay={0.7}>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 18, lineHeight: 1.7, color: '#4A4036', opacity: 0.7, marginBottom: 32, fontStyle: 'italic', maxWidth: 520 }}>
+            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 14, lineHeight: 1.7, color: '#4A4036', opacity: 0.7, marginBottom: 32, fontStyle: 'italic', maxWidth: 520 }}>
               We sit. We listen. We find. Straight and simple.
             </p>
           </SlowReveal>
@@ -87,7 +87,7 @@ export default function BuyingSection() {
               <StaggerItem key={point} as="li">
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '6px 0', borderBottom: '0.5px solid rgba(40,35,28,0.15)' }}>
                   <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#A0845C', flexShrink: 0, marginTop: 8 }} />
-                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 14, color: 'rgba(74,64,54,0.72)', lineHeight: 1.45 }}>{point}</span>
+                  <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'rgba(74,64,54,0.72)', lineHeight: 1.45 }}>{point}</span>
                 </div>
               </StaggerItem>
             ))}
