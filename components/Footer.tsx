@@ -22,7 +22,7 @@ const legalItems = [
 ]
 
 const linkStyle: React.CSSProperties = {
-  fontSize: 14,
+  fontSize: 12.5,
   color: 'rgba(239,236,230,0.55)',
   letterSpacing: '0.02em',
 }
@@ -40,27 +40,27 @@ export default function Footer() {
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '64px 20px 28px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
           <Stagger as="div" stagger={0.08}>
             <StaggerItem>
-              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 300, letterSpacing: '0.24em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
                 <span style={{ color: 'rgba(239,236,230,0.9)' }}>VALE</span>
                 <span style={{ color: '#A0845C' }}> &amp; </span>
                 <span style={{ color: 'rgba(239,236,230,0.95)' }}>MERCER</span>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <p style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(239,236,230,0.6)', marginBottom: 18, maxWidth: 300 }}>
+              <p style={{ fontSize: 13, lineHeight: 1.75, color: 'rgba(239,236,230,0.6)', marginBottom: 14, maxWidth: 280 }}>
                 Lettings, new homes and student lets across London.
               </p>
             </StaggerItem>
             <StaggerItem>
-              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 16, fontStyle: 'italic', color: 'rgba(239,236,230,0.42)', marginBottom: 20 }}>
+              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 16, fontStyle: 'italic', color: 'rgba(239,236,230,0.42)', marginBottom: 18 }}>
                 London, handled with care.
               </p>
             </StaggerItem>
             <StaggerItem>
-              <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.08)', paddingTop: 14 }}>
-                <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginBottom: 10 }}>
-                  <div style={{ background: '#fff', padding: '6px 10px', display: 'inline-flex', alignItems: 'center' }}>
-                    <svg width="64" height="22" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.08)', paddingTop: 12 }}>
+                <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginBottom: 8 }}>
+                  <div style={{ background: '#fff', padding: '5px 9px', display: 'inline-flex', alignItems: 'center' }}>
+                    <svg width="56" height="20" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect x="0" y="8" width="6" height="26" fill="#333" />
                       <rect x="9" y="14" width="6" height="20" fill="#9B59B6" />
                       <rect x="18" y="19" width="6" height="15" fill="#C39BD3" />
@@ -69,7 +69,7 @@ export default function Footer() {
                     </svg>
                   </div>
                 </a>
-                <p style={{ fontSize: 12, color: 'rgba(239,236,230,0.4)', lineHeight: 1.7 }}>
+                <p style={{ fontSize: 11, color: 'rgba(239,236,230,0.4)', lineHeight: 1.7 }}>
                   Member of Property Redress Scheme<br />
                   <span style={{ color: '#A0845C' }}>Membership No: PRS058796</span>
                 </p>
@@ -79,10 +79,10 @@ export default function Footer() {
 
           <Stagger as="div" stagger={0.05}>
             <StaggerItem>
-              <p className="eyebrow" style={{ fontSize: 12, color: '#A0845C', marginBottom: 20 }}>Navigate</p>
+              <p className="eyebrow" style={{ fontSize: 11, color: '#A0845C', marginBottom: 14 }}>Navigate</p>
             </StaggerItem>
             <StaggerItem>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
                 {navItems.map(item => (
                   <Link key={item.label} href={item.href} className="link-underline" style={linkStyle}>
                     {item.label}
@@ -94,20 +94,20 @@ export default function Footer() {
 
           <Stagger as="div" stagger={0.05}>
             <StaggerItem>
-              <p className="eyebrow" style={{ fontSize: 12, color: '#A0845C', marginBottom: 20 }}>Contact</p>
+              <p className="eyebrow" style={{ fontSize: 11, color: '#A0845C', marginBottom: 14 }}>Contact</p>
             </StaggerItem>
             <StaggerItem>
-              <div style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(239,236,230,0.4)', marginBottom: 6 }}>Email</div>
-                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 14, color: 'rgba(239,236,230,0.65)' }}>
+              <div style={{ marginBottom: 10 }}>
+                <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(239,236,230,0.4)', marginBottom: 4 }}>Email</div>
+                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 12.5, color: 'rgba(239,236,230,0.65)' }}>
                   info@valeandmercer.co.uk
                 </a>
               </div>
             </StaggerItem>
             <StaggerItem>
               <div>
-                <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(239,236,230,0.4)', marginBottom: 6 }}>Registered Office</div>
-                <p style={{ fontSize: 14, color: 'rgba(239,236,230,0.55)', lineHeight: 1.7 }}>124 City Road, London EC1V 2NX</p>
+                <div style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'rgba(239,236,230,0.4)', marginBottom: 4 }}>Registered Office</div>
+                <p style={{ fontSize: 12.5, color: 'rgba(239,236,230,0.55)', lineHeight: 1.7 }}>124 City Road, London EC1V 2NX</p>
               </div>
             </StaggerItem>
           </Stagger>
