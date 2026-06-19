@@ -90,7 +90,7 @@ export default function Navbar() {
             <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 18, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
               Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
             </Link>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginLeft: 32 }}>
               <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
               <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
             </div>
