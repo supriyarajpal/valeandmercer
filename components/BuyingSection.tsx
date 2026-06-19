@@ -77,7 +77,7 @@ export default function BuyingSection() {
           </SlowReveal>
 
           <SlowReveal delay={0.7}>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 14, lineHeight: 1.7, color: '#4A4036', opacity: 0.7, marginBottom: 32, fontStyle: 'italic', maxWidth: 520 }}>
+            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 18, lineHeight: 1.7, color: '#4A4036', opacity: 0.7, marginBottom: 32, fontStyle: 'italic', maxWidth: 520 }}>
               We sit. We listen. We find. Straight and simple.
             </p>
           </SlowReveal>

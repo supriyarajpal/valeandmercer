@@ -86,15 +86,15 @@ export default function GetInTouch() {
             </motion.h2>
 
             <Reveal as="div" delay={0.35} y={20} amount={0.2}>
-              <p style={{ fontSize: 16, lineHeight: 2, color: '#4A4036', opacity: 0.78, marginBottom: 36, maxWidth: 460 }}>
+              <p style={{ fontSize: 16, lineHeight: 2, color: '#4A4036', opacity: 0.78, marginBottom: 22, maxWidth: 460 }}>
                 Drop us a message and we will get back to you. No pitch, no pressure.
               </p>
             </Reveal>
 
             <Reveal as="div" delay={0.55} y={20} amount={0.2}>
-              <div style={{ borderTop: '0.5px solid rgba(40,35,28,0.2)', paddingTop: 22 }}>
+              <div style={{ borderTop: '0.5px solid rgba(40,35,28,0.2)', paddingTop: 14, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 <span style={lab}>Email</span>
-                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 16, color: '#4A4036', display: 'inline-block' }}>
+                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 16, color: '#4A4036' }}>
                   info@valeandmercer.co.uk
                 </a>
               </div>
@@ -151,7 +151,7 @@ export default function GetInTouch() {
                   </StaggerItem>
                   <StaggerItem>
                     <label style={lab}>Message</label>
-                    <textarea rows={3} placeholder="Tell us what you are looking for..." style={{ ...inp, resize: 'vertical', lineHeight: 1.5, minHeight: 96 }} value={form.message}
+                    <textarea rows={1} placeholder="Tell us what you are looking for..." style={{ ...inp, resize: 'vertical' }} value={form.message}
                       onChange={e => setForm({ ...form, message: e.target.value })}
                       onFocus={e => focusOn(e.currentTarget)}
                       onBlur={e => focusOff(e.currentTarget)} />

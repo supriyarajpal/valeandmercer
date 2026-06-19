@@ -133,7 +133,7 @@ export default function Hero() {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: ENTER_DELAY + 0.6, ease: EASE }}
-              style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(239,236,230,0.95)', marginBottom: 6, maxWidth: 460, textShadow: '0 2px 18px rgba(40,35,28,0.9), 0 1px 3px rgba(40,35,28,0.6)' }}
+              style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(239,236,230,0.82)', marginBottom: 6, maxWidth: 460, textShadow: '0 2px 18px rgba(40,35,28,0.9), 0 1px 3px rgba(40,35,28,0.6)' }}
             >
               London&rsquo;s finest neighbourhoods, handled personally.
             </motion.p>
