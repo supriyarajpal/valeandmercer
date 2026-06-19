@@ -85,12 +85,27 @@ export default function Navbar() {
         }}
       >
         <div style={{ padding: '18px var(--gutter)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
           <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14 }}>
             <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 18, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
               Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
             </Link>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginLeft: 32 }}>
+            <div
+              aria-hidden={scrolled}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 14,
+                marginLeft: 32,
+                marginTop: scrolled ? 0 : 20,
+                opacity: scrolled ? 0 : 1,
+                maxHeight: scrolled ? 0 : 24,
+                transform: scrolled ? 'translateY(-6px)' : 'translateY(0)',
+                pointerEvents: scrolled ? 'none' : 'auto',
+                overflow: 'hidden',
+                transition: 'opacity 0.45s var(--ease-out-soft), max-height 0.45s var(--ease-out-soft), transform 0.45s var(--ease-out-soft), margin-top 0.45s var(--ease-out-soft)',
+              }}
+            >
               <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
               <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
             </div>
