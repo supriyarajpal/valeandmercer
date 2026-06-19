@@ -9,7 +9,7 @@ export default function FeaturedProperties() {
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:'28px'}}>
           <div>
             <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'8px'}}>Our Listings</p>
-            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,42px)',fontWeight:300,color:'#28231C'}}>Properties <span style={{color:'#A0845C',fontStyle:'italic'}}>coming soon</span></h2>
+            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,42px)',fontWeight:300,color:'#4A4036'}}>Properties <span style={{color:'#A0845C',fontStyle:'italic'}}>coming soon</span></h2>
           </div>
           <Link href="/register" style={{fontSize:'10px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#A0845C',textDecoration:'none',borderBottom:'1px solid #A0845C',paddingBottom:'2px',whiteSpace:'nowrap',marginLeft:'12px'}}>Get Notified</Link>
         </div>

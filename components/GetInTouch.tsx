@@ -29,7 +29,7 @@ export default function GetInTouch() {
     background: 'transparent',
     border: 'none',
     borderBottom: '1px solid #C8C0B4',
-    color: '#28231C',
+    color: '#4A4036',
     fontSize: 16,
     padding: '14px 0',
     minHeight: 48,
@@ -80,13 +80,13 @@ export default function GetInTouch() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
-              style={{ color: '#28231C', marginBottom: 28, fontSize: 'clamp(40px, 6vw, 72px)' }}
+              style={{ color: '#4A4036', marginBottom: 28, fontSize: 'clamp(40px, 6vw, 72px)' }}
             >
               Let us find your <span style={{ color: '#A0845C', fontStyle: 'italic' }}>next chapter</span>
             </motion.h2>
 
             <Reveal as="div" delay={0.35} y={20} amount={0.2}>
-              <p style={{ fontSize: 16, lineHeight: 2, color: '#28231C', opacity: 0.78, marginBottom: 36, maxWidth: 460 }}>
+              <p style={{ fontSize: 16, lineHeight: 2, color: '#4A4036', opacity: 0.78, marginBottom: 36, maxWidth: 460 }}>
                 Drop us a message and we will get back to you. No pitch, no pressure.
               </p>
             </Reveal>
@@ -94,7 +94,7 @@ export default function GetInTouch() {
             <Reveal as="div" delay={0.55} y={20} amount={0.2}>
               <div style={{ borderTop: '0.5px solid rgba(40,35,28,0.2)', paddingTop: 22 }}>
                 <span style={lab}>Email</span>
-                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 16, color: '#28231C', display: 'inline-block' }}>
+                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 16, color: '#4A4036', display: 'inline-block' }}>
                   info@valeandmercer.co.uk
                 </a>
               </div>
@@ -105,7 +105,7 @@ export default function GetInTouch() {
             <div>
               {status === 'sent' ? (
                 <div style={{ padding: '56px 32px', background: 'rgba(255,255,255,0.6)', border: '0.5px solid #DDD7CC', borderRadius: 10, textAlign: 'center', backdropFilter: 'blur(10px)' }}>
-                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: 32, fontWeight: 300, color: '#28231C', marginBottom: 14 }}>Thank you</div>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: 32, fontWeight: 300, color: '#4A4036', marginBottom: 14 }}>Thank you</div>
                   <p style={{ fontSize: 14, color: '#6B6258', lineHeight: 1.9, maxWidth: 360, margin: '0 auto' }}>
                     We have received your message and will be in touch within 24 hours.
                   </p>

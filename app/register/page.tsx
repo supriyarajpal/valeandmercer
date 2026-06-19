@@ -27,7 +27,7 @@ export default function RegisterPage() {
     background: 'transparent',
     border: 'none',
     borderBottom: '1px solid #C8C0B4',
-    color: '#28231C',
+    color: '#4A4036',
     fontSize: 15,
     padding: '12px 0',
     outline: 'none',
@@ -56,7 +56,7 @@ export default function RegisterPage() {
             <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Stay Informed</p>
           </Reveal>
           <Reveal y={28} delay={0.05} amount={0.2}>
-            <h1 style={{ color: '#28231C', marginBottom: 18 }}>
+            <h1 style={{ color: '#4A4036', marginBottom: 18 }}>
               Be first to hear about <span style={{ color: '#A0845C', fontStyle: 'italic' }}>new listings</span>
             </h1>
           </Reveal>
@@ -69,7 +69,7 @@ export default function RegisterPage() {
           {status === 'sent' ? (
             <Reveal y={24}>
               <div style={{ textAlign: 'center', padding: '96px 32px', background: '#FFFFFF', border: '0.5px solid #DDD7CC', borderRadius: 10 }}>
-                <div style={{ fontFamily: 'var(--font-serif)', fontSize: 52, fontWeight: 300, color: '#28231C', marginBottom: 18 }}>Thank you</div>
+                <div style={{ fontFamily: 'var(--font-serif)', fontSize: 52, fontWeight: 300, color: '#4A4036', marginBottom: 18 }}>Thank you</div>
                 <p style={{ fontSize: 15, lineHeight: 2, color: '#6B6258' }}>
                   We have your details. We will be in touch as soon as something suitable comes up.
                 </p>

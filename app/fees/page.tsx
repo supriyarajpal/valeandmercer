@@ -3,10 +3,10 @@ import Footer from '@/components/Footer'
 
 export default function FeesPage() {
   const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'20px'}
-  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#28231C',fontWeight:500,borderBottom:'1px solid #C8C0B4',fontSize:'12px'}
+  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#4A4036',fontWeight:500,borderBottom:'1px solid #C8C0B4',fontSize:'12px'}
   const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'#6B6258',borderBottom:'0.5px solid #DDD7CC',verticalAlign:'top',lineHeight:1.7,fontSize:'13px'}
-  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#28231C',marginBottom:'12px',marginTop:'0'}
-  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'#28231C',marginBottom:'8px',marginTop:'20px'}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'12px',marginTop:'0'}
+  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'#4A4036',marginBottom:'8px',marginTop:'20px'}
   const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'12px'}
   const liStyle:React.CSSProperties = {fontSize:'13px',lineHeight:1.9,color:'#6B6258',marginBottom:'4px'}
   const sectionStyle:React.CSSProperties = {marginBottom:'40px',paddingBottom:'40px',borderBottom:'0.5px solid #DDD7CC'}
@@ -17,7 +17,7 @@ export default function FeesPage() {
       <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Transparency</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>Services and Fees</h1>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Services and Fees</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'8px'}}>Vale and Mercer Ltd — Straightforward, transparent pricing. No hidden charges, no surprises.</p>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px',fontStyle:'italic'}}>All fees stated on this page are not subject to VAT. Vale and Mercer Ltd is not currently VAT registered. This page will be updated promptly if our VAT status changes.</p>
 
@@ -35,7 +35,7 @@ export default function FeesPage() {
                     ['Full Management','8% of first year\'s rent','10% of monthly rent collected'],
                   ].map(([s,t,o],i)=>(
                     <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}>
-                      <td style={{...tdStyle,fontWeight:500,color:'#28231C'}}>{s}</td>
+                      <td style={{...tdStyle,fontWeight:500,color:'#4A4036'}}>{s}</td>
                       <td style={{...tdStyle,color:'#A0845C'}}>{t}</td>
                       <td style={tdStyle}>{o}</td>
                     </tr>

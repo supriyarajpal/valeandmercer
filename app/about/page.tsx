@@ -100,7 +100,7 @@ export default function AboutPage() {
                     style={{ background: '#EFECE6', padding: '44px 32px', height: '100%' }}
                   >
                     <div style={{ fontFamily: 'var(--font-serif)', fontSize: 44, fontWeight: 300, color: 'rgba(160,132,92,0.28)', lineHeight: 1, marginBottom: 22 }}>{item.icon}</div>
-                    <h3 style={{ fontSize: 26, color: '#28231C', marginBottom: 14 }}>{item.title}</h3>
+                    <h3 style={{ fontSize: 26, color: '#4A4036', marginBottom: 14 }}>{item.title}</h3>
                     <p style={{ fontSize: 13.5, lineHeight: 1.9, color: '#6B6258' }}>{item.body}</p>
                   </div>
                 </StaggerItem>

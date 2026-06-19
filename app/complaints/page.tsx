@@ -4,9 +4,9 @@ import Link from 'next/link'
 
 export default function ComplaintsPage() {
   const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'16px'}
-  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#28231C',fontWeight:500,borderBottom:'1px solid #C8C0B4'}
+  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#4A4036',fontWeight:500,borderBottom:'1px solid #C8C0B4'}
   const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'#6B6258',borderBottom:'0.5px solid #DDD7CC',verticalAlign:'top',lineHeight:1.7}
-  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#28231C',marginBottom:'12px',marginTop:'0',paddingTop:'32px'}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'12px',marginTop:'0',paddingTop:'32px'}
   const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'12px'}
   const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'4px'}
 
@@ -17,7 +17,7 @@ export default function ComplaintsPage() {
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
 
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>Complaints Policy</h1>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Complaints Policy</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'8px'}}>Vale and Mercer Ltd — Residential Lettings Agency</p>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>Last Updated: June 2026 | Company No: 17212434</p>
 
@@ -67,12 +67,12 @@ export default function ComplaintsPage() {
               {step:'Step 2 — Investigation',desc:'A Director-level member of staff will be assigned to investigate your complaint. We will review all relevant correspondence, records, and documents, and speak to any team members involved where appropriate.'},
             ].map((s)=>(
               <div key={s.step} style={{marginBottom:'16px',padding:'18px 20px',background:'#DDD7CC',borderLeft:'3px solid #A0845C'}}>
-                <p style={{fontSize:'13px',fontWeight:500,color:'#28231C',marginBottom:'6px'}}>{s.step}</p>
+                <p style={{fontSize:'13px',fontWeight:500,color:'#4A4036',marginBottom:'6px'}}>{s.step}</p>
                 <p style={{fontSize:'13px',color:'#6B6258',lineHeight:1.8,margin:0}}>{s.desc}</p>
               </div>
             ))}
             <div style={{marginBottom:'16px',padding:'18px 20px',background:'#DDD7CC',borderLeft:'3px solid #A0845C'}}>
-              <p style={{fontSize:'13px',fontWeight:500,color:'#28231C',marginBottom:'8px'}}>Step 3 — Full Written Response</p>
+              <p style={{fontSize:'13px',fontWeight:500,color:'#4A4036',marginBottom:'8px'}}>Step 3 — Full Written Response</p>
               <p style={{fontSize:'13px',color:'#6B6258',lineHeight:1.8,marginBottom:'8px'}}>We will provide you with our full written response within <strong>15 working days</strong> of our acknowledgement. Our response will:</p>
               <ul style={{paddingLeft:'18px',margin:0}}>
                 {['Address each point you have raised individually','Set out our findings clearly and transparently','State whether your complaint is upheld, partially upheld, or not upheld — with full reasoning','Offer a resolution or explanation where applicable'].map(item=>(

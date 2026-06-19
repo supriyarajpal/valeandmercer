@@ -36,7 +36,7 @@ export default function ValuationsPage() {
     background: 'transparent',
     border: 'none',
     borderBottom: '1px solid #C8C0B4',
-    color: '#28231C',
+    color: '#4A4036',
     fontSize: 15,
     padding: '12px 0',
     outline: 'none',
@@ -115,7 +115,7 @@ export default function ValuationsPage() {
             {status === 'sent' ? (
               <Reveal y={24}>
                 <div style={{ textAlign: 'center', padding: '96px 40px', background: '#FFFFFF', border: '0.5px solid #DDD7CC', borderRadius: 10 }}>
-                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: 56, fontWeight: 300, color: '#28231C', marginBottom: 20 }}>Request received</div>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: 56, fontWeight: 300, color: '#4A4036', marginBottom: 20 }}>Request received</div>
                   <p style={{ fontSize: 15, lineHeight: 1.9, color: '#6B6258', maxWidth: 440, margin: '0 auto' }}>
                     Thank you for booking a valuation with Vale and Mercer. One of our senior agents will be in touch within 24 hours to confirm your appointment.
                   </p>

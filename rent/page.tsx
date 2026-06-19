@@ -10,7 +10,7 @@ export default function RentPage() {
         <div style={{maxWidth:'1280px',margin:'0 auto',padding:'0 20px'}}>
           <div style={{marginBottom:'48px'}}>
             <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'16px'}}>Rentals</p>
-            <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(36px,6vw,60px)',fontWeight:300,color:'#28231C',lineHeight:1.0,marginBottom:'16px'}}>Rental properties coming soon</h1>
+            <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(36px,6vw,60px)',fontWeight:300,color:'#4A4036',lineHeight:1.0,marginBottom:'16px'}}>Rental properties coming soon</h1>
             <p style={{fontSize:'14px',lineHeight:1.9,color:'#6B6258',maxWidth:'520px',marginBottom:'32px'}}>We are building our lettings portfolio across prime London. Register your interest and we will be in touch as soon as something available matches what you need.</p>
             <Link href="/register" style={{fontSize:'11px',letterSpacing:'0.16em',textTransform:'uppercase',background:'#28231C',color:'#EFECE6',padding:'13px 24px',textDecoration:'none',display:'inline-block'}}>Register Your Interest</Link>
           </div>

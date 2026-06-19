@@ -10,7 +10,7 @@ export default function BlogPost2() {
         <div style={{maxWidth:'720px',margin:'0 auto',padding:'0 20px'}}>
           <Link href="/blog" style={{fontSize:'11px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#A0845C',textDecoration:'none',display:'inline-block',marginBottom:'32px'}}> Back to Journal</Link>
           <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Buying Guide</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,6vw,52px)',fontWeight:300,color:'#28231C',lineHeight:1.05,marginBottom:'16px'}}>Your complete guide to buying in Chelsea SW3</h1>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,6vw,52px)',fontWeight:300,color:'#4A4036',lineHeight:1.05,marginBottom:'16px'}}>Your complete guide to buying in Chelsea SW3</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>April 2025  6 min read</p>
           <div style={{height:'360px',overflow:'hidden',marginBottom:'40px'}}>
             <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900&q=85" alt="Chelsea London" style={{width:'100%',height:'100%',objectFit:'cover'}} />
@@ -23,7 +23,7 @@ export default function BlogPost2() {
             {h:'Our advice',p:'Chelsea rewards patience. The best properties here rarely sit for long, but rushing into the wrong one because you felt pressure to move is a mistake that takes years to correct. Come and speak to us before you start viewing — it will save you time.'},
           ].map((section)=>(
             <div key={section.h} style={{marginBottom:'28px'}}>
-              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#28231C',marginBottom:'10px'}}>{section.h}</h2>
+              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#4A4036',marginBottom:'10px'}}>{section.h}</h2>
               <p style={{fontSize:'15px',lineHeight:1.9,color:'#6B6258'}}>{section.p}</p>
             </div>
           ))}

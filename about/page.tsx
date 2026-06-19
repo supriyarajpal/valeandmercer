@@ -49,7 +49,7 @@ export default function AboutPage() {
               ].map((item)=>(
                 <div key={item.icon} style={{background:'#EFECE6',padding:'36px 28px'}}>
                   <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'40px',fontWeight:300,color:'rgba(160,132,92,0.2)',lineHeight:1,marginBottom:'16px'}}>{item.icon}</div>
-                  <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#28231C',marginBottom:'12px'}}>{item.title}</h3>
+                  <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'12px'}}>{item.title}</h3>
                   <p style={{fontSize:'13px',lineHeight:1.9,color:'#6B6258'}}>{item.body}</p>
                 </div>
               ))}

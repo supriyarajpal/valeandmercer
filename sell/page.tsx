@@ -38,14 +38,14 @@ export default function SellPage() {
               ].map((s)=>(
                 <div key={s.step} style={{background:'#EFECE6',padding:'32px 24px'}}>
                   <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'36px',fontWeight:300,color:'rgba(160,132,92,0.22)',lineHeight:1,marginBottom:'12px'}}>{s.step}</div>
-                  <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>{s.title}</h3>
+                  <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>{s.title}</h3>
                   <p style={{fontSize:'14px',lineHeight:2.0,color:'#6B6258'}}>{s.body}</p>
                 </div>
               ))}
             </div>
             <div style={{maxWidth:'640px'}}>
               <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Why Vale and Mercer</p>
-              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,42px)',fontWeight:300,color:'#28231C',marginBottom:'16px'}}>Selling your home the right way</h2>
+              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,42px)',fontWeight:300,color:'#4A4036',marginBottom:'16px'}}>Selling your home the right way</h2>
               <p style={{fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'14px'}}>The right buyer does not just want to know the square footage. They want to picture their life there. We write listings with that in mind.</p>
               <p style={{fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'28px'}}>We keep our client numbers small so nothing gets missed.</p>
               <Link href="/valuations" style={{fontSize:'11px',letterSpacing:'0.16em',textTransform:'uppercase',background:'#28231C',color:'#EFECE6',padding:'13px 24px',textDecoration:'none',display:'inline-block'}}>Book Your Free Valuation</Link>

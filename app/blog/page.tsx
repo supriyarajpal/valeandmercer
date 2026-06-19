@@ -19,7 +19,7 @@ export default function BlogPage() {
           <Reveal y={28} amount={0.2}>
             <div style={{ marginBottom: 72, maxWidth: 720 }}>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 16 }}>Journal</p>
-              <h1 style={{ color: '#28231C' }}>
+              <h1 style={{ color: '#4A4036' }}>
                 Insight and <span style={{ color: '#A0845C', fontStyle: 'italic' }}>advice</span>
               </h1>
             </div>
@@ -63,7 +63,7 @@ export default function BlogPage() {
                   </div>
                   <div style={{ padding: '28px 32px 32px' }}>
                     <span style={{ display: 'block', fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#A0845C', marginBottom: 14 }}>{post.category}</span>
-                    <h2 style={{ fontSize: 26, color: '#28231C', lineHeight: 1.2, marginBottom: 14 }}>{post.title}</h2>
+                    <h2 style={{ fontSize: 26, color: '#4A4036', lineHeight: 1.2, marginBottom: 14 }}>{post.title}</h2>
                     <p style={{ fontSize: 13.5, lineHeight: 1.85, color: '#6B6258', marginBottom: 22 }}>{post.excerpt}</p>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, borderTop: '0.5px solid #DDD7CC' }}>
                       <span style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#9A9188' }}>{post.date}</span>

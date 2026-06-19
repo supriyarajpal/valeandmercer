@@ -4,10 +4,10 @@ import Link from 'next/link'
 
 export default function PrivacyPage() {
   const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'16px'}
-  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#28231C',fontWeight:500,borderBottom:'1px solid #C8C0B4'}
+  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#4A4036',fontWeight:500,borderBottom:'1px solid #C8C0B4'}
   const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'#6B6258',borderBottom:'0.5px solid #DDD7CC',verticalAlign:'top',lineHeight:1.7}
-  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#28231C',marginBottom:'14px',marginTop:'0'}
-  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'#28231C',marginBottom:'10px',marginTop:'20px'}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'14px',marginTop:'0'}
+  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'#4A4036',marginBottom:'10px',marginTop:'20px'}
   const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'12px'}
   const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'4px'}
   const sectionStyle:React.CSSProperties = {marginBottom:'40px',paddingBottom:'40px',borderBottom:'0.5px solid #DDD7CC'}
@@ -18,7 +18,7 @@ export default function PrivacyPage() {
       <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'860px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>Privacy Notice</h1>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Privacy Notice</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>VM-PN-001 | Version 2.0 | May 2026 | Company Registration No: 17212434</p>
 
           <div style={{background:'#28231C',padding:'28px 32px',marginBottom:'48px'}}>
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
           </div>
 
           <div style={{background:'#DDD7CC',padding:'14px 20px',marginBottom:'40px',fontSize:'12px',color:'#6B6258',lineHeight:1.8}}>
-            <p style={{fontWeight:500,color:'#28231C',marginBottom:'6px',fontSize:'12px'}}>Jump to section:</p>
+            <p style={{fontWeight:500,color:'#4A4036',marginBottom:'6px',fontSize:'12px'}}>Jump to section:</p>
             <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
               {[['1','Who We Are'],['2','What This Notice Covers'],['3','Data We Collect'],['4','Legitimate Interests'],['5','Who We Share Data With'],['6','International Transfers'],['7','How Long We Keep Data'],['8','Your Rights'],['9','Cookies'],['10','Direct Marketing'],['11','Data Security'],['12','Changes'],['13','How to Complain']].map(([id,label])=>(
                 <a key={id} href={'#pn-'+id} style={{fontSize:'11px',color:'#A0845C',textDecoration:'none',borderBottom:'1px solid #A0845C',paddingBottom:'1px'}}>{label}</a>

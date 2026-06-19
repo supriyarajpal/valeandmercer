@@ -43,7 +43,7 @@ export default function BlogSection() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: 56 }}>
             <div>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 12 }}>Journal</p>
-              <h2 style={{ color: '#28231C' }}>Insight and <span style={{ color: '#A0845C', fontStyle: 'italic' }}>advice</span></h2>
+              <h2 style={{ color: '#4A4036' }}>Insight and <span style={{ color: '#A0845C', fontStyle: 'italic' }}>advice</span></h2>
             </div>
             <Link href="/blog" className="link-underline" style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#A0845C', whiteSpace: 'nowrap' }}>
               All articles <span aria-hidden style={{ marginLeft: 6 }}>→</span>
@@ -108,7 +108,7 @@ function BlogCard({ post, index }: { post: typeof posts[number]; index: number }
             <span style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#A0845C' }}>{post.category}</span>
             <span style={{ fontSize: 10, color: '#9A9188' }}>{post.readTime}</span>
           </div>
-          <h3 style={{ color: '#28231C', marginBottom: 12, fontSize: 'clamp(18px, 4vw, 22px)', lineHeight: 1.25 }}>{post.title}</h3>
+          <h3 style={{ color: '#4A4036', marginBottom: 12, fontSize: 'clamp(18px, 4vw, 22px)', lineHeight: 1.25 }}>{post.title}</h3>
           <p style={{ fontSize: 13, lineHeight: 1.85, color: '#6B6258', marginBottom: 18 }}>{post.excerpt}</p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 14, borderTop: '0.5px solid #DDD7CC' }}>
             <span style={{ fontSize: 10, color: '#9A9188', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{post.date}</span>

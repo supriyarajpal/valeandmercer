@@ -10,7 +10,7 @@ export default function BlogPost1() {
         <div style={{maxWidth:'720px',margin:'0 auto',padding:'0 20px'}}>
           <Link href="/blog" style={{fontSize:'11px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#A0845C',textDecoration:'none',display:'inline-block',marginBottom:'32px'}}> Back to Journal</Link>
           <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Market Insight</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,6vw,52px)',fontWeight:300,color:'#28231C',lineHeight:1.05,marginBottom:'16px'}}>The London property market in 2025</h1>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,6vw,52px)',fontWeight:300,color:'#4A4036',lineHeight:1.05,marginBottom:'16px'}}>The London property market in 2025</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>May 2025  4 min read</p>
           <div style={{height:'360px',overflow:'hidden',marginBottom:'40px'}}>
             <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=900&q=85" alt="London" style={{width:'100%',height:'100%',objectFit:'cover'}} />
@@ -22,7 +22,7 @@ export default function BlogPost1() {
             {h:'Our honest read',p:'London property has always rewarded long-term thinking. The people who struggle are those who try to time the market perfectly. The people who do well are those who buy the right property, in the right location, at a fair price — and hold it.'},
           ].map((section)=>(
             <div key={section.h} style={{marginBottom:'28px'}}>
-              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#28231C',marginBottom:'10px'}}>{section.h}</h2>
+              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#4A4036',marginBottom:'10px'}}>{section.h}</h2>
               <p style={{fontSize:'15px',lineHeight:1.9,color:'#6B6258'}}>{section.p}</p>
             </div>
           ))}

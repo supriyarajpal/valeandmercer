@@ -41,7 +41,7 @@ export default function LetPage() {
                 <StaggerItem key={s.title} as="div">
                   <div style={{ background: '#EFECE6', padding: '40px 28px', height: '100%' }}>
                     <div style={{ width: 22, height: 1, background: '#A0845C', marginBottom: 18 }} />
-                    <h3 style={{ fontSize: 22, color: '#28231C', marginBottom: 12 }}>{s.title}</h3>
+                    <h3 style={{ fontSize: 22, color: '#4A4036', marginBottom: 12 }}>{s.title}</h3>
                     <p style={{ fontSize: 14, lineHeight: 1.95, color: '#6B6258' }}>{s.body}</p>
                   </div>
                 </StaggerItem>
@@ -51,7 +51,7 @@ export default function LetPage() {
             <Reveal y={28} amount={0.25}>
               <div style={{ maxWidth: 720 }}>
                 <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>For Landlords</p>
-                <h2 style={{ color: '#28231C', marginBottom: 22 }}>
+                <h2 style={{ color: '#4A4036', marginBottom: 22 }}>
                   Why <span style={{ color: '#A0845C', fontStyle: 'italic' }}>referencing</span> matters
                 </h2>
                 <p style={{ fontSize: 15, lineHeight: 1.95, color: '#6B6258', marginBottom: 16 }}>

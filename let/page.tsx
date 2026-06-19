@@ -38,14 +38,14 @@ export default function LetPage() {
               ].map((s)=>(
                 <div key={s.title} style={{background:'#EFECE6',padding:'32px 24px'}}>
                   <div style={{width:'18px',height:'1px',background:'#A0845C',marginBottom:'14px'}} />
-                  <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>{s.title}</h3>
+                  <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>{s.title}</h3>
                   <p style={{fontSize:'14px',lineHeight:2.0,color:'#6B6258'}}>{s.body}</p>
                 </div>
               ))}
             </div>
             <div style={{maxWidth:'640px'}}>
               <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>For Landlords</p>
-              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,42px)',fontWeight:300,color:'#28231C',marginBottom:'16px'}}>Why referencing matters</h2>
+              <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,42px)',fontWeight:300,color:'#4A4036',marginBottom:'16px'}}>Why referencing matters</h2>
               <p style={{fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'14px'}}>A bad tenant costs more than a short void period. We reference properly and only proceed when we are satisfied.</p>
               <p style={{fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'28px'}}>Whether you have one property or several, the level of care is the same.</p>
               <Link href="/valuations" style={{fontSize:'11px',letterSpacing:'0.16em',textTransform:'uppercase',background:'#28231C',color:'#EFECE6',padding:'13px 24px',textDecoration:'none',display:'inline-block'}}>Discuss Your Property</Link>

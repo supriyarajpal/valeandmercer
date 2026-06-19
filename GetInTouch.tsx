@@ -14,7 +14,7 @@ export default function GetInTouch() {
     } catch { setStatus('error') }
   }
 
-  const inp:React.CSSProperties = {background:'transparent',border:'none',borderBottom:'1px solid #C8C0B4',color:'#28231C',fontSize:'15px',padding:'10px 0',outline:'none',width:'100%',fontFamily:'DM Sans,sans-serif'}
+  const inp:React.CSSProperties = {background:'transparent',border:'none',borderBottom:'1px solid #C8C0B4',color:'#4A4036',fontSize:'15px',padding:'10px 0',outline:'none',width:'100%',fontFamily:'DM Sans,sans-serif'}
   const lab:React.CSSProperties = {fontSize:'9px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#9A9188',display:'block',marginBottom:'4px'}
   const css = '@media(min-width:768px){.touch-grid{grid-template-columns:1fr 1fr!important}}'
 
@@ -25,7 +25,7 @@ export default function GetInTouch() {
         <div className="touch-grid" style={{display:'grid',gridTemplateColumns:'1fr',gap:'40px'}}>
           <div>
             <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Get in Touch</p>
-            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(28px,5vw,46px)',fontWeight:300,color:'#28231C',lineHeight:1.05,marginBottom:'14px'}}>Let us find your next chapter</h2>
+            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(28px,5vw,46px)',fontWeight:300,color:'#4A4036',lineHeight:1.05,marginBottom:'14px'}}>Let us find your next chapter</h2>
             <p style={{fontSize:'14px',lineHeight:2.1,color:'#6B6258',marginBottom:'24px'}}>Drop us a message and we will get back to you. No pitch, no pressure.</p>
             <div style={{display:'flex',flexDirection:'column',gap:'14px'}}>
               <div><span style={lab}>Email</span><a href="mailto:info@valeandmercer.co.uk" style={{fontSize:'14px',color:'#6B6258',textDecoration:'none'}}>info@valeandmercer.co.uk</a></div>
@@ -34,7 +34,7 @@ export default function GetInTouch() {
           <div style={{display:'flex',flexDirection:'column',gap:'16px'}}>
             {status==='sent'?(
               <div style={{padding:'36px 24px',background:'#DDD7CC',textAlign:'center'}}>
-                <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'26px',fontWeight:300,color:'#28231C',marginBottom:'10px'}}>Thank you</div>
+                <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'26px',fontWeight:300,color:'#4A4036',marginBottom:'10px'}}>Thank you</div>
                 <p style={{fontSize:'13px',color:'#6B6258',lineHeight:1.8}}>We have received your message and will be in touch within 24 hours.</p>
               </div>
             ):(

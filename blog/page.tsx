@@ -16,7 +16,7 @@ export default function BlogPage() {
         <div style={{maxWidth:'1280px',margin:'0 auto',padding:'0 1.5rem'}}>
           <div style={{marginBottom:'56px'}}>
             <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'16px'}}>Journal</p>
-            <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(40px,6vw,64px)',fontWeight:300,color:'#28231C',lineHeight:1.0}}>Insight and advice</h1>
+            <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(40px,6vw,64px)',fontWeight:300,color:'#4A4036',lineHeight:1.0}}>Insight and advice</h1>
           </div>
           <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',gap:'2px',background:'#C8C0B4'}}>
             {posts.map((post)=>(
@@ -26,7 +26,7 @@ export default function BlogPage() {
                 </div>
                 <div style={{padding:'28px'}}>
                   <span style={{fontSize:'9px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#A0845C',display:'block',marginBottom:'12px'}}>{post.category}</span>
-                  <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#28231C',lineHeight:1.4,marginBottom:'12px'}}>{post.title}</h2>
+                  <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',lineHeight:1.4,marginBottom:'12px'}}>{post.title}</h2>
                   <p style={{fontSize:'12px',lineHeight:1.8,color:'#6B6258',marginBottom:'20px'}}>{post.excerpt}</p>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingTop:'14px',borderTop:'0.5px solid #DDD7CC'}}>
                     <span style={{fontSize:'9px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#9A9188'}}>{post.date}</span>

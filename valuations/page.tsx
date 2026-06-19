@@ -22,7 +22,7 @@ export default function ValuationsPage() {
     }
   }
 
-  const inp = {background:'transparent',border:'none',borderBottom:'1px solid #C8C0B4',color:'#28231C',fontSize:'14px',padding:'12px 0',outline:'none',width:'100%',fontFamily:'DM Sans,sans-serif'}
+  const inp = {background:'transparent',border:'none',borderBottom:'1px solid #C8C0B4',color:'#4A4036',fontSize:'14px',padding:'12px 0',outline:'none',width:'100%',fontFamily:'DM Sans,sans-serif'}
 
   return (
     <>
@@ -50,7 +50,7 @@ export default function ValuationsPage() {
           <div style={{maxWidth:'900px',margin:'0 auto'}}>
             {status === 'sent' ? (
               <div style={{textAlign:'center',padding:'80px 40px'}}>
-                <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'48px',fontWeight:300,color:'#28231C',marginBottom:'16px'}}>Request received</div>
+                <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'48px',fontWeight:300,color:'#4A4036',marginBottom:'16px'}}>Request received</div>
                 <p style={{fontSize:'14px',lineHeight:1.9,color:'#6B6258',maxWidth:'400px',margin:'0 auto'}}>Thank you for booking a valuation with Vale and Mercer. One of our senior agents will be in touch within 24 hours to confirm your appointment.</p>
               </div>
             ) : (

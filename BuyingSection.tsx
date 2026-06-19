@@ -13,7 +13,7 @@ export default function BuyingSection() {
           </div>
           <div>
             <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Our Services</p>
-            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(28px,5vw,46px)',fontWeight:300,color:'#28231C',lineHeight:1.05,marginBottom:'14px'}}>
+            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(28px,5vw,46px)',fontWeight:300,color:'#4A4036',lineHeight:1.05,marginBottom:'14px'}}>
               For landlords who care<br/>and tenants who deserve<br/><span style={{color:'#A0845C',fontStyle:'italic'}}>better than average.</span>
             </h2>
             <p style={{fontSize:'13px',lineHeight:1.9,color:'#6B6258',marginBottom:'20px'}}>

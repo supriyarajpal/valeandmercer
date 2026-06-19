@@ -16,7 +16,7 @@ export default function RegisterPage() {
     } catch { setStatus('error') }
   }
 
-  const inp:React.CSSProperties = {background:'transparent',border:'none',borderBottom:'1px solid #C8C0B4',color:'#28231C',fontSize:'14px',padding:'12px 0',outline:'none',width:'100%',fontFamily:'DM Sans,sans-serif'}
+  const inp:React.CSSProperties = {background:'transparent',border:'none',borderBottom:'1px solid #C8C0B4',color:'#4A4036',fontSize:'14px',padding:'12px 0',outline:'none',width:'100%',fontFamily:'DM Sans,sans-serif'}
   const lab:React.CSSProperties = {fontSize:'9px',letterSpacing:'0.15em',textTransform:'uppercase',color:'#9A9188',display:'block',marginBottom:'4px'}
 
   return (
@@ -25,11 +25,11 @@ export default function RegisterPage() {
       <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'640px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Stay Informed</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,52px)',fontWeight:300,color:'#28231C',lineHeight:1.05,marginBottom:'12px'}}>Be first to hear about new listings</h1>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,52px)',fontWeight:300,color:'#4A4036',lineHeight:1.05,marginBottom:'12px'}}>Be first to hear about new listings</h1>
           <p style={{fontSize:'14px',lineHeight:2.1,color:'#6B6258',marginBottom:'40px'}}>Tell us what you need and we will get in touch when something fits. No spam.</p>
           {status==='sent'?(
             <div style={{textAlign:'center',padding:'60px 0'}}>
-              <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'36px',fontWeight:300,color:'#28231C',marginBottom:'12px'}}>Thank you</div>
+              <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'36px',fontWeight:300,color:'#4A4036',marginBottom:'12px'}}>Thank you</div>
               <p style={{fontSize:'14px',lineHeight:2.1,color:'#6B6258'}}>We have your details. We will be in touch as soon as something suitable comes up.</p>
             </div>
           ):(

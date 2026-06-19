@@ -15,7 +15,7 @@ export default function BlogSection() {
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:'32px'}}>
           <div>
             <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'8px'}}>Journal</p>
-            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,4vw,38px)',fontWeight:300,color:'#28231C'}}>Insight and advice</h2>
+            <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,4vw,38px)',fontWeight:300,color:'#4A4036'}}>Insight and advice</h2>
           </div>
           <Link href="/blog" style={{fontSize:'10px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#A0845C',textDecoration:'none',borderBottom:'1px solid #A0845C',paddingBottom:'2px',whiteSpace:'nowrap',marginLeft:'12px'}}>All articles</Link>
         </div>
@@ -30,7 +30,7 @@ export default function BlogSection() {
                   <span style={{fontSize:'9px',letterSpacing:'0.16em',textTransform:'uppercase',color:'#A0845C'}}>{post.category}</span>
                   <span style={{fontSize:'9px',color:'#9A9188'}}>{post.readTime}</span>
                 </div>
-                <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#28231C',lineHeight:1.2,marginBottom:'8px'}}>{post.title}</h3>
+                <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#4A4036',lineHeight:1.2,marginBottom:'8px'}}>{post.title}</h3>
                 <p style={{fontSize:'12px',lineHeight:1.8,color:'#6B6258',marginBottom:'14px'}}>{post.excerpt}</p>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',paddingTop:'12px',borderTop:'0.5px solid #DDD7CC'}}>
                   <span style={{fontSize:'10px',color:'#9A9188',textTransform:'uppercase',letterSpacing:'0.08em'}}>{post.date}</span>

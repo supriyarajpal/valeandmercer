@@ -3,7 +3,7 @@ import Footer from '@/components/Footer'
 import Link from 'next/link'
 
 export default function TermsPage() {
-  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#28231C',marginBottom:'12px',marginTop:'0'}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'12px',marginTop:'0'}
   const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'12px'}
   const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'4px'}
   const sectionStyle:React.CSSProperties = {marginBottom:'36px',paddingBottom:'36px',borderBottom:'0.5px solid #DDD7CC'}
@@ -14,7 +14,7 @@ export default function TermsPage() {
       <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>Website Terms of Use</h1>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Website Terms of Use</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>VM-TOU-001 | Version 1.0 | June 2026 | Company Registration No: 17212434</p>
 
           <div id="s1" style={sectionStyle}>

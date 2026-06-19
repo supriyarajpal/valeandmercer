@@ -32,13 +32,13 @@ export default function AdminPage() {
     setCode(entry)
   }
 
-  const s = {background:'transparent',border:'none',borderBottom:'1px solid #DDD7CC',color:'#28231C',fontSize:'14px',padding:'10px 0',outline:'none',width:'100%'}
+  const s = {background:'transparent',border:'none',borderBottom:'1px solid #DDD7CC',color:'#4A4036',fontSize:'14px',padding:'10px 0',outline:'none',width:'100%'}
   const l = {fontSize:'9px',letterSpacing:'0.15em',textTransform:'uppercase' as const,color:'#9A9188',display:'block',marginBottom:'4px'}
 
   if (!authed) return (
     <div style={{minHeight:'100vh',background:'#EFECE6',display:'flex',alignItems:'center',justifyContent:'center'}}>
       <div style={{background:'#fff',padding:'48px',minWidth:'320px',border:'0.5px solid #DDD7CC'}}>
-        <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>
+        <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>
           Vale <span style={{color:'#A0845C'}}>&</span> Mercer
         </div>
         <div style={{fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#9A9188',marginBottom:'32px'}}>Admin Panel</div>
@@ -57,7 +57,7 @@ export default function AdminPage() {
 
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'48px',paddingBottom:'24px',borderBottom:'0.5px solid #DDD7CC'}}>
           <div>
-            <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'32px',fontWeight:300,color:'#28231C'}}>Add New Property</div>
+            <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'32px',fontWeight:300,color:'#4A4036'}}>Add New Property</div>
             <div style={{fontSize:'11px',color:'#9A9188',marginTop:'4px'}}>Fill in the details and generate the code to paste into properties.ts</div>
           </div>
           <a href="/" style={{fontSize:'11px',letterSpacing:'0.15em',textTransform:'uppercase',color:'#A0845C',textDecoration:'none'}}>Back to site</a>

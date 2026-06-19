@@ -37,7 +37,7 @@ const variants: Record<Variant, {
   },
   'outlined-dark': {
     bg: 'transparent',
-    color: '#28231C',
+    color: '#4A4036',
     border: '1px solid rgba(40,35,28,0.3)',
     fill: '#28231C',
     hoverColor: '#EFECE6',

@@ -28,7 +28,7 @@ export default function FeaturedProperties() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: 56 }}>
             <div>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 12 }}>Our Listings</p>
-              <h2 style={{ color: '#28231C' }}>
+              <h2 style={{ color: '#4A4036' }}>
                 Properties <span style={{ color: '#A0845C', fontStyle: 'italic' }}>coming soon</span>
               </h2>
             </div>

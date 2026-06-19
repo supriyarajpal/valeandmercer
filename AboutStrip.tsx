@@ -8,7 +8,7 @@ export default function AboutStrip() {
       <div style={{maxWidth:'1280px',margin:'0 auto'}}>
         <div style={{marginBottom:'40px',maxWidth:'640px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.26em',textTransform:'uppercase',color:'#A0845C',marginBottom:'10px'}}>Who We Are</p>
-          <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,44px)',fontWeight:300,color:'#28231C',lineHeight:1.1,marginBottom:'14px'}}>
+          <h2 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(26px,5vw,44px)',fontWeight:300,color:'#4A4036',lineHeight:1.1,marginBottom:'14px'}}>
             Every home has a story.<br/>
             <span style={{color:'#A0845C',fontStyle:'italic'}}>We help write the next chapter.</span>
           </h2>
@@ -28,7 +28,7 @@ export default function AboutStrip() {
           ].map((s)=>(
             <Link key={s.title} href={s.href} style={{textDecoration:'none',display:'block',background:'#EFECE6',padding:'28px 24px'}}>
               <div style={{width:'18px',height:'1px',background:'#A0845C',marginBottom:'14px'}} />
-              <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#28231C',marginBottom:'8px'}}>{s.title}</h3>
+              <h3 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'20px',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>{s.title}</h3>
               <p style={{fontSize:'13px',lineHeight:1.8,color:'#6B6258',marginBottom:'12px'}}>{s.desc}</p>
               <span style={{fontSize:'10px',letterSpacing:'0.14em',textTransform:'uppercase',color:'#A0845C',borderBottom:'1px solid #A0845C',paddingBottom:'1px'}}>Find out more</span>
             </Link>

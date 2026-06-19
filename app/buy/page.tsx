@@ -20,7 +20,7 @@ export default function BuyPage() {
           <Reveal y={28} amount={0.2}>
             <div style={{ marginBottom: 64, maxWidth: 720 }}>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 16 }}>Properties</p>
-              <h1 style={{ color: '#28231C', marginBottom: 22 }}>
+              <h1 style={{ color: '#4A4036', marginBottom: 22 }}>
                 Properties <span style={{ color: '#A0845C', fontStyle: 'italic' }}>coming soon</span>
               </h1>
               <p style={{ fontSize: 15, lineHeight: 1.95, color: '#6B6258', maxWidth: 540, marginBottom: 36 }}>

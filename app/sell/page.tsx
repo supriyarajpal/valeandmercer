@@ -41,7 +41,7 @@ export default function SellPage() {
                 <StaggerItem key={s.step} as="div">
                   <div style={{ background: '#EFECE6', padding: '40px 28px', height: '100%' }}>
                     <div style={{ fontFamily: 'var(--font-serif)', fontSize: 40, fontWeight: 300, color: 'rgba(160,132,92,0.28)', lineHeight: 1, marginBottom: 14 }}>{s.step}</div>
-                    <h3 style={{ fontSize: 22, color: '#28231C', marginBottom: 10 }}>{s.title}</h3>
+                    <h3 style={{ fontSize: 22, color: '#4A4036', marginBottom: 10 }}>{s.title}</h3>
                     <p style={{ fontSize: 14, lineHeight: 1.95, color: '#6B6258' }}>{s.body}</p>
                   </div>
                 </StaggerItem>
@@ -51,7 +51,7 @@ export default function SellPage() {
             <Reveal y={28} amount={0.25}>
               <div style={{ maxWidth: 720 }}>
                 <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Why Vale and Mercer</p>
-                <h2 style={{ color: '#28231C', marginBottom: 22 }}>
+                <h2 style={{ color: '#4A4036', marginBottom: 22 }}>
                   Selling your home <span style={{ color: '#A0845C', fontStyle: 'italic' }}>the right way</span>
                 </h2>
                 <p style={{ fontSize: 15, lineHeight: 1.95, color: '#6B6258', marginBottom: 16 }}>
