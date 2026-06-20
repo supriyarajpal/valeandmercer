@@ -17,6 +17,7 @@ const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations']
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [hideEyebrow, setHideEyebrow] = useState(false)
   const [mobile, setMobile] = useState(true)
   const pathname = usePathname()
   const reduce = useReducedMotion()
@@ -26,7 +27,11 @@ export default function Navbar() {
 
   useEffect(() => {
     const checkSize = () => setMobile(window.innerWidth < 900)
-    const checkScroll = () => setScrolled(window.scrollY > 80)
+    const checkScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 80)
+      setHideEyebrow(y > 8)
+    }
     checkSize()
     checkScroll()
     window.addEventListener('resize', checkSize)
@@ -56,8 +61,8 @@ export default function Navbar() {
   const linkColor = scrolled ? 'rgba(239,236,230,0.82)' : isDarkHero ? 'rgba(239,236,230,0.78)' : 'rgba(40,35,28,0.7)'
   const btnBorder = isLight ? '1px solid rgba(40,35,28,0.25)' : '1px solid rgba(239,236,230,0.35)'
   const hamburgerColor = isLight ? 'rgba(40,35,28,0.75)' : 'rgba(239,236,230,0.9)'
-  const navBg = scrolled ? 'rgba(40,35,28,0.78)' : 'transparent'
-  const navShadow = scrolled ? '0 1px 0 rgba(239,236,230,0.06), 0 8px 24px rgba(0,0,0,0.18)' : 'none'
+  const navBg = 'transparent'
+  const navShadow = 'none'
 
   const enterDelay = reduce ? 0 : firstLoad ? 0.9 : 0.05
   const container: Variants = {
@@ -85,25 +90,25 @@ export default function Navbar() {
         }}
       >
         <div style={{ padding: '18px var(--gutter)' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
           <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14 }}>
-            <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 14, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
+            <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 17, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
               Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
             </Link>
             <div
-              aria-hidden={scrolled}
+              aria-hidden={hideEyebrow}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 14,
                 marginLeft: 0,
-                marginTop: scrolled ? 0 : 32,
-                opacity: scrolled ? 0 : 1,
-                maxHeight: scrolled ? 0 : 24,
-                transform: scrolled ? 'translateY(-6px)' : 'translateY(0)',
-                pointerEvents: scrolled ? 'none' : 'auto',
+                marginTop: hideEyebrow ? 0 : 32,
+                opacity: hideEyebrow ? 0 : 1,
+                maxHeight: hideEyebrow ? 0 : 24,
+                transform: hideEyebrow ? 'translateY(-6px)' : 'translateY(0)',
+                pointerEvents: hideEyebrow ? 'none' : 'auto',
                 overflow: 'hidden',
-                transition: 'opacity 0.45s var(--ease-out-soft), max-height 0.45s var(--ease-out-soft), transform 0.45s var(--ease-out-soft), margin-top 0.45s var(--ease-out-soft)',
+                transition: 'opacity 0.3s var(--ease-out-soft), max-height 0.3s var(--ease-out-soft), transform 0.3s var(--ease-out-soft), margin-top 0.3s var(--ease-out-soft)',
               }}
             >
               <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />

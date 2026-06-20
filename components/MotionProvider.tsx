@@ -12,11 +12,13 @@ const CURTAIN_CSS = `
 @keyframes vm-curtain-top   { to { transform: translateY(-100%); } }
 @keyframes vm-curtain-bot   { to { transform: translateY(100%); } }
 @keyframes vm-curtain-fade  { to { opacity: 0; visibility: hidden; } }
+@keyframes vm-curtain-text-fade { to { opacity: 0; } }
 .vm-curtain { animation: vm-curtain-fade 0.01s linear 1.6s forwards; }
 .vm-curtain-top { animation: vm-curtain-top 0.6s cubic-bezier(0.76,0,0.24,1) 1s forwards; }
 .vm-curtain-bot { animation: vm-curtain-bot 0.6s cubic-bezier(0.76,0,0.24,1) 1s forwards; }
+.vm-curtain-text { animation: vm-curtain-text-fade 0.35s cubic-bezier(0.76,0,0.24,1) 0.75s forwards; }
 @media (prefers-reduced-motion: reduce) {
-  .vm-curtain, .vm-curtain-top, .vm-curtain-bot { display: none; }
+  .vm-curtain, .vm-curtain-top, .vm-curtain-bot, .vm-curtain-text { display: none; }
 }
 `
 
@@ -80,7 +82,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
           <div className="vm-curtain-top" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }} />
           <div className="vm-curtain-bot" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }} />
 
-          <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18 }}>
+          <div className="vm-curtain-text" style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18, willChange: 'opacity' }}>
             <span style={{
               fontFamily: 'Cormorant Garamond, Georgia, serif',
               fontSize: 'clamp(20px, 2.4vw, 28px)',

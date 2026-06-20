@@ -82,16 +82,15 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Layer 1 — atmospheric overlays. */}
-      <motion.div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(40,35,28,0.58)', y: l1, willChange: 'transform' }} />
-      <motion.div
+      {/* Layer 1 — atmospheric overlays. Pinned to the section so the
+          warm tint always covers the image regardless of scroll. */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(40,35,28,0.58)' }} />
+      <div
         aria-hidden
         style={{
           position: 'absolute',
           inset: 0,
           background: 'linear-gradient(to bottom, rgba(40,35,28,0.5) 0%, rgba(40,35,28,0.1) 22%, rgba(40,35,28,0.1) 70%, rgba(40,35,28,0.75) 100%)',
-          y: l1,
-          willChange: 'transform',
         }}
       />
 
