@@ -104,7 +104,7 @@ export default function Navbar() {
         }}
       >
         <div style={{ padding: '18px var(--gutter)' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
           <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14 }}>
             <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 17, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
               Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
@@ -146,12 +146,28 @@ export default function Navbar() {
                 display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0,
                 minWidth: 44, minHeight: 44,
                 alignItems: 'flex-end', justifyContent: 'center',
-                // Parent row uses `alignItems: 'baseline'`. A button with
-                // no inline text has no real baseline, so the browser
-                // synthesised one from the bottom edge of the box and
-                // shoved the hamburger up out of the visible nav. Center
-                // it explicitly to override that.
-                alignSelf: 'center',
+                // Parent row uses `alignItems: 'flex-start'`, so both the
+                // logo column and this button anchor to the row's top
+                // edge — a position that is stable across scroll states
+                // because the logo Link is the first child of its column
+                // and the Est. London eyebrow only ever adds height
+                // BELOW the logo, never above.
+                //
+                // Pull the button up so the 14.5px bar stack's vertical
+                // centre lands on the logo's vertical centre:
+                //
+                //   logo centre  = (17 × 1.2) / 2     ≈ 10.2px from row top
+                //   bar centre   = 10 (pad-top)
+                //                + (24 − 14.5) / 2     = 4.75 (stack offset
+                //                                              in content box)
+                //                + 14.5 / 2            = 7.25 (half of stack)
+                //                                      = 22px from button top
+                //   marginTop    = 10.2 − 22          ≈ −12px
+                //
+                // Box-sizing is border-box globally (see globals.css *
+                // selector), so min-height: 44 is the border-box height
+                // and content box = 44 − 10 − 10 = 24.
+                marginTop: -12,
               }}
               aria-label="Menu"
               aria-expanded={menuOpen}

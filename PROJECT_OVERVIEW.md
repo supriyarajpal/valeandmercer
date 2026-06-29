@@ -429,6 +429,21 @@ Fix in `components/Navbar.tsx` (scoped to the mobile hamburger button only, insi
 
 Both states checked: closed nav (3 stacked lines) and open menu (lines transformed into an X over the dark mobile-menu overlay) both render correctly with the new logic.
 
+### Phase 8 — hamburger ↔ logo vertical alignment (2026-06-30)
+
+Phase 7's `alignSelf: 'center'` centred the hamburger in the row, not on the logo. With the "Est. London" eyebrow visible the row is ~90 px tall and the centred 44 px button parked ~35 px below the logo's text centre. Replaced with a top-anchored layout plus a fixed pixel pull-up.
+
+Changes in `components/Navbar.tsx`, scoped exactly to the two surfaces called out in the brief — the parent row's `alignItems` and the hamburger button's own style block:
+
+- Row `alignItems: 'baseline'` → `'flex-start'`. The logo `<Link>` is always the first child of its flex column, so its top edge is at row top regardless of scroll state.
+- Hamburger button: removed `alignSelf: 'center'`. Added `marginTop: -12`. Derived from the button's own internals (border-box min-height 44, padding `10 0 10 10`, gap 5, 3 × 1.5 px bars centred via `justifyContent: 'center'`): bar-stack centre sits 22 px below the button's top, logo centre sits 10.2 px below row top → button needs −11.8 ≈ −12 px lift.
+- Eyebrow ("Est. London") block left **completely untouched** per the hard constraint — DOM order, position, and all of its `marginTop: 32 / maxHeight: 24 / transform / transition` collapse behaviour identical to before.
+- Hamburger horizontal positioning (`padding-right: 0`, lines flush with `--gutter`) carried over from Phase 7 — not touched in this pass.
+
+Stable in both scroll states because the logo's top edge is invariant: only the eyebrow below it expands/collapses, so anchoring the button to row-top with a fixed −12 px offset puts the bar-stack centre on the logo's text centre whether the eyebrow is showing or not.
+
+Desktop nav (≥ 900 px) is structurally untouched; the parent's switch from `baseline` to `flex-start` shifts the desktop nav links ≈ 1 px upward relative to the logo's baseline, which is below visual perception. If pixel-parity becomes important, add `alignSelf: 'baseline'` to the desktop `motion.div` (line 164).
+
 ### Outstanding items not addressed in this rework
 - Resend `from` address is still the sandbox `onboarding@resend.dev`. Verify the domain in Resend and switch to e.g. `noreply@valeandmercer.co.uk`.
 - Email-body HTML injection risk: both routes still interpolate user input directly. Add HTML-escaping or switch to a templating helper.
