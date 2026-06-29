@@ -45,11 +45,12 @@ export default function Hero() {
   return (
     <section
       ref={ref}
+      className="vm-h-screen-dvh"
       style={{
         position: 'relative',
-        // 100dvh = dynamic viewport height: shrinks when mobile browser
-        // chrome is visible so 100vh doesn't leak below the fold.
-        minHeight: '100dvh',
+        // Min-height is set via `.vm-h-screen-dvh` so we can fall back to
+        // `100vh` on iOS <15.4 / older WebKit where `dvh` is invalid and
+        // the inline style would otherwise drop and leave min-height:auto.
         overflow: 'hidden',
         background: '#28231C',
         display: 'flex',

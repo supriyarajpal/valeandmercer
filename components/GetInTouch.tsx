@@ -1,12 +1,13 @@
 'use client'
 import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
+import { Reveal, Stagger, StaggerItem, useInViewSafe } from '@/components/Reveal'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function GetInTouch() {
   const reduce = useReducedMotion()
+  const { ref: headlineRef, inView: headlineInView } = useInViewSafe<HTMLHeadingElement>(0.3)
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', interest: 'Lettings enquiry', message: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
 
@@ -76,9 +77,9 @@ export default function GetInTouch() {
             {/* Headline arrives LAST — like a welcome sign you see when
                 you pull into a town. Slow, deliberate, large. */}
             <motion.h2
+              ref={headlineRef}
               initial={reduce ? false : { opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
+              animate={reduce ? undefined : headlineInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
               transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
               style={{ color: '#4A4036', marginBottom: 28, fontSize: 'clamp(40px, 6vw, 72px)' }}
             >

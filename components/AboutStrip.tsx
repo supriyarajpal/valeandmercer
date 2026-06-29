@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Reveal } from '@/components/Reveal'
+import { Reveal, useInViewSafe } from '@/components/Reveal'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -61,11 +61,12 @@ export default function AboutStrip() {
 function ArcCard({ title, href, desc, index }: { title: string; href: string; desc: string; index: number }) {
   const reduce = useReducedMotion()
   const direction = index % 2 === 0 ? -1 : 1
+  const { ref, inView } = useInViewSafe<HTMLDivElement>(0.25)
   return (
     <motion.div
+      ref={ref}
       initial={reduce ? false : { opacity: 0, y: 56, rotate: direction * 1.2 }}
-      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
+      animate={reduce ? undefined : inView ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 56, rotate: direction * 1.2 }}
       transition={{ duration: 0.95, delay: 0.08 + index * 0.13, ease: EASE }}
       style={{ willChange: 'transform, opacity' }}
     >

@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Stagger, StaggerItem } from '@/components/Reveal'
+import { Stagger, StaggerItem, useInViewSafe } from '@/components/Reveal'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -43,11 +43,12 @@ const eyebrowRule: React.CSSProperties = {
 
 export default function Footer() {
   const reduce = useReducedMotion()
+  const { ref, inView } = useInViewSafe<HTMLElement>(0.1)
   return (
     <motion.footer
+      ref={ref as never}
       initial={reduce ? false : { opacity: 0, scale: 0.98, y: 24 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
+      animate={reduce ? undefined : inView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.98, y: 24 }}
       transition={{ duration: 1.4, ease: EASE }}
       style={{ background: '#28231C', color: '#EFECE6', transformOrigin: 'center bottom', willChange: 'transform, opacity' }}
     >

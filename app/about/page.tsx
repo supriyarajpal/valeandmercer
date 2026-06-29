@@ -84,7 +84,7 @@ export default function AboutPage() {
             </Reveal>
             <Reveal y={28} delay={0.1} amount={0.25}>
               <p style={{ fontSize: 16, lineHeight: 2.1, color: '#6B6258' }}>
-                Vale &amp; Mercer exists for clients who care not only about the outcome, but about the way the process is handled. We are a team, working closely, keeping clients informed with clarity and discretion, and managing the detail properly in the background.
+                Vale and Mercer exists for clients who care not only about the outcome, but about the way the process is handled. We are a team, working closely, keeping clients informed with clarity and discretion, and managing the detail properly in the background.
               </p>
             </Reveal>
           </div>

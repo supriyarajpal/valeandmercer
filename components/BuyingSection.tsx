@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
-import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
+import { Reveal, Stagger, StaggerItem, useInViewSafe } from '@/components/Reveal'
 import { useIsMobile } from '@/components/useDepthParallax'
 
 const points = [
@@ -103,11 +103,12 @@ export default function BuyingSection() {
 // Slow reveal — like reading a plaque on a wall as you walk toward it
 function SlowReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const reduce = useReducedMotion()
+  const { ref, inView } = useInViewSafe<HTMLDivElement>(0.3)
   return (
     <motion.div
+      ref={ref}
       initial={reduce ? false : { opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
+      animate={reduce ? undefined : inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
       transition={{ duration: 1.1, delay, ease: EASE }}
     >
       {children}

@@ -160,3 +160,14 @@ a { color: inherit; text-decoration: none; }
     scroll-behavior: auto !important;
   }
 }
+
+/* Dynamic-viewport-height with a static-vh fallback for iOS <15.4 and
+   any WebKit that doesn't understand `dvh`. Without the fallback an
+   invalid `min-height: 100dvh` is dropped, leaving the section at
+   min-height:auto (= its content height), which collapses the hero. */
+.vm-h-screen-dvh { min-height: 100vh; }
+.vm-h-90-dvh     { min-height: 90vh; }
+@supports (min-height: 100dvh) {
+  .vm-h-screen-dvh { min-height: 100dvh; }
+  .vm-h-90-dvh     { min-height: 90dvh; }
+}

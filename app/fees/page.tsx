@@ -1,5 +1,12 @@
-﻿import Navbar from '@/components/Navbar'
+﻿import type { Metadata } from 'next'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Services and Fees',
+  description: 'Transparent, no-hidden-charges pricing for lettings and residential sales. Tenant Find, Rent Collection, and Full Management options.',
+  alternates: { canonical: '/fees' },
+}
 
 export default function FeesPage() {
   const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'20px'}
@@ -18,7 +25,7 @@ export default function FeesPage() {
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Transparency</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Services and Fees</h1>
-          <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'8px'}}>Vale and Mercer Ltd — Straightforward, transparent pricing. No hidden charges, no surprises.</p>
+          <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'8px'}}>Vale and Mercer Ltd. Straightforward, transparent pricing. No hidden charges, no surprises.</p>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px',fontStyle:'italic'}}>All fees stated on this page are not subject to VAT. Vale and Mercer Ltd is not currently VAT registered. This page will be updated promptly if our VAT status changes.</p>
 
           <div style={sectionStyle}>
@@ -47,7 +54,7 @@ export default function FeesPage() {
             <h3 style={h3Style}>Tenant Find Only</h3>
             <p style={pStyle}>For landlords who are confident managing their own tenancy once a quality tenant is in place.</p>
             <ul style={{paddingLeft:'20px',marginBottom:'16px'}}>
-              {['Professional property photography and written listing','Advertising on major UK property portals and the Vale and Mercer website','Full tenant marketing and enquiry handling','Accompanied viewings','Full tenant referencing — credit checks, income verification, employment and previous landlord references','Right to Rent compliance checks','Anti-money laundering (AML) and sanctions screening','Tenancy agreement preparation','Collection and registration of the tenancy deposit with an approved deposit protection scheme','Service of all legally required pre-tenancy documents','Key handover'].map(item=>(
+              {['Professional property photography and written listing','Advertising on major UK property portals and the Vale and Mercer website','Full tenant marketing and enquiry handling','Accompanied viewings','Full tenant referencing: credit checks, income verification, employment and previous landlord references','Right to Rent compliance checks','Anti-money laundering (AML) and sanctions screening','Tenancy agreement preparation','Collection and registration of the tenancy deposit with an approved deposit protection scheme','Service of all legally required pre-tenancy documents','Key handover'].map(item=>(
                 <li key={item} style={liStyle}>{item}</li>
               ))}
             </ul>
@@ -64,7 +71,7 @@ export default function FeesPage() {
             <h2 style={h2Style}>Residential Sales</h2>
             <div style={{background:'#28231C',padding:'20px 24px',marginBottom:'16px',display:'inline-block'}}>
               <p style={{fontSize:'13px',color:'rgba(239,236,230,0.6)',marginBottom:'4px'}}>Fee</p>
-              <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'28px',fontWeight:300,color:'#EFECE6'}}>1.5% of the agreed sale price (indicative — please contact us to discuss)</p>
+              <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'28px',fontWeight:300,color:'#EFECE6'}}>1.5% of the agreed sale price (indicative; please contact us to discuss)</p>
               <p style={{fontSize:'11px',color:'rgba(239,236,230,0.4)',marginTop:'4px'}}>Not subject to VAT</p>
             </div>
             <p style={pStyle}>Vale and Mercer Ltd accepts residential sales instructions on a selective basis. Please contact us to discuss your requirements.</p>

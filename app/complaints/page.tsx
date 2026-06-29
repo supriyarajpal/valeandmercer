@@ -1,6 +1,13 @@
-﻿import Navbar from '@/components/Navbar'
+﻿import type { Metadata } from 'next'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Complaints Policy',
+  description: 'How to raise a complaint with Vale and Mercer, our internal process, and your right to refer to the Property Redress Scheme.',
+  alternates: { canonical: '/complaints' },
+}
 
 export default function ComplaintsPage() {
   const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'16px'}
@@ -18,20 +25,20 @@ export default function ComplaintsPage() {
 
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Complaints Policy</h1>
-          <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'8px'}}>Vale and Mercer Ltd — Residential Lettings Agency</p>
+          <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'8px'}}>Vale and Mercer Ltd, Residential Lettings Agency</p>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>Last Updated: June 2026 | Company No: 17212434</p>
 
           <div style={{background:'#28231C',padding:'24px 28px',marginBottom:'40px',display:'flex',alignItems:'center',gap:'20px',flexWrap:'wrap'}}>
             <div>
               <p style={{fontSize:'10px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#A0845C',marginBottom:'6px'}}>Redress Membership</p>
-              <p style={{fontSize:'14px',color:'#EFECE6',lineHeight:1.6}}>Vale and Mercer Ltd is a member of the <strong style={{color:'#EFECE6'}}>Property Redress Scheme</strong> — a government-approved, independent redress scheme.</p>
+              <p style={{fontSize:'14px',color:'#EFECE6',lineHeight:1.6}}>Vale and Mercer Ltd is a member of the <strong style={{color:'#EFECE6'}}>Property Redress Scheme</strong>, a government-approved, independent redress scheme.</p>
               <p style={{fontSize:'12px',color:'rgba(239,236,230,0.5)',marginTop:'6px'}}>Membership No: PRS058796</p>
             </div>
           </div>
 
           <div style={{marginBottom:'32px',paddingBottom:'32px',borderBottom:'0.5px solid #DDD7CC'}}>
             <h2 style={{...h2Style,paddingTop:'0'}}>Our Commitment</h2>
-            <p style={pStyle}>At Vale and Mercer Ltd, we are committed to providing a professional, responsive, and transparent service to all our clients — whether you are a landlord or a tenant. If at any point we fall short of that standard, we want to hear from you so we can put it right.</p>
+            <p style={pStyle}>At Vale and Mercer Ltd, we are committed to providing a professional, responsive, and transparent service to all our clients, whether you are a landlord or a tenant. If at any point we fall short of that standard, we want to hear from you so we can put it right.</p>
           </div>
 
           <div style={{marginBottom:'32px',paddingBottom:'32px',borderBottom:'0.5px solid #DDD7CC'}}>
@@ -63,8 +70,8 @@ export default function ComplaintsPage() {
           <div style={{marginBottom:'32px',paddingBottom:'32px',borderBottom:'0.5px solid #DDD7CC'}}>
             <h2 style={{...h2Style,paddingTop:'0'}}>What Happens Next</h2>
             {[
-              {step:'Step 1 — Acknowledgement',desc:'We will acknowledge your complaint in writing within 3 working days of receiving it. You will be given a unique complaint reference number to use in all future correspondence.'},
-              {step:'Step 2 — Investigation',desc:'A Director-level member of staff will be assigned to investigate your complaint. We will review all relevant correspondence, records, and documents, and speak to any team members involved where appropriate.'},
+              {step:'Step 1: Acknowledgement',desc:'We will acknowledge your complaint in writing within 3 working days of receiving it. You will be given a unique complaint reference number to use in all future correspondence.'},
+              {step:'Step 2: Investigation',desc:'A Director-level member of staff will be assigned to investigate your complaint. We will review all relevant correspondence, records, and documents, and speak to any team members involved where appropriate.'},
             ].map((s)=>(
               <div key={s.step} style={{marginBottom:'16px',padding:'18px 20px',background:'#DDD7CC',borderLeft:'3px solid #A0845C'}}>
                 <p style={{fontSize:'13px',fontWeight:500,color:'#4A4036',marginBottom:'6px'}}>{s.step}</p>
@@ -72,10 +79,10 @@ export default function ComplaintsPage() {
               </div>
             ))}
             <div style={{marginBottom:'16px',padding:'18px 20px',background:'#DDD7CC',borderLeft:'3px solid #A0845C'}}>
-              <p style={{fontSize:'13px',fontWeight:500,color:'#4A4036',marginBottom:'8px'}}>Step 3 — Full Written Response</p>
+              <p style={{fontSize:'13px',fontWeight:500,color:'#4A4036',marginBottom:'8px'}}>Step 3: Full Written Response</p>
               <p style={{fontSize:'13px',color:'#6B6258',lineHeight:1.8,marginBottom:'8px'}}>We will provide you with our full written response within <strong>15 working days</strong> of our acknowledgement. Our response will:</p>
               <ul style={{paddingLeft:'18px',margin:0}}>
-                {['Address each point you have raised individually','Set out our findings clearly and transparently','State whether your complaint is upheld, partially upheld, or not upheld — with full reasoning','Offer a resolution or explanation where applicable'].map(item=>(
+                {['Address each point you have raised individually','Set out our findings clearly and transparently','State whether your complaint is upheld, partially upheld, or not upheld, with full reasoning','Offer a resolution or explanation where applicable'].map(item=>(
                   <li key={item} style={{fontSize:'13px',color:'#6B6258',lineHeight:1.8,marginBottom:'2px'}}>{item}</li>
                 ))}
               </ul>
@@ -85,7 +92,7 @@ export default function ComplaintsPage() {
 
           <div style={{marginBottom:'32px',paddingBottom:'32px',borderBottom:'0.5px solid #DDD7CC'}}>
             <h2 style={{...h2Style,paddingTop:'0'}}>If You Remain Dissatisfied</h2>
-            <p style={pStyle}>If you are not satisfied with our final response, or if 8 weeks have passed since you made your complaint without receiving a final response, you have the right to refer your complaint to the <strong>Property Redress Scheme (PRS)</strong> — a government-approved, independent redress scheme. This service is <strong>free of charge</strong> to consumers.</p>
+            <p style={pStyle}>If you are not satisfied with our final response, or if 8 weeks have passed since you made your complaint without receiving a final response, you have the right to refer your complaint to the <strong>Property Redress Scheme (PRS)</strong>, a government-approved, independent redress scheme. This service is <strong>free of charge</strong> to consumers.</p>
             <p style={pStyle}><strong>Please note:</strong> Referrals to the PRS must be made within <strong>12 months</strong> of your last communication with us regarding the complaint.</p>
             <div style={{overflowX:'auto',marginBottom:'16px'}}>
               <table style={tableStyle}>

@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PageHero, { HeroLine, HeroSubtext } from '@/components/PageHero'
 import ArrowButton from '@/components/ArrowButton'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
+
+export const metadata: Metadata = {
+  title: 'Lettings',
+  description: 'Let your London property to tenants who treat it like home. Proper referencing, honest pricing, full management options from Vale and Mercer.',
+  alternates: { canonical: '/let' },
+}
 
 const services = [
   { title: 'Tenant sourcing', body: 'We advertise your property to qualified tenants and conduct thorough referencing. You only meet people who have already been vetted.' },

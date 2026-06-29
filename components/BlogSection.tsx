@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Reveal } from '@/components/Reveal'
+import { Reveal, useInViewSafe } from '@/components/Reveal'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -62,12 +62,13 @@ export default function BlogSection() {
 function BlogCard({ post, index }: { post: typeof posts[number]; index: number }) {
   const reduce = useReducedMotion()
   const direction = index % 2 === 0 ? -1 : 1
+  const { ref, inView } = useInViewSafe<HTMLElement>(0.2)
 
   return (
     <motion.article
+      ref={ref as never}
       initial={reduce ? false : { opacity: 0, y: 60, rotate: direction * 1.4 }}
-      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
+      animate={reduce ? undefined : inView ? { opacity: 1, y: 0, rotate: 0 } : { opacity: 0, y: 60, rotate: direction * 1.4 }}
       transition={{ duration: 0.95, delay: 0.1 + index * 0.13, ease: EASE }}
       style={{ willChange: 'transform, opacity' }}
     >

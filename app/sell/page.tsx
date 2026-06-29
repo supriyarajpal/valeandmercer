@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PageHero, { HeroLine, HeroSubtext } from '@/components/PageHero'
 import ArrowButton from '@/components/ArrowButton'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
+
+export const metadata: Metadata = {
+  title: 'Selling',
+  description: 'Sell your London home for what it is truly worth. Honest pricing, professional presentation, and careful negotiation from Vale and Mercer.',
+  alternates: { canonical: '/sell' },
+}
 
 const steps = [
   { step: '01', title: 'Free valuation', body: 'We visit your property, assess the market, and give you a realistic price based on what the market is doing right now.' },

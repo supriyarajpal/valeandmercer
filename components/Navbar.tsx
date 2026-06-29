@@ -53,16 +53,30 @@ export default function Navbar() {
 
   useEffect(() => setMenuOpen(false), [pathname])
 
-  const isLight = !scrolled && !isDarkHero
+  // Single source of truth: "is the visible backdrop behind the navbar
+  // currently dark?" Drives logo/link/hamburger/border colour.
+  //
+  // - When `scrolled` the navbar paints its own cream tint (navBg below)
+  //   and provides contrast itself, so the backdrop is effectively cream
+  //   from the wordmark's point of view — text must be dark.
+  // - When NOT scrolled the navbar is transparent, so we see whatever is
+  //   behind it: the dark hero on dark-hero pages, the dark mobile-menu
+  //   overlay if the menu is open, or the light page top otherwise.
+  //
+  // This replaces the old per-page `darkHeroPages`-after-scroll logic
+  // that left the wordmark light on cream sections after scroll.
+  const isOverDark = !scrolled && (menuOpen || isDarkHero)
+
   // Lighter blur radius on mobile — backdrop-filter is GPU-expensive on
   // integrated/mobile graphics. Slightly bumped bg opacity compensates.
   const navBlur = scrolled ? (mobile ? 'blur(10px)' : 'blur(20px) saturate(160%)') : 'none'
-  const logoColor = scrolled ? 'rgba(239,236,230,0.95)' : isDarkHero ? 'rgba(239,236,230,0.9)' : 'rgba(40,35,28,0.85)'
-  const linkColor = scrolled ? 'rgba(239,236,230,0.82)' : isDarkHero ? 'rgba(239,236,230,0.78)' : 'rgba(40,35,28,0.7)'
-  const btnBorder = isLight ? '1px solid rgba(40,35,28,0.25)' : '1px solid rgba(239,236,230,0.35)'
-  const hamburgerColor = isLight ? 'rgba(40,35,28,0.75)' : 'rgba(239,236,230,0.9)'
-  const navBg = 'transparent'
-  const navShadow = 'none'
+  const navBg = scrolled ? 'rgba(239,236,230,0.85)' : 'transparent'
+  const navShadow = scrolled ? '0 1px 0 rgba(40,35,28,0.06)' : 'none'
+
+  const logoColor       = isOverDark ? 'rgba(239,236,230,0.95)' : 'rgba(40,35,28,0.92)'
+  const linkColor       = isOverDark ? 'rgba(239,236,230,0.82)' : 'rgba(40,35,28,0.72)'
+  const hamburgerColor  = isOverDark ? 'rgba(239,236,230,0.9)'  : 'rgba(40,35,28,0.85)'
+  const btnBorder       = isOverDark ? '1px solid rgba(239,236,230,0.35)' : '1px solid rgba(40,35,28,0.25)'
 
   const enterDelay = reduce ? 0 : firstLoad ? 0.9 : 0.05
   const container: Variants = {
@@ -122,7 +136,23 @@ export default function Navbar() {
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: enterDelay, ease: 'easeOut' }}
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 10, display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0, minWidth: 44, minHeight: 44, alignItems: 'flex-end', justifyContent: 'center' }}
+              style={{
+                background: 'transparent', border: 'none', cursor: 'pointer',
+                // Vertical padding builds the 44px touch target; horizontal
+                // padding-right is 0 so the 24px-wide lines sit flush with
+                // the row's right edge (= --gutter from the viewport edge,
+                // matching the logo's left inset).
+                padding: '10px 0 10px 10px',
+                display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0,
+                minWidth: 44, minHeight: 44,
+                alignItems: 'flex-end', justifyContent: 'center',
+                // Parent row uses `alignItems: 'baseline'`. A button with
+                // no inline text has no real baseline, so the browser
+                // synthesised one from the bottom edge of the box and
+                // shoved the hamburger up out of the visible nav. Center
+                // it explicitly to override that.
+                alignSelf: 'center',
+              }}
               aria-label="Menu"
               aria-expanded={menuOpen}
             >

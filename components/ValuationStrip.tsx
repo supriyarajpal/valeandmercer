@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Reveal } from '@/components/Reveal'
+import { Reveal, useInViewSafe } from '@/components/Reveal'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -25,12 +25,12 @@ const KEN_BURNS_CSS = `
 export default function ValuationStrip() {
   return (
     <section
+      className="vm-h-90-dvh"
       style={{
         background: 'transparent',
         padding: 'var(--section-y) var(--gutter)',
         position: 'relative',
         overflow: 'hidden',
-        minHeight: '90dvh',
         display: 'flex',
         alignItems: 'center',
       }}
@@ -103,6 +103,7 @@ export default function ValuationStrip() {
 // places, not as a single stamped row.
 function DriftWord({ text, delay, fromX, italic, gold }: { text: string; delay: number; fromX: number; italic?: boolean; gold?: boolean }) {
   const reduce = useReducedMotion()
+  const { ref, inView } = useInViewSafe<HTMLSpanElement>(0.3)
   return (
     <span
       style={{
@@ -114,9 +115,9 @@ function DriftWord({ text, delay, fromX, italic, gold }: { text: string; delay: 
       }}
     >
       <motion.span
+        ref={ref}
         initial={reduce ? false : { opacity: 0, x: fromX, y: 12 }}
-        whileInView={{ opacity: 1, x: 0, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        animate={reduce ? undefined : inView ? { opacity: 1, x: 0, y: 0 } : { opacity: 0, x: fromX, y: 12 }}
         transition={{ duration: 1.25, delay, ease: EASE }}
         style={{
           display: 'inline-block',
