@@ -161,6 +161,14 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
+/* Scrolled navbar background is owned inline by <motion.nav> in
+   components/Navbar.tsx (Phase 15: dark charcoal glass, blur+saturate).
+   The `.vm-nav-scrolled` class from Phases 7→14 has been retired —
+   its light-cream fill would visibly clash with the dark bar. If a
+   future maintainer sees this comment and finds `.vm-nav-scrolled`
+   referenced anywhere: it doesn't exist any more. See PROJECT_OVERVIEW
+   Section 10, Phase 15 for the reasoning. */
+
 /* Dynamic-viewport-height with a static-vh fallback for iOS <15.4 and
    any WebKit that doesn't understand `dvh`. Without the fallback an
    invalid `min-height: 100dvh` is dropped, leaving the section at

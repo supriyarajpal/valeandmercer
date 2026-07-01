@@ -67,16 +67,45 @@ export default function Navbar() {
   // that left the wordmark light on cream sections after scroll.
   const isOverDark = !scrolled && (menuOpen || isDarkHero)
 
-  // Lighter blur radius on mobile — backdrop-filter is GPU-expensive on
-  // integrated/mobile graphics. Slightly bumped bg opacity compensates.
-  const navBlur = scrolled ? (mobile ? 'blur(10px)' : 'blur(20px) saturate(160%)') : 'none'
-  const navBg = scrolled ? 'rgba(239,236,230,0.85)' : 'transparent'
+  // Phase 15: scrolled navbar = dark charcoal translucent glass.
+  //   background:                rgba(40,35,28,0.55)
+  //   backdrop-filter:           blur(20px) saturate(160%)
+  //   -webkit-backdrop-filter:   blur(20px) saturate(160%)
+  //
+  // Set inline on <motion.nav> below (owned here, not in globals.css).
+  // The dark tint reads correctly over both light sections and the dark
+  // hero — the backdrop is dark in both cases from the wordmark's point
+  // of view, so text stays LIGHT in the scrolled state regardless of
+  // which section is behind the bar.
+  //
+  // Blur render requirement: no ancestor of <motion.nav> may hold a
+  // lingering `transform`, `filter`, `will-change`, `perspective`, or
+  // `contain` at rest — those disable backdrop-filter on descendants
+  // per spec. Phase 13 removed the ancestor `animate={{ y: 0 }}` in
+  // MotionProvider that was breaking this. See the block comment above
+  // that wrapper for the do-not-reintroduce warning.
+  //
+  // Text-colour pairing has THREE branches, not two, because the
+  // "scrolled" state and the "top-of-page over dark hero" state both
+  // need LIGHT text but with SLIGHTLY DIFFERENT alpha values (the
+  // Phase 15 target reads better over the blurred charcoal than the
+  // Phase 7 values did over the raw dark hero photograph). Do NOT
+  // collapse this back to a single boolean unless you also unify the
+  // values — top-of-page behaviour must remain byte-identical.
   const navShadow = scrolled ? '0 1px 0 rgba(40,35,28,0.06)' : 'none'
 
-  const logoColor       = isOverDark ? 'rgba(239,236,230,0.95)' : 'rgba(40,35,28,0.92)'
-  const linkColor       = isOverDark ? 'rgba(239,236,230,0.82)' : 'rgba(40,35,28,0.72)'
-  const hamburgerColor  = isOverDark ? 'rgba(239,236,230,0.9)'  : 'rgba(40,35,28,0.85)'
-  const btnBorder       = isOverDark ? '1px solid rgba(239,236,230,0.35)' : '1px solid rgba(40,35,28,0.25)'
+  const logoColor       = scrolled
+    ? 'rgba(239,236,230,0.9)'
+    : isOverDark ? 'rgba(239,236,230,0.95)' : 'rgba(40,35,28,0.92)'
+  const linkColor       = scrolled
+    ? 'rgba(239,236,230,0.8)'
+    : isOverDark ? 'rgba(239,236,230,0.82)' : 'rgba(40,35,28,0.72)'
+  const hamburgerColor  = scrolled
+    ? 'rgba(239,236,230,0.85)'
+    : isOverDark ? 'rgba(239,236,230,0.9)'  : 'rgba(40,35,28,0.85)'
+  const btnBorder       = scrolled
+    ? '1px solid rgba(239,236,230,0.3)'
+    : isOverDark ? '1px solid rgba(239,236,230,0.35)' : '1px solid rgba(40,35,28,0.25)'
 
   const enterDelay = reduce ? 0 : firstLoad ? 0.9 : 0.05
   const container: Variants = {
@@ -96,39 +125,40 @@ export default function Navbar() {
         transition={{ duration: 0.6, delay: reduce ? 0 : firstLoad ? 0.85 : 0, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-          background: navBg,
-          backdropFilter: navBlur,
-          WebkitBackdropFilter: navBlur,
+          background: scrolled ? 'rgba(40,35,28,0.55)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
           boxShadow: navShadow,
           transition: 'background 0.5s var(--ease-out-soft), box-shadow 0.5s var(--ease-out-soft), backdrop-filter 0.5s',
         }}
       >
         <div style={{ padding: '18px var(--gutter)' }}>
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', maxWidth: 1280, margin: '0 auto' }}>
-          <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 14 }}>
-            <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 17, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
-              Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
-            </Link>
-            <div
-              aria-hidden={hideEyebrow}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 14,
-                marginLeft: 0,
-                marginTop: hideEyebrow ? 0 : 32,
-                opacity: hideEyebrow ? 0 : 1,
-                maxHeight: hideEyebrow ? 0 : 24,
-                transform: hideEyebrow ? 'translateY(-6px)' : 'translateY(0)',
-                pointerEvents: hideEyebrow ? 'none' : 'auto',
-                overflow: 'hidden',
-                transition: 'opacity 0.3s var(--ease-out-soft), max-height 0.3s var(--ease-out-soft), transform 0.3s var(--ease-out-soft), margin-top 0.3s var(--ease-out-soft)',
-              }}
-            >
-              <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
-              <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
-            </div>
-          </motion.div>
+        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          {/*
+            MAIN ROW — fixed-height (44px) flex with alignItems:'center'.
+            Logo Link + right cluster/hamburger both centre on the row's
+            cross-axis, so they sit on one shared horizontal line with
+            equal space above and below the line. The 44px is the iOS
+            touch-target standard and comfortably fits the Book Valuation
+            pill (≈ 38.7px tall) with ~2.6px breathing room top/bottom.
+
+            CRITICAL: the Est. London eyebrow used to live inside the logo
+            as a flex-column sibling, which made the column ~90px tall
+            (logo 20.4 + gap 14 + marginTop 32 + eyebrow 24) and forced
+            the cluster to either anchor to row-top (the recent "sits too
+            high" complaint) or get pushed ~35px below the logo if the
+            row was centred. To get genuine cluster centring in BOTH
+            scroll states, the eyebrow block has been lifted out to a
+            sibling row below this one (see the EYEBROW ROW comment
+            further down). Its content, collapse animation, and visible
+            position are all preserved — only its parent changes.
+          */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 }}>
+            <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }} style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <Link href="/" style={{ fontFamily: 'var(--font-serif)', fontSize: 17, fontWeight: 300, letterSpacing: '0.22em', textTransform: 'uppercase', color: logoColor, lineHeight: 1.2, transition: 'color 0.5s var(--ease-out-soft)' }}>
+                Vale <span style={{ color: '#A0845C' }}>&</span> Mercer
+              </Link>
+            </motion.div>
 
           {mobile ? (
             <motion.button
@@ -146,28 +176,13 @@ export default function Navbar() {
                 display: 'flex', flexDirection: 'column', gap: 5, flexShrink: 0,
                 minWidth: 44, minHeight: 44,
                 alignItems: 'flex-end', justifyContent: 'center',
-                // Parent row uses `alignItems: 'flex-start'`, so both the
-                // logo column and this button anchor to the row's top
-                // edge — a position that is stable across scroll states
-                // because the logo Link is the first child of its column
-                // and the Est. London eyebrow only ever adds height
-                // BELOW the logo, never above.
-                //
-                // Pull the button up so the 14.5px bar stack's vertical
-                // centre lands on the logo's vertical centre:
-                //
-                //   logo centre  = (17 × 1.2) / 2     ≈ 10.2px from row top
-                //   bar centre   = 10 (pad-top)
-                //                + (24 − 14.5) / 2     = 4.75 (stack offset
-                //                                              in content box)
-                //                + 14.5 / 2            = 7.25 (half of stack)
-                //                                      = 22px from button top
-                //   marginTop    = 10.2 − 22          ≈ −12px
-                //
-                // Box-sizing is border-box globally (see globals.css *
-                // selector), so min-height: 44 is the border-box height
-                // and content box = 44 − 10 − 10 = 24.
-                marginTop: -12,
+                // Parent main row is now alignItems:'center' with minHeight 44.
+                // The button is exactly 44 tall (border-box) and the bar stack
+                // is centred inside the button's content box via
+                // justifyContent:'center', so the bar stack's vertical centre
+                // sits on the row's vertical centre — same axis the logo Link
+                // (also alignItems:'center') is centred on. No marginTop hack
+                // needed; the older Phase 8 −12px pull-up has been removed.
               }}
               aria-label="Menu"
               aria-expanded={menuOpen}
@@ -177,7 +192,16 @@ export default function Navbar() {
               <span style={{ display: 'block', width: 24, height: 1.5, background: hamburgerColor, transition: 'transform 0.4s, background 0.4s', transform: menuOpen ? 'rotate(-45deg) translate(4px,-5px)' : 'none' }} />
             </motion.button>
           ) : (
-            <motion.div variants={container} initial="hidden" animate="show" style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+            <motion.div variants={container} initial="hidden" animate="show" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 28,
+              // Main row is alignItems:'center' with minHeight 44, so this
+              // cluster (≈ 38.7px tall, dominated by the Book Valuation pill)
+              // and the logo Link (≈ 20.4px tall) both centre on the row's
+              // cross-axis automatically. Earlier marginTop:-9 lift removed
+              // — no longer needed now that the eyebrow is a sibling row.
+            }}>
               {links.map(link => (
                 <motion.div key={link.href} variants={item}>
                   <Link href={link.href} className="link-underline" style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>
@@ -192,6 +216,40 @@ export default function Navbar() {
               </motion.div>
             </motion.div>
           )}
+          </div>
+          {/*
+            EYEBROW ROW — was previously the 2nd child of the logo column;
+            lifted out so it doesn't drag on the main row's centring. Block
+            content (gold bar + "Est. London" text) and collapse animation
+            are byte-for-byte preserved; only the parent changed and the
+            marginTop dropped from 32 to 22 to absorb the column gap (14)
+            that no longer exists. Visible position from viewport top:
+              old = 18 (nav pad) + 20.4 (logo) + 14 (col gap) + 32 = 84.4
+              new = 18 (nav pad) + 44 (main row) + 22 (eyebrow mt) = 84
+            Off by 0.4px — within imperceptible. Left edge stays at
+            var(--gutter) because both rows share the same padded wrapper.
+          */}
+          <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }}>
+            <div
+              aria-hidden={hideEyebrow}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 14,
+                marginLeft: 0,
+                marginTop: hideEyebrow ? 0 : 22,
+                opacity: hideEyebrow ? 0 : 1,
+                maxHeight: hideEyebrow ? 0 : 24,
+                transform: hideEyebrow ? 'translateY(-6px)' : 'translateY(0)',
+                pointerEvents: hideEyebrow ? 'none' : 'auto',
+                overflow: 'hidden',
+                transition: 'opacity 0.3s var(--ease-out-soft), max-height 0.3s var(--ease-out-soft), transform 0.3s var(--ease-out-soft), margin-top 0.3s var(--ease-out-soft)',
+              }}
+            >
+              <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
+              <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
+            </div>
+          </motion.div>
         </div>
         </div>
       </motion.nav>
