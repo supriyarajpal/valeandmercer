@@ -5,6 +5,7 @@ Audit + change log for `/Users/devasyesachdeva12/Downloads/vale-and-mercer-sourc
 > **Update history**
 > - **Original audit** — read-only deep-dive of the codebase as it stood.
 > - **2026-06-29 rework** — fixed iPad Safari/render-blank issues, repointed form emails, fixed register-form bug, gated `/admin` behind a build flag, removed em-dashes from visitor copy, fixed UK-English typos, and shipped a full SEO layer (per-page metadata, sitemap, robots, OG/Twitter, JSON-LD). See section 10 for the change log.
+> - **2026-07-02** — Vercel Web Analytics wired in. `@vercel/analytics` added to `package.json`; `<Analytics />` mounted in `app/layout.tsx` inside `<body>` as a sibling of `<MotionProvider>` (not nested, so it isn't affected by page-transition wrappers). Data only surfaces once deployed to production on Vercel and receiving real traffic.
 
 ---
 
