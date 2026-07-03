@@ -5,10 +5,21 @@ import PageHero, { HeroLine, HeroSubtext } from '@/components/PageHero'
 import ArrowButton from '@/components/ArrowButton'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 
+const SITE_URL = 'https://valeandmercer.co.uk'
+
 export const metadata: Metadata = {
-  title: 'Selling',
-  description: 'Sell your London home for what it is truly worth. Honest pricing, professional presentation, and careful negotiation from Vale and Mercer.',
+  title: 'Sell Your London Home',
+  description: 'Sell your London property with Vale and Mercer. Honest pricing, professional presentation and careful negotiation from an independent London agency.',
   alternates: { canonical: '/sell' },
+}
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Sell Your London Home', item: SITE_URL + '/sell' },
+  ],
 }
 
 const steps = [
@@ -21,6 +32,11 @@ const steps = [
 export default function SellPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main>
         <PageHero

@@ -8,8 +8,9 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function ValuationsPage() {
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '', postcode: '', propertyType: 'Flat', bedrooms: '2', reason: 'Looking to sell' })
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '', postcode: '', propertyType: 'Flat', bedrooms: '2', reason: 'Looking to sell', consent: false })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [consentError, setConsentError] = useState(false)
 
   const heroRef = useRef<HTMLElement>(null)
   const reduce = useReducedMotion()
@@ -18,6 +19,11 @@ export default function ValuationsPage() {
   const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.12])
 
   const handleSubmit = async () => {
+    if (!form.consent) {
+      setConsentError(true)
+      return
+    }
+    setConsentError(false)
     setStatus('sending')
     try {
       const res = await fetch('/api/valuation', {
@@ -148,7 +154,7 @@ export default function ValuationsPage() {
                 </Reveal>
 
                 <Reveal y={28} amount={0.2}>
-                  <div style={{ marginBottom: 64 }}>
+                  <div style={{ marginBottom: 28 }}>
                     <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 24 }}>Property Details</p>
                     <Stagger as="div" stagger={0.06} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 32 }}>
                       <StaggerItem>
@@ -198,8 +204,18 @@ export default function ValuationsPage() {
                 </Reveal>
 
                 <Reveal y={20} amount={0.2}>
-                  <div style={{ borderTop: '0.5px solid #DDD7CC', paddingTop: 36 }}>
+                  <div style={{ borderTop: '0.5px solid #DDD7CC', paddingTop: 22 }}>
                     {status === 'error' && <p style={{ fontSize: 12, color: '#c0392b', marginBottom: 18 }}>Something went wrong. Please try again or call us directly.</p>}
+                    <div style={{ marginBottom: 22 }}>
+                      <ConsentCheckbox
+                        checked={form.consent}
+                        onChange={next => {
+                          setForm({ ...form, consent: next })
+                          if (next) setConsentError(false)
+                        }}
+                        error={consentError}
+                      />
+                    </div>
                     <SubmitBtn status={status} onClick={handleSubmit} />
                     <p style={{ fontSize: 11, color: '#9A9188', marginTop: 14, lineHeight: 1.8 }}>No obligation. We will contact you within 24 hours to confirm your appointment.</p>
                   </div>
@@ -232,6 +248,39 @@ function HeroLine({ text, delay, italic, gold }: { text: string; delay: number; 
         {text}
       </motion.span>
     </span>
+  )
+}
+
+function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onChange: (v: boolean) => void; error: boolean }) {
+  return (
+    <div>
+      <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', cursor: 'pointer' }}>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={e => onChange(e.target.checked)}
+          aria-invalid={error}
+          aria-describedby={error ? 'consent-error-valuation' : undefined}
+          style={{
+            marginTop: 3,
+            width: 16,
+            height: 16,
+            accentColor: '#A0845C',
+            flexShrink: 0,
+            cursor: 'pointer',
+          }}
+        />
+        <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
+          I consent to Vale &amp; Mercer collecting and processing my information to arrange my valuation and respond to my enquiry. I understand my details may also be used to send me relevant property updates and marketing communications, and I can unsubscribe at any time. See our{' '}
+          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a> for full details.
+        </span>
+      </label>
+      {error && (
+        <p id="consent-error-valuation" role="alert" style={{ fontSize: 12, color: '#c0392b', marginTop: 8, marginLeft: 28 }}>
+          Please tick the box to consent before submitting.
+        </p>
+      )}
+    </div>
   )
 }
 

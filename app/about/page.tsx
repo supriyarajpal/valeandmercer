@@ -38,7 +38,7 @@ export default function AboutPage() {
           <motion.div style={{ position: 'absolute', inset: '-5%', y: reduce ? 0 : bgY, scale: reduce ? 1 : bgScale }}>
             <img
               src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=2000&q=85"
-              alt="London"
+              alt="London townhouse street"
               loading="eager"
               fetchPriority="high"
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}

@@ -3,16 +3,44 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ArticleLayout from '@/components/ArticleLayout'
 
+const SITE_URL = 'https://valeandmercer.co.uk'
+const SLUG = '/blog/london-property-market-2025'
+const IMAGE = 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1400&q=85'
+const DATE_PUBLISHED = '2025-05-01'
+
 export const metadata: Metadata = {
-  title: 'The London property market in 2025',
-  description: 'Supply is up, rates have settled a little, and buyers are moving again. Here is what we are seeing across prime London.',
-  alternates: { canonical: '/blog/london-property-market-2025' },
+  title: 'The London Property Market in 2025',
+  description: 'Vale and Mercer on the London property market in 2025 — supply is up, rates have settled, and buyers are moving again across prime London.',
+  alternates: { canonical: SLUG },
   openGraph: {
     type: 'article',
-    title: 'The London property market in 2025 | Vale and Mercer',
-    description: 'Supply is up, rates have settled a little, and buyers are moving again. Here is what we are seeing across prime London.',
-    url: '/blog/london-property-market-2025',
+    title: 'The London Property Market in 2025 | Vale and Mercer',
+    description: 'Vale and Mercer on the London property market in 2025 — supply is up, rates have settled, and buyers are moving again across prime London.',
+    url: SLUG,
+    images: [IMAGE],
   },
+}
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  mainEntityOfPage: { '@type': 'WebPage', '@id': SITE_URL + SLUG },
+  headline: 'The London Property Market in 2025',
+  description: 'Vale and Mercer on the London property market in 2025 — supply is up, rates have settled, and buyers are moving again across prime London.',
+  image: IMAGE,
+  datePublished: DATE_PUBLISHED,
+  author: { '@type': 'Organization', name: 'Vale and Mercer', url: SITE_URL },
+  publisher: { '@id': SITE_URL + '/#organization' },
+}
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+    { '@type': 'ListItem', position: 2, name: 'London Property Journal', item: SITE_URL + '/blog' },
+    { '@type': 'ListItem', position: 3, name: 'The London Property Market in 2025', item: SITE_URL + SLUG },
+  ],
 }
 
 const sections = [
@@ -25,13 +53,23 @@ const sections = [
 export default function BlogPost1() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <ArticleLayout
         category="Market Insight"
         title="The London property market in 2025"
         meta="May 2025  ·  4 min read"
         image="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1400&q=85"
-        imageAlt="London"
+        imageAlt="London skyline from the South Bank"
         sections={sections}
         signoff="Written by the Vale and Mercer team  ·  May 2025"
       />

@@ -118,7 +118,7 @@ function StorefrontCard({ item, index, total }: StorefrontProps) {
       >
         <img
           src={item.image}
-          alt={item.area}
+          alt={item.area + ' property listing'}
           loading="lazy"
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
         />

@@ -2,10 +2,21 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
+const SITE_URL = 'https://valeandmercer.co.uk'
+
 export const metadata: Metadata = {
-  title: 'Services and Fees',
-  description: 'Transparent, no-hidden-charges pricing for lettings and residential sales. Tenant Find, Rent Collection, and Full Management options.',
+  title: 'Lettings and Sales Fees',
+  description: 'Transparent Vale and Mercer fees for London lettings and residential sales — Tenant Find, Rent Collection and Full Management options with no hidden charges.',
   alternates: { canonical: '/fees' },
+}
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Lettings and Sales Fees', item: SITE_URL + '/fees' },
+  ],
 }
 
 export default function FeesPage() {
@@ -20,6 +31,11 @@ export default function FeesPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>

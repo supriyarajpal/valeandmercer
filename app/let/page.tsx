@@ -5,10 +5,21 @@ import PageHero, { HeroLine, HeroSubtext } from '@/components/PageHero'
 import ArrowButton from '@/components/ArrowButton'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 
+const SITE_URL = 'https://valeandmercer.co.uk'
+
 export const metadata: Metadata = {
-  title: 'Lettings',
-  description: 'Let your London property to tenants who treat it like home. Proper referencing, honest pricing, full management options from Vale and Mercer.',
+  title: 'London Lettings',
+  description: 'London residential lettings from Vale and Mercer. Let your London property to well-referenced tenants — honest rental pricing and full management options.',
   alternates: { canonical: '/let' },
+}
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+    { '@type': 'ListItem', position: 2, name: 'London Lettings', item: SITE_URL + '/let' },
+  ],
 }
 
 const services = [
@@ -21,6 +32,11 @@ const services = [
 export default function LetPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main>
         <PageHero

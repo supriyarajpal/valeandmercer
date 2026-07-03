@@ -77,7 +77,7 @@ export default function Hero() {
             https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=2000&q=85 2000w
           "
           sizes="100vw"
-          alt="London"
+          alt="Prime London residential streetscape at dusk"
           loading="eager"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
         />

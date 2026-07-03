@@ -3,16 +3,46 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ArticleLayout from '@/components/ArticleLayout'
 
+const SITE_URL = 'https://valeandmercer.co.uk'
+const SLUG = '/blog/student-lettings-london-guide'
+const IMAGE = 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=85'
+const DATE_PUBLISHED = '2025-03-01'
+const TITLE = 'Student Lettings in London: The Practical Guide'
+const DESC = 'A Vale and Mercer guide to student lettings in London — what nobody tells you before you start renting, from tenancy contracts to deposits and guarantors.'
+
 export const metadata: Metadata = {
-  title: 'Renting in London as a student',
-  description: 'What nobody tells you before you start. A straight guide to renting in London as a student.',
-  alternates: { canonical: '/blog/student-lettings-london-guide' },
+  title: TITLE,
+  description: DESC,
+  alternates: { canonical: SLUG },
   openGraph: {
     type: 'article',
-    title: 'Renting in London as a student | Vale and Mercer',
-    description: 'What nobody tells you before you start. A straight guide to renting in London as a student.',
-    url: '/blog/student-lettings-london-guide',
+    title: TITLE + ' | Vale and Mercer',
+    description: DESC,
+    url: SLUG,
+    images: [IMAGE],
   },
+}
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  mainEntityOfPage: { '@type': 'WebPage', '@id': SITE_URL + SLUG },
+  headline: TITLE,
+  description: DESC,
+  image: IMAGE,
+  datePublished: DATE_PUBLISHED,
+  author: { '@type': 'Organization', name: 'Vale and Mercer', url: SITE_URL },
+  publisher: { '@id': SITE_URL + '/#organization' },
+}
+
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
+    { '@type': 'ListItem', position: 2, name: 'London Property Journal', item: SITE_URL + '/blog' },
+    { '@type': 'ListItem', position: 3, name: TITLE, item: SITE_URL + SLUG },
+  ],
 }
 
 const sections = [
@@ -26,13 +56,23 @@ const sections = [
 export default function BlogPost3() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <ArticleLayout
         category="Student Living"
         title="Renting in London as a student"
         meta="March 2025  ·  5 min read"
         image="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=85"
-        imageAlt="London"
+        imageAlt="London student flat interior"
         sections={sections}
         signoff="Written by the Vale and Mercer team  ·  March 2025"
       />

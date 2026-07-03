@@ -7,6 +7,8 @@ const EASE = [0.22, 1, 0.36, 1] as const
 
 const navItems = [
   { label: 'Lettings', href: '/let' },
+  { label: 'Rentals', href: '/rent' },
+  { label: 'Sell', href: '/sell' },
   { label: 'New Homes', href: '/buy' },
   { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },

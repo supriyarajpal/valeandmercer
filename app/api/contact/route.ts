@@ -24,8 +24,9 @@ function shell(heading: string, rows: string) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const { firstName, lastName, email, interest, subject } = body as Record<string, string | undefined>
+    const { firstName, lastName, email, interest, subject, consent } = body as Record<string, string | boolean | undefined>
     const fullName = [firstName, lastName].filter(Boolean).join(' ').trim() || 'Unknown'
+    const consentLabel = consent === true ? 'Yes (given at submission)' : 'No'
 
     // Property Alert Registration (from /register) carries `phone` + `budget`
     // and a custom subject. Homepage contact form carries `message` instead.
@@ -38,10 +39,11 @@ export async function POST(req: NextRequest) {
       const { phone, budget } = body as Record<string, string | undefined>
       const rows = [
         row('Name', fullName),
-        row('Email', email || ''),
+        row('Email', (email as string) || ''),
         row('Phone', phone || ''),
-        row('Looking for', interest || ''),
-        row('Budget', budget || '', true),
+        row('Looking for', (interest as string) || ''),
+        row('Budget', budget || ''),
+        row('Consent given', consentLabel, true),
       ].join('')
       html = shell('Vale & Mercer: Property Alert Registration', rows)
       mailSubject = 'Property Alert Registration: ' + fullName
@@ -49,9 +51,10 @@ export async function POST(req: NextRequest) {
       const { message } = body as Record<string, string | undefined>
       const rows = [
         row('Name', fullName),
-        row('Email', email || ''),
-        row('Interested In', interest || ''),
-        row('Message', message || '', true),
+        row('Email', (email as string) || ''),
+        row('Interested In', (interest as string) || ''),
+        row('Message', message || ''),
+        row('Consent given', consentLabel, true),
       ].join('')
       html = shell('Vale & Mercer: New Enquiry', rows)
       mailSubject = 'New enquiry: ' + fullName

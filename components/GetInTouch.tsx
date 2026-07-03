@@ -8,10 +8,16 @@ const EASE = [0.22, 1, 0.36, 1] as const
 export default function GetInTouch() {
   const reduce = useReducedMotion()
   const { ref: headlineRef, inView: headlineInView } = useInViewSafe<HTMLHeadingElement>(0.3)
-  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', interest: 'Lettings enquiry', message: '' })
+  const [form, setForm] = useState({ firstName: '', lastName: '', email: '', interest: 'Lettings enquiry', message: '', consent: false })
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [consentError, setConsentError] = useState(false)
 
   const handleSubmit = async () => {
+    if (!form.consent) {
+      setConsentError(true)
+      return
+    }
+    setConsentError(false)
     setStatus('sending')
     try {
       const res = await fetch('/api/contact', {
@@ -161,10 +167,14 @@ export default function GetInTouch() {
                     <p style={{ fontSize: 13, color: '#c0392b' }}>Something went wrong. Please try again.</p>
                   )}
                   <StaggerItem>
-                    <p style={{ fontSize: 11, color: '#9A9188', lineHeight: 1.8 }}>
-                      We will use your details to respond to your enquiry and, if you agree, to send you property updates. See our{' '}
-                      <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a> for full details.
-                    </p>
+                    <ConsentCheckbox
+                      checked={form.consent}
+                      onChange={next => {
+                        setForm({ ...form, consent: next })
+                        if (next) setConsentError(false)
+                      }}
+                      error={consentError}
+                    />
                   </StaggerItem>
                   <StaggerItem>
                     <SubmitButton onClick={handleSubmit} status={status} />
@@ -176,6 +186,39 @@ export default function GetInTouch() {
         </div>
       </div>
     </section>
+  )
+}
+
+function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onChange: (v: boolean) => void; error: boolean }) {
+  return (
+    <div>
+      <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', cursor: 'pointer' }}>
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={e => onChange(e.target.checked)}
+          aria-invalid={error}
+          aria-describedby={error ? 'consent-error-contact' : undefined}
+          style={{
+            marginTop: 3,
+            width: 16,
+            height: 16,
+            accentColor: '#A0845C',
+            flexShrink: 0,
+            cursor: 'pointer',
+          }}
+        />
+        <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
+          I consent to Vale &amp; Mercer collecting and processing my information to respond to my enquiry. I understand my details may also be used to send me relevant property updates and marketing communications, and I can unsubscribe at any time. See our{' '}
+          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a> for full details.
+        </span>
+      </label>
+      {error && (
+        <p id="consent-error-contact" role="alert" style={{ fontSize: 12, color: '#c0392b', marginTop: 8, marginLeft: 28 }}>
+          Please tick the box to consent before submitting.
+        </p>
+      )}
+    </div>
   )
 }
 

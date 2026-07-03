@@ -692,6 +692,81 @@ So the blur *will* render — unlike in Phases 9b → 12 when the MotionProvider
 
 **What did not change.** Layout, alignment (main-row `alignItems:'center', minHeight: 44`), vertical centring, height, spacing, the eyebrow (sibling row, `marginTop:22`), the mobile hamburger geometry, and the scroll-trigger threshold (`window.scrollY > 80`) are all byte-unchanged. Typecheck (`npx tsc --noEmit`) clean.
 
+### Phase 16 — GDPR consent checkbox on every public form (2026-07-04)
+
+**Why.** UK GDPR / PECR require an explicit, freely given opt-in before collecting personal data through a webform, and a durable record of that consent per submission. The three public forms (`components/GetInTouch.tsx`, `app/valuations/page.tsx`, `app/register/page.tsx`) previously carried only a passive "we will use your details" footnote — legally insufficient.
+
+**Approach chosen — single combined checkbox (processing + marketing).** The site does not currently distinguish separate "processing" vs "marketing" consent anywhere; the pre-existing footnote wrapped both purposes into one sentence. Splitting into two checkboxes would introduce a distinction the rest of the site does not model. One required checkbox, one combined purpose. If marketing preferences ever need to be tracked independently, this can be split later without breaking the API contract (the email templates already have room for a second "Marketing consent" row).
+
+**What changed.**
+- Each of the three forms gained a `consent: boolean` field in local state, a `consentError: boolean` guard, and a `ConsentCheckbox` sub-component defined inline in the same file. The checkbox sits directly above the submit button. `handleSubmit` short-circuits with `setConsentError(true)` if `consent === false` and no fetch is issued.
+- Checkbox styling matches the site's existing form aesthetic: 16 × 16px native checkbox with `accentColor: '#A0845C'`, label text at 11px `#6B6258` (same treatment as the existing FIRST NAME / EMAIL micro-copy), inline `Privacy Notice` link in gold underlined. Inline error message (`role="alert"`, `#c0392b`, `aria-describedby`) appears immediately below the checkbox when submission is blocked.
+- Label copy is identical across all three forms except for one word on `/valuations` ("arrange my valuation and respond to my enquiry" vs. "respond to my enquiry") to keep the sentence natural per surface.
+- The now-redundant "We will use your details..." / "No spam. Unsubscribe at any time..." footnote paragraphs below the submit buttons on the homepage form and `/register` were removed — the new checkbox label supersedes them. `/valuations` kept its "No obligation. We will contact you within 24 hours" footnote because that copy is about SLA, not consent.
+- `app/api/contact/route.ts` and `app/api/valuation/route.ts` now accept a `consent` boolean in the request body and render a **Consent given: Yes (given at submission) / No** row as the last line of the email table. The value is derived server-side from the boolean (`consent === true`) rather than trusted verbatim, so a malformed payload defaults to "No".
+- Privacy Notice link points to the existing `/privacy` route (verified — `app/privacy/page.tsx` exists).
+- The password-gated `/admin` form was left alone; it is not a public personal-data collection surface.
+
+**Verification.** `npx tsc --noEmit` clean. `next dev` renders the checkbox HTML on `/`, `/valuations`, and `/register`. Client-side blocking is enforced by the `handleSubmit` short-circuit — no fetch fires when the box is unchecked, and the inline `role="alert"` error appears next to the checkbox.
+
+**Follow-up worth noting.** UK ICO guidance is that marketing consent should ideally be a separate, opt-in-only checkbox (soft opt-in for existing customers being the one exception). This implementation combines processing and marketing per the current site model; if you later want strict-mode PECR compliance for marketing specifically, split the single box into (a) required "process my enquiry" and (b) optional "send me updates," and add the second boolean to the API payload + email row.
+
+### Phase 17 — SEO hardening pass (2026-07-04)
+
+**Why.** Phase 6 laid down per-page metadata, sitemap, robots, and one homepage JSON-LD block. This pass tightens brand-name consistency, boosts location + service keyword weight in titles/descriptions without stuffing body copy, extends structured data beyond the homepage, and closes an orphan-page crawl gap.
+
+**Brand form standardized.** "Vale and Mercer" (unencoded, 45+ occurrences) is now the canonical form in every metadata title/description and every JSON-LD `name` field. Visual "&" glyphs in the Navbar/Footer wordmark lockup are unchanged — that's a design element, not metadata. Consent-checkbox labels keep `&amp;` (HTML-entity form) because they render user-facing text; both forms are semantically identical to search engines.
+
+**Titles rewritten for keyword weight.** Every page title now leads with a location + service phrase and appends " | Vale and Mercer" via the layout `template`. All titles kept under 60 characters to survive Google's SERP truncation:
+
+| Route | Before | After |
+|---|---|---|
+| `/` | Vale and Mercer \| London Residential Property Agency | *(unchanged, already good — 54 chars)* |
+| `/about` | About | About the Agency |
+| `/let` | Lettings | London Lettings |
+| `/rent` | Rentals | London Rentals |
+| `/buy` | New Homes | New Homes in London |
+| `/sell` | Selling | Sell Your London Home |
+| `/fees` | Services and Fees | Lettings and Sales Fees |
+| `/valuations` | Book a Valuation | Free London Property Valuations |
+| `/register` | Register Interest | Register for Property Alerts |
+| `/blog` | Journal | London Property Journal |
+| `/blog/london-property-market-2025` | The London property market in 2025 | The London Property Market in 2025 |
+| `/blog/guide-to-buying-in-chelsea` | Your complete guide to buying in Chelsea SW3 | Guide to Buying a Home in Chelsea SW3 |
+| `/blog/student-lettings-london-guide` | Renting in London as a student | Student Lettings in London: The Practical Guide |
+
+Legal pages (Privacy, Cookies, Terms, Complaints) left unchanged — already well-formed.
+
+**Meta descriptions rewritten.** Every page's description was rewritten to include the brand, a location keyword, and a service phrase, all under ~155 characters, all unique. Blog article descriptions were also refreshed and matched into their OpenGraph `description` field so social previews carry the same copy.
+
+**Structured data expanded.** The homepage's single `RealEstateAgent` block has been promoted to `app/layout.tsx` so it's rendered on **every** page in the site (with `@id: <site>/#organization` so it can be referenced by other schemas). The homepage keeps a `WebSite` schema of its own that references the shared org via `publisher: { '@id': ... }`. Every interior route now emits a `BreadcrumbList` (Home → Page for one-level routes, Home → Journal → Article Title for blog posts). Every blog article emits a `BlogPosting` with real `headline`, `image`, `datePublished`, `author` (Organization: Vale and Mercer), and `publisher` (referencing the shared org node). No invented ratings, reviews, or counts anywhere.
+
+**Sitemap tightened.** `app/sitemap.ts` was refactored so blog posts live in a small `BLOG_POSTS` registry with their real publication dates as `lastModified` (previously every route stamped `new Date()`, which lied to Google about freshness of March 2025 posts). Comment at the top of the file tells future editors to update the registry when adding a new blog directory. All 14 live routes + 3 blog articles enumerated.
+
+**Robots.ts** — verified: allows `/`, disallows `/api/` and `/admin`, references the sitemap URL. No change needed.
+
+**Canonicals** — verified: every layout / page metadata sets `alternates.canonical: '/path'`; root layout sets `metadataBase`. No duplicates, no orphans.
+
+**Orphan-page crawl fix.** `/rent` and `/sell` had no inbound internal links from anywhere on the site — indexable via sitemap but receiving no link equity. Added both to the Footer nav (now: Lettings, Rentals, Sell, New Homes, About, Blog, Fees, Book Valuation). Primary Navbar unchanged to preserve the current visual density.
+
+**Image alt text audit.** Fixed generic `alt="London"` values on `components/Hero.tsx` (→ "Prime London residential streetscape at dusk"), `app/about/page.tsx` (→ "London townhouse street"), `components/FeaturedProperties.tsx` (→ `alt={item.area + ' property listing'}`), and both remaining blog article `imageAlt` props. `components/ValuationStrip.tsx` empty `alt=""` was **kept** — the parent div carries `aria-hidden` and the image is decorative, so empty alt is the WCAG-correct signal.
+
+**Body copy** — audited for keyword thinness; no additions made. Service pages already reference "prime London", "lettings", "valuation", and named neighbourhoods ("Chelsea SW3", "Kensington W8", "Notting Hill W11", "Canary Wharf") in natural context. Adding more would tip into keyword stuffing.
+
+**Verification.** `npx tsc --noEmit` clean.
+
+**Perf red flags flagged (not fixed — out of scope).**
+- Every image on the site is a bare `<img>` from the Unsplash CDN. No `next/image` usage anywhere in `/app` or `/components`. Missing AVIF/WebP negotiation, auto-srcset (Hero only builds one manually), CLS-preventing width/height. Non-trivial refactor because existing usage relies on inline styles and Ken Burns / parallax transforms that would need re-wiring. Recommend a follow-up phase.
+- Six routes are marked `'use client'` at the page level (`/buy`, `/about`, `/blog`, `/register`, `/valuations`, `/rent`). They still SSR (metadata + JSON-LD work), but they ship the framer-motion runtime to the browser for pages whose main content is largely static. Worth splitting client islands out of static shells later.
+- Cookiebot loads `afterInteractive` — deliberate anti-blocking choice per Phase 4 notes. Correct as-is.
+
+**What still needs YOUR action outside the codebase.**
+1. **Verify `valeandmercer.co.uk` in Resend** and add the returned DNS records at your domain registrar (SPF `TXT`, DKIM `TXT`). Until this is done the sandbox `from` still applies (Phase 15 outstanding item) and no email actually reaches the inbox. This is now doubly blocking — SEO can't help if enquiries never surface.
+2. **Google Search Console** — submit `https://valeandmercer.co.uk/sitemap.xml` at [search.google.com/search-console](https://search.google.com/search-console). Verify domain via DNS TXT record. This is what actually gets Google to notice the new schema/titles quickly rather than waiting for organic discovery.
+3. **Bing Webmaster Tools** — same drill, at [bing.com/webmasters](https://www.bing.com/webmasters). Bing's share of London property searches is small but non-zero.
+4. **Rich Results Test** — after next deploy, paste `https://valeandmercer.co.uk/` and one blog article URL into [search.google.com/test/rich-results](https://search.google.com/test/rich-results) to confirm the RealEstateAgent, BreadcrumbList, and BlogPosting schemas parse without errors. If it flags "missing image" on the RealEstateAgent, add a square logo PNG at `public/logo.png` and update `logo: SITE_URL + '/logo.png'` in `app/layout.tsx` (currently points at `/icon.svg` which is the tab favicon — some Google validators prefer raster).
+5. **OG image** — the homepage OpenGraph still uses an Unsplash placeholder. Commission a real 1200×630 branded PNG and drop it at `public/og-image.jpg`, then update `OG_IMAGE` in `app/layout.tsx`. Flagged since Phase 6; still outstanding.
+
 ### Outstanding items not addressed in this rework
 - Resend `from` address is still the sandbox `onboarding@resend.dev`. Verify the domain in Resend and switch to e.g. `noreply@valeandmercer.co.uk`.
 - Email-body HTML injection risk: both routes still interpolate user input directly. Add HTML-escaping or switch to a templating helper.
