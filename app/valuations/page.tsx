@@ -25,15 +25,46 @@ export default function ValuationsPage() {
     }
     setConsentError(false)
     setStatus('sending')
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
+    if (!accessKey) {
+      // eslint-disable-next-line no-console
+      console.error('NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is not set')
+      setStatus('error')
+      return
+    }
+    const fullName = [form.firstName, form.lastName].filter(Boolean).join(' ').trim() || 'Unknown'
+    const addressLine = [form.address, form.postcode].filter(Boolean).join(', ') || fullName
     try {
-      const res = await fetch('/api/valuation', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          subject: 'Valuation Request: ' + addressLine,
+          from_name: 'Vale and Mercer Website',
+          replyto: form.email,
+          'Form': 'Valuation Request',
+          'Name': fullName,
+          'Email': form.email,
+          'Phone': form.phone,
+          'Property address': form.address,
+          'Postcode': form.postcode,
+          'Property type': form.propertyType,
+          'Bedrooms': form.bedrooms,
+          'Reason for valuation': form.reason,
+          'Consent given': 'Yes (given at submission)',
+        }),
       })
-      if (res.ok) setStatus('sent')
-      else setStatus('error')
-    } catch {
+      const result = await res.json().catch(() => null)
+      if (res.ok && result?.success) setStatus('sent')
+      else {
+        // eslint-disable-next-line no-console
+        console.error('Web3Forms rejected the submission', result)
+        setStatus('error')
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Web3Forms network error', err)
       setStatus('error')
     }
   }
