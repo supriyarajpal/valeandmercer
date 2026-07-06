@@ -791,6 +791,112 @@ Legal pages (Privacy, Cookies, Terms, Complaints) left unchanged — already wel
 3. **On Vercel** — add the env var `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=65ce5771-a969-4c9b-bb58-15b4f89cb3ed` to Production (and Preview / Development if you want them to work there too), then redeploy. The name is important — Vercel currently has `RESEND_API_KEY` and `CONTACT_EMAIL` which are no longer used. Feel free to delete those after the new one is in place.
 4. **Rotate the leaked Resend key** as a precaution — my earlier `grep .env.local` output leaked it into an earlier turn of this conversation. The key is now inactive (Resend is uninstalled) but if you had it wired to a paid Resend account, revoke it in the Resend dashboard so no one who saw the terminal can send from it.
 
+### Phase 19 — Zoopla Online Valuation Tool floating button (2026-07-07)
+
+**Purely additive** per client instruction. The existing "Book Valuation" navbar pill, hero CTA, and custom `/valuations` form are untouched — this adds a **second** valuation channel (Zoopla's own instant-valuation iframe) alongside them so visitors can choose the flow that suits them.
+
+**What changed.**
+- `app/layout.tsx` — added a second `next/script` `<Script id="zoopla-ovt" ...>` in the `<head>` next to Cookiebot, `strategy="afterInteractive"` so it never blocks initial render. Also mounted `<ZooplaValuationButton />` once, globally, as a sibling of `<MotionProvider>{children}</MotionProvider>` inside `<body>`. Single mount site so the button appears on every route without per-page duplication.
+- `components/ZooplaValuationButton.tsx` — new server component. Renders exactly one `<a id="online-valuation-tool" class="ovt-button-fixed zt-ovt-button">` containing house icon `<img>`, "Request an Instant Online Valuation" text, and arrow icon `<img>`. Both icons point at the exact Zoopla-hosted URLs (`https://www.zoopla.co.uk/zvt/house-light.png` and `arrow-right-light.png`) rather than being rehosted locally — the widget script matches on id, not on the img src, but the icons match Zoopla's branding out of the box. Two `// eslint-disable-next-line @next/next/no-img-element` comments suppress the Next.js "use next/image" warning; using `next/image` here is inappropriate because the widget's own CSS + JS wire up around raw `<img>` DOM nodes.
+- `app/globals.css` — appended the widget's CSS block (`#online-valuation-tool { ... }` + `#online-valuation-tool.ovt-button-fixed { ... }`) copied verbatim from Zoopla's loader response, `!important` markers preserved. Layout-only additions (icon `height:36px` for the house, `height:14px` for the arrow, `vertical-align:middle`, `line-height:1.15` on the span) are added so the three inline children align cleanly inside the pill without editing any of Zoopla's declared values.
+
+**How it works at runtime.** On first paint React renders the `<a>` at bottom-left with Zoopla's fixed CSS (bottom:20px, left:-1px, purple `#8046F1` background, `z-index:2147483000`). Once the page finishes interactive parsing, the widget loader script executes, finds the anchor by id, and attaches a click handler that opens Zoopla's iframe modal in place. Because the initial render is pure HTML/CSS, the button is visible even if the widget script hasn't loaded yet — but clicking it only does something after the script is on the page.
+
+**Core Web Vitals.** `afterInteractive` guarantees the script is not parser-blocking and is scheduled after hydration, so LCP/FID/INP are unaffected. The button itself is a plain anchor with two `<img>` (~few KB combined from Zoopla's CDN, lazy in practice because it's below-the-fold on shorter viewports, though visible at bottom-left on all viewports). No JavaScript runs from `<ZooplaValuationButton />` itself — it's a Server Component.
+
+**Positioning + collision check.** Cookiebot is the only other third-party overlay on the site; its banner defaults to a full-width bottom strip (not corner-anchored), so it briefly obscures the Zoopla button on first visit until the user makes a consent choice, after which the strip disappears and the button is clear. This is Cookiebot's default behaviour, not a bug — flagged to the client rather than repositioned, per task instruction not to silently move Zoopla's button (their widget's iframe positioning assumes `bottom:20px; left:-1px`, and moving it can shift the iframe launch coordinates). No other fixed/floating element occupies the bottom-left corner (checked `Navbar.tsx`, `Hero.tsx`, `AtmosphereLayer.tsx`, `GrainOverlay.tsx`, `MotionProvider.tsx`).
+
+**Verification.** `npx tsc --noEmit` clean. `npx eslint components/ZooplaValuationButton.tsx` clean (0 warnings after per-line disables). Runtime click-through to the iframe modal on desktop and mobile viewport widths **must be verified in a real browser** — the loader script sits behind Cloudflare Turnstile and can't be curled headlessly, so any automated check would false-negative on script availability. See YOUR ACTION below.
+
+**What still needs YOUR action outside the codebase.**
+1. **Verify the floating "Request an Instant Online Valuation" button opens Zoopla's iframe** at `http://localhost:3000` (any route — it's mounted globally). Test on a desktop browser AND a mobile viewport (Chrome DevTools device toolbar, or a real phone via `npm run dev` on a LAN URL). Clicking it should open Zoopla's own valuation iframe overlay — if it doesn't, check DevTools Console for `widgetiframeloader` errors and confirm Zoopla's key `9fb4cf97-d666-458b-95d2-9b5554eb8228` is still active on their side.
+2. **Cookiebot ↔ Zoopla button visual overlap on first visit.** The Cookiebot banner (bottom strip) briefly covers the Zoopla button before the user consents. If the client wants the Zoopla button visible above the Cookiebot banner from the first frame, options are (a) change the Cookiebot layout to a corner popup in the Cookiebot dashboard, or (b) accept the current behaviour where consent-first-then-valuation is a reasonable order of operations. Left as-is per task instruction (do not silently reposition Zoopla's widget).
+
+### Phase 19b — Zoopla button repositioned to bottom-right + Turbopack CSS staleness (2026-07-07)
+
+**Client asked for the pill on the right, not the left.** Zoopla's own widget script injects a hardcoded `<style>` at runtime with `left: -1px !important` and `border-top-right-radius / border-bottom-right-radius: 40px !important` — that injection may fire AFTER our `globals.css` chunk loads, so a same-specificity override in globals would lose the cascade tie.
+
+**Specificity trick used.** In `app/globals.css` a second rule is written with the id selector *doubled*:
+```
+#online-valuation-tool#online-valuation-tool.ovt-button-fixed {
+  left: auto !important;
+  right: -1px !important;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-top-left-radius: 40px !important;
+  border-bottom-left-radius: 40px !important;
+}
+```
+Specificity climbs from Zoopla's `#id.class` (1,1,0) to our `#id#id.class` (2,1,0), so our positioning wins even though Zoopla's rule and ours both use `!important` and theirs may be injected later in DOM order. This is the smallest valid CSS-only override — no wrapping element, no MutationObserver, no JS shim.
+
+**Padding also flipped.** Original `padding: 14px 15px 14px 5px` (top, right=15, bottom, left=5) put the tight edge on the left because the pill sat flush-left. Now the pill sits flush-right, so the tight edge belongs on the right: `padding: 14px 5px 14px 15px`. Icons + text now read left-to-right from the leftward-extending rounded side toward the flush-right arrow.
+
+**Turbopack CSS chunk staleness — hit twice.** Both the Phase 19 initial write and this Phase 19b edit ran into the same trap: Turbopack in Next 16 hashes the compiled CSS chunk URL by pre-edit content and serves the stale chunk to browsers on subsequent HTML requests. Neither HMR nor a `touch globals.css` triggers a recompile. The recovery is `kill <dev-pid>; rm -rf .next; npm run dev`. If future edits to `globals.css` seem to have "no effect" in the browser, this is the first thing to try.
+
+**Verification of the CSS chunk after cache wipe.**
+- Served `#online-valuation-tool#online-valuation-tool.ovt-button-fixed` rule contains `right: -1px !important`, `left: auto !important`, `border-radius: 40px 0 0 40px !important` (Turbopack minified the four corner rules into the shorthand — same effect).
+- Base `#online-valuation-tool.ovt-button-fixed` rule contains `position: fixed !important; bottom: 20px !important; z-index: 2147483000 !important; background-color: #8046f1; color: #fff`.
+
+**Clickability.** The initial "not clickable" report is almost certainly a downstream symptom of Phase 19's stale-CSS chunk: with no `position:fixed / bottom / left / right / z-index / background` styles applied, the `<a>` collapsed into normal document flow, rendered as an inline anchor with two broken images somewhere inside the body's regular content, and the user clicking the empty bottom-left corner (where the pill *should* have been) was clicking nothing. After this phase (CSS applied correctly + bottom-right position), the anchor becomes a visible bounding box at `right:-1px; bottom:20px; z-index:2147483000` and clicks land on it. Nothing else in the codebase intercepts pointer events at that stacking context:
+- `MotionProvider`'s curtain overlay is `pointer-events: none` and auto-fades in 1.6s.
+- `GrainOverlay` is `pointer-events: none`.
+- `AtmosphereLayer` is `z-index: -1` and `pointer-events: none`.
+- No other component sets `z-index > 2147483000` or covers the bottom-right corner with a hit target.
+
+Once the pill is visible, click behaviour is Zoopla's script's responsibility — it scans the DOM for `#online-valuation-tool` on execution and attaches an onclick that opens the iframe modal. If a real-browser test after Phase 19b still shows dead clicks, the remaining root causes to check in this order are: (a) ad blocker blocking `zoopla.co.uk/resource/widgetiframeloader/*`, (b) the browser session lacking the Cloudflare cookies Zoopla's CDN sometimes uses for JS delivery, (c) Cookiebot's banner (default z-index ≈ 2147483645, higher than ours) covering the pill until consent is given — Cookiebot on `localhost` is not authorised for this account (log shows the "domain LOCALHOST is not authorized" warning), so on localhost the banner is not rendered at all, but on the production domain this is worth eye-balling.
+
+**What still needs YOUR action outside the codebase.**
+1. **Hard-refresh the browser** at `http://localhost:3001` and confirm the purple pill sits at bottom-right with the rounded corners on the LEFT (icon + text extending leftward, arrow flush to the right edge).
+2. **Click it.** Confirm the Zoopla iframe modal opens. Test on desktop and a mobile viewport (Chrome DevTools device toolbar or a real phone against `http://192.168.1.203:3001`).
+3. **If the click still does nothing**, open DevTools → Network, filter for `widgetiframeloader`, and check: status 200? content-type `text/javascript` or `application/javascript`? Response body starts with real JS (not `<!DOCTYPE html>`)? If not, that's Cloudflare/ad-blocker interference and needs to be diagnosed in the browser context, not from the server.
+
+### Phase 19c — Zoopla button click now works (defensive href fallback) (2026-07-07)
+
+**Symptom.** After Phase 19b the pill was visible at bottom-right with correct positioning, but clicking it did nothing observable.
+
+**Root cause — Cloudflare on Zoopla's widget endpoint returns a challenge page, not the real JS.** Fetching `https://www.zoopla.co.uk/resource/widgetiframeloader/?key=...` from the Node runtime (as a proxy for a real cross-origin script fetch) with Chrome/Safari-like `User-Agent`, `Accept: */*`, `Referer`, `sec-fetch-dest: script` etc. returns:
+
+```
+HTTP: 403
+Content-Type: text/html; charset=UTF-8
+CF-Ray: a171b07f4c92a73b-DEL
+First bytes: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title>...
+Contains "online-valuation-tool": false
+Contains "onclick": false
+Contains "addEventListener": false
+Contains "Just a moment": true
+```
+
+That is Cloudflare's interstitial "Just a moment" browser-check HTML page — not JavaScript. When a real browser encounters this served with `Content-Type: text/html` via a `<script src>` tag, one of two things happens:
+- (a) The browser refuses to execute a non-JS-MIME response as a script (modern browsers block on MIME mismatch for scripts) → the script silently does not run, `#online-valuation-tool` has no click handler attached.
+- (b) The browser tries to parse it → `Uncaught SyntaxError: Unexpected token '<'`. Even then, no handler is attached.
+
+Either way, the anchor's own `href="#"` (from the original Phase 19 code) then takes over on click. `#` scrolls the page to the top of the document, which is either invisible (already at the top) or looks like "nothing happened" if the user is at the top and the browser doesn't visually indicate the URL fragment change. That matches the symptom exactly.
+
+Real browsers passing through Cloudflare from a legitimate whitelisted origin (Zoopla's partner-agent domains) will get the real JS. But the localhost / development origin, and possibly the production origin if it hasn't been registered against this key, will not — Cloudflare distinguishes real browsers via TLS fingerprints and Sec-Fetch metadata, and the account key `9fb4cf97-...` may be domain-locked at Zoopla's end. There is no server-side workaround; changing the `next/script` strategy does not help (this is an origin/CDN rejection, not a timing issue).
+
+**Fix — defensive href.** `components/ZooplaValuationButton.tsx` now uses `href="https://www.zoopla.co.uk/home-values/"` with `target="_blank" rel="noopener noreferrer"` instead of `href="#"`. Behaviour matrix:
+- Widget script *does* load and attach: its click handler runs first, calls `preventDefault`, opens the iframe modal in place. The `href` never fires. Same UX as intended.
+- Widget script *does not* load (Cloudflare block, ad-blocker, etc.): browser falls through to the anchor's default, opens Zoopla's own instant-valuation landing page (`/home-values/` — the confirmed live URL with the postcode-lookup / "get an instant online house valuation" flow) in a new tab. User still lands on a valuation flow. Not the seamless in-page modal, but not dead either.
+
+The id, class, image URLs, and inline markup remain unchanged so the widget script still finds and wires up the anchor whenever it *does* execute.
+
+**Ruled out during diagnosis, so no time was spent on these fixes.**
+- Higher-z-index overlay stealing the click. Nothing in the codebase sets `z-index > 2147483000` except the button itself. `MotionProvider` curtain and `GrainOverlay` are `pointer-events: none`. Cookiebot's default z-index (~2147483645) is higher but its log warning `"The domain LOCALHOST is not authorized"` confirms it never renders a banner on `localhost`, so on the dev server it cannot be swallowing clicks. On production it *could* — flagged as YOUR ACTION #3.
+- Parent stacking context trapping the button. The button is a direct child of `<body>` in the render tree (sibling of `<MotionProvider>`, not a descendant), so no parent creates a stacking context that could cap its effective z-index.
+- Our own CSS setting `pointer-events: none`. Grepped for `pointer-events` across `globals.css` and every `*.tsx` file — none touch the button.
+
+**Verification.**
+- `npx tsc --noEmit` clean.
+- Rendered HTML on `/`: `<a id="online-valuation-tool" class="ovt-button-fixed zt-ovt-button" href="https://www.zoopla.co.uk/home-values/" target="_blank" rel="noopener noreferrer">…</a>`.
+- Served CSS chunk still contains the bottom-right override with the double-id specificity trick.
+
+**What still needs YOUR action outside the codebase.**
+1. **Hard-refresh the browser** (Cmd-Shift-R on the Zoopla test page) so the updated component JS is loaded.
+2. **Click the pill.** If Zoopla's script attaches on your browser+network combo, the iframe modal opens. If not, a new tab opens to `zoopla.co.uk/home-values/`.
+3. **In DevTools → Network**, filter for `widgetiframeloader` and confirm what your specific browser sees. If the status is 200 with `Content-Type: application/javascript` (or `text/javascript`) and the response body is real JS, then Zoopla's script IS wiring the modal for you and the new-tab fallback should never fire. If it's the "Just a moment" HTML page, you'll get the fallback — and the deployment-time fix is either (a) contact Zoopla support to register `valeandmercer.co.uk` (and any preview URLs) against the widget key, or (b) accept the new-tab fallback as the permanent behaviour.
+4. **On production**, watch for Cookiebot's default full-width banner at z-index ~2147483645 briefly covering the pill on first visit until consent. If clients report bottom-right click misses in that pre-consent window, either raise our pill's z-index above Cookiebot's or reconfigure Cookiebot to a corner popup.
+
 ### Outstanding items not addressed in this rework
 - Resend `from` address is still the sandbox `onboarding@resend.dev`. Verify the domain in Resend and switch to e.g. `noreply@valeandmercer.co.uk`.
 - Email-body HTML injection risk: both routes still interpolate user input directly. Add HTML-escaping or switch to a templating helper.

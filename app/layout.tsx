@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import MotionProvider from '@/components/MotionProvider'
+import ZooplaValuationButton from '@/components/ZooplaValuationButton'
 import './globals.css'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
@@ -85,6 +86,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           data-blockingmode="auto"
           strategy="afterInteractive"
         />
+        {/* Zoopla Online Valuation Tool widget loader. `afterInteractive`
+            so it never blocks initial render — the floating anchor
+            <ZooplaValuationButton /> is rendered by React on first
+            paint, and this script wires up the iframe modal to it
+            once the page is interactive. This is ADDITIONAL to the
+            existing custom /valuations form; neither replaces the
+            other. Client requirement — see PROJECT_OVERVIEW Section 10. */}
+        <Script
+          id="zoopla-ovt"
+          src="https://www.zoopla.co.uk/resource/widgetiframeloader/?key=9fb4cf97-d666-458b-95d2-9b5554eb8228"
+          strategy="afterInteractive"
+        />
       </head>
       <body>
         <script
@@ -93,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
         <MotionProvider>{children}</MotionProvider>
+        <ZooplaValuationButton />
         <Analytics />
       </body>
     </html>

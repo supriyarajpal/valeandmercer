@@ -179,3 +179,20 @@ a { color: inherit; text-decoration: none; }
   .vm-h-screen-dvh { min-height: 100dvh; }
   .vm-h-90-dvh     { min-height: 90dvh; }
 }
+
+/* Zoopla Online Valuation Tool floating button. Base rules mirror the
+   ruleset Zoopla's widget loader injects at runtime; the *positioning*
+   rule is overridden to move the pill to the bottom-RIGHT (Zoopla's
+   default is bottom-left with `left:-1px`).
+
+   The override uses the double-id trick `#online-valuation-tool#online-valuation-tool.ovt-button-fixed`
+   → specificity (2,1,0) vs their (1,1,0), so we win the cascade even
+   though the widget script injects its <style> tag AFTER ours loads.
+   Every positioning property is `!important` for the same reason. Do
+   not "clean up" the double id — it is what beats their injected rule. */
+#online-valuation-tool{font-family:inherit!important;cursor:pointer!important;user-select:none!important;outline:0!important;font-size:14px!important;font-weight:700!important;vertical-align:middle!important;white-space:nowrap!important;text-decoration:none!important;border-color:transparent!important}
+#online-valuation-tool.ovt-button-fixed{z-index:2147483000!important;position:fixed!important;bottom:20px!important;text-align:left!important;padding:14px 5px 14px 15px!important;box-shadow:0 2px 4px 0 rgba(0,0,0,.48);background-color:#8046F1;color:#fff;}
+#online-valuation-tool#online-valuation-tool.ovt-button-fixed{left:auto!important;right:-1px!important;border-top-right-radius:0!important;border-bottom-right-radius:0!important;border-top-left-radius:40px!important;border-bottom-left-radius:40px!important;}
+#online-valuation-tool.ovt-button-fixed img{display:inline-block;vertical-align:middle;height:36px;width:auto;}
+#online-valuation-tool.ovt-button-fixed span{display:inline-block;vertical-align:middle;line-height:1.15;padding:0 8px;}
+#online-valuation-tool.ovt-button-fixed img:last-of-type{height:14px;padding-right:2px;}
