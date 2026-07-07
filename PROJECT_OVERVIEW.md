@@ -897,6 +897,23 @@ The id, class, image URLs, and inline markup remain unchanged so the widget scri
 3. **In DevTools → Network**, filter for `widgetiframeloader` and confirm what your specific browser sees. If the status is 200 with `Content-Type: application/javascript` (or `text/javascript`) and the response body is real JS, then Zoopla's script IS wiring the modal for you and the new-tab fallback should never fire. If it's the "Just a moment" HTML page, you'll get the fallback — and the deployment-time fix is either (a) contact Zoopla support to register `valeandmercer.co.uk` (and any preview URLs) against the widget key, or (b) accept the new-tab fallback as the permanent behaviour.
 4. **On production**, watch for Cookiebot's default full-width banner at z-index ~2147483645 briefly covering the pill on first visit until consent. If clients report bottom-right click misses in that pre-consent window, either raise our pill's z-index above Cookiebot's or reconfigure Cookiebot to a corner popup.
 
+### Phase 19 (all sub-phases) — REVERTED (2026-07-07)
+
+**Phases 19, 19b, and 19c are reverted.** The Zoopla Online Valuation Tool floating button is removed entirely; the site is back to the pre-Phase-19 state on this axis.
+
+**Reason.** The widget's click handler could not be reliably triggered. Zoopla's `widgetiframeloader` script is fronted by Cloudflare, which returns a "Just a moment..." challenge page (HTML, not JS) instead of the real widget code for our origins — so the script never executed in the browser and the anchor's click never invoked Zoopla's iframe modal. The Phase 19c defensive-href fallback (new tab to `zoopla.co.uk/home-values/`) worked, but a floating pill that only ever takes users off-site to a Zoopla-branded page was judged worse than removing the pill entirely. Client's existing "Book Valuation" navbar pill, hero CTA, and custom `/valuations` form are the sole valuation channels going forward.
+
+**What was removed.**
+- `components/ZooplaValuationButton.tsx` — deleted.
+- `app/layout.tsx` — removed the `import ZooplaValuationButton` line, the `<Script id="zoopla-ovt" ...>` tag, and the `<ZooplaValuationButton />` mount.
+- `app/globals.css` — removed the `#online-valuation-tool` / `#online-valuation-tool.ovt-button-fixed` block (including the double-id specificity override and the img/span layout helpers).
+
+**Untouched by this revert** (per instruction): the existing "Book Valuation" navbar pill, the hero CTA, and the custom `/valuations` form remain exactly as they were.
+
+**Verification.** `grep -rn -i "zoopla|ovt-button|online-valuation-tool"` across `.tsx / .ts / .css / .js / .mjs` returns zero widget-related matches (the two remaining `Zoopla Ltd` mentions in `privacy/page.tsx` and `app/privacy/page.tsx` are unrelated GDPR disclosures naming Zoopla as a listing partner). `npx tsc --noEmit` clean. `npm run build` clean.
+
+**Revisit later if desired.** If Zoopla's partner-agent team can register `valeandmercer.co.uk` against the widget key so Cloudflare stops challenging the script fetch — or if the client wants the always-safe new-tab-to-Zoopla fallback back as a lead-capture channel — reintroducing this is straightforward: the Phase 19 / 19b / 19c write-ups above document the exact markup, CSS trick, and Script placement needed.
+
 ### Outstanding items not addressed in this rework
 - Resend `from` address is still the sandbox `onboarding@resend.dev`. Verify the domain in Resend and switch to e.g. `noreply@valeandmercer.co.uk`.
 - Email-body HTML injection risk: both routes still interpolate user input directly. Add HTML-escaping or switch to a templating helper.
