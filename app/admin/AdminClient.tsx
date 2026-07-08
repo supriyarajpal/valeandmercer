@@ -36,7 +36,7 @@ export default function AdminClient() {
   const l = {fontSize:'9px',letterSpacing:'0.15em',textTransform:'uppercase' as const,color:'#9A9188',display:'block',marginBottom:'4px'}
 
   if (!authed) return (
-    <div style={{minHeight:'100vh',background:'#EFECE6',display:'flex',alignItems:'center',justifyContent:'center'}}>
+    <div style={{minHeight:'100vh',background:'#F2EFE9',display:'flex',alignItems:'center',justifyContent:'center'}}>
       <div style={{background:'#fff',padding:'48px',minWidth:'320px',border:'0.5px solid #DDD7CC'}}>
         <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>
           Vale <span style={{color:'#A0845C'}}>&</span> Mercer
@@ -44,7 +44,7 @@ export default function AdminClient() {
         <div style={{fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#9A9188',marginBottom:'32px'}}>Admin Panel</div>
         <label style={l}>Password</label>
         <input type="password" style={{...s,marginBottom:'24px'}} value={password} onChange={e=>setPassword(e.target.value)} />
-        <button onClick={()=>password==='valemercer2025'?setAuthed(true):alert('Wrong password')} style={{background:'#28231C',color:'#EFECE6',fontSize:'11px',letterSpacing:'0.18em',textTransform:'uppercase',padding:'14px 28px',border:'none',cursor:'pointer',width:'100%'}}>
+        <button onClick={()=>password==='valemercer2025'?setAuthed(true):alert('Wrong password')} style={{background:'#34302B',color:'#F2EFE9',fontSize:'11px',letterSpacing:'0.18em',textTransform:'uppercase',padding:'14px 28px',border:'none',cursor:'pointer',width:'100%'}}>
           Enter
         </button>
       </div>
@@ -52,7 +52,7 @@ export default function AdminClient() {
   )
 
   return (
-    <div style={{minHeight:'100vh',background:'#EFECE6',padding:'40px 1.5rem'}}>
+    <div style={{minHeight:'100vh',background:'#F2EFE9',padding:'40px 1.5rem'}}>
       <div style={{maxWidth:'900px',margin:'0 auto'}}>
 
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'48px',paddingBottom:'24px',borderBottom:'0.5px solid #DDD7CC'}}>
@@ -112,17 +112,17 @@ export default function AdminClient() {
           <label htmlFor="feat" style={{fontSize:'13px',color:'#6B6258'}}>Show on homepage as featured property</label>
         </div>
 
-        <button onClick={generate} style={{background:'#28231C',color:'#EFECE6',fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',padding:'16px 48px',border:'none',cursor:'pointer',marginBottom:'32px',display:'block'}}>
+        <button onClick={generate} style={{background:'#34302B',color:'#F2EFE9',fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',padding:'16px 48px',border:'none',cursor:'pointer',marginBottom:'32px',display:'block'}}>
           Generate Property Code
         </button>
 
         {code && (
           <div>
-            <div style={{background:'#28231C',padding:'28px',marginBottom:'24px'}}>
+            <div style={{background:'#34302B',padding:'28px',marginBottom:'24px'}}>
               <div style={{fontSize:'9px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#A0845C',marginBottom:'16px'}}>
                 Copy this code
               </div>
-              <pre style={{color:'#EFECE6',fontSize:'12px',lineHeight:1.9,overflow:'auto',whiteSpace:'pre-wrap',margin:0}}>{code}</pre>
+              <pre style={{color:'#F2EFE9',fontSize:'12px',lineHeight:1.9,overflow:'auto',whiteSpace:'pre-wrap',margin:0}}>{code}</pre>
             </div>
             <div style={{background:'#DDD7CC',padding:'24px'}}>
               <div style={{fontSize:'10px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#6B6258',marginBottom:'12px'}}>Next steps</div>

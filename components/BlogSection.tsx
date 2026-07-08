@@ -80,7 +80,7 @@ function BlogCard({ post, index }: { post: typeof posts[number]; index: number }
           background: '#FFFFFF',
           borderRadius: 10,
           overflow: 'hidden',
-          boxShadow: '0 1px 0 rgba(40,35,28,0.04), 0 16px 32px -22px rgba(40,35,28,0.2)',
+          boxShadow: '0 1px 0 rgba(52,48,43,0.04), 0 16px 32px -22px rgba(52,48,43,0.2)',
           height: '100%',
         }}
         onMouseEnter={e => {

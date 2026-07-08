@@ -1,0 +1,57 @@
+We previously completed 6 phases of fixes on this codebase (see PROJECT_OVERVIEW.md
+Section 10 for full history). Two new visual bugs found via screenshots on mobile Safari
+(iPhone). Fix both.
+
+=== BUG 1: Navbar wordmark becomes unreadable on scroll ===
+
+The "VALE & MERCER" wordmark in components/Navbar.tsx has scroll-aware colour theming
+(the `darkHeroPages` logic mentioned in the project audit) intended to keep it light
+when over a dark hero image and dark when over a light background. On mobile, after
+scrolling past the hero into a light/cream section (background colour ~#EFECE6, the
+--c-bg token), the wordmark is still rendering in a light/gold tone and is nearly
+invisible against the light background — see attached screenshot for exact symptom
+(text visible but extremely low contrast against cream background while menu/burger
+icon stays visibly dark, meaning the two elements are using inconsistent colour logic).
+
+Investigate:
+- How Navbar.tsx currently decides text colour (scroll position threshold? page-based
+  darkHeroPages list? both?)
+- Why this particular page/section triggers the wrong colour, or whether this happens
+  site-wide
+- Whether the colour switch is keyed off scroll Y position, or off which page you're on,
+  or some combination, and whether that logic actually matches where light vs dark
+  background sections actually are on each page
+
+Fix it so the wordmark colour always has sufficient contrast against whatever is
+actually behind it at the current scroll position, on every page, not just the
+homepage. If the current implementation hardcodes per-page assumptions about where
+dark/light sections are, make it more robust (e.g. driven by actual scroll position
+relative to known section boundaries, or a CSS-based contrast solution like mix-blend-mode:
+difference, whichever fits better with the existing MotionProvider/AtmosphereLayer
+scroll-tied colour system already in place — check how AtmosphereLayer.tsx ties colour
+to scrollYProgress and consider reusing that same source of truth so the navbar and
+background never disagree).
+
+=== BUG 2: Hamburger icon misaligned on mobile nav ===
+
+On mobile viewport widths, the hamburger menu icon in Navbar.tsx is visually
+misaligned relative to the logo — see attached screenshot. Fix the hamburger icon's
+alignment (vertical centering relative to the logo, consistent right-edge padding/
+gutter matching the existing --gutter token) so it sits cleanly balanced in the bar.
+
+Constraints:
+- Do NOT change the logo's position, size, or alignment
+- Only adjust the hamburger icon's own positioning/spacing
+- Test that this fix does not break the navbar layout on tablet or desktop widths —
+  the hamburger is likely mobile-only (check the breakpoint it's hidden/shown at) but
+  confirm the fix is scoped correctly and doesn't leak into other breakpoints
+- Check both the closed state and the open/expanded mobile menu state for consistency
+
+=== GENERAL ===
+
+- Test both fixes across the actual page sections where light and dark backgrounds
+  occur (homepage hero -> light section, and any interior page like /about, /let,
+  /fees that use PageHero.tsx) to make sure the contrast fix holds everywhere, not
+  just the one screenshot
+- Summarize what you changed and why
+- Update PROJECT_OVERVIEW.md Section 10 changelog with these two fixes

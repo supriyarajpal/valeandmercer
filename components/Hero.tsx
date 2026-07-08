@@ -52,7 +52,7 @@ export default function Hero() {
         // `100vh` on iOS <15.4 / older WebKit where `dvh` is invalid and
         // the inline style would otherwise drop and leave min-height:auto.
         overflow: 'hidden',
-        background: '#28231C',
+        background: '#34302B',
         display: 'flex',
         flexDirection: 'column',
       }}
@@ -85,13 +85,13 @@ export default function Hero() {
 
       {/* Layer 1 — atmospheric overlays. Pinned to the section so the
           warm tint always covers the image regardless of scroll. */}
-      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(40,35,28,0.58)' }} />
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(52,48,43,0.58)' }} />
       <div
         aria-hidden
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to bottom, rgba(40,35,28,0.5) 0%, rgba(40,35,28,0.1) 22%, rgba(40,35,28,0.1) 70%, rgba(40,35,28,0.75) 100%)',
+          background: 'linear-gradient(to bottom, rgba(52,48,43,0.5) 0%, rgba(52,48,43,0.1) 22%, rgba(52,48,43,0.1) 70%, rgba(52,48,43,0.75) 100%)',
         }}
       />
 
@@ -115,7 +115,7 @@ export default function Hero() {
       >
         <div style={{ width: '100%', maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ maxWidth: 640 }}>
-            <h1 style={{ color: '#EFECE6', margin: '0 0 1.6rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 1.2, textShadow: '0 4px 28px rgba(40,35,28,0.55)' }}>
+            <h1 style={{ color: '#F2EFE9', margin: '0 0 1.6rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 1.2, textShadow: '0 4px 28px rgba(52,48,43,0.55)' }}>
               <HeroLine text="Where" delay={ENTER_DELAY + 0.05} />
               <HeroLine text="homes" delay={ENTER_DELAY + 0.18} italic gold />
               <HeroLine text="find their" delay={ENTER_DELAY + 0.31} />
@@ -133,7 +133,7 @@ export default function Hero() {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: ENTER_DELAY + 0.6, ease: EASE }}
-              style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(239,236,230,0.82)', marginBottom: 6, maxWidth: 460, textShadow: '0 2px 18px rgba(40,35,28,0.9), 0 1px 3px rgba(40,35,28,0.6)' }}
+              style={{ fontSize: 15, lineHeight: 1.8, color: 'rgba(242,239,233,0.82)', marginBottom: 6, maxWidth: 460, textShadow: '0 2px 18px rgba(52,48,43,0.9), 0 1px 3px rgba(52,48,43,0.6)' }}
             >
               London&rsquo;s finest neighbourhoods, handled personally.
             </motion.p>
@@ -142,7 +142,7 @@ export default function Hero() {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: ENTER_DELAY + 0.72, ease: EASE }}
-              style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.5, color: '#A0845C', marginBottom: 0, maxWidth: 460, fontStyle: 'italic', textShadow: '0 1px 16px rgba(40,35,28,0.9)' }}
+              style={{ fontFamily: 'var(--font-serif)', fontSize: 22, lineHeight: 1.5, color: '#A0845C', marginBottom: 0, maxWidth: 460, fontStyle: 'italic', textShadow: '0 1px 16px rgba(52,48,43,0.9)' }}
             >
               Let&rsquo;s get you moving.
             </motion.p>
@@ -186,14 +186,14 @@ export default function Hero() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: 10,
-          color: 'rgba(239,236,230,0.45)',
+          color: 'rgba(242,239,233,0.45)',
           opacity: cueOpacity,
         }}
       >
         <motion.div
           animate={reduce ? {} : { y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, rgba(239,236,230,0.6), transparent)' }}
+          style={{ width: 1, height: 32, background: 'linear-gradient(to bottom, rgba(242,239,233,0.6), transparent)' }}
         />
       </motion.div>
     </section>
@@ -210,7 +210,7 @@ function HeroLine({ text, delay, italic, gold }: { text: string; delay: number; 
         transition={{ duration: 0.9, delay, ease: EASE }}
         style={{
           display: 'block',
-          color: gold ? '#A0845C' : '#EFECE6',
+          color: gold ? '#A0845C' : '#F2EFE9',
           fontStyle: italic ? 'italic' : 'normal',
           willChange: 'transform',
         }}
@@ -233,9 +233,9 @@ function ArrowLink({ href, label, primary }: { href: string; label: string; prim
         fontSize: 11,
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
-        color: primary ? '#28231C' : 'rgba(239,236,230,0.9)',
-        background: primary ? '#EFECE6' : 'transparent',
-        border: primary ? '1px solid #EFECE6' : '1px solid rgba(239,236,230,0.35)',
+        color: primary ? '#34302B' : 'rgba(242,239,233,0.9)',
+        background: primary ? '#F2EFE9' : 'transparent',
+        border: primary ? '1px solid #F2EFE9' : '1px solid rgba(242,239,233,0.35)',
         padding: '18px 26px',
         minHeight: 48,
         overflow: 'hidden',
@@ -244,17 +244,17 @@ function ArrowLink({ href, label, primary }: { href: string; label: string; prim
       onMouseEnter={e => {
         const fill = e.currentTarget.querySelector<HTMLSpanElement>('[data-fill]')
         if (fill) fill.style.transform = 'translateX(0)'
-        e.currentTarget.style.color = primary ? '#EFECE6' : '#28231C'
-        e.currentTarget.style.borderColor = primary ? '#A0845C' : '#EFECE6'
+        e.currentTarget.style.color = primary ? '#F2EFE9' : '#34302B'
+        e.currentTarget.style.borderColor = primary ? '#A0845C' : '#F2EFE9'
       }}
       onMouseLeave={e => {
         const fill = e.currentTarget.querySelector<HTMLSpanElement>('[data-fill]')
         if (fill) fill.style.transform = 'translateX(-101%)'
-        e.currentTarget.style.color = primary ? '#28231C' : 'rgba(239,236,230,0.9)'
-        e.currentTarget.style.borderColor = primary ? '#EFECE6' : 'rgba(239,236,230,0.35)'
+        e.currentTarget.style.color = primary ? '#34302B' : 'rgba(242,239,233,0.9)'
+        e.currentTarget.style.borderColor = primary ? '#F2EFE9' : 'rgba(242,239,233,0.35)'
       }}
     >
-      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: primary ? '#A0845C' : '#EFECE6', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
+      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: primary ? '#A0845C' : '#F2EFE9', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
       <span style={{ position: 'relative', zIndex: 1 }}>{label}</span>
       <span style={{ position: 'relative', zIndex: 1, fontSize: 13, transform: 'translateY(-1px)' }} aria-hidden>→</span>
     </Link>

@@ -4,7 +4,7 @@ const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
   title: 'Free London Property Valuations',
-  description: 'Book a free in-person London property valuation with Vale and Mercer. No online tools, no algorithms — a straight, well-reasoned figure from a senior agent.',
+  description: 'Book a free in-person London property valuation with Vale and Mercer. No online tools, no algorithms, just a straight, well-reasoned figure from a senior agent.',
   alternates: { canonical: '/valuations' },
 }
 

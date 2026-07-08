@@ -6,7 +6,7 @@ const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
   title: 'Lettings and Sales Fees',
-  description: 'Transparent Vale and Mercer fees for London lettings and residential sales — Tenant Find, Rent Collection and Full Management options with no hidden charges.',
+  description: 'Transparent Vale and Mercer fees for London lettings and residential sales. Tenant Find, Rent Collection and Full Management options with no hidden charges.',
   alternates: { canonical: '/fees' },
 }
 
@@ -37,7 +37,7 @@ export default function FeesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
       <Navbar />
-      <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Transparency</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Services and Fees</h1>
@@ -57,7 +57,7 @@ export default function FeesPage() {
                     ['Rent Collection','8% of first year\'s rent','7% of monthly rent collected'],
                     ['Full Management','8% of first year\'s rent','10% of monthly rent collected'],
                   ].map(([s,t,o],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}>
                       <td style={{...tdStyle,fontWeight:500,color:'#4A4036'}}>{s}</td>
                       <td style={{...tdStyle,color:'#A0845C'}}>{t}</td>
                       <td style={tdStyle}>{o}</td>
@@ -85,10 +85,10 @@ export default function FeesPage() {
 
           <div style={sectionStyle}>
             <h2 style={h2Style}>Residential Sales</h2>
-            <div style={{background:'#28231C',padding:'20px 24px',marginBottom:'16px',display:'inline-block'}}>
-              <p style={{fontSize:'13px',color:'rgba(239,236,230,0.6)',marginBottom:'4px'}}>Fee</p>
-              <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'28px',fontWeight:300,color:'#EFECE6'}}>1.5% of the agreed sale price (indicative; please contact us to discuss)</p>
-              <p style={{fontSize:'11px',color:'rgba(239,236,230,0.4)',marginTop:'4px'}}>Not subject to VAT</p>
+            <div style={{background:'#34302B',padding:'20px 24px',marginBottom:'16px',display:'inline-block'}}>
+              <p style={{fontSize:'13px',color:'rgba(242,239,233,0.6)',marginBottom:'4px'}}>Fee</p>
+              <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'28px',fontWeight:300,color:'#F2EFE9'}}>1.5% of the agreed sale price (indicative; please contact us to discuss)</p>
+              <p style={{fontSize:'11px',color:'rgba(242,239,233,0.4)',marginTop:'4px'}}>Not subject to VAT</p>
             </div>
             <p style={pStyle}>Vale and Mercer Ltd accepts residential sales instructions on a selective basis. Please contact us to discuss your requirements.</p>
           </div>
@@ -105,7 +105,7 @@ export default function FeesPage() {
               <table style={tableStyle}>
                 <thead><tr><th style={thStyle}>Annual Rent</th><th style={thStyle}>Maximum Deposit</th></tr></thead>
                 <tbody>
-                  <tr style={{background:'#EFECE6'}}><td style={tdStyle}>£50,000 or below</td><td style={{...tdStyle,color:'#A0845C',fontWeight:500}}>5 weeks' rent</td></tr>
+                  <tr style={{background:'#F2EFE9'}}><td style={tdStyle}>£50,000 or below</td><td style={{...tdStyle,color:'#A0845C',fontWeight:500}}>5 weeks' rent</td></tr>
                   <tr style={{background:'#F5F2EE'}}><td style={tdStyle}>Over £50,000</td><td style={{...tdStyle,color:'#A0845C',fontWeight:500}}>6 weeks' rent</td></tr>
                 </tbody>
               </table>
@@ -122,7 +122,7 @@ export default function FeesPage() {
                     ['Tenancy variation','If you request a change, e.g. adding a new flatmate','£50'],
                     ['Early termination','If you wish to leave before your tenancy ends','Landlord\'s reasonable re-letting costs and rent until a replacement tenant moves in'],
                   ].map(([c,w,a],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}>
                       <td style={{...tdStyle,fontWeight:500}}>{c}</td>
                       <td style={tdStyle}>{w}</td>
                       <td style={{...tdStyle,color:'#A0845C'}}>{a}</td>
@@ -142,7 +142,7 @@ export default function FeesPage() {
                 {title:'Client Money Protection',body:'Vale and Mercer Ltd holds client money in a dedicated client account separate from business funds. We are a member of an approved Client Money Protection scheme under the Client Money Protection Schemes for Property Agents Regulations 2018.'},
                 {title:'Anti-Money Laundering',body:'Vale and Mercer Ltd is registered with HMRC for anti-money laundering supervision under the Money Laundering Regulations 2017. We conduct identity, ownership and sanctions checks as required by law on all landlords and tenants.'},
               ].map(item=>(
-                <div key={item.title} style={{background:'#EFECE6',padding:'24px'}}>
+                <div key={item.title} style={{background:'#F2EFE9',padding:'24px'}}>
                   <h3 style={{...h3Style,marginTop:0,fontSize:'16px'}}>{item.title}</h3>
                   <p style={{...pStyle,marginBottom:0,fontSize:'13px'}}>{item.body}</p>
                 </div>

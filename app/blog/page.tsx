@@ -5,16 +5,20 @@ import Footer from '@/components/Footer'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 
 const posts = [
-  { slug: 'london-property-market-2025', category: 'Market Insight', title: 'The London property market in 2025', excerpt: 'Supply is up, rates have settled a little, and buyers are moving again. Here is what we are seeing.', date: 'May 2025', image: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1400&q=85' },
-  { slug: 'guide-to-buying-in-chelsea', category: 'Buying Guide', title: 'Your complete guide to buying in Chelsea SW3', excerpt: 'What to expect, where to look, and what the streets actually feel like. A practical guide to buying in SW3.', date: 'April 2025', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1000&q=85' },
-  { slug: 'student-lettings-london-guide', category: 'Student Living', title: 'Renting in London as a student', excerpt: 'No jargon, no hidden fees. Everything you need to find a good home near your university and avoid the common pitfalls.', date: 'March 2025', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=85' },
+  { slug: 'landlord-checklist-preparing-to-let', category: 'For Landlords', title: "Getting your property ready to let: a landlord's checklist", excerpt: 'A practical checklist for landlords preparing a rental. Photography, staging, compliance paperwork, honest pricing, and what a good agent should be doing.', date: 'July 2026', image: 'https://images.unsplash.com/photo-1595846519845-68e298c2edd8?w=1400&q=85' },
+  { slug: 'local-guide-renting-canary-wharf', category: 'Area Guide', title: "A local's guide to renting in Canary Wharf", excerpt: 'What the area actually feels like. Transport links, resident profile, riverside walks, and the newer high-rises that fill our current lettings shortlist.', date: 'July 2026', image: 'https://images.unsplash.com/photo-1664624447750-39756899f4a7?w=1400&q=85' },
+  { slug: 'london-rental-market-2026', category: 'Market Insight', title: "London's rental market in 2026: what's actually happening to rents", excerpt: 'A calm, data-led look at London rents in mid-2026. UK average, London growth versus other regions, supply, and time-to-let.', date: 'July 2026', image: 'https://images.unsplash.com/photo-1513026705753-bc3fffca8bf4?w=1400&q=85' },
+  { slug: 'renters-rights-act-london-2026', category: 'Regulation', title: "What the Renters' Rights Act means for London tenants and landlords in 2026", excerpt: 'In force since 1 May 2026. What changed for bidding, rent increases, and how homes are advertised. Practical guidance for both sides.', date: 'July 2026', image: 'https://images.unsplash.com/photo-1510265236892-329bfd7de7a1?w=1400&q=85' },
+  { slug: 'london-property-market-2025', category: 'Market Insight', title: 'The London property market in 2026', excerpt: 'Supply is up, rates have settled a little, and buyers are moving again. Here is what we are seeing.', date: 'May 2026', image: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1400&q=85' },
+  { slug: 'guide-to-buying-in-chelsea', category: 'Buying Guide', title: 'Your complete guide to buying in Chelsea SW3', excerpt: 'What to expect, where to look, and what the streets actually feel like. A practical guide to buying in SW3.', date: 'April 2026', image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1000&q=85' },
+  { slug: 'student-lettings-london-guide', category: 'Student Living', title: 'Renting in London as a student', excerpt: 'No jargon, no hidden fees. Everything you need to find a good home near your university and avoid the common pitfalls.', date: 'March 2026', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1000&q=85' },
 ]
 
 export default function BlogPage() {
   return (
     <>
       <Navbar />
-      <main style={{ background: '#EFECE6', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
+      <main style={{ background: '#F2EFE9', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 var(--gutter)' }}>
           <Reveal y={28} amount={0.2}>
             <div style={{ marginBottom: 72, maxWidth: 720 }}>
@@ -36,7 +40,7 @@ export default function BlogPage() {
                     background: '#FFFFFF',
                     borderRadius: 10,
                     overflow: 'hidden',
-                    boxShadow: '0 1px 0 rgba(40,35,28,0.04), 0 16px 32px -22px rgba(40,35,28,0.2)',
+                    boxShadow: '0 1px 0 rgba(52,48,43,0.04), 0 16px 32px -22px rgba(52,48,43,0.2)',
                     height: '100%',
                     textDecoration: 'none',
                   }}

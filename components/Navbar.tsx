@@ -12,7 +12,18 @@ const links = [
   { label: 'Blog', href: '/blog' },
 ]
 
-const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations']
+const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/student-lettings']
+// Dynamic-route path prefixes whose pages render a dark hero band up
+// against the navbar. Kept as a small array so future routes can be
+// added by prefix rather than needing a one-off `pathname === '/foo'`
+// check. Blog posts (`/blog/[slug]`) use the cream ArticleLayout hero
+// and deliberately are NOT in this list.
+const darkHeroPathPrefixes = ['/property/']
+
+function pathIsDarkHero(pathname: string): boolean {
+  return darkHeroPages.includes(pathname)
+    || darkHeroPathPrefixes.some(prefix => pathname.startsWith(prefix))
+}
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -23,7 +34,7 @@ export default function Navbar() {
   const reduce = useReducedMotion()
   const firstLoad = useFirstLoad()
 
-  const isDarkHero = darkHeroPages.includes(pathname)
+  const isDarkHero = pathIsDarkHero(pathname)
 
   useEffect(() => {
     const checkSize = () => setMobile(window.innerWidth < 900)
@@ -68,7 +79,7 @@ export default function Navbar() {
   const isOverDark = !scrolled && (menuOpen || isDarkHero)
 
   // Phase 15: scrolled navbar = dark charcoal translucent glass.
-  //   background:                rgba(40,35,28,0.55)
+  //   background:                rgba(52,48,43,0.55)
   //   backdrop-filter:           blur(20px) saturate(160%)
   //   -webkit-backdrop-filter:   blur(20px) saturate(160%)
   //
@@ -92,20 +103,20 @@ export default function Navbar() {
   // Phase 7 values did over the raw dark hero photograph). Do NOT
   // collapse this back to a single boolean unless you also unify the
   // values — top-of-page behaviour must remain byte-identical.
-  const navShadow = scrolled ? '0 1px 0 rgba(40,35,28,0.06)' : 'none'
+  const navShadow = scrolled ? '0 1px 0 rgba(52,48,43,0.06)' : 'none'
 
   const logoColor       = scrolled
-    ? 'rgba(239,236,230,0.9)'
-    : isOverDark ? 'rgba(239,236,230,0.95)' : 'rgba(40,35,28,0.92)'
+    ? 'rgba(242,239,233,0.9)'
+    : isOverDark ? 'rgba(242,239,233,0.95)' : 'rgba(52,48,43,0.92)'
   const linkColor       = scrolled
-    ? 'rgba(239,236,230,0.8)'
-    : isOverDark ? 'rgba(239,236,230,0.82)' : 'rgba(40,35,28,0.72)'
+    ? 'rgba(242,239,233,0.8)'
+    : isOverDark ? 'rgba(242,239,233,0.82)' : 'rgba(52,48,43,0.72)'
   const hamburgerColor  = scrolled
-    ? 'rgba(239,236,230,0.85)'
-    : isOverDark ? 'rgba(239,236,230,0.9)'  : 'rgba(40,35,28,0.85)'
+    ? 'rgba(242,239,233,0.85)'
+    : isOverDark ? 'rgba(242,239,233,0.9)'  : 'rgba(52,48,43,0.85)'
   const btnBorder       = scrolled
-    ? '1px solid rgba(239,236,230,0.3)'
-    : isOverDark ? '1px solid rgba(239,236,230,0.35)' : '1px solid rgba(40,35,28,0.25)'
+    ? '1px solid rgba(242,239,233,0.3)'
+    : isOverDark ? '1px solid rgba(242,239,233,0.35)' : '1px solid rgba(52,48,43,0.25)'
 
   const enterDelay = reduce ? 0 : firstLoad ? 0.9 : 0.05
   const container: Variants = {
@@ -125,7 +136,7 @@ export default function Navbar() {
         transition={{ duration: 0.6, delay: reduce ? 0 : firstLoad ? 0.85 : 0, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-          background: scrolled ? 'rgba(40,35,28,0.55)' : 'transparent',
+          background: scrolled ? 'rgba(52,48,43,0.55)' : 'transparent',
           backdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
           WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
           boxShadow: navShadow,
@@ -262,7 +273,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            style={{ position: 'fixed', inset: 0, zIndex: 99, background: 'rgba(40,35,28,0.97)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
+            style={{ position: 'fixed', inset: 0, zIndex: 99, background: 'rgba(52,48,43,0.97)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
           >
             <motion.div
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}
@@ -272,7 +283,7 @@ export default function Navbar() {
             >
               {[...links, { label: 'Book Valuation', href: '/valuations' }].map(link => (
                 <motion.div key={link.label} variants={item}>
-                  <Link href={link.href} onClick={() => setMenuOpen(false)} style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 6.5vw, 32px)', fontWeight: 300, color: '#EFECE6', letterSpacing: '0.03em', textAlign: 'center', display: 'inline-block', padding: '8px 12px' }}>
+                  <Link href={link.href} onClick={() => setMenuOpen(false)} style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 6.5vw, 32px)', fontWeight: 300, color: '#F2EFE9', letterSpacing: '0.03em', textAlign: 'center', display: 'inline-block', padding: '8px 12px' }}>
                     {link.label}
                   </Link>
                 </motion.div>

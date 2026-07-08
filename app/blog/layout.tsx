@@ -4,7 +4,7 @@ const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
   title: 'London Property Journal',
-  description: 'Insight and advice on the London property market, buying guides for prime London postcodes like Chelsea SW3, and student lettings guidance — the Vale and Mercer journal.',
+  description: 'Insight and advice on the London property market, buying guides for prime London postcodes like Chelsea SW3, and student lettings guidance from the Vale and Mercer journal.',
   alternates: { canonical: '/blog' },
 }
 

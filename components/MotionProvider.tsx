@@ -79,8 +79,8 @@ export default function MotionProvider({ children }: { children: React.ReactNode
           aria-hidden
           style={{ position: 'fixed', inset: 0, zIndex: 9999, pointerEvents: 'none', overflow: 'hidden' }}
         >
-          <div className="vm-curtain-top" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }} />
-          <div className="vm-curtain-bot" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50.2%', background: '#28231C', willChange: 'transform' }} />
+          <div className="vm-curtain-top" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '50.2%', background: '#34302B', willChange: 'transform' }} />
+          <div className="vm-curtain-bot" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '50.2%', background: '#34302B', willChange: 'transform' }} />
 
           <div className="vm-curtain-text" style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 18, willChange: 'opacity' }}>
             <span style={{
@@ -89,7 +89,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
               fontWeight: 300,
               letterSpacing: '0.32em',
               textTransform: 'uppercase',
-              color: 'rgba(239,236,230,0.95)',
+              color: 'rgba(242,239,233,0.95)',
               paddingLeft: '0.32em',
               textIndent: '-0.32em',
             }}>
@@ -101,7 +101,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
               fontSize: 10,
               letterSpacing: '0.32em',
               textTransform: 'uppercase',
-              color: 'rgba(239,236,230,0.5)',
+              color: 'rgba(242,239,233,0.5)',
             }}>
               London, handled with care.
             </span>

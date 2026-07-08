@@ -4,7 +4,7 @@ const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
   title: 'About the Agency',
-  description: 'About Vale and Mercer — an independent London residential estate agency offering attentive, straightforward service across lettings, sales and valuations.',
+  description: 'About Vale and Mercer, an independent London residential estate agency offering attentive, straightforward service across lettings, sales and valuations.',
   alternates: { canonical: '/about' },
 }
 

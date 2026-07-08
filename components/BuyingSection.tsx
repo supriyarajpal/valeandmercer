@@ -36,7 +36,7 @@ export default function BuyingSection() {
   const innerY = useTransform(imageProgress, [0, 1], isMobile ? ['0%', '0%'] : ['8%', '-8%'])
 
   return (
-    <section ref={sectionRef} style={{ background: '#EFECE6', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
+    <section ref={sectionRef} style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 64, alignItems: 'center' }}>
         <motion.div
           ref={imageRef}
@@ -57,7 +57,7 @@ export default function BuyingSection() {
               style={{ width: '100%', height: '120%', objectFit: 'cover', objectPosition: 'center' }}
             />
           </motion.div>
-          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(40,35,28,0.4) 0%, transparent 55%)' }} />
+          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(52,48,43,0.4) 0%, transparent 55%)' }} />
         </motion.div>
 
         <div>
@@ -85,7 +85,7 @@ export default function BuyingSection() {
           <Stagger as="ul" stagger={0.32} delayChildren={0.85} style={{ listStyle: 'none', margin: '0 0 32px', padding: 0 }}>
             {points.map(point => (
               <StaggerItem key={point} as="li">
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '6px 0', borderBottom: '0.5px solid rgba(40,35,28,0.15)' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 14, padding: '6px 0', borderBottom: '0.5px solid rgba(52,48,43,0.15)' }}>
                   <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#A0845C', flexShrink: 0, marginTop: 8 }} />
                   <span style={{ fontFamily: 'var(--font-sans)', fontSize: 13, color: 'rgba(74,64,54,0.72)', lineHeight: 1.45 }}>{point}</span>
                 </div>
@@ -128,8 +128,8 @@ function ArrowCTA({ href, label }: { href: string; label: string }) {
         fontSize: 11,
         letterSpacing: '0.18em',
         textTransform: 'uppercase',
-        color: '#EFECE6',
-        background: '#28231C',
+        color: '#F2EFE9',
+        background: '#34302B',
         padding: '15px 26px',
         overflow: 'hidden',
         transition: 'color 0.4s var(--ease-out-soft)',

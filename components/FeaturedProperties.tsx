@@ -4,21 +4,34 @@ import Link from 'next/link'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Reveal } from '@/components/Reveal'
 import { useIsMobile } from '@/components/useDepthParallax'
+import { properties } from '@/lib/properties'
 
-const listings = [
-  {
-    label: 'To Let',
-    area: 'Canary Wharf, East London',
-    desc: 'Lettings properties coming shortly across Canary Wharf and East London. Register to be the first to know.',
-    image: 'https://images.unsplash.com/photo-1540770742812-9a2da5a37ec0?w=1400&q=85',
-  },
-  {
-    label: 'To Let',
-    area: 'Notting Hill W11',
-    desc: 'Lettings properties coming shortly across Notting Hill and Kensington. Register to be the first to know.',
-    image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1400&q=85',
-  },
-]
+type Listing = {
+  label: string
+  area: string
+  desc: string
+  image: string
+  href: string
+  meta?: string        // small line above CTA — e.g. "£4,050pcm · 2 beds"
+  ctaLabel?: string    // "Register Interest" for coming-soon, "View Property" for live
+}
+
+// Live rentals with real photography flagged featured:true in lib/properties.
+// Only live records (status === 'live') with `featured: true` appear here.
+const listings: Listing[] = properties
+  .filter(p => p.status === 'live' && p.featured)
+  .map(p => {
+    const beds = p.beds === 0 ? 'Studio' : `${p.beds} bed${p.beds === 1 ? '' : 's'}`
+    return {
+      label: p.listingType,
+      area: `${p.title} · ${p.area}`,
+      desc: p.teaser ?? p.description,
+      image: p.image,
+      href: `/property/${p.slug}`,
+      meta: `${p.rent} · ${beds} · Available ${p.available}`,
+      ctaLabel: 'View Property',
+    }
+  })
 
 export default function FeaturedProperties() {
   return (
@@ -29,18 +42,18 @@ export default function FeaturedProperties() {
             <div>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 12 }}>Our Listings</p>
               <h2 style={{ color: '#4A4036' }}>
-                Properties <span style={{ color: '#A0845C', fontStyle: 'italic' }}>coming soon</span>
+                Available <span style={{ color: '#A0845C', fontStyle: 'italic' }}>now</span>
               </h2>
             </div>
-            <Link href="/register" className="link-underline" style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#A0845C', whiteSpace: 'nowrap' }}>
-              Get Notified <span aria-hidden style={{ marginLeft: 6 }}>→</span>
+            <Link href="/rent" className="link-underline" style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#A0845C', whiteSpace: 'nowrap' }}>
+              All Rentals <span aria-hidden style={{ marginLeft: 6 }}>→</span>
             </Link>
           </div>
         </Reveal>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24, perspective: '1400px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, perspective: '1400px' }}>
           {listings.map((item, i) => (
-            <StorefrontCard key={item.area} item={item} index={i} total={listings.length} />
+            <StorefrontCard key={item.href + item.area} item={item} index={i} total={listings.length} />
           ))}
         </div>
       </div>
@@ -49,7 +62,7 @@ export default function FeaturedProperties() {
 }
 
 type StorefrontProps = {
-  item: { label: string; area: string; desc: string; image: string }
+  item: Listing
   index: number
   total: number
 }
@@ -93,15 +106,15 @@ function StorefrontCard({ item, index, total }: StorefrontProps) {
       }}
     >
       <Link
-        href="/register"
+        href={item.href}
         style={{
           position: 'relative',
           display: 'block',
-          background: '#28231C',
+          background: '#34302B',
           borderRadius: 12,
           overflow: 'hidden',
           minHeight: 440,
-          boxShadow: '0 1px 0 rgba(40,35,28,0.04), 0 20px 40px -20px rgba(40,35,28,0.18)',
+          boxShadow: '0 1px 0 rgba(52,48,43,0.04), 0 20px 40px -20px rgba(52,48,43,0.18)',
         }}
         onMouseEnter={e => {
           const img = e.currentTarget.querySelector<HTMLImageElement>('img')
@@ -127,24 +140,31 @@ function StorefrontCard({ item, index, total }: StorefrontProps) {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(180deg, rgba(40,35,28,0.92) 0%, rgba(40,35,28,0.86) 45%, rgba(40,35,28,0.55) 100%)',
+            background: 'linear-gradient(180deg, rgba(52,48,43,0.92) 0%, rgba(52,48,43,0.86) 45%, rgba(52,48,43,0.55) 100%)',
           }}
         />
         <div style={{ position: 'relative', zIndex: 2, padding: '36px 32px', height: '100%', minHeight: 440, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ display: 'inline-block', fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', background: '#A0845C', color: '#EFECE6', padding: '6px 12px', marginBottom: 24 }}>
+            <span style={{ display: 'inline-block', fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '6px 12px', marginBottom: 24 }}>
               {item.label}
             </span>
-            <h3 style={{ color: '#EFECE6', marginBottom: 14, fontSize: 'clamp(24px, 3.4vw, 36px)' }}>
+            <h3 style={{ color: '#F2EFE9', marginBottom: 14, fontSize: 'clamp(24px, 3.4vw, 36px)' }}>
               {item.area}
             </h3>
-            <p style={{ fontSize: 13, lineHeight: 1.85, color: 'rgba(239,236,230,0.82)', maxWidth: 340, textShadow: '0 1px 8px rgba(40,35,28,0.6)' }}>
+            <p style={{ fontSize: 13, lineHeight: 1.85, color: 'rgba(242,239,233,0.82)', maxWidth: 340, textShadow: '0 1px 8px rgba(52,48,43,0.6)' }}>
               {item.desc}
             </p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 24, borderTop: '0.5px solid rgba(239,236,230,0.18)' }}>
-            <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#A0845C' }}>Register Interest</span>
-            <span data-arrow style={{ color: '#A0845C', fontSize: 14, transition: 'transform 0.4s var(--ease-out-soft)' }} aria-hidden>→</span>
+          <div>
+            {item.meta && (
+              <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.72)', marginBottom: 16, textShadow: '0 1px 6px rgba(52,48,43,0.7)' }}>
+                {item.meta}
+              </div>
+            )}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 24, borderTop: '0.5px solid rgba(242,239,233,0.18)' }}>
+              <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#A0845C' }}>{item.ctaLabel ?? 'Register Interest'}</span>
+              <span data-arrow style={{ color: '#A0845C', fontSize: 14, transition: 'transform 0.4s var(--ease-out-soft)' }} aria-hidden>→</span>
+            </div>
           </div>
         </div>
       </Link>

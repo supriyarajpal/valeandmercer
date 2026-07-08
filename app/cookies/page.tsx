@@ -22,19 +22,19 @@ export default function CookiesPage() {
   return (
     <>
       <Navbar />
-      <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'860px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Cookie Policy</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>VM-CP-001 | Version 1.1 | May 2026 | Company Registration No: 17212434</p>
 
-          <div style={{background:'#28231C',padding:'28px 32px',marginBottom:'16px'}}>
+          <div style={{background:'#34302B',padding:'28px 32px',marginBottom:'16px'}}>
             <p style={{fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#A0845C',marginBottom:'14px'}}>At a Glance</p>
             <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
               {['We use essential cookies to run the site and keep it secure. No consent needed.','Analytics cookies (Google Analytics) help us improve the site and require your consent. They are off by default.','Marketing cookies for Google Ads are off by default and only switched on if you choose "Accept Marketing."','You can change your choices at any time via "Cookie Settings" in the footer.'].map((item,i)=>(
                 <div key={i} style={{display:'flex',gap:'12px',alignItems:'flex-start'}}>
                   <div style={{width:'4px',height:'4px',borderRadius:'50%',background:'#A0845C',flexShrink:0,marginTop:'8px'}} />
-                  <span style={{fontSize:'13px',color:'rgba(239,236,230,0.7)',lineHeight:1.7}}>{item}</span>
+                  <span style={{fontSize:'13px',color:'rgba(242,239,233,0.7)',lineHeight:1.7}}>{item}</span>
                 </div>
               ))}
             </div>
@@ -96,7 +96,7 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Data Collected</th><th style={thStyle}>Duration</th></tr></thead>
                 <tbody>
                   {[['__vercel_live_token','Vercel Inc','Enables the website to be served correctly and securely','Technical routing data only (no personal data identifiable to you)','Session'],['_vercel_jwt','Vercel Inc','Authentication and security token for protected deployments','Encrypted token (no readable personal data)','Session'],['cookie_consent','Vale and Mercer Ltd','Stores your cookie consent preferences so you are not asked again on every page visit','Your consent choices: Accept/Decline per category; timestamp of consent','1 year']].map(([name,by,purpose,data,dur],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={tdStyle}>{data}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={tdStyle}>{data}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -111,7 +111,7 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Duration</th><th style={thStyle}>Consent</th></tr></thead>
                 <tbody>
                   {[['_ga','Google Analytics 4 (Google LLC)','Distinguishes unique website visitors using a randomly generated identifier','2 years','Yes (via banner)'],['_ga_[ID]','Google Analytics 4','Stores and counts page views for this specific Vale and Mercer GA4 property','2 years','Yes (via banner)'],['_gid','Google Analytics 4','Distinguishes users over a 24-hour period','24 hours','Yes (via banner)']].map(([name,by,purpose,dur,consent],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -136,7 +136,7 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Duration</th><th style={thStyle}>Consent</th></tr></thead>
                 <tbody>
                   {[['_gcl_au','Google Ads (Google LLC)','Conversion tracking: links a click on a Vale and Mercer Ltd Google Ad to a subsequent action taken on this website','3 months','Yes (explicit)'],['IDE','Google LLC (DoubleClick)','Remarketing: records that you visited this website so Google can show you Vale and Mercer Ltd advertisements on other websites','13 months','Yes (explicit)'],['DSID','Google LLC (DoubleClick)','Used in conjunction with IDE to sync your advertising ID across Google ad platforms','2 weeks','Yes (explicit)'],['__gads / __gpi','Google LLC','Stores advertising preferences and prevents the same ad from being shown too many times','13 months','Yes (explicit)'],['_gac_[ID]','Google Ads (Google LLC)','Links Google Ads campaign data to conversions recorded in GA4','90 days','Yes (explicit)']].map(([name,by,purpose,dur,consent],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -156,7 +156,7 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Third Party</th><th style={thStyle}>Role on This Site</th><th style={thStyle}>Their Privacy and Cookie Policy</th></tr></thead>
                 <tbody>
                   {[['Google LLC','Analytics (GA4) and advertising (Google Ads, DoubleClick)','policies.google.com/privacy'],['Vercel Inc','Website infrastructure and hosting','vercel.com/legal/privacy-policy']].map(([party,role,link],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}><td style={{...tdStyle,fontWeight:500}}>{party}</td><td style={tdStyle}>{role}</td><td style={tdStyle}><a href={'https://'+link} target="_blank" rel="noreferrer" style={{color:'#A0845C',fontSize:'12px'}}>{link}</a></td></tr>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={{...tdStyle,fontWeight:500}}>{party}</td><td style={tdStyle}>{role}</td><td style={tdStyle}><a href={'https://'+link} target="_blank" rel="noreferrer" style={{color:'#A0845C',fontSize:'12px'}}>{link}</a></td></tr>
                   ))}
                 </tbody>
               </table>

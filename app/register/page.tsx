@@ -83,7 +83,7 @@ export default function RegisterPage() {
   return (
     <>
       <Navbar />
-      <main style={{ background: '#EFECE6', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
+      <main style={{ background: '#F2EFE9', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 var(--gutter)' }}>
           <Reveal y={28} amount={0.2}>
             <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Stay Informed</p>
@@ -188,8 +188,8 @@ function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onCha
           }}
         />
         <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
-          I consent to Vale &amp; Mercer collecting and processing my information to respond to my enquiry. I understand my details may also be used to send me relevant property updates and marketing communications, and I can unsubscribe at any time. See our{' '}
-          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a> for full details.
+          I agree to Vale &amp; Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
+          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a>.
         </span>
       </label>
       {error && (
@@ -209,8 +209,8 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
       disabled={disabled}
       style={{
         position: 'relative',
-        background: '#28231C',
-        color: '#EFECE6',
+        background: '#34302B',
+        color: '#F2EFE9',
         fontSize: 11,
         letterSpacing: '0.2em',
         textTransform: 'uppercase',

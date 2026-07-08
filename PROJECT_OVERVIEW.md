@@ -914,11 +914,639 @@ The id, class, image URLs, and inline markup remain unchanged so the widget scri
 
 **Revisit later if desired.** If Zoopla's partner-agent team can register `valeandmercer.co.uk` against the widget key so Cloudflare stops challenging the script fetch — or if the client wants the always-safe new-tab-to-Zoopla fallback back as a lead-capture channel — reintroducing this is straightforward: the Phase 19 / 19b / 19c write-ups above document the exact markup, CSS trick, and Script placement needed.
 
+### Phase 20 — Live rentals: 10 real listings + dynamic detail pages (2026-07-08)
+
+**Purely additive** per instruction. None of the existing hardcoded property teaser cards were removed or edited — this pass adds a real property-detail surface alongside them so the site now carries actual current availability.
+
+**Data model.** `lib/properties.ts` — previously dead code with 3 placeholder samples — was rewritten. The `Property` type was extended to cover the full detail-page field set (`ref`, `rent` pcm + `rentPW`, `available`, `holdingDeposit`, `securityDeposit`, nullable `sqft`/`floor`, `epc`, `tags[]`, `headline`, `description`, `amenities`, `keyFeatures[]`, optional `compliance` block, `location`, `nearby[]` with `Tube` / `School` discrimination, `income` requirements block). Two new exported constants — `AGENT_CONTACT` (Raghav Rajpal, info@valeandmercer.co.uk, +44 7517 696926) and `RENT_TERMS` / `RENT_GUIDES` — centralise the shared blocks so future edits touch one place. The 3 placeholder samples were removed; the 10 real Canary Wharf / Isle of Dogs / Millwall / Cubitt Town lettings supplied by the client are the sole records. Two helper functions: `getPropertyBySlug` and `getAllPropertySlugs`.
+
+**Detail page.** `app/property/[slug]/page.tsx` — new dynamic route, server component. Emits `generateStaticParams` (all 10 slugs) so every property gets a real SSG URL (`/property/lawn-house-close-1bed`, `…/marsh-wall-studio-2400`, `…/westferry-circus-4078`, etc). Also emits per-property `generateMetadata` with canonical, OpenGraph, and short SERP description. Renders in Next.js 16 style (`params: Promise<{ slug: string }>`, `const { slug } = await params`). Layout: dark ink hero (matching `PageHero` pattern — placeholder image at 0.55 opacity, gradient wash, gold accent rule, serif title with area suffix, rent + rentPW + bed/bath/sqft/floor/availability strip), then a two-column body (main column + sticky sidebar) that flattens to one column below 900 px via a scoped inline stylesheet. Main column sections, each with the existing hairline `border-top: 0.5px solid #DDD7CC` separator: Overview (headline + description), Amenities, Key Features (bullet list, hidden if empty), Compliance (EPC + council tax, hidden if absent), Location + Nearby (tube/rail and schools split into two labelled groups), Deposits, Rent payment + income requirements table, rent-term lines ("Pay monthly", "Required" for ID / R2R / proof), and the two guide links (`How to Rent Guide`, `Renters' Rights Act Information Sheet`) as `href="#"` placeholders. Sidebar is a dark `#28231C` card with the agent block (serif name, sans micro-title, mailto with pre-populated `subject=Enquiry — <title> (Ref <ref>)`, tel), two CTAs (`Book a Viewing` gold, `Make an Offer` outlined-light) both using the existing `ArrowButton` component with `href="#"` placeholders, and a small `Property Ref` footer.
+
+**Wired into `/rent`.** `app/rent/page.tsx` — the existing hero block and the existing 3 "coming soon" teaser cards are byte-for-byte unchanged. A new section is inserted between them: eyebrow "Available now", h2 "Currently on the market", right-aligned listing count, then a responsive grid of 10 property cards (dark card, 200 px placeholder-image band with `To Let` gold pill, area eyebrow, serif title, bed/bath/sqft micro-copy, price + `rentPW` + availability footer, gold arrow on hover — same design vocabulary as the coming-soon cards but with real data and linking to `/property/[slug]` instead of `/register`). Uses the existing `Stagger` / `StaggerItem` reveal machinery.
+
+**Wired into homepage.** `components/FeaturedProperties.tsx` — the 2 existing "coming soon" storefront cards (Canary Wharf, East London / Notting Hill W11) are unchanged. Two additional cards are added by importing `properties` from `lib/properties`, filtering for `featured: true` (Marsh Wall £4,050pcm 18th-floor 2-bed and Westferry Circus £4,078pcm 3rd-floor 2-bed), and prepending them to the existing `listings` array. The card body was extended to (a) source `href` from the item so live cards link to `/property/[slug]` while coming-soon cards still link to `/register`, (b) render an optional `meta` line ("£4,050pcm · 2 beds · Available 21 August") above the CTA row for live cards only, and (c) render a configurable CTA label ("View Property" / "Register Interest"). Section h2 changed from "Properties coming soon" to "Available now & coming soon" and the section-header link swapped from "Get Notified → /register" to "All Rentals → /rent" so the CTA matches the mixed content.
+
+**Placeholder image.** `public/images/property-placeholder.svg` — new SVG asset. Solid dark charcoal (`#28231C`) 1600×1000 rectangle with faint gold internal grid, gold `VALE • MERCER` eyebrow, cream italic "Photo coming soon" set in the site's Cormorant Garamond serif, and a "RESIDENTIAL LETTING" sub-caption. Uses the site palette so it doesn't visually clash with real photos when interleaved on the /rent grid. All 10 records reference this via `image: '/images/property-placeholder.svg'`; swap in real photography by replacing per-record `image` values.
+
+**Source-spec inconsistencies preserved verbatim** (per "do not invent or guess any value not given"). None were silently fixed — flagging here so an editor can decide whether to correct them:
+1. `lawn-house-close-1bed` location text starts "Situated on a well-connected d,"  — the word after "connected" appears truncated in the source spec ("d," is not a word; every other record uses "central road").
+2. `marsh-wall-studio-2400` headline says "Available 20th of July" but the `available` field is "20 August".
+3. `pan-peninsula-square-studio` headline and description both reference "Marsh Wall" while the property's `title` is Pan Peninsula Square (the address on the source spec is Pan Peninsula Square but the surrounding copy says Marsh Wall).
+4. `westferry-circus-4078` description reads "situated on the sixth floor" but the `floor` field is "3rd floor".
+5. `marsh-wall-1bed-3000` has `nearby: []` (source spec listed no nearby points for this one record only).
+
+**Placeholders that need real values later** (all currently `href="#"`, flagged inline in the code):
+- Detail page "Book a Viewing" CTA → wire to `/register?ref=<ref>` or a dedicated viewing form once one exists.
+- Detail page "Make an Offer" CTA → same.
+- `How to Rent Guide` link → replace with the real hosted UK government PDF URL (or a locally hosted copy in `public/`).
+- `Renters' Rights Act Information Sheet` link → same.
+- Per-record `image` path → replace `/images/property-placeholder.svg` with a real photo when available.
+
+**Next.js 16 compatibility.** Dynamic-segment `params` is a Promise in 16, so the detail page uses `async function` + `await params` per `node_modules/next/dist/docs/01-app/03-api-reference/03-file-conventions/dynamic-routes.md`. Client boundaries: `Reveal`/`Stagger`/`StaggerItem` remain `'use client'` and are used inside the server component page — the framework auto-splits at the client boundary.
+
+**Verification.** `npx tsc --noEmit` clean. `npm run build` clean — all 10 slugs prerendered under `● /property/[slug]` (SSG). Sitemap does **not** yet include the 10 property URLs; add them to `app/sitemap.ts` on a follow-up pass if you want Google to index them faster than link-graph discovery from `/rent` allows.
+
+### Phase 20b — Property enquiry disclosure buttons (2026-07-08)
+
+**Why.** Phase 20 shipped the property detail pages with two sidebar CTAs (`Book a Viewing`, `Make an Offer`) as `href="#"` placeholders. This phase replaces both with a functional three-channel enquiry surface — Call, Email, WhatsApp — so a visitor can complete an enquiry from the property page without any additional routing or form work.
+
+**Interaction pattern reused from Navbar mobile menu.** The Navbar's mobile hamburger uses `useState` toggle + `AnimatePresence` + `aria-expanded` on the trigger; each menu item closes the overlay on click. The property enquiry disclosure follows the same shape, scaled down to a per-button inline flyout rather than a full-page overlay. Inline (not a positioned popover) so mobile tap behaviour is glitch-free and no positioning math is needed.
+
+**New file.** `components/PropertyEnquiryActions.tsx` — `'use client'`. Props: `title`, `propertyRef`, `rent`. Renders two disclosures stacked; only one may be open at a time (`useState<'viewing' | 'offer' | null>`). Each disclosure:
+- **Trigger button** — full-width, styled to match the existing `ArrowButton` `gold` and `outlined-light` variants (same padding, letter-spacing, uppercase 11px). Adds a `▾` chevron that rotates 180° when open. `type="button"`, `aria-expanded`, `aria-controls` all present for accessibility.
+- **Panel** — `AnimatePresence` + `motion.div` height / opacity ease-in; contains a `<ul>` of three `<li>` items. `initial={false}` per `useReducedMotion()` when the user prefers reduced motion.
+
+Each panel item is an `<a href>` with a two-line body: gold uppercase heading (`Call` / `Email` / `WhatsApp`) + a muted sub-label. Item hover paints a translucent gold wash (`rgba(160,132,92,0.14)`) for feedback. Minimum row height 56 px so all three targets clear the iOS 44 px tap threshold.
+
+**Message construction.** Central `buildMessage(intent, title, ref, rent)` helper inside the component:
+- **Book a Viewing** → subject `Book a Viewing – <title>, Ref <ref>` · body `Hi, I'd like to book a viewing for <title> (Ref <ref>, <rent>).\n\n`
+- **Make an Offer** → subject `Enquiry – Make an Offer – <title>, Ref <ref>` · body `Hi, I'd like to make an offer on <title> (Ref <ref>, <rent>).\n\n`
+
+En-dash `–` (U+2013), not em-dash — per the site's UK-English rework (Phase 5) em-dashes are removed from visitor-facing strings; en-dash is fine and matches the user's spec. Trailing `\n\n` becomes a blank line in the client's mail composer for the visitor to add availability / notes.
+
+Both `subject` and `body` are passed through `encodeURIComponent`, which encodes `£` → `%C2%A3`, `–` → `%E2%80%93`, `,` → `%2C`, space → `%20`, newline → `%0A`. Apostrophes and parens are left as-is (per `encodeURIComponent` spec).
+
+**URL formats.**
+- **Call**: `tel:+447517696926` — RFC 3966 (no spaces in the number). Displayed sub-label uses the human-readable `+44 7517 696926` form.
+- **Email**: `mailto:info@valeandmercer.co.uk?subject=<encoded>&body=<encoded>`.
+- **WhatsApp**: `https://wa.me/447517696926?text=<encoded-body>` — WhatsApp's official click-to-chat redirector. Country code without leading `+`. Opens the WA app on mobile, `web.whatsapp.com` (or a QR / download prompt) on desktop — the platform-native behaviour the user expects.
+
+WhatsApp link opens in a new tab (`target="_blank" rel="noopener noreferrer"`). `tel:` and `mailto:` links open in the same tab so the browser's native handler prompts appear normally.
+
+**Close behaviour.** Panel closes on: (a) clicking the same trigger again, (b) clicking a different trigger (only one open at a time), (c) mousedown / touchstart outside the wrapper, (d) `Escape` keypress. Menu items also close the panel on `onClick` so returning to the tab after a mailto / tel prompt leaves the sidebar in a clean state. Listeners are only mounted while a panel is open — no idle event overhead.
+
+**Verified.** URL construction reproduced in Node against Lawn House Close (`Ref 33403, £2,860pcm`) and Westferry Circus (`Ref 30967, £4,078pcm`) — both viewing and offer intents. All 12 URLs (2 properties × 2 intents × 3 methods) build correctly with the expected `%C2%A3`, `%E2%80%93`, `%0A%0A` encodings. Built HTML for `westferry-circus-4078.html` confirms `Book a Viewing` and `Make an Offer` render at SSR with `aria-expanded="false"` on both triggers; panels are conditionally mounted so their child hrefs only appear in the DOM after a client-side toggle — accepted trade-off since the disclosure is inherently a client interaction and the buttons themselves are announced by screen readers.
+
+**Files changed.**
+- `components/PropertyEnquiryActions.tsx` — new file.
+- `app/property/[slug]/page.tsx` — replaced `ArrowButton` import with `PropertyEnquiryActions`; sidebar CTA block swapped from two `<ArrowButton href="#" />` calls to `<PropertyEnquiryActions title={property.title} propertyRef={property.ref} rent={property.rent} />`.
+
+**Verification.** `npx tsc --noEmit` clean. `npm run build` clean. All 10 `/property/[slug]` routes still prerender under `● /property/[slug]` (SSG).
+
+**Follow-ups worth noting** (not blockers).
+- WhatsApp brand guidelines suggest showing the WhatsApp wordmark next to click-to-chat CTAs. Current implementation uses a text-only "WhatsApp" heading in the site's palette — cleanest visual fit but arguably lower recognition. Consider adding a small (16 px) monochrome WhatsApp glyph as an SVG if brand recognition matters more than typographic minimalism.
+- The `Book a Viewing` / `Make an Offer` split funnels both to the same three channels with different pre-filled copy. If Raghav wants viewings routed to a scheduling tool (Calendly, YouCanBookMe, etc.), the `viewing` intent can be repointed at that URL without touching the offer channel.
+- If a dedicated `/enquire?ref=…` form is later built, the disclosure surface can gain a fourth "Fill in a form" option alongside the three direct channels.
+
+### Phase 21 — Consent checkbox copy shortened (2026-07-08)
+
+Long paragraph shortened from ~340 to ~150 characters across all three GDPR consent surfaces, per updated legal review. Identical text used on every surface for consistency.
+
+**Copy** (identical everywhere): `I agree to Vale & Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.` followed by a `Privacy Notice` inline link to `/privacy`, then a full stop.
+
+**Files touched**
+- `components/GetInTouch.tsx` (homepage contact form)
+- `app/register/page.tsx`
+- `app/valuations/page.tsx` — the valuation-specific "arrange my valuation" phrasing was collapsed into the generic "about this enquiry" wording; a valuation is an enquiry, so scope is unchanged.
+
+Checkbox still `required`, `handleSubmit` still short-circuits with `Please tick the box to consent before submitting.` on unchecked submit. Email payload still carries `Consent given: Yes (given at submission) / No` as the last row of the enquiry table.
+
+### Phase 22 — Property status field + gated listing grids (2026-07-08)
+
+Groundwork for the copy rewrite that will follow once the client's `Vale-Mercer-Website-Listing-Build-Pack.md` lands. Copy itself is unchanged in this pass — this phase just adds the plumbing so drafts can be held back from public grids without breaking their static routes.
+
+**Type change in `lib/properties.ts`.** The old `Property.status: 'To Let' | 'For Sale'` (which was really the listing kind) was renamed to `Property.listingType`. A new `Property.status: 'live' | 'draft'` (PublicationStatus) now holds the workflow state. Every record has both fields.
+
+**Assignments.** Records with confirmed EPC + council tax band (`compliance.epc` AND `compliance.councilTax` both present) are `live`. Records without compliance data are `draft`:
+
+| Ref   | Slug                          | Status | Featured |
+|-------|-------------------------------|--------|----------|
+| 33403 | lawn-house-close-1bed         | draft  |          |
+| 33406 | marsh-wall-studio-2400        | draft  |          |
+| 33416 | marsh-wall-studio-2700        | draft  |          |
+| 33238 | marsh-wall-1bed-3000          | live   |          |
+| 31871 | marsh-wall-2bed-4050          | live   | ✓        |
+| 33405 | marsh-wall-3bed-5958          | draft  |          |
+| 33396 | pan-peninsula-square-studio   | live   |          |
+| 30967 | westferry-circus-4078         | live   | ✓        |
+| 30968 | westferry-circus-4160         | live   |          |
+| 31039 | westferry-circus-4377         | live   |          |
+
+6 live + 4 draft. Each of the 4 draft records has an internal `// DRAFT — missing EPC/CT band, do not share link publicly.` comment on the line above so a future editor sees the flag when eyeballing the file.
+
+**Gates applied.**
+- `getLiveProperties()` helper exported alongside existing `getAllPropertySlugs()`.
+- `app/rent/page.tsx` — "Available now" grid now iterates `getLiveProperties().filter(p => p.listingType === 'To Let')`. Verified in built HTML: 6 property links, no drafts.
+- `components/FeaturedProperties.tsx` — filters `p.status === 'live' && p.featured`. Verified: 2 featured cards.
+- `app/property/[slug]/page.tsx` — draft records get `robots: { index: false, follow: false }` in metadata as a defensive noindex. Verified in built HTML (`lawn-house-close-1bed.html` contains `noindex`, `westferry-circus-4078.html` does not).
+- `generateStaticParams` still returns all 10 slugs, so an internal preview URL exists for every draft.
+- No user-facing "draft" language is rendered anywhere.
+
+**Blocked follow-up.** The verbatim brand-voice copy rewrites and the corrections to record 33396 (Pan Peninsula Square vs Marsh Wall wording) and record 33416 (nearest-stations list) still need `Vale-Mercer-Website-Listing-Build-Pack.md`. Current copy remains as delivered under Phase 20. Once the build pack lands: swap in the per-property `headline`, `description`, `amenities`, `keyFeatures`, `location`, `nearby`, and fix the two specific corrections; flip any newly complete records to `status: 'live'`.
+
+### Phase 23 — Two new blog posts (2026-07-08)
+
+Two original articles written for the site's `/blog` section, in Vale and Mercer voice, using only client-supplied 2026 UK/London rental market statistics. No fabricated numbers. No em-dashes.
+
+**New files.**
+- `app/blog/london-rental-market-2026/page.tsx` — Category "Market Insight", ~590 words, July 2026. Facts used verbatim from client: UK average rent for new lets £1,321/month per Zoopla June 2026 up 2.1% YoY; London rental inflation 1.7–2.2% annually per ONS/Zoopla; London average rent £2,273/month per ONS Feb 2026 (highest UK region); UK supply still below pre-pandemic but London improving; average time-to-let 20–30 days. Framed as calm practical context.
+- `app/blog/renters-rights-act-london-2026/page.tsx` — Category "Regulation", ~585 words, July 2026. Facts used verbatim from client: Act in force 1 May 2026 (England); requires advance notice on rent increases; bans accepting bids above advertised rent; pre-Act ~1 in 10 UK / ~1 in 5 London tenancies agreed above asking at peak; market response expected to be higher initial asking rents rather than bidding wars. Practical/reassuring tone, both audiences addressed.
+
+Both use the existing pattern: per-post `Metadata`, `BlogPosting` JSON-LD, `BreadcrumbList` JSON-LD, wrapped in `<ArticleLayout />`. Signed off `Written by the Vale and Mercer team · July 2026`.
+
+**Placeholder image.** `public/images/blog-placeholder.svg` — new SVG in the same visual language as `property-placeholder.svg` but with `Journal · Insight and Advice` caption instead of `Residential Letting`. Kept in place as a fallback for future posts written before their editorial photography is ready.
+
+**Real hero photography** (2026-07-08 follow-up). Both new posts now use verified Unsplash London imagery under the Unsplash License (free commercial use, no attribution required):
+- London Rental Market 2026 → `photo-1513026705753-bc3fffca8bf4` (London city skyline at dawn). Alt: `London city skyline at dawn`.
+- Renters' Rights Act 2026 → `photo-1510265236892-329bfd7de7a1` (leafy London residential street with a period terrace). Alt: `Leafy London residential street with a period terrace`.
+
+Both URLs updated in three places per post: the article hero via `ArticleLayout`, the `BlogPosting` JSON-LD `image`, the OpenGraph `images`, and the card thumbnail on `app/blog/page.tsx`. Neither photo overlaps with the three pre-existing blog posts. The `SITE_URL + IMAGE` prefix in the JSON-LD image field was dropped since the new URLs are already absolute; that matches how the pre-existing posts do it too. Verified in built HTML: both URLs appear on their respective post pages and on the blog index.
+
+**Index + sitemap.**
+- `app/blog/page.tsx` — both new posts prepended to the `posts` array so July 2026 content leads the journal grid. Existing 3 posts preserved below.
+- `app/sitemap.ts` — both slugs added to `BLOG_POSTS` with real `2026-07-08` publication dates.
+
+`npx tsc --noEmit` clean, `npm run build` clean, both routes prerendered.
+
+### Phase 24 — Palette brightening (2026-07-08)
+
+Subtle across-the-board bump, ~5% lightness on the dark ink family, ~2% on the cream family. Not a redesign — a visible airiness on hero bands, sidebars, cards, and mobile menu overlay, with text/dividers/brand gold unchanged so contrast ratios and visual weight of typography stay put. Fully reversible: swap the six find/replace pairs back to the "before" column and it's undone.
+
+**Values.**
+
+| Where                      | Before hex        | Before rgb    | After hex | After rgb    | ΔL     |
+|----------------------------|-------------------|---------------|-----------|--------------|--------|
+| `--c-bg`, `--c-bone`       | `#EFECE6`         | 239, 236, 230 | `#F2EFE9` | 242, 239, 233| +≈2%   |
+| `--c-bg-dark`              | `#28231C`         | 40, 35, 28    | `#34302B` | 52, 48, 43   | +≈5%   |
+| Deepest card fill          | `#1A1612`/`#1a1712` | 26, 22, 18  | `#26221C` | 38, 34, 28   | +≈5%   |
+| Rent-teaser card hover     | `#332D24`         | 51, 45, 36    | `#40392E` | 64, 57, 46   | +≈5%   |
+| `rgba(40,35,28,α)`         | — | 40, 35, 28    | —         | 52, 48, 43   | +≈5% base |
+| `rgba(239,236,230,α)`      | — | 239, 236, 230 | —         | 242, 239, 233| +≈1% base |
+
+**Untouched.** Gold `#A0845C`; all text tones `#4A4036 #6B6258 #7A7268 #9A9188`; dividers `#DDD7CC #C8C0B4`; already-brighter cream card variants `#F5F2EE #FFFBF0`; pure white `#FFFFFF` where used (blog card body). The lighter cream variants deliberately stay put so their tonal gap above the base cream is preserved.
+
+**Application.** 33 files under `app/` and `components/` contained at least one of the six literal patterns. A single shell loop ran six `sed` substitutions per file. `app/globals.css` custom properties updated in the same pass so both the CSS variables and their inline hex/rgba duplicates now speak the same brighter language.
+
+**Verification.** `grep -rE "#28231C|#EFECE6|#1[Aa]1[67]12|#332D24|rgba\(40,35,28|rgba\(239,236,230" app components` returns zero matches after the pass. `npx tsc --noEmit` clean. `npm run build` clean.
+
+### Phase 25 — Em-dash re-sweep (2026-07-08)
+
+Phase 5 already removed em-dashes from visitor-facing strings, but new content added in later phases (metadata descriptions, blog posts, property records) reintroduced them. This pass sweeps them again across every `.tsx / .ts` under `app/` and `components/` and `lib/`.
+
+**Rule of thumb** unchanged from Phase 5: strip em-dashes from anything a visitor can see (page copy, alt text, metadata descriptions, SERP snippets, social preview strings, email subject pre-fills, property headlines/features/amenities). Leave em-dashes in `//` line comments and `{/* ... */}` JSX comments — those are code-facing, and dropping them would churn the codebase without changing anything a user sees.
+
+**17 visitor-facing occurrences fixed across 13 files.**
+
+| File                                             | # fixed | Type                              |
+|--------------------------------------------------|---------|-----------------------------------|
+| `app/layout.tsx`                                 | 2       | site description, OG image alt    |
+| `app/page.tsx`                                   | 1       | homepage metadata description     |
+| `app/let/page.tsx`                               | 1       | metadata description              |
+| `app/fees/page.tsx`                              | 1       | metadata description              |
+| `app/about/layout.tsx`                           | 1       | metadata description              |
+| `app/blog/layout.tsx`                            | 1       | metadata description              |
+| `app/valuations/layout.tsx`                      | 1       | metadata description              |
+| `app/blog/london-property-market-2025/page.tsx`  | 3       | 3 metadata description repeats    |
+| `app/blog/guide-to-buying-in-chelsea/page.tsx`   | 1       | DESC constant                     |
+| `app/blog/student-lettings-london-guide/page.tsx`| 1       | DESC constant                     |
+| `app/property/[slug]/page.tsx`                   | 2       | hero image alt, sidebar mail subj |
+| `lib/properties.ts`                              | 5       | 2 amenity/feature strings, 3 headlines |
+
+**Replacements chosen for reading, not blind find/replace.**
+- Most metadata em-dashes became `. ` (sentence break) or `,` (appositive).
+- `Canary Wharf — Westferry Circus` in headlines became `Canary Wharf, Westferry Circus`.
+- Email subject template `Enquiry — <title>` became `Enquiry: <title>` — colon reads cleaner in a mail client than the alternatives.
+- `Air conditioning — a rare and valuable feature in London` became `Air conditioning, a rare and valuable feature in London`.
+
+**New Phase 23 blog posts** were written without em-dashes from the start — verified `grep -c "—"` returns 0 on both files.
+
+**Left untouched (deliberate).** Every `//` line comment and `{/* ... */}` JSX comment still using em-dashes across Navbar, MotionProvider, useDepthParallax, FeaturedProperties, PropertyEnquiryActions, rent/page, and everything else. `app/globals.css` em-dashes (CSS comments). `app/sitemap.ts:7` (code comment). `epc: '—'` on the 4 draft property records — this is a data-only "unknown" placeholder marker and never renders (draft records don't emit a compliance section on their detail page). 
+
+`npx tsc --noEmit` clean, `npm run build` clean.
+
+### Phase 26 — Property hero fix: placeholder redesign, scrim, hierarchy (2026-07-08)
+
+**The bug.** The Phase 20 `property-placeholder.svg` contained decorative text ("VALE · MERCER", "Photo coming soon", "RESIDENTIAL LETTING") baked directly into the image. On the property hero, the image sat at 0.55 opacity behind the property title, ref, price, and detail row. The middle band of the linear-gradient scrim was fully transparent, so the placeholder's own decorative text bled through and camouflaged the property title. On short titles like "Marsh Wall" the collision was severe. Fix had to solve three things: text-on-text collision, insufficient scrim contrast in the copy zone, and general hero hierarchy.
+
+**1. Placeholder redesign — no text at all.** `public/images/property-placeholder.svg` rewritten to a plain radial gradient (`#3E3830` core → `#34302B` mid → `#221E19` edge, cx 50% cy 42% r 80%). No wordmark, no italic serif, no sub-caption, no grid lines. Nothing to compete with any content sitting on top. Reads as a considered neutral surface rather than a placeholder graphic. `role="img" aria-label=""` (empty alt) since it carries no information.
+
+**2. Scrim rebuilt.** Old scrim = uniform `rgba(52,48,43,0.55)` + linear-gradient that went transparent in the middle band. New scrim in `PropertyHero`:
+- image opacity is now conditional: **1.0 for the placeholder** (it's a designed dark gradient, no benefit to fading it), **0.7 for real photos** (dims bright daylight without killing colour).
+- **Uniform darken** at `rgba(20,17,14,0.35)` — pulled to a colder near-black (`#14110E`) not the tinted `#34302B`, so text-shadow reads deeper.
+- **Bottom-heavy 4-stop gradient** `rgba(20,17,14, 0.55 → 0.12 → 0.55 → 0.92)` at 0% → 32% → 62% → 100%. Middle now stays at 0.12 minimum, and the copy zone (60%+) sits between 0.55 and 0.92 dark. Chosen empirically to keep title + price legible on placeholder, bright daylight photos, and low-key twilight — the three cases we can expect in production.
+
+**3. Text-shadow on every hero string.** Single shared constant `HERO_TEXT_SHADOW = '0 2px 18px rgba(20,17,14,0.75), 0 1px 3px rgba(20,17,14,0.55)'` applied to Back link, ref eyebrow, h1 title, rent, rentPW, and detail row. Same double-drop pattern used on `HeroSubtext` in `components/PageHero.tsx` so the property hero matches the site's other hero surfaces.
+
+**4. Hierarchy tightened.** Spacing between hero elements bumped for confident rhythm: Back-to-Rentals margin-bottom 40 → 44; ref eyebrow row margin-bottom 22 → 24; h1 margin-bottom 20 → 24 and gained `max-width: 900` so long area names like `Marsh Wall · E14 · Millwall` wrap cleanly instead of extending near the edge; price row margin-bottom 10 → 14. Section padding at bottom bumped 90 → 96 for a bit more air below the details row.
+
+**5. "Photography commissioned" badge.** Small pill in top-right of the hero, conditional on `isUsingPlaceholder(property.image)` (endsWith `/property-placeholder.svg`). Style: 7px×14px padding, translucent dark background `rgba(20,17,14,0.4)` with a 6px `backdrop-filter: blur`, `0.5px` hairline border in cream at 28%, 10px letter-spaced uppercase in cream at 75%, with a tiny 5×5 gold dot on the left. Copy: `Photography commissioned` — reads as intentional ("we've hired someone, real photos coming") rather than an error state ("photo missing"). Because it's driven from the image URL alone, it appears on all 10 detail pages until we swap in real photography per record.
+
+**6. Tag pills refined.** Existing `TagPills` container margin `0 0 8px` → `0 0 40px` so the first section's hairline `border-top` gets proper breathing room; individual pills now use `border-radius: 999` (rounded), `background: rgba(221,215,204,0.5)` (soft on-brand cream), and `border: 0.5px solid rgba(200,192,180,0.55)`. Padding 6×12 → 7×14, letter-spacing 0.08em → 0.06em (slightly tighter). Reads as a modern chip set instead of form-adjacent boxes.
+
+**Section rhythm review.** Already consistent from Phase 20: every `SectionBlock` uses `margin-bottom: 64`, `padding-top: 42`, and a `0.5px solid #DDD7CC` `border-top`. Left as-is.
+
+**Verified on 3 different-length property pages.**
+- `westferry-circus-4078` (longest content — 4-section location paragraph, 4 nearby points, full compliance)
+- `pan-peninsula-square-studio` (medium — 5 nearby points, compliance, no key features)
+- `marsh-wall-1bed-3000` (short — no nearby list, brief location paragraph)
+
+Built HTML for all three confirms: placeholder image referenced, "Photography commissioned" badge in the SSR payload, new h1 text-shadow applied. `npx tsc --noEmit` clean, `npm run build` clean, all 10 SSG routes still prerender.
+
+**Reverting** just the visual bump (not the scrim fix): the tag pill styling, spacing bumps, and the small badge are self-contained inside `PropertyHero` and `TagPills` — swap them back independently if the client prefers.
+
+### Phase 27 — Two more blog posts: Canary Wharf area guide + Landlord checklist (2026-07-08)
+
+Two additional articles on evergreen topics that don't rely on external statistics, so no sourcing risk. Follow the same file / metadata / routing convention established by Phases 23.
+
+**New files.**
+- `app/blog/local-guide-renting-canary-wharf/page.tsx` — Category "Area Guide", ~580 body words, July 2026. Warm neighbourhood guide framed for a prospective tenant weighing whether to book viewings. Covers the day-vs-evening feel of the estate, Elizabeth Line / Jubilee / DLR connections with realistic journey times, the typical resident profile (working professionals, corporate lettings, small families, some students), nearby fixtures (Crossrail Place roof garden, riverside walks, main shopping centre, Cabot Square dining, weekend markets at Canada Water / Greenwich / Wapping), the profile of the buildings (newer high-rises with concierge, gym, pool, sky terraces, with a note that amenities are priced into rent), and a short "what to check on a viewing" checklist (orientation, sunlight, construction noise, what's included, pets, parking). Signs off with a soft prompt to register interest since most current listings are in the area.
+- `app/blog/landlord-checklist-preparing-to-let/page.tsx` — Category "For Landlords", ~620 body words, July 2026. Practical trust-building piece for prospective landlord clients. Sections: compliance-first (EPC, gas safety, electrical safety, deposit protection), professional photography as highest-ROI move, decluttering and light staging, small repairs and neutral paint, honest pricing first-time (with a subtle callback to the Phase-23 Renters' Rights Act post: bidding wars can no longer correct an under-priced listing), and a checklist of what a good agent should be doing (comparable evidence, photography arrangement, listing copy, real referencing, staying reachable, compliance calendar during the tenancy). Closes with an informal "book a valuation" nudge.
+
+**Imagery.**
+- Canary Wharf post → `photo-1664624447750-39756899f4a7` (Canary Wharf towers seen across the River Thames). Alt: `Canary Wharf towers seen across the River Thames`.
+- Landlord post → `photo-1595846519845-68e298c2edd8` (contemporary lounge with round table and brown sofa, neutral styling). Alt: `A well-staged residential lounge ready for viewings`.
+
+Both under Unsplash License (free commercial use, no attribution required). Neither overlaps with the five earlier blog post images. Wired into the article hero, `BlogPosting` JSON-LD `image`, OpenGraph `images`, and blog index card.
+
+**Index + sitemap.**
+- `app/blog/page.tsx` — both posts prepended so the two July 2026 additions lead the grid. Existing 5 posts preserved in their previous order below.
+- `app/sitemap.ts` — both slugs added to `BLOG_POSTS` with `2026-07-08` publication dates.
+
+**No em-dashes** — verified `grep -c "—"` returns 0 on both files. `npx tsc --noEmit` clean, `npm run build` clean, both new SSG routes prerender.
+
+### Phase 28 — Mass publish: all 10 properties live (2026-07-08)
+
+**Client override.** Per instruction, all remaining `status: 'draft'` records were flipped to `status: 'live'`, unblocking every property from the compliance gate. No user-facing changes to the detail pages or the workflow-status field itself, just a data flip: `lib/properties.ts` now has 10 live records and 0 drafts.
+
+**Records flipped from draft → live** (each still missing EPC + council tax band, revisit with landlord):
+
+| Ref   | Slug                          | Title / Address              |
+|-------|-------------------------------|------------------------------|
+| 33403 | lawn-house-close-1bed         | Lawn House Close             |
+| 33406 | marsh-wall-studio-2400        | Marsh Wall (studio, £2,400)  |
+| 33416 | marsh-wall-studio-2700        | Marsh Wall (studio, £2,700)  |
+| 33405 | marsh-wall-3bed-5958          | Marsh Wall (3-bed, £5,958)   |
+
+Each of these still has no `compliance` block on the record, so the detail page's Compliance section is hidden for them. That's the same behaviour that was already in place under `draft`; it just no longer implies "held back from the grid." Follow-up action for the letting team: obtain EPC rating + council tax band from the landlord for each of the four refs above, then add a `compliance: { epc: '...', councilTax: '...' }` block to each record. Once added, the Compliance section on the detail page renders automatically — no other code change needed.
+
+**DRAFT comments updated.** The prior `// DRAFT — missing EPC/CT band, do not share link publicly.` comments above the four records were replaced with a `// PUBLISHED per client override on 2026-07-08. Compliance data still outstanding — revisit with the landlord…` note so the compliance gap remains visible in-file to any future editor.
+
+**Filtering logic left in place, effectively a no-op.**
+- `getLiveProperties()` still exists in `lib/properties.ts`; the `app/rent/page.tsx` grid still calls it; `components/FeaturedProperties.tsx` still filters `p.status === 'live' && p.featured`. All 10 records now pass, so nothing is hidden — but the plumbing is retained so if the client ever wants to hold a new record back before its data is ready, flip the new record's `status` to `'draft'` and the gate works again with no code change.
+- Draft-only `robots: { index: false, follow: false }` in `generateMetadata` is now unreachable for these 10 records (none are draft). All 10 detail pages are indexable; verified `grep noindex` returns zero on the four previously-drafted built HTML files.
+
+**/rent full inventory after publish (13 cards, 0 duplicates, 0 missing):**
+- **10 real property cards** — one per live record, each linking to its `/property/[slug]` detail page. Grid order (as of build): lawn-house-close-1bed, marsh-wall-1bed-3000, marsh-wall-2bed-4050, marsh-wall-3bed-5958, marsh-wall-studio-2400, marsh-wall-studio-2700, pan-peninsula-square-studio, westferry-circus-4078, westferry-circus-4160, westferry-circus-4377.
+- **3 coming-soon teaser cards** — Canary Wharf East London, Notting Hill W11, Kensington W8 (each linking to `/register`, unchanged since Phase 20's additive brief).
+
+**Homepage featured section** unchanged: still the 2 records flagged `featured: true` (Marsh Wall £4,050 · 18th floor + Westferry Circus £4,078 · 3rd floor) shown alongside the 2 pre-existing coming-soon cards.
+
+`npx tsc --noEmit` clean, `npm run build` clean, all 10 `/property/[slug]` routes still prerender under `● /property/[slug]`.
+
+### Phase 29 — Email option in property enquiry menu was silently failing (2026-07-08)
+
+**Symptom.** On the `/property/[slug]` sidebar, the Book a Viewing and Make an Offer disclosures each expose Call, Email, and WhatsApp. Call and WhatsApp fired correctly. Email did nothing on click.
+
+**Investigation.** All three items in `EnquiryItem` (`components/PropertyEnquiryActions.tsx`) render as identical `<a href={href}>` anchors (not buttons), so the Q1 "is it a button" theory was ruled out immediately. `preventDefault` / `stopPropagation` were absent (Q3). Two combined causes for the specific `mailto:` failure:
+
+1. **Encoding was permissive.** `encodeURIComponent()` leaves `!*'()` unencoded (RFC 3986 sub-delims). Certain mail clients — Outlook on Windows and older Windows Mail in particular — refuse to parse mailto URLs containing raw apostrophes or parentheses. Our body opened with `Hi, I'd like to…` and included `(Ref ${ref}, ${rent})`, so both offenders were present. And the body used `\n` newlines encoded to `%0A`; RFC 6068 calls for CRLF `%0D%0A`. LF-only worked in Chrome + macOS Mail but was silently dropped by Outlook.
+2. **Click-handoff was racing React state.** The `onClick` fired `onSelect()` which set the disclosure state to `null`, triggering the parent panel's `AnimatePresence` exit animation. Some Chromium builds drop the OS `mailto:` handoff when the anchor is being unmounted in the same click tick. `tel:` and `https:` handoffs generally survive because their handoff paths are more forgiving.
+
+**Fix.**
+- **New `encodeMailtoParam(value)` helper** — wraps `encodeURIComponent` then explicitly percent-encodes `! ' ( ) *` (`%21 %27 %28 %29 %2A`). Applied to both subject and body. `wa.me` still uses plain `encodeURIComponent` since WhatsApp is more permissive and treating it the same doesn't matter.
+- **Body newlines switched to CRLF** — `\r\n\r\n` at the end of the body template. Encoded output is now `%0D%0A%0D%0A` per RFC 6068.
+- **Explicit navigation in `EnquiryItem`'s `onClick`** — for non-external links (mailto, tel) the handler now calls `e.preventDefault()`, closes the panel via `onSelect()`, then schedules `window.location.href = href` in a `setTimeout(0)` macrotask. The zero-delay defer lets React's synchronous re-render (panel exit-animation start) settle first, so the OS handler opens over a settled DOM. `href` is kept on the anchor so right-click "copy link", keyboard, and no-JS fallbacks still work.
+
+**Verified mailto URL for Lawn House Close (Book a Viewing):**
+```
+mailto:info@valeandmercer.co.uk?subject=Book%20a%20Viewing%20%E2%80%93%20Lawn%20House%20Close%2C%20Ref%2033403&body=Hi%2C%20I%27d%20like%20to%20book%20a%20viewing%20for%20Lawn%20House%20Close%20%28Ref%2033403%2C%20%C2%A32%2C860pcm%29.%0D%0A%0D%0A
+```
+Decoded subject: `Book a Viewing – Lawn House Close, Ref 33403`. Decoded body: `Hi, I'd like to book a viewing for Lawn House Close (Ref 33403, £2,860pcm).\r\n\r\n`.
+
+Same construction verified for Lawn House Close (Make an Offer) and Westferry Circus (both intents). All eight URLs (2 properties × 2 intents × 2 variables that changed) round-trip cleanly. `npx tsc --noEmit` clean, `npm run build` clean.
+
+**Why tel and WhatsApp weren't affected.** `tel:` handoff on modern OSes is more permissive about React re-renders in the same click tick, so the LF/apostrophe/paren issues didn't come into play there and the state-race didn't fire either. `wa.me` is `https:`, which is standard browser navigation — no OS handoff — so the panel exit-animation race never applied.
+
+### Phase 30 — Navbar dark-hero detection missed `/property/[slug]` (2026-07-08)
+
+**Symptom.** On every `/property/[slug]` page, the wordmark, nav links, and Book Valuation pill rendered in dark ink against the page's dark hero band. Effectively invisible at the top of the page.
+
+**Root cause.** `components/Navbar.tsx` had a fixed exact-match list (`darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations']`) checked via `darkHeroPages.includes(pathname)`. The 10 dynamic `/property/[slug]` routes were added in Phase 20 and never registered against this list. On dark-hero pages the navbar renders light text; on cream pages it renders dark text. The property pages defaulted to dark text against their own dark hero. Same class of bug as the original homepage nav-contrast issue that Phase 7 fixed, just re-emerged for a new route family.
+
+**Fix.** In `components/Navbar.tsx`:
+- Added a companion array `darkHeroPathPrefixes: ['/property/']` and a small helper `pathIsDarkHero(pathname)` that ORs the exact-match against a prefix scan.
+- Wired `isDarkHero` through the helper.
+- Left everything else strictly untouched — scroll-based color switching, `isOverDark` boolean, alignment logic, mobile hamburger, `menuOpen` handling, all the Phase 7 / 8 / 9 / 15 fixes.
+
+**Blog posts deliberately excluded.** `/blog/[slug]` uses `ArticleLayout` with a cream `#F2EFE9` background and dark text — no dark hero band. Adding it to the prefix list would have inverted the wordmark on the cream article surface.
+
+**Verified.** Grepped SSR HTML on three different property pages (`lawn-house-close-1bed`, `westferry-circus-4078`, `marsh-wall-1bed-3000`) — all three now emit the light navbar colours at rest:
+- Wordmark: `rgba(242,239,233,0.95)`
+- Nav links: `rgba(242,239,233,0.82)`
+- No `rgba(40,35,28,*)` (dark tone) present anywhere in the navbar surface.
+
+Non-property pages remain correct: `/rent` and `/fees` (cream heroes) still render dark navbar text; `/` still renders light navbar text as it did before this change. The scrolled-state translucent-charcoal-glass treatment from Phase 15 continues to work unchanged on all pages including property pages — that logic lives in a separate branch of the color ternaries and was not touched.
+
+`npx tsc --noEmit` clean, `npm run build` clean.
+
+### Phase 31 — Interactive map + area-grouped list on /rent (2026-07-08)
+
+**What shipped.** Above the "Available now" grid on `/rent`, an interactive Leaflet map plots all 10 live properties on OpenStreetMap tiles. Below the map, the same 10 listings are grouped by neighbourhood (Canary Wharf, Cubitt Town, Millwall) and rendered with the existing `PropertyCard` component. Clicking a marker on the map scrolls the matching card into view and briefly highlights it with a gold outer ring.
+
+**Vanilla Leaflet, not react-leaflet.** react-leaflet's React 19 peer-dependency story was still fragile at the time of writing, and our needs here are simple enough that useEffect + a couple of refs is genuinely less code than the react-leaflet component tree. If the map ever grows layer clusters, vector tiles, or drawing controls, revisit the react-leaflet call. Documented inline at the top of `components/PropertyMap.tsx`.
+
+**Client-only rendering.** Leaflet touches `window` and `document` at module scope. To keep it out of the SSR pass and out of the initial JS bundle for non-`/rent` visitors, `app/rent/page.tsx` imports the map via `next/dynamic(() => import('@/components/PropertyMap'), { ssr: false, loading: <placeholder> })`. `PropertyMap.tsx` itself is `'use client'` and further defers Leaflet via a `useEffect` + dynamic `import('leaflet')` so no top-level side-effects run before mount. During SSR the `/rent` HTML now contains a cream-tinted "Loading map" placeholder card at the intended dimensions; hydration replaces it with the map. Verified in built HTML: the placeholder is present, and the surrounding page (hero, "Currently on the market" heading, all 3 area group headings, all 10 property links, all 10 `id="property-<slug>"` anchors, all 3 coming-soon teaser cards) SSRs normally.
+
+**Data.** New optional `coordinates?: { lat: number; lng: number }` field on `Property` in `lib/properties.ts` + `Coordinates` type export. All 10 records now carry approximate street-level lat/lng per the client-supplied list (three clusters: Lawn House Close / Marsh Wall around 51.497 / -0.017, Pan Peninsula around 51.494 / -0.019, Westferry Circus around 51.507 / -0.023). Coarse-on-purpose per rental-listing convention.
+
+**Tile provider — CartoDB Positron.** `https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png`. Minimal editorial style with reduced label density and a warm neutral background that reads as an extension of the site's cream palette rather than the neon-blue OSM default. Free for reasonable traffic per CARTO's basemap terms; attribution `© OpenStreetMap contributors © CARTO` rendered by Leaflet's built-in attribution control (visible bottom-right, minimal chrome).
+
+**Custom marker.** Not the Leaflet default blue-and-white pin. `L.divIcon` with an inline SVG teardrop in the site palette: `#34302B` fill, `#A0845C` 1.4px stroke, `#A0845C` filled dot at the pin's head, dropped shadow at 35% alpha. `iconSize: [30, 40]`, `iconAnchor: [15, 39]` (tail tip pinned to the coordinate), `popupAnchor: [0, -34]`. A scoped `.vm-marker` class in an inline `<style>` block strips Leaflet's default divIcon white background and border. Solves the well-known Next.js + Leaflet issue where the default marker images (`marker-icon.png` / `marker-shadow.png`) fail to load because webpack rewrites the URLs — by not using them at all.
+
+**Popup.** Ink text on cream chrome, `Cormorant Garamond` serif on the title + rent (matching the site's editorial headings), `DM Sans` on the metadata. Renders: listing type (gold eyebrow), title, `E14 · <neighbourhood>` sub-label, bed/bath row, rent, and a `View Property →` anchor to `/property/<slug>`. Popup wrapper CSS re-skinned in a scoped `.vm-popup` class inside the same inline stylesheet.
+
+**Marker-to-card scroll.** The map component's props include `onMarkerFocus?: (slug: string) => void`. Two triggers fire it: (a) opening a marker popup, and (b) clicking the popup's `View Property` link (event-delegated on the container so the callback fires *before* the anchor's default navigation; on a client-side transition Next's router still takes over). Parent `/rent` handler `requestAnimationFrame`s a `getElementById('property-<slug>').scrollIntoView({ behavior: 'smooth', block: 'center' })` and toggles a `vm-flash` class that runs a 1.6s CSS keyframe pulsing a translucent gold `box-shadow` around the card. Each `PropertyCard` was tagged `id={\`property-\${slug}\`}` so the target is reliably addressable.
+
+**Area grouping.** `neighbourhoodOf(area)` splits the property's `area` field on `·` and takes the last segment, so `E14 · Cubitt Town` → `Cubitt Town`, `E14 · Millwall` → `Millwall`, `E14 · Canary Wharf` → `Canary Wharf`. Groups sorted alphabetically for a stable read: Canary Wharf (3 listings), Cubitt Town (3 listings), Millwall (4 listings). Each group has a small heading with a gold accent bar, listing count, and a responsive `PropertyCard` grid below. Group order is stable across renders via `useMemo`.
+
+**Layout.**
+- Map: full width of the content area, `clamp(360px, 55vh, 560px)` tall, 12px rounded corners matching the site's card style, `0.5px` cream border. Scroll-wheel zoom deliberately disabled so scrolling the page doesn't hijack into map zoom; native zoom control (top-left) still works. `z-index: 1` so it doesn't paint over the fixed Navbar.
+- Below the map, a small `Marker locations are indicative to the street, not the door.` caption — sets expectation for coarse coordinates.
+- Below that, the three area groups. Group card grid re-uses the exact same `PropertyCard` component that Phase 20 introduced — no new card style.
+
+**Interaction: implemented, not skipped.** The user offered to skip the marker-to-card link if it added significant complexity; it did not — the event-delegated `data-vm-view-property` attribute lookup + the parent `onMarkerFocus` callback added about twenty lines total. Left in.
+
+**Files changed.**
+- `package.json` — `leaflet@^1.9.4` + `@types/leaflet@^1.9.21` added.
+- `lib/properties.ts` — new `Coordinates` type, optional `coordinates` field on `Property`, all 10 records populated.
+- `components/PropertyMap.tsx` — new client component.
+- `app/rent/page.tsx` — dynamic map import, area grouping via `neighbourhoodOf` + `useMemo`, `onMarkerFocus` scroll handler, `.vm-flash` keyframe. Coming-soon teaser section preserved verbatim.
+
+**Verification.**
+- `npx tsc --noEmit` clean, `npm run build` clean, all 10 SSG property routes still prerender.
+- Built HTML for `/rent`: 10 unique `id="property-<slug>"` anchors + 10 unique `/property/<slug>` links + all three area group `<h3>` tags (Canary Wharf, Cubitt Town, Millwall) + all 3 coming-soon teaser cards + "Loading map" SSR placeholder. No duplicates, no omissions.
+- Dev server hydrated `/rent` correctly on repeat build; the placeholder swaps to the live Leaflet map on mount.
+
+**Mobile.** Map height uses `clamp(360px, 55vh, 560px)`, so on a phone in portrait the map lands at 55vh (typically 400-500px), still generous enough to see all 10 markers. `scrollWheelZoom: false` prevents the accidental "map ate my page scroll" on trackpads and mobile browsers.
+
+### Phase 32 — /rent map showed markers but no tiles (2026-07-08)
+
+**Symptom.** After Phase 31 shipped, the map area on `/rent` rendered blank cream. The custom teardrop markers appeared at the correct pixel positions. The CARTO attribution showed at the bottom-right. But no street, water, or label imagery loaded.
+
+**Investigation, in order (per the fix brief):**
+
+1. **CARTO tile URL reachability** — verified independently. `curl -I https://a.basemaps.cartocdn.com/light_all/14/8188/5450.png` returned `HTTP 200`, `Content-Type: image/png`, ~28 KB. Not a URL, subdomain, or upstream issue.
+2. **Container height** — set inline to `clamp(360px, 55vh, 560px)`. Rendered non-zero in DevTools. Not the cause.
+3. **`leaflet.css` bundling** — this was the cause. The stylesheet was imported at the top of `components/PropertyMap.tsx`. `find .next -name "*.css" | xargs grep -l "leaflet-tile"` confirmed Next.js *did* bundle Leaflet's CSS, into `.next/static/chunks/0t48hzs_6fshe.css`. But `/rent.html`'s `<link rel="stylesheet">` tags only referenced the app-shell chunk `0b-sigw14mo1m.css`. The Leaflet CSS chunk existed on disk but was **not linked from the `/rent` HTML**.
+
+**Root cause.** CSS imported from a component loaded via `next/dynamic({ ssr: false })` gets emitted as a bundled chunk, but Next.js does not always insert a `<link>` for that chunk into the parent page's HTML. The `.leaflet-tile-pane` and `.leaflet-tile` positioning rules therefore never reached the browser. Tiles still downloaded (visible in the Network tab as 200 OK PNG responses) but were injected as plain `<img>` tags with no CSS class rules applied, so they had `position: static` and collapsed to zero content flow inside the pane. Markers still rendered because Leaflet writes `transform: translate3d(...)` inline on each marker element via JS — bypasses CSS classes entirely. Attribution rendered because it's plain HTML at the bottom of the container.
+
+**Fix.**
+1. **Hoisted `import 'leaflet/dist/leaflet.css'` to `app/rent/page.tsx`** (the top-level page module, statically imported). Next.js reliably links CSS imported from top-level page modules into the page's initial `<link>` tags. The import inside `components/PropertyMap.tsx` was kept as a safety net for any future reuse of the component in a non-dynamic context; with the page-level import in place it's just a duplicate that the bundler dedupes.
+2. **Added `map.invalidateSize()` calls on `requestAnimationFrame` and again on a 300ms timeout** after `L.tileLayer(...).addTo(map)`. Defense-in-depth against the other classic tile-blank cause: dynamically-imported map mounted inside a reveal wrapper whose container width hasn't settled by the time the tile layer starts requesting tiles. Two invalidations cover both the "container just laid out" case and the "parent animation just finished" case. Cheap and idempotent.
+
+**Explanatory comments** added at both import sites so a future editor doesn't move the CSS import back into the component and re-break the tiles.
+
+**Verified.**
+- `grep -oE '"/_next/[^"]+\.css"' .next/server/app/rent.html` now returns TWO stylesheets — the app shell `0b-sigw14mo1m.css` AND `0t48hzs_6fshe.css` (contains `.leaflet-tile-pane`, `.leaflet-tile`, `.leaflet-container`, etc.). Before the fix only the app shell was linked.
+- Cross-checked five non-map pages (`/`, `/blog`, `/about`, `/buy`, `/fees`) — none of them link `0t48hzs_6fshe.css`. The Leaflet CSS ships only with `/rent`, not with the whole site.
+- `npx tsc --noEmit` clean. `npm run build` clean. All routes prerender.
+
+**Bundle-size note.** Leaflet's stylesheet is ~14 KB minified. Only visitors landing on `/rent` download it now — not the whole-site cost that a global `@import` in `app/globals.css` would have imposed.
+
+### Phase 33 — /rent map: click-to-arm scroll zoom + custom fullscreen (2026-07-08)
+
+Two additions to `components/PropertyMap.tsx`, both fully self-contained (the /rent page did not need to change).
+
+**1. Scroll-wheel zoom is now armable.** Leaflet still boots with `scrollWheelZoom: false` so scrolling past the map does not hijack page scroll. Two Leaflet events flip the toggle:
+- `map.on('click', ...)` calls `map.scrollWheelZoom.enable()` and sets `zoomArmed = true`.
+- `map.on('mouseout', ...)` calls `map.scrollWheelZoom.disable()` and sets `zoomArmed = false`.
+
+This is the same "click to activate, cursor-off to release" pattern that Google Maps embeds use. Trackpad two-finger scroll and mouse-wheel zoom both flow through `scrollWheelZoom` in Leaflet, so both work once armed. Pinch zoom (`touchZoom`) is on by default and unaffected by `scrollWheelZoom` — mobile visitors always have pinch available without arming anything, no code path needed for them.
+
+A subtle bottom-left hint badge ("Click map to zoom") shows while zoom is not armed and fades to opacity 0 (transitions over 400ms) as soon as it is. Ink `rgba(20,17,14,0.72)` background, cream text, gold dot to match the site's other floating badges. `pointer-events: none` so it never blocks a click on the map underneath.
+
+**2. Fullscreen toggle — custom, no plugin.** The `leaflet.fullscreen` plugin was considered but it (a) requires another peer-dep install into a project already careful about React 19 compat, (b) ships its own icon font that clashes with the site's typographic aesthetic, and (c) needs its default button restyled to match the palette anyway. Writing the button ourselves cost about 40 lines and matches the site perfectly.
+
+**Structure.**
+- The map container is now an `<div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />` inside an outer wrapper `<div ref={wrapperRef} style={wrapperStyle}>`. In non-fullscreen mode the wrapper has the same `clamp(360px, 55vh, 560px)` height + rounded corners + hairline border as before. In fullscreen mode the wrapper becomes `position: fixed; inset: 0; z-index: 500; background: #F2EFE9`. The Leaflet map is unaware of the state change — it just sees its container get bigger.
+- `z-index: 500` puts the fullscreen map above the fixed Navbar (`z-index: 100`) but below Cookiebot's consent overlays (which sit in the thousands). Chosen deliberately.
+- Fullscreen button top-right (`top: 14, right: 14`), 40×40, gold-on-ink, matches the `ArrowButton` gold variant visually. Hover swaps background to gold. `aria-label` toggles between `Open fullscreen map` and `Exit fullscreen map`. Icon is inline SVG — no icon-font dependency: four polylines pointing corner-to-corner outward for enter, and the same polylines pointing inward for exit.
+- A second bottom-left badge ("Press Esc to exit") mirrors the "Click map to zoom" hint but shows only in fullscreen. Same style tokens, same fade transition. Only one of the two hints is visible at any time.
+
+**Post-toggle plumbing (three coordinated things happen when `isFullscreen` changes):**
+1. **Body scroll lock.** `document.body.style.overflow = 'hidden'` while fullscreen, restored to its previous value on exit and on unmount.
+2. **Scroll-wheel zoom auto-armed on entry, disarmed on exit.** In fullscreen mode the visitor is unambiguously in interact mode, so we don't make them click a second time. On exit we disarm so the page-scroll-friendly default is restored.
+3. **`map.invalidateSize()` × 2.** One on the next `requestAnimationFrame` (covers the "container just resized" case) and one on a 250ms `setTimeout` (covers any residual CSS-transition settling). Without this the tiles compute against the pre-toggle dimensions and the map goes blank at the new size — the exact hazard the fix brief called out. Both calls are cheap and idempotent, so paying for both is nothing.
+
+**Esc key.** A `document.addEventListener('keydown', ...)` mounts only while `isFullscreen` is true and exits fullscreen on `Escape`. Same short-lived listener pattern used for the property enquiry disclosure in Phase 20b. No idle overhead.
+
+**Verification.**
+- `npx tsc --noEmit` clean, `npm run build` clean.
+- `/rent.html` still links `.next/static/chunks/0t48hzs_6fshe.css` (the Leaflet CSS chunk) as of Phase 32 — verified still present after this pass.
+- The `/rent` SSR HTML still contains all 10 `id="property-<slug>"` anchors, all 10 `/property/<slug>` links, all 3 area group `<h3>` headings, all 3 coming-soon teaser cards, and the "Loading map" placeholder.
+- New client-only strings verified in the map JS chunk (`.next/static/chunks/09be0icamc4ue.js`): `Click map to zoom`, `Press Esc to exit`, `Exit fullscreen map`. `invalidateSize` referenced twice (RAF + timeout), `scrollWheelZoom` referenced twice (enable + disable), `"Escape"` keyup handler present.
+
+**Mobile behaviour.** In portrait, the wrapper's non-fullscreen height stays at 55vh (typically 400-500px). The fullscreen button is 40×40 — comfortably above the 44px iOS tap target for interior padding. Pinch zoom continues to work through Leaflet's `touchZoom` regardless of the `scrollWheelZoom` state, so mobile visitors never see or need to interact with the "Click map to zoom" hint. In fullscreen on a phone the map fills the viewport; the fullscreen button and Esc hint remain in the same corners.
+
+### Phase 34 — /rent map tiles regressed after Phase 33 restructure (2026-07-08)
+
+**Symptom.** After Phase 33 shipped the scroll-zoom + fullscreen button, the `/rent` map area was blank grey. Custom markers rendered at correct positions. Fullscreen button and "Click map to zoom" hint rendered. CARTO attribution rendered. No tile imagery.
+
+**Reading the symptom.**
+- Blank **grey** (not cream) meant `.leaflet-container` default `#ddd` was showing — the Phase 32 CSS-linking fix was still holding.
+- Markers rendered at correct pixel positions meant the map instance existed and its coordinate-to-pixel projection worked, which meant Leaflet had computed *some* container size.
+- Attribution rendered meant the tile layer was successfully `addTo(map)`'d.
+- Only the tile *images* were missing.
+
+Combined, this pointed at: the tile layer was added, but Leaflet's tile grid was calculated against a wrong (near-zero) container size at init, so it computed "zero tiles to fetch" and never fired requests. When the container later settled to its real size, nothing forced the tile grid to re-evaluate. My Phase 33 `invalidateSize` calls (`requestAnimationFrame` + 300ms) fired, but not reliably in the window Leaflet needed.
+
+**What Phase 33 changed that broke this.** The map's DOM restructure. Phase 32 initialized Leaflet on a single `<div>` with an explicit inline `height: clamp(360px, 55vh, 560px)`. Phase 33 wrapped that in an outer wrapper (which carries the clamp height + fullscreen switching) with an inner `<div>` at `position: absolute; inset: 0` that Leaflet initialized on. `inset: 0` is a valid CSS shorthand and it *usually* resolves the child to the parent's content box at layout time, but the "usually" is the whole problem: on the async gap between `useEffect` firing and `import('leaflet').then(...)` resolving, the browser's guarantee that `containerRef.current.clientWidth` had settled to the parent's width was not tight enough. Some paints produced a container Leaflet read as small-or-zero-width. Since Leaflet only queries container size *once at init* by default, the tile grid was calculated against that bad size and never re-tried.
+
+**Fix — two coordinated changes to `components/PropertyMap.tsx`:**
+
+1. **Replaced `position: absolute; inset: 0` with `width: 100%; height: 100%`** on the map container. The explicit percentage form resolves synchronously against the wrapper's known clamp height at layout time, without depending on the browser correctly implementing the `inset` shorthand at the exact moment Leaflet reads `clientWidth`. This alone probably fixes the observed symptom.
+2. **Added a `ResizeObserver` on the map container** that calls `mapRef.current?.invalidateSize()` on any size change. Belt-and-braces: even if the container size is briefly wrong at init, the next paint's size settling triggers the observer, `invalidateSize` fires, and Leaflet re-evaluates the tile grid and requests the correct tiles. The observer covers all four states the fix brief listed — initial paint, click-to-arm-zoom (no size change here, but observer is harmless), fullscreen enter, fullscreen exit — plus a fifth we didn't list, browser resize / device rotation.
+
+**Ancillary bug fixed while in this file.** The Phase 33 fullscreen effect captured `prevOverflow = document.body.style.overflow` on every effect run. First run captured `''`, then set `'hidden'` for fullscreen. On exit, the next effect run captured `'hidden'` (our own value) as "previous" and restored `'hidden'` — leaving the body permanently scroll-locked after one fullscreen use. Replaced with a straight `document.body.style.overflow = isFullscreen ? 'hidden' : ''`, which is what the code always meant to do.
+
+**Kept as-is (per fix brief instruction "do NOT remove the scroll-zoom or fullscreen features").**
+- Scroll-wheel zoom arms on `map.on('click')`, disarms on `map.on('mouseout')`.
+- Fullscreen button and Esc handler.
+- Both bottom-left hint badges ("Click map to zoom" / "Press Esc to exit").
+- All the Phase 33 CSS palette + button styling.
+
+**Verified.**
+- `npx tsc --noEmit` clean, `npm run build` clean.
+- `.next/static/chunks/*.js` — searched the map chunk directly:
+  - `ResizeObserver` present ×1 (the observer instantiation).
+  - `invalidateSize` present ×2 (the rAF and setTimeout calls in the fullscreen effect).
+  - `width:"100%"` present.
+  - `"inset":0` no longer present — the buggy shorthand is gone from the shipped bundle.
+  - `scrollWheelZoom` still ×2 (enable + disable).
+- `/rent.html` still `<link>`s the Leaflet CSS chunk `0t48hzs_6fshe.css` (Phase 32 fix still holding — verified independently, contains `.leaflet-tile`, `.leaflet-container`).
+- `curl -I https://a.basemaps.cartocdn.com/light_all/13/4094/2725.png` → `HTTP/2 200 image/png 26,654 bytes`. Tile endpoint healthy. Not a network / CORS issue.
+- Dev server (`localhost:3000`) serves `/rent` HTTP 200, HTML contains the Leaflet CSS `<link>`, "Loading map" placeholder, 10 property `<a>` links, 10 `id="property-<slug>"` anchors, all three area group `<h3>` tags. Ready for HMR pickup of the fix.
+
+**Why the ResizeObserver is the durable answer.** Even if some future change to the wrapper's CSS or React render order breaks the init-time size guarantee again, the observer's callback will fire on the size settling and force `invalidateSize`. This blank-tiles regression class is now closed at the map layer, not at the DOM layer. Future contributors can refactor the wrapper without re-introducing the bug.
+
+### Phase 35 — /rent map trackpad zoom felt like it was jumping levels (2026-07-08)
+
+**Symptom.** Once scroll-wheel zoom was armed (click-to-arm from Phase 33), a small two-finger trackpad gesture zoomed multiple levels at once. Physical mouse wheel felt reasonable — the issue was trackpad-specific.
+
+**Cause.** Leaflet's defaults are tuned for a mouse wheel emitting one big event per notch. Trackpads emit many small `wheel` events per gesture; each event was being treated as roughly one zoom step. A gentle swipe generated 4-5 events, so the map jumped 4-5 levels. Well-documented issue in Leaflet-land, four coordinated knobs fix it.
+
+**Fix.** Added four options to `L.map(container, {...})` in `components/PropertyMap.tsx`. Every other Phase 33/34 behaviour left untouched.
+
+| Option                    | Value | Effect |
+|---------------------------|-------|--------|
+| `zoomSnap`                | `0.25` | Allows the map to settle at fractional zoom levels (0.25, 0.5, 0.75, 1.0, …) instead of only integers, so the zoom lands wherever the gesture ends instead of overshooting to the nearest whole level. |
+| `zoomDelta`               | `0.5`  | Each +/− button press and each keyboard shortcut moves half a level, matching the finer snap grid. |
+| `wheelPxPerZoomLevel`     | `120`  | **The main knob.** Requires 120 px of accumulated wheel delta per zoom level (default is 60). Doubling it makes trackpad gestures gentle. |
+| `wheelDebounceTime`       | `60`   | Coalesces rapid trackpad events into a smoother running total (default is 40). |
+
+**Why this works for both input devices.** A physical mouse wheel notch emits ~120 px of scroll delta on most systems. With `wheelPxPerZoomLevel: 120`, one notch still ≈ one zoom level — exactly what a mouse user expects. Trackpads accumulate the same 120 px over many small events, so a gentle swipe zooms about one level, not four. Big trackpad swipes still zoom multiple levels, proportionally.
+
+**Kept intact per fix brief.**
+- Click-to-arm scroll zoom (init still uses `scrollWheelZoom: false`; enabled on `map.on('click')`, disabled on `map.on('mouseout')`) — page scroll doesn't get hijacked until the visitor engages.
+- + / − buttons and keyboard shortcuts still work (they now move by `zoomDelta` = 0.5 level per press, which feels more precise, not less).
+- Fullscreen enter/exit auto-arm and auto-disarm scroll zoom as before, plus RAF + 250 ms `invalidateSize` on toggle.
+- Phase 34's `ResizeObserver` + `width: 100% / height: 100%` container fix — untouched. Tiles still render in all four states.
+
+**Verified.**
+- `npx tsc --noEmit` clean, `npm run build` clean.
+- All four knobs present in the shipped map JS chunk (minifier collapsed `0.25` → `.25` and `0.5` → `.5`): `zoomSnap:.25`, `zoomDelta:.5`, `wheelPxPerZoomLevel:120`, `wheelDebounceTime:60`. Grep-confirmed one occurrence each.
+- Prior behaviour still present in the same chunk: `scrollWheelZoom:!1` (the init `false` for click-to-arm), `invalidateSize` ×2, `ResizeObserver` ×1, `"Escape"` handler ×1.
+- Leaflet CSS chunk `0t48hzs_6fshe.css` still `<link>`ed from `/rent.html` — Phase 32 fix continues to hold, tiles will render.
+
+**Tuning knobs are cheap to revisit.** If trackpad users report the zoom is still too aggressive, bump `wheelPxPerZoomLevel` from 120 to 150 or 180. If it feels too sluggish, drop to 90. The other three values are near-optimal defaults for the fractional-zoom feel and rarely need touching.
+
 ### Outstanding items not addressed in this rework
 - Resend `from` address is still the sandbox `onboarding@resend.dev`. Verify the domain in Resend and switch to e.g. `noreply@valeandmercer.co.uk`.
 - Email-body HTML injection risk: both routes still interpolate user input directly. Add HTML-escaping or switch to a templating helper.
 - Branded `og-image.jpg` not yet present.
 - The repo-root leftover duplicate tree is still present (README acknowledges; out of scope for this rework).
 - Google Analytics is still referenced in policy copy but no GA tag is loaded. Either wire up GA4 (gated by Cookiebot consent) or remove the policy references.
-- `lib/properties.ts` is still dead code; `public/images/` is still empty.
+- Admin flow at `/admin` still emits template strings against the *old* short `Property` schema (see Phase 20 for the new field set) AND against the pre-Phase-22 `status: 'To Let' | 'For Sale'` naming. Both shape and field name mismatch now. Pastes will fail typecheck until the admin generator is rebuilt against the new type or replaced with a real persistence layer. Still gated by `ENABLE_ADMIN=true`.
+- 10 new `/property/[slug]` routes are prerendered but not yet listed in `app/sitemap.ts`. Add them for faster crawl discovery. All 10 are now indexable after Phase 28's mass publish, so all 10 should go in the sitemap.
+- **Compliance follow-up** (Phase 28 override): refs `33403 Lawn House Close`, `33406 Marsh Wall studio £2,400`, `33416 Marsh Wall studio £2,700`, and `33405 Marsh Wall 3-bed £5,958` were published without EPC rating or council tax band. The Compliance section on their detail pages stays hidden until this data is added. Chase the landlord and populate each record's `compliance: { epc, councilTax }` block.
+- 5 of 10 property records now have real photography wired up: `lawn-house-close-1bed`, `westferry-circus-4078`, `westferry-circus-4160`, `westferry-circus-4377`, `marsh-wall-3bed-5958`. The remaining 5 still use the placeholder: `marsh-wall-studio-2400`, `marsh-wall-studio-2700`, `marsh-wall-1bed-3000`, `marsh-wall-2bed-4050`, `pan-peninsula-square-studio`.
+- Both new blog posts (Phase 23) now use Unsplash London photography (see follow-up in that phase). Swap in commissioned photography per post when it becomes available; the `blog-placeholder.svg` remains ready as a fallback for future posts written before their photography is ready.
 - `/buy` page content still says "To Let" cards under a nav label "New Homes" — needs a content decision.
+- **Phase 22 blocker still open:** the `Vale-Mercer-Website-Listing-Build-Pack.md` copy rewrite for the 10 property records is pending client attachment. Once received, do a verbatim swap of headline / description / amenities / keyFeatures / location / nearby per record; also apply the two specific corrections (33396 Pan Peninsula Square wording and 33416 nearest stations). Note: since Phase 28's mass publish all 10 records are already `live`, so the draft-→-live flip step from earlier is no longer needed.
+
+### Phase 29 — real property photography + blog date corrections (2026-07-09)
+
+**Property photos wired up for 3 of 4 target properties.**
+
+Added `gallery?: string[]` to the `Property` type in `lib/properties.ts`. For each wired property, `image` now points to the first photo (alphabetical sort) as the hero, and `gallery` holds the remaining photos. The hero image drives the existing `PropertyHero` background with its two scrim layers and 0.7 opacity, keeping text readable. The "Photography commissioned" badge disappears automatically because `isUsingPlaceholder` returns false once `image` is a real path.
+
+A new `PhotoGallery` component was added to `app/property/[slug]/page.tsx`. It renders the gallery in a responsive auto-fill grid (min 220 px columns, 8 px gap, 200 px tall cells) using `next/image` with `fill` and `objectFit: cover`. The gallery appears between the tag pills and the Overview section in the property body.
+
+Properties updated:
+
+| Slug | Folder | Hero | Gallery count |
+|------|--------|------|---------------|
+| `lawn-house-close-1bed` | `lawn-house-close-2860` | `2.jpeg` | 7 (3-8 + WhatsApp image) |
+| `westferry-circus-4078` | `westferry-circus-4078` | `1.jpeg` | 17 (all others, 13.jpeg absent from folder) |
+| `westferry-circus-4377` | `westferry-circus-4377` | `1.jpeg` | 28 (2-29) |
+
+`westferry-circus-4160` was flagged and left on the placeholder. Its folder (`public/images/westferry-circus-4160/`) contains corrupted/garbled filenames alongside 5 cleanly-named `westferry-circus-4160-N.jpeg` files. Awaiting client confirmation of which files to use before wiring it up.
+
+**Blog dates corrected to 2026.**
+
+Three blog posts had visible dates, signoff lines, JSON-LD `datePublished`, and metadata titles/descriptions showing 2025. All updated to 2026. The blog listing page (`app/blog/page.tsx`) `date` fields for the same three posts were also corrected.
+
+| Post | What changed |
+|------|-------------|
+| `london-property-market-2025` | `datePublished` 2025-05-01 to 2026-05-01; title/headline/description "2025" to "2026"; `meta` May 2025 to May 2026; signoff May 2025 to May 2026; listing card date May 2025 to May 2026 |
+| `guide-to-buying-in-chelsea` | `datePublished` 2025-04-01 to 2026-04-01; `meta` April 2025 to April 2026; signoff April 2025 to April 2026; listing card date April 2025 to April 2026 |
+| `student-lettings-london-guide` | `datePublished` 2025-03-01 to 2026-03-01; `meta` March 2025 to March 2026; signoff March 2025 to March 2026; listing card date March 2025 to March 2026 |
+
+Four other posts (`landlord-checklist-preparing-to-let`, `local-guide-renting-canary-wharf`, `london-rental-market-2026`, `renters-rights-act-london-2026`) already showed July 2026 throughout and were not touched.
+
+### Phase 30 — thumbnail strip + lightbox gallery (2026-07-09)
+
+Replaced the "all images as a scrolling grid" gallery with a compact thumbnail preview strip plus a full-screen lightbox.
+
+**New file: `components/PropertyGallery.tsx`** (`'use client'`). Exports two components:
+
+- `HeroImageClickTarget` — a `position: absolute; inset: 0; z-index: 5` transparent button rendered inside the hero's image container. Dispatches a `vm:open-gallery` custom event when clicked. Shown only when a real photo is in the hero AND the property has gallery images.
+- `PropertyGallery` — the main interactive component. Listens for `vm:open-gallery` events to open the lightbox at index 0 (hero image). Manages all lightbox state (open, current index).
+
+**Thumbnail strip** (3 visible max, `gallery.slice(0, 3)`):
+- 116 × 78 px buttons, 6 px gap, `next/image` with `fill + objectFit: cover`
+- If `gallery.length > 3`, a dark overlay (`rgba(20,17,14,0.62)`) on the last thumbnail shows `+N` (N = gallery.length - 3) in serif cream text
+- Clicking any thumbnail opens the lightbox at that image's index in `allImages` (= `[heroImage, ...gallery]`)
+
+**Lightbox**:
+- `position: fixed; inset: 0; z-index: 9999` dark overlay (`rgba(14,11,8,0.96)`)
+- Current image in an `88vw × 80vh` container using `next/image fill + objectFit: contain`
+- Click backdrop to close; click image area does NOT close (stopPropagation)
+- Gold (`#A0845C`) close button (top-right), left/right arrow buttons with gold border
+- Counter label `N / Total` bottom-center in muted cream
+- Keyboard: Escape closes, ArrowLeft/ArrowRight navigates
+- Touch swipe: 50 px threshold on the image container triggers prev/next
+- Body scroll locked while lightbox is open (restored on unmount/close)
+
+**`page.tsx` changes**:
+- Removed `import Image from 'next/image'` (no longer used in page.tsx directly)
+- Added `import { PropertyGallery, HeroImageClickTarget } from '@/components/PropertyGallery'`
+- `PropertyHero` renders `<HeroImageClickTarget show={!usingPlaceholder && (gallery?.length ?? 0) > 0} />` inside the image div (z-index 5 sits above the scrims but below the text at z-index 10)
+- `PropertyBody` renders `<PropertyGallery heroImage={...} gallery={...} title={...} area={...} />` where the gallery previously was
+- Removed the old `PhotoGallery` server function
+
+Applies to all 3 properties with real photography (`lawn-house-close-1bed`, `westferry-circus-4078`, `westferry-circus-4377`). Properties on the placeholder are unaffected (gallery is absent so `PropertyGallery` returns null and `HeroImageClickTarget` renders nothing).
+
+### Phase 31 — 4160 photos wired, homepage featured refresh, gallery thumbnails enlarged (2026-07-09)
+
+**`westferry-circus-4160` photos wired up.**
+Using the 5 cleanly-named files in `public/images/westferry-circus-4160/` (`westferry-circus-4160-1.jpeg` through `5.jpeg`). Hero = `...-1.jpeg`, gallery = `...-2.jpeg` through `...-5.jpeg`. The corrupted/garbled filenames in that folder are ignored. `westferry-circus-4160` now has the full lightbox gallery experience alongside the other 3 wired properties.
+
+**`marsh-wall-3bed-5958` photos wired up (follow-up pass).**
+16 clean images in `public/images/marsh-wall-5958/` (`1.jpeg` through `16.jpeg`). Hero = `1.jpeg`, gallery = alphabetical remainder (10-16, 2-9). Full lightbox gallery active. `featured: true` set, teaser added. See Phase 32 below.
+
+**Homepage featured section (`components/FeaturedProperties.tsx`):**
+- Removed the two `comingSoon` placeholder cards (Canary Wharf / Notting Hill Register Interest cards pointing to Unsplash images)
+- The section now shows only `featured: true` live properties from `lib/properties.ts`
+- `featured: true` added to: `lawn-house-close-1bed`, `westferry-circus-4160`, `westferry-circus-4377`
+- `featured: true` removed from: `marsh-wall-2bed-4050` (placeholder photo)
+- Homepage currently shows 4 properties: `lawn-house-close-1bed`, `westferry-circus-4078`, `westferry-circus-4160`, `westferry-circus-4377`
+- Section heading changed from "Available now & coming soon" to "Available now"
+- Grid minmax narrowed from 320px to 280px so all 4 cards sit in a single row at 1280px
+- `desc` field now uses `p.teaser ?? p.description` so short teasers show on cards
+
+**`teaser` field added to `Property` type.**
+Short 1-2 sentence homepage card teasers added to all 4 featured properties:
+- `lawn-house-close-1bed`: "Brand new 1-bed in Canary Wharf with a private terrace, stunning Dock views and underfloor heating throughout."
+- `westferry-circus-4078`: "Spacious 2-bed, 966 sq. ft. on the 3rd floor with a private balcony and Canary Wharf skyline views."
+- `westferry-circus-4160`: "2-bed on the 10th floor, 966 sq. ft. with air conditioning, a private balcony and sweeping Canary Wharf views."
+- `westferry-circus-4377`: "Luxurious interior-designed 2-bed on the 10th floor with a private balcony and panoramic Canary Wharf skyline views."
+Full `description` on detail pages is untouched.
+
+**Gallery thumbnail strip enlarged (`components/PropertyGallery.tsx`):**
+- Thumbnail size: 116×78px → 180×120px (55% larger)
+- Gap between thumbnails: 6px → 8px
+- Added "Gallery" eyebrow label (`fontSize: 9, letterSpacing: 0.22em, color: #A0845C`) above the strip
+
+### Phase 32 — marsh-wall-3bed-5958 photos wired (2026-07-09)
+
+`public/images/marsh-wall-5958/` uploaded with 16 images (`1.jpeg` through `16.jpeg`).
+
+`lib/properties.ts` updated for `marsh-wall-3bed-5958`:
+- `image`: `/images/marsh-wall-5958/1.jpeg` (hero)
+- `gallery`: 15 remaining images in alphabetical order (`10-16.jpeg`, `2-9.jpeg`)
+- `teaser`: "Fully furnished 3-bed in Canary Wharf with high ceilings, a pool, gym and access to London's highest communal garden."
+- `featured: true` set — property now appears in the homepage featured strip
+
+Homepage now shows all 5 real-photo properties: `lawn-house-close-1bed`, `westferry-circus-4078`, `westferry-circus-4160`, `westferry-circus-4377`, `marsh-wall-3bed-5958`. No code changes needed beyond `lib/properties.ts` — the existing gallery and featured-card infrastructure handles this property automatically.
+
+### Phase 33 — Student Lettings page + footer navigation cleanup (2026-07-09)
+
+**New page: `app/student-lettings/page.tsx`**
+- URL: `/student-lettings`
+- Metadata: title "Student Lettings in London", canonical `/student-lettings`
+- Breadcrumb JSON-LD: Home → Student Lettings
+- Hero image: Unsplash Canary Wharf skyline (`photo-1555854877-bab0e564b8d5`)
+- Headline: "Student lettings done without the runaround." (italic gold on last line)
+- Subtext: "Well-connected, furnished rentals in East London — with guarantor support included as standard."
+- CTA: ArrowButton `gold` variant → `/register`
+- 4-service grid (same layout as `/let`): Furnished properties, Guarantor-friendly, Transport connections, Honest referencing
+- Body copy section: Canary Wharf transport (Jubilee, DLR, Elizabeth line), fair referencing message
+- Second CTA: ArrowButton `dark` variant → `/register`
+
+**`components/Navbar.tsx`:** Added `/student-lettings` to `darkHeroPages` array so the navbar renders white text over the dark hero.
+
+**`components/Footer.tsx`:** `navItems` trimmed from 8 links to exactly 4: Lettings (`/let`), Rentals (`/rent`), New Homes (`/buy`), Student Lettings (`/student-lettings`). `legalItems`, Contact column, and copyright row untouched.
+
+**`app/sitemap.ts`:** Added `/student-lettings` (`changeFrequency: 'monthly'`, `priority: 0.8`).

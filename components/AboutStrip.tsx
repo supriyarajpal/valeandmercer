@@ -25,7 +25,7 @@ const services = [
 
 export default function AboutStrip() {
   return (
-    <section style={{ background: '#EFECE6', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
+    <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <Reveal y={28} amount={0.2}>
           <div style={{ marginBottom: 64, maxWidth: 720 }}>
@@ -78,8 +78,8 @@ function ArcCard({ title, href, desc, index }: { title: string; href: string; de
           background: '#FFFFFF',
           padding: '36px 32px',
           borderRadius: 10,
-          border: '0.5px solid rgba(40,35,28,0.06)',
-          boxShadow: '0 1px 0 rgba(40,35,28,0.02), 0 18px 36px -22px rgba(40,35,28,0.2)',
+          border: '0.5px solid rgba(52,48,43,0.06)',
+          boxShadow: '0 1px 0 rgba(52,48,43,0.02), 0 18px 36px -22px rgba(52,48,43,0.2)',
           height: '100%',
         }}
         onMouseEnter={e => {

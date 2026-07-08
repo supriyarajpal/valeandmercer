@@ -6,9 +6,9 @@ import ArticleLayout from '@/components/ArticleLayout'
 const SITE_URL = 'https://valeandmercer.co.uk'
 const SLUG = '/blog/student-lettings-london-guide'
 const IMAGE = 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=85'
-const DATE_PUBLISHED = '2025-03-01'
+const DATE_PUBLISHED = '2026-03-01'
 const TITLE = 'Student Lettings in London: The Practical Guide'
-const DESC = 'A Vale and Mercer guide to student lettings in London — what nobody tells you before you start renting, from tenancy contracts to deposits and guarantors.'
+const DESC = 'A Vale and Mercer guide to student lettings in London. What nobody tells you before you start renting, from tenancy contracts to deposits and guarantors.'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -70,11 +70,11 @@ export default function BlogPost3() {
       <ArticleLayout
         category="Student Living"
         title="Renting in London as a student"
-        meta="March 2025  ·  5 min read"
+        meta="March 2026  ·  5 min read"
         image="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=85"
         imageAlt="London student flat interior"
         sections={sections}
-        signoff="Written by the Vale and Mercer team  ·  March 2025"
+        signoff="Written by the Vale and Mercer team  ·  March 2026"
       />
       <Footer />
     </>

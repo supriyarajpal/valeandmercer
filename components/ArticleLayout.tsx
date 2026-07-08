@@ -16,7 +16,7 @@ type Props = {
 
 export default function ArticleLayout({ category, title, meta, image, imageAlt, sections, signoff }: Props) {
   return (
-    <main style={{ background: '#EFECE6', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
+    <main style={{ background: '#F2EFE9', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 var(--gutter)' }}>
         <Reveal y={20} amount={0.3}>
           <Link

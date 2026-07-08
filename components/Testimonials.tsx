@@ -38,13 +38,13 @@ export default function Testimonials() {
   }, [maxIndex])
 
   return (
-    <section style={{ background: '#28231C', padding: 'var(--section-y) 0', overflow: 'hidden' }}>
+    <section style={{ background: '#34302B', padding: 'var(--section-y) 0', overflow: 'hidden' }}>
       <div style={{ padding: '0 var(--gutter)', marginBottom: 56 }}>
         <Reveal y={28} amount={0.2}>
           <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 24, flexWrap: 'wrap' }}>
             <div style={{ maxWidth: 720 }}>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Client Stories</p>
-              <h2 style={{ color: '#EFECE6' }}>
+              <h2 style={{ color: '#F2EFE9' }}>
                 What our clients <span style={{ color: '#A0845C', fontStyle: 'italic' }}>say about us</span>
               </h2>
             </div>
@@ -79,8 +79,8 @@ export default function Testimonials() {
                 style={{
                   flexShrink: 0,
                   width: cardWidth,
-                  background: 'rgba(239,236,230,0.04)',
-                  border: '0.5px solid rgba(239,236,230,0.1)',
+                  background: 'rgba(242,239,233,0.04)',
+                  border: '0.5px solid rgba(242,239,233,0.1)',
                   borderRadius: 8,
                   padding: '36px 32px 32px',
                   display: 'flex',
@@ -91,12 +91,12 @@ export default function Testimonials() {
               >
                 <div>
                   <div style={{ fontFamily: 'var(--font-serif)', fontSize: 64, lineHeight: 0.6, color: '#A0845C', opacity: 0.5, marginBottom: 12, height: 32 }} aria-hidden>&ldquo;</div>
-                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: 19, fontStyle: 'italic', lineHeight: 1.6, color: 'rgba(239,236,230,0.82)' }}>
+                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: 19, fontStyle: 'italic', lineHeight: 1.6, color: 'rgba(242,239,233,0.82)' }}>
                     {t.quote}
                   </p>
                 </div>
-                <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.12)', paddingTop: 18, marginTop: 24 }}>
-                  <div style={{ fontSize: 13, fontWeight: 500, color: '#EFECE6', marginBottom: 4 }}>{t.name}</div>
+                <div style={{ borderTop: '0.5px solid rgba(242,239,233,0.12)', paddingTop: 18, marginTop: 24 }}>
+                  <div style={{ fontSize: 13, fontWeight: 500, color: '#F2EFE9', marginBottom: 4 }}>{t.name}</div>
                   <div style={{ fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#A0845C' }}>{t.role}</div>
                 </div>
               </article>
@@ -117,9 +117,9 @@ function ArrowButton({ dir, disabled, onClick, aria }: { dir: 1 | -1; disabled: 
       style={{
         width: 44,
         height: 44,
-        border: '1px solid rgba(239,236,230,0.3)',
+        border: '1px solid rgba(242,239,233,0.3)',
         background: 'transparent',
-        color: '#EFECE6',
+        color: '#F2EFE9',
         cursor: disabled ? 'default' : 'pointer',
         opacity: disabled ? 0.3 : 1,
         transition: 'all 0.4s var(--ease-out-soft)',
@@ -129,7 +129,7 @@ function ArrowButton({ dir, disabled, onClick, aria }: { dir: 1 | -1; disabled: 
         justifyContent: 'center',
       }}
       onMouseEnter={e => { if (!disabled) { e.currentTarget.style.background = '#A0845C'; e.currentTarget.style.borderColor = '#A0845C' } }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(239,236,230,0.3)' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(242,239,233,0.3)' }}
     >
       {dir === -1 ? '←' : '→'}
     </button>

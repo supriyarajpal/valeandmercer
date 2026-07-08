@@ -40,7 +40,7 @@ export default function ValuationStrip() {
       {/* Solid dark cocoon — hard edges. The merging into neighbour
           sections is handled by dark fades in those sections, so the
           boundary is dark→dark with no visible lighter strip. */}
-      <div aria-hidden style={{ position: 'absolute', inset: 0, background: '#28231C', zIndex: 0 }} />
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: '#34302B', zIndex: 0 }} />
       <div aria-hidden style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
         <div className="vm-ken-burns" style={{ position: 'absolute', inset: '-6%' }}>
           <img
@@ -50,7 +50,7 @@ export default function ValuationStrip() {
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', opacity: 0.45 }}
           />
         </div>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(40,35,28,0.55) 0%, rgba(40,35,28,0.7) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(52,48,43,0.55) 0%, rgba(52,48,43,0.7) 100%)' }} />
       </div>
 
       <motion.div
@@ -68,12 +68,12 @@ export default function ValuationStrip() {
 
         {/* Big cinematic headline — forces a pause */}
         <h2 style={{
-          color: '#EFECE6',
+          color: '#F2EFE9',
           fontSize: 'clamp(44px, 8vw, 108px)',
           lineHeight: 0.95,
           marginBottom: 36,
           letterSpacing: '-0.025em',
-          textShadow: '0 4px 32px rgba(40,35,28,0.55)',
+          textShadow: '0 4px 32px rgba(52,48,43,0.55)',
         }}>
           <DriftWord text="What" delay={0.0} fromX={-32} />{' '}
           <DriftWord text="is" delay={0.12} fromX={20} />{' '}
@@ -85,7 +85,7 @@ export default function ValuationStrip() {
         </h2>
 
         <Reveal as="div" delay={1.0} y={20} amount={0.3}>
-          <p style={{ fontSize: 17, lineHeight: 1.85, color: 'rgba(239,236,230,0.78)', marginBottom: 44, maxWidth: 640 }}>
+          <p style={{ fontSize: 17, lineHeight: 1.85, color: 'rgba(242,239,233,0.78)', marginBottom: 44, maxWidth: 640 }}>
             In London&rsquo;s most active neighbourhoods, values move quickly and quietly. We&rsquo;ll come to you, assess properly, and give you a straight, well-reasoned figure, because a number that flatters you helps no one.
           </p>
         </Reveal>
@@ -121,7 +121,7 @@ function DriftWord({ text, delay, fromX, italic, gold }: { text: string; delay: 
         transition={{ duration: 1.25, delay, ease: EASE }}
         style={{
           display: 'inline-block',
-          color: gold ? '#A0845C' : '#EFECE6',
+          color: gold ? '#A0845C' : '#F2EFE9',
           fontStyle: italic ? 'italic' : 'normal',
           willChange: 'transform, opacity',
         }}
@@ -144,7 +144,7 @@ function PrimaryCTA({ href, label }: { href: string; label: string }) {
         fontSize: 12,
         letterSpacing: '0.2em',
         textTransform: 'uppercase',
-        color: '#EFECE6',
+        color: '#F2EFE9',
         background: '#A0845C',
         padding: '18px 32px',
         overflow: 'hidden',
@@ -153,15 +153,15 @@ function PrimaryCTA({ href, label }: { href: string; label: string }) {
       onMouseEnter={e => {
         const fill = e.currentTarget.querySelector<HTMLSpanElement>('[data-fill]')
         if (fill) fill.style.transform = 'translateX(0)'
-        e.currentTarget.style.color = '#28231C'
+        e.currentTarget.style.color = '#34302B'
       }}
       onMouseLeave={e => {
         const fill = e.currentTarget.querySelector<HTMLSpanElement>('[data-fill]')
         if (fill) fill.style.transform = 'translateX(-101%)'
-        e.currentTarget.style.color = '#EFECE6'
+        e.currentTarget.style.color = '#F2EFE9'
       }}
     >
-      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#EFECE6', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
+      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#F2EFE9', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
       <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 12 }}>{label}<span aria-hidden style={{ fontSize: 14 }}>→</span></span>
     </Link>
   )

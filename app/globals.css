@@ -8,14 +8,14 @@
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'DM Sans', system-ui, sans-serif;
 
-  --c-bg: #EFECE6;
-  --c-bg-dark: #28231C;
+  --c-bg: #F2EFE9;
+  --c-bg-dark: #34302B;
   --c-ink: #4A4036;
   --c-muted: #7A7268;
   --c-line: #DDD7CC;
   --c-line-soft: #C8C0B4;
   --c-gold: #A0845C;
-  --c-bone: #EFECE6;
+  --c-bone: #F2EFE9;
 
   --ls-tight: -0.02em;
   --ls-snug: -0.01em;

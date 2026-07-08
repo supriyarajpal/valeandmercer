@@ -44,7 +44,7 @@ export default function SellPage() {
           image="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=2000&q=85"
           imageAlt="London property"
         >
-          <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
+          <h1 style={{ color: '#F2EFE9', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(52,48,43,0.5)' }}>
             <HeroLine text="Sell your home" delay={1.05} />
             <HeroLine text="for what it is" delay={1.18} />
             <HeroLine text="truly worth." delay={1.31} italic gold />
@@ -57,12 +57,12 @@ export default function SellPage() {
           </div>
         </PageHero>
 
-        <section style={{ background: '#EFECE6', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>
             <Stagger as="div" stagger={0.1} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 1, background: '#C8C0B4', marginBottom: 80 }}>
               {steps.map(s => (
                 <StaggerItem key={s.step} as="div">
-                  <div style={{ background: '#EFECE6', padding: '40px 28px', height: '100%' }}>
+                  <div style={{ background: '#F2EFE9', padding: '40px 28px', height: '100%' }}>
                     <div style={{ fontFamily: 'var(--font-serif)', fontSize: 40, fontWeight: 300, color: 'rgba(160,132,92,0.28)', lineHeight: 1, marginBottom: 14 }}>{s.step}</div>
                     <h3 style={{ fontSize: 22, color: '#4A4036', marginBottom: 10 }}>{s.title}</h3>
                     <p style={{ fontSize: 14, lineHeight: 1.95, color: '#6B6258' }}>{s.body}</p>

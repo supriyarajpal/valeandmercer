@@ -6,9 +6,9 @@ import ArticleLayout from '@/components/ArticleLayout'
 const SITE_URL = 'https://valeandmercer.co.uk'
 const SLUG = '/blog/guide-to-buying-in-chelsea'
 const IMAGE = 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1400&q=85'
-const DATE_PUBLISHED = '2025-04-01'
+const DATE_PUBLISHED = '2026-04-01'
 const TITLE = 'Guide to Buying a Home in Chelsea SW3'
-const DESC = 'A Vale and Mercer guide to buying a home in Chelsea SW3 — what to expect, where to look, pricing, leases, and the streets worth knowing.'
+const DESC = 'A Vale and Mercer guide to buying a home in Chelsea SW3. What to expect, where to look, pricing, leases, and the streets worth knowing.'
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -70,11 +70,11 @@ export default function BlogPost2() {
       <ArticleLayout
         category="Buying Guide"
         title="Your complete guide to buying in Chelsea SW3"
-        meta="April 2025  ·  6 min read"
+        meta="April 2026  ·  6 min read"
         image="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1400&q=85"
         imageAlt="Chelsea SW3 residential street"
         sections={sections}
-        signoff="Written by the Vale and Mercer team  ·  April 2025"
+        signoff="Written by the Vale and Mercer team  ·  April 2026"
       />
       <Footer />
     </>

@@ -125,7 +125,7 @@ export default function GetInTouch() {
             </Reveal>
 
             <Reveal as="div" delay={0.55} y={20} amount={0.2}>
-              <div style={{ borderTop: '0.5px solid rgba(40,35,28,0.2)', paddingTop: 14, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ borderTop: '0.5px solid rgba(52,48,43,0.2)', paddingTop: 14, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 <span style={lab}>Email</span>
                 <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 16, color: '#4A4036' }}>
                   info@valeandmercer.co.uk
@@ -235,8 +235,8 @@ function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onCha
           }}
         />
         <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
-          I consent to Vale &amp; Mercer collecting and processing my information to respond to my enquiry. I understand my details may also be used to send me relevant property updates and marketing communications, and I can unsubscribe at any time. See our{' '}
-          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a> for full details.
+          I agree to Vale &amp; Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
+          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a>.
         </span>
       </label>
       {error && (
@@ -256,8 +256,8 @@ function SubmitButton({ onClick, status }: { onClick: () => void; status: 'idle'
       disabled={disabled}
       style={{
         position: 'relative',
-        background: '#28231C',
-        color: '#EFECE6',
+        background: '#34302B',
+        color: '#F2EFE9',
         fontSize: 11,
         letterSpacing: '0.2em',
         textTransform: 'uppercase',

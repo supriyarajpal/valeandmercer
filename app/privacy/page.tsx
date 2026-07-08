@@ -22,14 +22,14 @@ export default function PrivacyPage() {
   return (
     <>
       <Navbar />
-      <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'860px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Privacy Notice</h1>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>VM-PN-001 | Version 2.0 | May 2026 | Company Registration No: 17212434</p>
 
-          <div style={{background:'#28231C',padding:'28px 32px',marginBottom:'48px'}}>
-            <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(15px,2vw,19px)',fontWeight:300,color:'#EFECE6',lineHeight:1.7,fontStyle:'italic'}}>
+          <div style={{background:'#34302B',padding:'28px 32px',marginBottom:'48px'}}>
+            <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(15px,2vw,19px)',fontWeight:300,color:'#F2EFE9',lineHeight:1.7,fontStyle:'italic'}}>
               "In short: we collect only the data we need to provide your property services, comply with anti-money laundering law, and run our business. We do not sell your data. We keep it securely for defined periods. You can ask us to access, correct, or delete it at any time. Full details are below."
             </p>
           </div>
@@ -85,7 +85,7 @@ export default function PrivacyPage() {
                 <div style={{overflowX:'auto'}}>
                   <table style={{...tableStyle,minWidth:'500px'}}>
                     <thead><tr><th style={{...thStyle,width:'35%'}}>Data Collected</th><th style={thStyle}>Purpose</th><th style={{...thStyle,width:'25%'}}>Lawful Basis</th></tr></thead>
-                    <tbody>{rows.map(([d,p,b],i)=><tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}><td style={tdStyle}>{d}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>)}</tbody>
+                    <tbody>{rows.map(([d,p,b],i)=><tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}>{d}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>)}</tbody>
                   </table>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
                 <thead><tr><th style={thStyle}>Recipient</th><th style={thStyle}>Purpose</th><th style={thStyle}>Basis for Sharing</th></tr></thead>
                 <tbody>
                   {[['Rightmove Ltd (when subscribed)','To list and advertise your property on Rightmove','Contract: listing instruction'],['Zoopla Ltd (when subscribed)','To list and advertise your property on Zoopla','Contract: listing instruction'],['Lettings Hub (tenant referencing, when subscribed)','To conduct independent tenant referencing and credit checks','Contract: tenancy application'],['Government-approved tenancy deposit protection scheme (DPS, TDS, or MyDeposits)','To register and protect tenant deposits as required by law','Legal Obligation: Housing Act 2004'],['Solicitors and conveyancers','To facilitate the legal completion of sales transactions','Contract'],['HMRC','Anti-money laundering reporting, PAYE, Non-Resident Landlord scheme reporting','Legal Obligation'],['Home Office','Right to Rent verification (if required)','Legal Obligation: Immigration Act 2014'],['Property maintenance contractors','To arrange and carry out repairs and inspections (name and address only)','Contract: property management'],['Microsoft Corporation (Microsoft 365 / Outlook)','Cloud email platform used for client correspondence','Contract. Microsoft acts as our data processor'],['Google LLC (Google Workspace, Google Ads, when activated)','Cloud storage and digital advertising','Contract / Consent. Google acts as our data processor'],['DocuSign Inc (when subscribed)','Electronic signature processing for tenancy agreements','Contract. DocuSign acts as our data processor'],['Accountants and financial advisers','Bookkeeping, financial compliance, and tax filing','Legal Obligation / Contract'],['ICO','Regulatory compliance: registration and mandatory breach reporting','Legal Obligation: DPA 2018']].map(([r,p,b],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}><td style={{...tdStyle,fontWeight:500}}>{r}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={{...tdStyle,fontWeight:500}}>{r}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -133,7 +133,7 @@ export default function PrivacyPage() {
                 <thead><tr><th style={thStyle}>Data Category</th><th style={thStyle}>Retention Period</th><th style={thStyle}>When Clock Starts</th><th style={thStyle}>Legal Basis</th></tr></thead>
                 <tbody>
                   {[['Completed sale files (vendor and buyer)','6 years','Date of sale completion or instruction withdrawal','Limitation Act 1980'],['AML identity verification documents (mandatory, cannot be deleted early)','5 years minimum','Date business relationship ends','Money Laundering Regulations 2017, Reg. 40 (mandatory)'],['Tenancy files (landlord and tenant data)','6 years','Date tenancy ends','Limitation Act 1980'],['Right to Rent check documents','1 year','Date tenancy ends','Immigration Act 2014'],['Tenancy deposit protection records','6 years','Date tenancy ends','Housing Act 2004'],['Buyer/applicant records (no transaction formed)','12 months','Date of last contact','Legitimate interests (proportionate)'],['Website contact form enquiries (no relationship formed)','12 months','Date of submission','Legitimate interests (proportionate)'],['Email marketing consent records','Duration of consent + 1 year','Date of unsubscription or withdrawal','PECR 2003'],['Financial records (invoices, bank statements)','6 years','End of financial year to which records relate','Companies Act 2006; HMRC requirements']].map(([d,r,w,l],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#EFECE6':'#F5F2EE'}}><td style={tdStyle}>{d}</td><td style={{...tdStyle,color:'#A0845C',fontWeight:500}}>{r}</td><td style={tdStyle}>{w}</td><td style={{...tdStyle,fontSize:'12px'}}>{l}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}>{d}</td><td style={{...tdStyle,color:'#A0845C',fontWeight:500}}>{r}</td><td style={tdStyle}>{w}</td><td style={{...tdStyle,fontSize:'12px'}}>{l}</td></tr>
                   ))}
                 </tbody>
               </table>

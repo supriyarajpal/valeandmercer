@@ -9,7 +9,7 @@ const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
   title: 'London Lettings',
-  description: 'London residential lettings from Vale and Mercer. Let your London property to well-referenced tenants — honest rental pricing and full management options.',
+  description: 'London residential lettings from Vale and Mercer. Let your London property to well-referenced tenants, with honest rental pricing and full management options.',
   alternates: { canonical: '/let' },
 }
 
@@ -44,7 +44,7 @@ export default function LetPage() {
           image="https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=2000&q=85"
           imageAlt="London letting"
         >
-          <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
+          <h1 style={{ color: '#F2EFE9', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(52,48,43,0.5)' }}>
             <HeroLine text="Let your property" delay={1.05} />
             <HeroLine text="to tenants who" delay={1.18} />
             <HeroLine text="treat it like home." delay={1.31} italic gold />
@@ -57,12 +57,12 @@ export default function LetPage() {
           </div>
         </PageHero>
 
-        <section style={{ background: '#EFECE6', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>
             <Stagger as="div" stagger={0.1} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 1, background: '#C8C0B4', marginBottom: 80 }}>
               {services.map(s => (
                 <StaggerItem key={s.title} as="div">
-                  <div style={{ background: '#EFECE6', padding: '40px 28px', height: '100%' }}>
+                  <div style={{ background: '#F2EFE9', padding: '40px 28px', height: '100%' }}>
                     <div style={{ width: 22, height: 1, background: '#A0845C', marginBottom: 18 }} />
                     <h3 style={{ fontSize: 22, color: '#4A4036', marginBottom: 12 }}>{s.title}</h3>
                     <p style={{ fontSize: 14, lineHeight: 1.95, color: '#6B6258' }}>{s.body}</p>

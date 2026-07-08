@@ -15,7 +15,7 @@ export default function BuyPage() {
   return (
     <>
       <Navbar />
-      <main style={{ background: '#EFECE6', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
+      <main style={{ background: '#F2EFE9', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 var(--gutter)' }}>
           <Reveal y={28} amount={0.2}>
             <div style={{ marginBottom: 64, maxWidth: 720 }}>
@@ -46,13 +46,13 @@ export default function BuyPage() {
                     if (arrow) arrow.style.transform = 'translateX(0)'
                   }}
                 >
-                  <div aria-hidden style={{ position: 'absolute', inset: '-60px', background: 'radial-gradient(closest-side, rgba(160,132,92,0.9) 0%, rgba(122,96,62,0.6) 35%, rgba(74,55,32,0.25) 65%, rgba(40,35,28,0) 100%)', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none' }} />
-                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(40,35,28,0.88)', boxShadow: '0 30px 80px -10px rgba(122,96,62,0.6), 0 0 0 1px rgba(160,132,92,0.2) inset', zIndex: 1, borderRadius: 4 }} />
+                  <div aria-hidden style={{ position: 'absolute', inset: '-60px', background: 'radial-gradient(closest-side, rgba(160,132,92,0.9) 0%, rgba(122,96,62,0.6) 35%, rgba(74,55,32,0.25) 65%, rgba(52,48,43,0) 100%)', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(52,48,43,0.88)', boxShadow: '0 30px 80px -10px rgba(122,96,62,0.6), 0 0 0 1px rgba(160,132,92,0.2) inset', zIndex: 1, borderRadius: 4 }} />
                   <div style={{ position: 'relative', zIndex: 2, padding: '36px 30px', minHeight: 220, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div>
-                      <span style={{ display: 'inline-block', fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', background: '#A0845C', color: '#EFECE6', padding: '5px 11px', marginBottom: 18 }}>{item.type}</span>
-                      <h3 style={{ fontSize: 24, color: '#EFECE6', marginBottom: 10 }}>{item.area}</h3>
-                      <p style={{ fontSize: 13, color: 'rgba(239,236,230,0.62)', lineHeight: 1.75 }}>{item.desc}</p>
+                      <span style={{ display: 'inline-block', fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 11px', marginBottom: 18 }}>{item.type}</span>
+                      <h3 style={{ fontSize: 24, color: '#F2EFE9', marginBottom: 10 }}>{item.area}</h3>
+                      <p style={{ fontSize: 13, color: 'rgba(242,239,233,0.62)', lineHeight: 1.75 }}>{item.desc}</p>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 22 }}>
                       <span style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A0845C' }}>Register Interest</span>

@@ -8,12 +8,8 @@ const EASE = [0.22, 1, 0.36, 1] as const
 const navItems = [
   { label: 'Lettings', href: '/let' },
   { label: 'Rentals', href: '/rent' },
-  { label: 'Sell', href: '/sell' },
   { label: 'New Homes', href: '/buy' },
-  { label: 'About', href: '/about' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Fees', href: '/fees' },
-  { label: 'Book Valuation', href: '/valuations' },
+  { label: 'Student Lettings', href: '/student-lettings' },
 ]
 
 const legalItems = [
@@ -25,7 +21,7 @@ const legalItems = [
 
 const linkStyle: React.CSSProperties = {
   fontSize: 11,
-  color: 'rgba(239,236,230,0.35)',
+  color: 'rgba(242,239,233,0.35)',
   letterSpacing: '0.03em',
 }
 
@@ -52,24 +48,24 @@ export default function Footer() {
       initial={reduce ? false : { opacity: 0, scale: 0.98, y: 24 }}
       animate={reduce ? undefined : inView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.98, y: 24 }}
       transition={{ duration: 1.4, ease: EASE }}
-      style={{ background: '#28231C', color: '#EFECE6', transformOrigin: 'center bottom', willChange: 'transform, opacity' }}
+      style={{ background: '#34302B', color: '#F2EFE9', transformOrigin: 'center bottom', willChange: 'transform, opacity' }}
     >
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '56px 20px 32px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
           <Stagger as="div" stagger={0.08}>
             <StaggerItem>
               <div style={{ fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 300, letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ color: 'rgba(239,236,230,0.85)' }}>VALE</span>
+                <span style={{ color: 'rgba(242,239,233,0.85)' }}>VALE</span>
                 <span style={{ color: '#A0845C' }}> &amp; </span>
-                <span style={{ color: 'rgba(239,236,230,0.95)' }}>MERCER</span>
+                <span style={{ color: 'rgba(242,239,233,0.95)' }}>MERCER</span>
               </div>
             </StaggerItem>
             <StaggerItem>
-              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 15, fontStyle: 'italic', color: 'rgba(239,236,230,0.55)', marginBottom: 20, letterSpacing: '0.01em' }}>
+              <p style={{ fontFamily: 'var(--font-serif)', fontSize: 15, fontStyle: 'italic', color: 'rgba(242,239,233,0.55)', marginBottom: 20, letterSpacing: '0.01em' }}>
                 London, handled with care.
               </p>
             </StaggerItem>
             <StaggerItem>
-              <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.08)', paddingTop: 16 }}>
+              <div style={{ borderTop: '0.5px solid rgba(242,239,233,0.08)', paddingTop: 16 }}>
                 <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginBottom: 10 }}>
                   <div style={{ background: '#fff', padding: '8px 12px', display: 'inline-flex', alignItems: 'center' }}>
                     <svg width="80" height="28" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,7 +77,7 @@ export default function Footer() {
                     </svg>
                   </div>
                 </a>
-                <p style={{ fontSize: 10, color: 'rgba(239,236,230,0.25)', lineHeight: 1.8 }}>
+                <p style={{ fontSize: 10, color: 'rgba(242,239,233,0.25)', lineHeight: 1.8 }}>
                   Member of Property Redress Scheme<br />
                   <span style={{ color: '#A0845C' }}>Membership No: PRS058796</span>
                 </p>
@@ -116,28 +112,28 @@ export default function Footer() {
             </StaggerItem>
             <StaggerItem>
               <div style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(239,236,230,0.2)', marginBottom: 4 }}>Email</div>
-                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 11, color: 'rgba(239,236,230,0.4)', letterSpacing: '0.01em' }}>
+                <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(242,239,233,0.2)', marginBottom: 4 }}>Email</div>
+                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 11, color: 'rgba(242,239,233,0.4)', letterSpacing: '0.01em' }}>
                   info@valeandmercer.co.uk
                 </a>
               </div>
             </StaggerItem>
             <StaggerItem>
               <div>
-                <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(239,236,230,0.2)', marginBottom: 4 }}>Registered Office</div>
-                <p style={{ fontSize: 11, color: 'rgba(239,236,230,0.35)', lineHeight: 1.7 }}>124 City Road, London EC1V 2NX</p>
+                <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(242,239,233,0.2)', marginBottom: 4 }}>Registered Office</div>
+                <p style={{ fontSize: 11, color: 'rgba(242,239,233,0.35)', lineHeight: 1.7 }}>124 City Road, London EC1V 2NX</p>
               </div>
             </StaggerItem>
           </Stagger>
         </div>
 
-      <div style={{ borderTop: '0.5px solid rgba(239,236,230,0.06)', padding: '18px 20px', maxWidth: 1280, margin: '0 auto' }}>
-        <p style={{ fontSize: 9, color: 'rgba(239,236,230,0.18)', marginBottom: 8, lineHeight: 1.9 }}>
+      <div style={{ borderTop: '0.5px solid rgba(242,239,233,0.06)', padding: '18px 20px', maxWidth: 1280, margin: '0 auto' }}>
+        <p style={{ fontSize: 9, color: 'rgba(242,239,233,0.18)', marginBottom: 8, lineHeight: 1.9 }}>
           2026 Vale and Mercer Ltd. Company No: 17212434. Registered in England and Wales. ICO No: ZC155397. AML Supervised by HMRC.
         </p>
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
           {legalItems.map(item => (
-            <Link key={item.label} href={item.href} className="link-underline" style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.22em', color: 'rgba(239,236,230,0.25)' }}>
+            <Link key={item.label} href={item.href} className="link-underline" style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.22em', color: 'rgba(242,239,233,0.25)' }}>
               {item.label}
             </Link>
           ))}

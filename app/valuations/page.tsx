@@ -99,7 +99,7 @@ export default function ValuationsPage() {
         <section
           ref={heroRef}
           style={{
-            background: '#28231C',
+            background: '#34302B',
             padding: '160px 20px 100px',
             position: 'relative',
             overflow: 'hidden',
@@ -117,8 +117,8 @@ export default function ValuationsPage() {
               style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
             />
           </motion.div>
-          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(40,35,28,0.65)' }} />
-          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(40,35,28,0.5) 0%, rgba(40,35,28,0) 25%, rgba(40,35,28,0) 70%, rgba(40,35,28,0.75) 100%)' }} />
+          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(52,48,43,0.65)' }} />
+          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(52,48,43,0.5) 0%, rgba(52,48,43,0) 25%, rgba(52,48,43,0) 70%, rgba(52,48,43,0.75) 100%)' }} />
 
           <div style={{ position: 'relative', zIndex: 10, maxWidth: 1280, margin: '0 auto', width: '100%' }}>
             <motion.div
@@ -131,7 +131,7 @@ export default function ValuationsPage() {
               <span className="eyebrow" style={{ color: '#A0845C' }}>Free Valuation</span>
             </motion.div>
 
-            <h1 style={{ color: '#EFECE6', marginBottom: 26, fontSize: 'clamp(38px, 5.8vw, 72px)', textShadow: '0 4px 24px rgba(40,35,28,0.5)' }}>
+            <h1 style={{ color: '#F2EFE9', marginBottom: 26, fontSize: 'clamp(38px, 5.8vw, 72px)', textShadow: '0 4px 24px rgba(52,48,43,0.5)' }}>
               <HeroLine text="Book your free" delay={1.05} />
               <HeroLine text="valuation" delay={1.18} italic gold />
             </h1>
@@ -140,14 +140,14 @@ export default function ValuationsPage() {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.4, ease: EASE }}
-              style={{ fontSize: 16, lineHeight: 2, color: 'rgba(239,236,230,0.96)', maxWidth: 520, textShadow: '0 2px 18px rgba(40,35,28,0.9), 0 1px 3px rgba(40,35,28,0.6)' }}
+              style={{ fontSize: 16, lineHeight: 2, color: 'rgba(242,239,233,0.96)', maxWidth: 520, textShadow: '0 2px 18px rgba(52,48,43,0.9), 0 1px 3px rgba(52,48,43,0.6)' }}
             >
               No online tool. No algorithm. We visit your property, look at it with fresh eyes, and give you a number you can actually rely on.
             </motion.p>
           </div>
         </section>
 
-        <section style={{ background: '#EFECE6', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             {status === 'sent' ? (
               <Reveal y={24}>
@@ -271,7 +271,7 @@ function HeroLine({ text, delay, italic, gold }: { text: string; delay: number; 
         transition={{ duration: 0.85, delay, ease: EASE }}
         style={{
           display: 'block',
-          color: gold ? '#A0845C' : '#EFECE6',
+          color: gold ? '#A0845C' : '#F2EFE9',
           fontStyle: italic ? 'italic' : 'normal',
           willChange: 'transform',
         }}
@@ -302,8 +302,8 @@ function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onCha
           }}
         />
         <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
-          I consent to Vale &amp; Mercer collecting and processing my information to arrange my valuation and respond to my enquiry. I understand my details may also be used to send me relevant property updates and marketing communications, and I can unsubscribe at any time. See our{' '}
-          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a> for full details.
+          I agree to Vale &amp; Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
+          <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a>.
         </span>
       </label>
       {error && (
@@ -323,8 +323,8 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
       disabled={disabled}
       style={{
         position: 'relative',
-        background: '#28231C',
-        color: '#EFECE6',
+        background: '#34302B',
+        color: '#F2EFE9',
         fontSize: 11,
         letterSpacing: '0.2em',
         textTransform: 'uppercase',

@@ -24,7 +24,7 @@ export default function PageHero({ eyebrow, image, imageAlt, children, minHeight
     <section
       ref={ref}
       style={{
-        background: '#28231C',
+        background: '#34302B',
         minHeight,
         display: 'flex',
         alignItems: 'center',
@@ -42,8 +42,8 @@ export default function PageHero({ eyebrow, image, imageAlt, children, minHeight
           style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
         />
       </motion.div>
-      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(40,35,28,0.65)' }} />
-      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(40,35,28,0.5) 0%, rgba(40,35,28,0) 25%, rgba(40,35,28,0) 70%, rgba(40,35,28,0.75) 100%)' }} />
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(52,48,43,0.65)' }} />
+      <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(52,48,43,0.5) 0%, rgba(52,48,43,0) 25%, rgba(52,48,43,0) 70%, rgba(52,48,43,0.75) 100%)' }} />
 
       <div style={{ position: 'relative', zIndex: 10, maxWidth: 1280, margin: '0 auto', width: '100%' }}>
         <div style={{ maxWidth: 640 }}>
@@ -73,7 +73,7 @@ export function HeroLine({ text, delay, italic, gold }: { text: string; delay: n
         transition={{ duration: 0.85, delay, ease: EASE }}
         style={{
           display: 'block',
-          color: gold ? '#A0845C' : '#EFECE6',
+          color: gold ? '#A0845C' : '#F2EFE9',
           fontStyle: italic ? 'italic' : 'normal',
           willChange: 'transform',
         }}
@@ -94,10 +94,10 @@ export function HeroSubtext({ children, delay }: { children: ReactNode; delay: n
       style={{
         fontSize: 16,
         lineHeight: 2,
-        color: 'rgba(239,236,230,0.96)',
+        color: 'rgba(242,239,233,0.96)',
         maxWidth: 460,
         marginBottom: 32,
-        textShadow: '0 2px 18px rgba(40,35,28,0.9), 0 1px 3px rgba(40,35,28,0.6)',
+        textShadow: '0 2px 18px rgba(52,48,43,0.9), 0 1px 3px rgba(52,48,43,0.6)',
       }}
     >
       {children}

@@ -18,7 +18,7 @@ export default function TermsPage() {
   return (
     <>
       <Navbar />
-      <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Website Terms of Use</h1>

@@ -6,7 +6,7 @@ import './globals.css'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 const OG_IMAGE = 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&h=630&fit=crop&q=85'
-const DESCRIPTION = 'London lettings, sales and property valuations. Independent London estate agency for residential lettings, new homes, and student lets — personal service and honest advice from Vale and Mercer.'
+const DESCRIPTION = 'London lettings, sales and property valuations. Independent London estate agency for residential lettings, new homes, and student lets. Personal service and honest advice from Vale and Mercer.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     siteName: 'Vale and Mercer',
     title: 'Vale and Mercer | London Residential Property Agency',
     description: DESCRIPTION,
-    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: 'Vale and Mercer — London residential property agency' }],
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: 'Vale and Mercer, London residential property agency' }],
   },
   twitter: {
     card: 'summary_large_image',

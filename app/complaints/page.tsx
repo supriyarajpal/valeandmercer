@@ -20,7 +20,7 @@ export default function ComplaintsPage() {
   return (
     <>
       <Navbar />
-      <main style={{background:'#EFECE6',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
 
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
@@ -28,11 +28,11 @@ export default function ComplaintsPage() {
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'8px'}}>Vale and Mercer Ltd, Residential Lettings Agency</p>
           <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>Last Updated: June 2026 | Company No: 17212434</p>
 
-          <div style={{background:'#28231C',padding:'24px 28px',marginBottom:'40px',display:'flex',alignItems:'center',gap:'20px',flexWrap:'wrap'}}>
+          <div style={{background:'#34302B',padding:'24px 28px',marginBottom:'40px',display:'flex',alignItems:'center',gap:'20px',flexWrap:'wrap'}}>
             <div>
               <p style={{fontSize:'10px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#A0845C',marginBottom:'6px'}}>Redress Membership</p>
-              <p style={{fontSize:'14px',color:'#EFECE6',lineHeight:1.6}}>Vale and Mercer Ltd is a member of the <strong style={{color:'#EFECE6'}}>Property Redress Scheme</strong>, a government-approved, independent redress scheme.</p>
-              <p style={{fontSize:'12px',color:'rgba(239,236,230,0.5)',marginTop:'6px'}}>Membership No: PRS058796</p>
+              <p style={{fontSize:'14px',color:'#F2EFE9',lineHeight:1.6}}>Vale and Mercer Ltd is a member of the <strong style={{color:'#F2EFE9'}}>Property Redress Scheme</strong>, a government-approved, independent redress scheme.</p>
+              <p style={{fontSize:'12px',color:'rgba(242,239,233,0.5)',marginTop:'6px'}}>Membership No: PRS058796</p>
             </div>
           </div>
 
