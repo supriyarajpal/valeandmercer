@@ -97,10 +97,10 @@ export default function RentPage() {
             <div style={{ marginBottom: 56, maxWidth: 720 }}>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 16 }}>Rentals</p>
               <h1 style={{ color: '#4A4036', marginBottom: 22 }}>
-                Rental properties <span style={{ color: '#A0845C', fontStyle: 'italic' }}>coming soon</span>
+                Rental properties <span style={{ color: '#A0845C', fontStyle: 'italic' }}>available now</span>
               </h1>
               <p style={{ fontSize: 15, lineHeight: 1.95, color: '#6B6258', maxWidth: 540, marginBottom: 36 }}>
-                We are building our lettings portfolio across prime London. Register your interest and we will be in touch as soon as something available matches what you need.
+                Browse our current lettings across East London. Can&apos;t find what you need? Register your interest and we will be in touch when something matching comes up.
               </p>
               <ArrowButton href="/register" label="Register Your Interest" variant="dark" />
             </div>

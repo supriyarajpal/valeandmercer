@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap');
+/* Leaflet tile-pane styles — imported globally so the CSS is reliably
+   linked regardless of how/when the PropertyMap chunk loads. */
+@import 'leaflet/dist/leaflet.css';
 
 @tailwind base;
 @tailwind components;
