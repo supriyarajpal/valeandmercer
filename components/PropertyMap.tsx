@@ -72,8 +72,17 @@ const CARTO_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">Ope
 const OSM_ATTR   = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 // If CARTO emits this many `tileerror` events before we've seen a
 // successful `tileload`, swap in the OSM layer. Three is enough to
-// distinguish a genuine outage from a single flaky request.
-const TILE_ERROR_THRESHOLD = 3
+// distinguish a genuine outage from a single flaky request. Lowered
+// from 3 to 2 during the 2026-07-10 prod-tile-blank triage so the OSM
+// fallback kicks in faster if CARTO is being blocked at a browser
+// extension / network level.
+const TILE_ERROR_THRESHOLD = 2
+// If NO tile from the primary provider has loaded within this window,
+// force-swap to the fallback even if `tileerror` events never fired.
+// This covers the case where an ad blocker / DNS filter silently
+// swallows requests to `basemaps.cartocdn.com` without letting the
+// browser fire the image error handler that Leaflet listens on.
+const PRIMARY_NO_LOAD_TIMEOUT_MS = 3500
 // Hard cap on how long the skeleton stays up. If neither provider
 // answers we still hide the overlay so the empty map is visible
 // (better than a stuck loading state).
@@ -258,21 +267,45 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
         attribution: OSM_ATTR,
       })
       let primaryErrors = 0
+      let primaryLoaded = false
       let switched = false
+      const swapToFallback = (reason: string) => {
+        if (switched) return
+        switched = true
+        // Diagnostic breadcrumb — visible in the browser DevTools
+        // console so a user reporting a blank-tile bug can send us
+        // exactly what triggered the swap. Info-level to avoid
+        // scaring anyone who opens the console for other reasons.
+        // eslint-disable-next-line no-console
+        console.info(`[vm-map] Primary tile provider fell back to OSM (${reason})`)
+        if (map.hasLayer(primary)) map.removeLayer(primary)
+        fallback.addTo(map)
+      }
       const markLoaded = () => setTilesLoaded(true)
-      primary.on('tileload',  markLoaded)
+      primary.on('tileload',  () => { primaryLoaded = true; markLoaded() })
       fallback.on('tileload', markLoaded)
       primary.on('load',      markLoaded)
       fallback.on('load',     markLoaded)
       primary.on('tileerror', () => {
         primaryErrors++
-        if (!switched && primaryErrors >= TILE_ERROR_THRESHOLD) {
-          switched = true
-          if (map.hasLayer(primary)) map.removeLayer(primary)
-          fallback.addTo(map)
+        if (primaryErrors >= TILE_ERROR_THRESHOLD) {
+          swapToFallback(`tileerror x${primaryErrors}`)
         }
       })
       primary.addTo(map)
+
+      // Silent-block guard: if the primary provider hasn't produced
+      // even ONE successful tileload within PRIMARY_NO_LOAD_TIMEOUT_MS,
+      // assume the requests are being swallowed (ad blocker, DNS
+      // filter, corporate proxy) and swap to OSM regardless of
+      // whether any `tileerror` events fired. Extensions sometimes
+      // suppress the browser-level error handler that Leaflet listens
+      // on, so `tileerror` alone isn't a reliable signal.
+      window.setTimeout(() => {
+        if (!primaryLoaded && !switched) {
+          swapToFallback('primary silent (no tileload before timeout)')
+        }
+      }, PRIMARY_NO_LOAD_TIMEOUT_MS)
 
       // Belt-and-braces: run invalidateSize on the freshly created
       // map so its first tile-grid fetch uses the correct container
