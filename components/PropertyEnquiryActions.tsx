@@ -15,7 +15,7 @@ type Props = {
   rent: string
 }
 
-const AGENT_EMAIL   = 'info@valeandmercer.co.uk'
+const AGENT_EMAIL   = 'raghav@valeandmercer.co.uk'
 const AGENT_TEL_URL = 'tel:+447517696926'                    // no spaces per RFC 3966
 const AGENT_TEL_LBL = '+44 7517 696926'
 const AGENT_WA      = '447517696926'                          // wa.me uses country code without '+'

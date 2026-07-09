@@ -69,10 +69,14 @@ export type Property = {
   coordinates?: Coordinates
 }
 
+// Property-page enquiry contact. Consumed only by the property detail
+// page / PropertyEnquiryActions — do NOT reuse for site-wide contact
+// surfaces (footer, /about, etc.), which still route through
+// info@valeandmercer.co.uk. Personal name intentionally omitted from
+// the sidebar UI; role label ("Lettings · Vale and Mercer") carries
+// the human context instead.
 export const AGENT_CONTACT = {
-  name: 'Raghav Rajpal',
-  email: 'info@valeandmercer.co.uk',
-  phone: '+44 7517 696926',
+  email: 'raghav@valeandmercer.co.uk',
 } as const
 
 export const RENT_TERMS = {

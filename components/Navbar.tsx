@@ -35,6 +35,11 @@ export default function Navbar() {
   const firstLoad = useFirstLoad()
 
   const isDarkHero = pathIsDarkHero(pathname)
+  // On individual property pages we swap the site eyebrow ("Est. London")
+  // for an inline "Back to Rentals" link so the eyebrow doubles as the
+  // page's back-navigation. Behaviour is scoped strictly to `/property/*`;
+  // every other route keeps the marque as-is.
+  const isPropertyDetail = pathname.startsWith('/property/')
 
   useEffect(() => {
     const checkSize = () => setMobile(window.innerWidth < 900)
@@ -258,7 +263,17 @@ export default function Navbar() {
               }}
             >
               <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
-              <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
+              {isPropertyDetail ? (
+                <Link
+                  href="/rent"
+                  className="eyebrow link-underline"
+                  style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)', display: 'inline-flex', alignItems: 'center', gap: 6 }}
+                >
+                  <span aria-hidden style={{ fontSize: 12, lineHeight: 1 }}>←</span> Back to Rentals
+                </Link>
+              ) : (
+                <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
+              )}
             </div>
           </motion.div>
         </div>
