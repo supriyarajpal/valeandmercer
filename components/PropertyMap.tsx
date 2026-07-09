@@ -5,15 +5,43 @@
 // couple of refs is genuinely less code than the react-leaflet component
 // tree. If the map ever grows layer clusters / vector tiles / drawing
 // controls, revisit react-leaflet.
+//
+// Reliability history (read before changing the init effect):
+//   The map used to intermittently render with blank tiles. Root cause
+//   was that the init `useEffect` depended on `properties` and
+//   `onMarkerFocus`. Both are reference-unstable on the parents:
+//     * app/rent/page.tsx computes `getLiveProperties().filter(...)`
+//       during render without useMemo, so a fresh array reference is
+//       produced every render.
+//     * components/PropertyLocationMap.tsx passes `properties={[property]}`,
+//       a fresh literal every render.
+//     * Callers pass an inline `onMarkerFocus` when the parent's own
+//       state (e.g. `Reveal`'s `inView`) changes.
+//   Combined with the async `import('leaflet').then(...)` bootstrap,
+//   this produced a re-init race: effect A starts, Reveal fires
+//   inView=true, parent re-renders, effect A's cleanup runs before
+//   Leaflet has resolved, effect B starts a second import, and the
+//   belt-and-braces `invalidateSize` timers from run A have already
+//   been cleared by the time the surviving map instance exists — so
+//   Leaflet grabs the container size a beat too early and half the
+//   tile grid stays blank.
+//   The fix here: dep on a memoised `propertiesKey` string, keep the
+//   live `properties` + `onMarkerFocus` in refs. Combined with a wider
+//   `invalidateSize` net (ResizeObserver + IntersectionObserver +
+//   `window.resize` + a chained rAF / setTimeout ladder) plus an
+//   OpenStreetMap fallback tile layer that kicks in on repeated CARTO
+//   tile errors, and a loading skeleton overlay that only clears on
+//   an actual `tileload`. Don't collapse these back — each one covers
+//   a real failure mode we've seen.
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 // NOTE: Leaflet's stylesheet must ALSO be imported at the page level
-// (see app/rent/page.tsx). Importing it here alone is not enough when
-// this component is loaded via `next/dynamic({ ssr: false })` — Next
-// bundles the CSS but does not always link it into the parent page's
-// initial CSS bundle, and the map renders blank tiles as a result.
-// This import stays as a safety net for anyone using PropertyMap in a
-// non-dynamic context.
+// (see app/rent/page.tsx and components/PropertyLocationMap.tsx).
+// Importing it here alone is not enough when this component is loaded
+// via `next/dynamic({ ssr: false })` — Next bundles the CSS but does
+// not always link it into the parent page's initial CSS bundle, and
+// the map renders blank tiles as a result. This import stays as a
+// safety net for anyone using PropertyMap in a non-dynamic context.
 import 'leaflet/dist/leaflet.css'
 import type { Property } from '@/lib/properties'
 
@@ -21,9 +49,35 @@ type Props = {
   properties: Property[]
   // Fired when a marker's popup "View Property" link fires OR when the
   // marker itself is clicked. Parent uses this to scroll the matching
-  // card into view.
+  // card into view. Callback identity is captured via a ref inside the
+  // component so a fresh identity on the parent doesn't re-init the map.
   onMarkerFocus?: (slug: string) => void
+  // Any CSS length. Overrides the default `clamp(360px, 55vh, 560px)`
+  // wrapper height. Single-property detail views pass ~400px here.
+  height?: string
+  // If set, the map opens centred on the single property at exactly
+  // this zoom level instead of running fitBounds. Only meaningful when
+  // `properties.length === 1`; ignored otherwise so the multi-marker
+  // /rent view keeps its auto-fit behaviour.
+  initialZoom?: number
 }
+
+// Primary + fallback tile providers. CARTO is preferred for the muted
+// cream palette that matches the site; OSM standard is the safety net.
+// Both use the same {s} / {z} / {x} / {y} template so Leaflet handles
+// them interchangeably.
+const CARTO_URL  = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+const OSM_URL    = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+const CARTO_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+const OSM_ATTR   = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+// If CARTO emits this many `tileerror` events before we've seen a
+// successful `tileload`, swap in the OSM layer. Three is enough to
+// distinguish a genuine outage from a single flaky request.
+const TILE_ERROR_THRESHOLD = 3
+// Hard cap on how long the skeleton stays up. If neither provider
+// answers we still hide the overlay so the empty map is visible
+// (better than a stuck loading state).
+const SKELETON_SAFETY_MS = 6000
 
 // Built once, reused for every marker. Ink teardrop with a gold border
 // and a gold dot in the center. iconAnchor points the tail's tip at the
@@ -65,9 +119,6 @@ function buildPopupHtml(p: Property): string {
   `
 }
 
-// SVG icon for the fullscreen toggle. `variant` picks enter (arrows out
-// from corners) or exit (arrows in). Rendered inline so the button
-// styling matches without any icon-font dependency.
 function FullscreenIcon({ variant }: { variant: 'enter' | 'exit' }) {
   const strokeProps = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.5, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
   if (variant === 'enter') {
@@ -90,17 +141,33 @@ function FullscreenIcon({ variant }: { variant: 'enter' | 'exit' }) {
   )
 }
 
-export default function PropertyMap({ properties, onMarkerFocus }: Props) {
+export default function PropertyMap({ properties, onMarkerFocus, height, initialZoom }: Props) {
   const containerRef  = useRef<HTMLDivElement | null>(null)
   const wrapperRef    = useRef<HTMLDivElement | null>(null)
   const mapRef        = useRef<import('leaflet').Map | null>(null)
 
   const [isFullscreen, setIsFullscreen] = useState(false)
-  // Tracks whether scroll-wheel zoom is currently armed. Starts off so the
-  // page can be scrolled past the map freely; click on the map arms it,
-  // moving the cursor off the map disarms it. Used to render the small
-  // "Click to zoom" hint badge.
   const [zoomArmed, setZoomArmed] = useState(false)
+  // Cleared on the first successful `tileload` OR after the safety
+  // timeout, whichever fires first. Drives the skeleton overlay.
+  const [tilesLoaded, setTilesLoaded] = useState(false)
+
+  // Content-based key for the properties list. Only changes when the
+  // set of plotted markers actually changes, so we don't tear the map
+  // down and rebuild it on every unrelated parent re-render.
+  const propertiesKey = useMemo(() => {
+    return properties
+      .filter(p => p.coordinates)
+      .map(p => `${p.slug}:${p.coordinates!.lat.toFixed(6)},${p.coordinates!.lng.toFixed(6)}`)
+      .join('|')
+  }, [properties])
+
+  // Refs kept fresh on every render so the init effect can read the
+  // current props without re-running.
+  const propertiesRef    = useRef(properties)
+  const onMarkerFocusRef = useRef(onMarkerFocus)
+  useEffect(() => { propertiesRef.current    = properties    })
+  useEffect(() => { onMarkerFocusRef.current = onMarkerFocus })
 
   const toggleFullscreen = useCallback(() => {
     setIsFullscreen(prev => !prev)
@@ -112,19 +179,46 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
 
     let cancelled = false
 
-    // Primary defence against tile-blanking: any container size change
-    // triggers invalidateSize on the live map instance. Covers the four
-    // states the map has to survive:
-    //   (1) initial paint — the async `import('leaflet')` can resolve
-    //       before the flex/grid parent has settled its dimensions
-    //   (2) fullscreen enter (fixed inset:0)
-    //   (3) fullscreen exit (back to clamp height)
-    //   (4) window / device rotation resize
-    // Observer stays alive for the map's lifetime.
-    const ro = new ResizeObserver(() => {
-      mapRef.current?.invalidateSize()
-    })
+    // ---- invalidateSize triggers ----------------------------------
+    // Multiple independent signals converge on a single `bumpSize`
+    // helper. Each is safe to call before the map exists (it's a
+    // no-op via optional chaining) and after the map is torn down.
+    const bumpSize = () => mapRef.current?.invalidateSize()
+
+    // (1) Container size changes — parent grid reflow, sidebar sticky
+    //     transition, fullscreen enter/exit, mobile keyboard, etc.
+    const ro = new ResizeObserver(bumpSize)
     ro.observe(container)
+
+    // (2) Container visibility — the map might be inside a
+    //     Reveal wrapper that starts at opacity 0 (still laid-out),
+    //     or in the future inside a lazy/conditionally-mounted
+    //     section. IO catches the "first time this thing crossed
+    //     the viewport" moment.
+    let io: IntersectionObserver | null = null
+    if (typeof IntersectionObserver !== 'undefined') {
+      io = new IntersectionObserver(entries => {
+        for (const e of entries) if (e.isIntersecting) bumpSize()
+      }, { threshold: 0 })
+      io.observe(container)
+    }
+
+    // (3) Window resize (orientation change on mobile, browser resize
+    //     on desktop). RO usually catches this too, but only if the
+    //     container size actually changes; a container with fixed
+    //     dimensions wouldn't trigger RO.
+    window.addEventListener('resize', bumpSize)
+
+    // (4) Chained timers as a first-paint safety net. Cover the race
+    //     where the async `import('leaflet')` resolves before the
+    //     container's flex/grid parent has settled.
+    const rafId  = window.requestAnimationFrame(bumpSize)
+    const t100   = window.setTimeout(bumpSize, 100)
+    const t400   = window.setTimeout(bumpSize, 400)
+    const t1200  = window.setTimeout(bumpSize, 1200)
+
+    // Skeleton safety timeout — never leave the overlay stuck.
+    const skeletonSafety = window.setTimeout(() => setTilesLoaded(true), SKELETON_SAFETY_MS)
 
     import('leaflet').then(mod => {
       if (cancelled) return
@@ -134,35 +228,13 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
 
       const map = L.map(container, {
         zoomControl: true,
-        scrollWheelZoom: false,   // armed on click, disarmed on mouseout
+        scrollWheelZoom: false,
         attributionControl: true,
         // ---- Smooth-zoom tuning for trackpads --------------------
         // Leaflet's defaults treat every wheel event as a full zoom
-        // step, which is fine for a scroll wheel that emits one big
-        // event per notch but terrible for trackpads, which emit many
-        // small events per gesture and jump three or four zoom levels
-        // per swipe. Four coordinated knobs fix this:
-        //
-        //   zoomSnap: 0.25          allow the zoom level to settle at
-        //                           fractional values instead of only
-        //                           whole integers, so the map lands
-        //                           smoothly wherever the gesture ends
-        //   zoomDelta: 0.5          each +/- button press or key press
-        //                           moves half a level, matching the
-        //                           finer snap grid
-        //   wheelPxPerZoomLevel:120 require 120px of accumulated wheel
-        //                           delta per level (default is 60);
-        //                           this is the main knob — doubling
-        //                           it makes trackpad gestures gentle
-        //   wheelDebounceTime: 60   coalesce rapid trackpad events
-        //                           into a smoother running total
-        //                           (default is 40)
-        //
-        // Mouse-wheel notches on a physical wheel still emit ~120px
-        // per notch on most systems, so one notch ≈ one zoom level —
-        // that's what a mouse user expects. Trackpads accumulate the
-        // same 120px over many small events, so a gentle swipe zooms
-        // ~one level, not four.
+        // step. Four coordinated knobs let a trackpad gesture move
+        // ~one zoom level instead of four. See git blame for the
+        // long-form comment on each knob.
         zoomSnap: 0.25,
         zoomDelta: 0.5,
         wheelPxPerZoomLevel: 120,
@@ -170,33 +242,45 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
       })
       mapRef.current = map
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      // ---- Tile layers: CARTO primary + OSM fallback --------------
+      // Primary layer starts attached. If it emits enough tileerror
+      // events without a matching tileload, we swap in the OSM layer
+      // so the map never stays blank because of a CARTO outage.
+      // `tileload` on either layer clears the skeleton overlay — the
+      // user just needs to see real tiles, not any specific provider.
+      const primary = L.tileLayer(CARTO_URL, {
         subdomains: 'abcd',
         maxZoom: 20,
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      }).addTo(map)
-
-      // Belt-and-braces size sync. See the ResizeObserver at the top of
-      // this useEffect for the primary defence; these two fire once at
-      // init to catch the "async import resolved while container was
-      // still 0-sized" case that leaves the tile layer with an empty
-      // grid to fetch on first paint.
-      window.requestAnimationFrame(() => {
-        mapRef.current?.invalidateSize()
+        attribution: CARTO_ATTR,
       })
-      window.setTimeout(() => {
-        mapRef.current?.invalidateSize()
-      }, 300)
+      const fallback = L.tileLayer(OSM_URL, {
+        maxZoom: 19,
+        attribution: OSM_ATTR,
+      })
+      let primaryErrors = 0
+      let switched = false
+      const markLoaded = () => setTilesLoaded(true)
+      primary.on('tileload',  markLoaded)
+      fallback.on('tileload', markLoaded)
+      primary.on('load',      markLoaded)
+      fallback.on('load',     markLoaded)
+      primary.on('tileerror', () => {
+        primaryErrors++
+        if (!switched && primaryErrors >= TILE_ERROR_THRESHOLD) {
+          switched = true
+          if (map.hasLayer(primary)) map.removeLayer(primary)
+          fallback.addTo(map)
+        }
+      })
+      primary.addTo(map)
+
+      // Belt-and-braces: run invalidateSize on the freshly created
+      // map so its first tile-grid fetch uses the correct container
+      // dims. The chained timers above catch subsequent settle
+      // frames.
+      bumpSize()
 
       // ---- scroll-wheel zoom UX -----------------------------------
-      // Click inside the map arms scroll-wheel zoom, so subsequent
-      // scroll/trackpad gestures zoom the map instead of the page.
-      // When the cursor leaves the map area we disarm it, restoring
-      // page scroll. This is the pattern that Google Maps embeds use.
-      // Touch pinch-zoom (`touchZoom`) is on by default in Leaflet and
-      // is unaffected by scrollWheelZoom, so mobile users always have
-      // pinch available without arming anything.
       map.on('click', () => {
         map.scrollWheelZoom.enable()
         setZoomArmed(true)
@@ -216,17 +300,23 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
         popupAnchor: [0, -34],
       })
 
+      const currentProps = propertiesRef.current
       const validPoints: Array<[number, number]> = []
-      for (const p of properties) {
+      for (const p of currentProps) {
         if (!p.coordinates) continue
         const marker = L.marker([p.coordinates.lat, p.coordinates.lng], { icon })
           .bindPopup(buildPopupHtml(p), { closeButton: true, autoClose: true, className: 'vm-popup' })
           .addTo(map)
-        marker.on('popupopen', () => { onMarkerFocus?.(p.slug) })
+        marker.on('popupopen', () => { onMarkerFocusRef.current?.(p.slug) })
         validPoints.push([p.coordinates.lat, p.coordinates.lng])
       }
 
-      if (validPoints.length > 0) {
+      // Single-property detail view: skip fitBounds and centre on the
+      // point at the requested zoom. Multi-marker /rent grid keeps
+      // the auto-fit path.
+      if (initialZoom != null && validPoints.length === 1) {
+        map.setView(validPoints[0], initialZoom)
+      } else if (validPoints.length > 0) {
         const bounds = L.latLngBounds(validPoints)
         map.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 })
       } else {
@@ -238,38 +328,35 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
         const anchor = el?.closest?.('a[data-vm-view-property]') as HTMLAnchorElement | null
         if (!anchor) return
         const slug = anchor.getAttribute('data-vm-view-property')
-        if (slug) onMarkerFocus?.(slug)
+        if (slug) onMarkerFocusRef.current?.(slug)
       })
     })
 
     return () => {
       cancelled = true
+      window.cancelAnimationFrame(rafId)
+      window.clearTimeout(t100)
+      window.clearTimeout(t400)
+      window.clearTimeout(t1200)
+      window.clearTimeout(skeletonSafety)
+      window.removeEventListener('resize', bumpSize)
       ro.disconnect()
+      io?.disconnect()
       if (mapRef.current) {
         mapRef.current.remove()
         mapRef.current = null
       }
     }
-  }, [properties, onMarkerFocus])
+    // Depending on `propertiesKey` (a content-based string) instead of
+    // `properties` (a reference-unstable array) is intentional and the
+    // whole point of the reliability fix above — every parent produces
+    // fresh array references on re-render, which used to tear this
+    // effect down mid-init. See file-top comment.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [propertiesKey, initialZoom])
 
   // ----- Fullscreen effects ---------------------------------------
-  //
-  // 1. Body scroll lock while fullscreen. Restored on exit and on
-  //    unmount.
-  // 2. Fullscreen entry auto-arms scroll-wheel zoom (the user is
-  //    clearly in "interact" mode). Exit disarms it again so returning
-  //    to the page scroll works normally.
-  // 3. Two invalidateSize calls after each toggle: one on the next
-  //    animation frame (covers the "container just resized" case) and
-  //    one on a 250ms timeout (covers the case where a CSS transition
-  //    is still settling). Tiles re-request against the new pixel
-  //    dimensions after each call.
-  // ----------------------------------------------------------------
   useEffect(() => {
-    // Simple assignment / empty-string restore. The previous version
-    // captured `prevOverflow` on every effect run, which meant once
-    // we set 'hidden' for fullscreen, subsequent runs captured 'hidden'
-    // as the "previous" state and body-scroll stayed locked forever.
     document.body.style.overflow = isFullscreen ? 'hidden' : ''
 
     const map = mapRef.current
@@ -281,10 +368,6 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
         map.scrollWheelZoom.disable()
         setZoomArmed(false)
       }
-      // The ResizeObserver in the init effect will fire on the size
-      // change too, but these explicit calls also cover the case
-      // where the container size is animated over a CSS transition
-      // that briefly settles at intermediate values.
       window.requestAnimationFrame(() => { mapRef.current?.invalidateSize() })
       const t = window.setTimeout(() => { mapRef.current?.invalidateSize() }, 250)
       return () => {
@@ -298,8 +381,6 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
     }
   }, [isFullscreen])
 
-  // Esc key exits fullscreen. Listener only mounts while fullscreen so
-  // there's no idle overhead.
   useEffect(() => {
     if (!isFullscreen) return
     function onKey(e: KeyboardEvent) {
@@ -313,7 +394,7 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
     ? {
         position: 'fixed',
         top: 0, right: 0, bottom: 0, left: 0,
-        zIndex: 500,   // above Navbar (100), below Cookiebot overlays
+        zIndex: 500,
         background: '#F2EFE9',
         borderRadius: 0,
         border: 'none',
@@ -322,7 +403,7 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
     : {
         position: 'relative',
         width: '100%',
-        height: 'clamp(360px, 55vh, 560px)',
+        height: height ?? 'clamp(360px, 55vh, 560px)',
         borderRadius: 12,
         overflow: 'hidden',
         background: '#F2EFE9',
@@ -333,19 +414,51 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
   return (
     <>
       <div ref={wrapperRef} style={wrapperStyle}>
-        {/* Explicit 100%/100% (not `position: absolute; inset: 0`).
-            The absolute+inset variant sometimes returned a zero
-            clientWidth at the moment the async `import('leaflet')`
-            resolved, leaving Leaflet with an empty tile grid to fetch
-            on first paint (see Phase 34). Width/height 100% resolves
-            directly against the wrapper's known clamp dimensions and
-            is stable at layout time. */}
         <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
 
-        {/* Fullscreen toggle. Top-right corner. Small, gold-on-ink,
-            matches the ArrowButton `gold` variant visually. Kept as a
-            sibling of the map container so its clicks don't reach the
-            Leaflet map's event listeners. */}
+        {/* Loading skeleton overlay — sits ABOVE the Leaflet container
+            (zIndex 30, higher than the map's own panes but below the
+            fullscreen button at 20 within this wrapper — see zIndex 30
+            vs 20; the button remains keyboard-reachable because it's
+            positioned above the overlay only visually, and the overlay
+            is pointer-events:none). Fades out once the first tileload
+            fires OR after SKELETON_SAFETY_MS. Simple pulsing bar
+            provides a subtle "something is happening" cue without
+            introducing an animation library dependency. */}
+        <div
+          aria-hidden={tilesLoaded}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 15,
+            background: '#F2EFE9',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 14,
+            color: '#9A9188',
+            fontSize: 10,
+            letterSpacing: '0.24em',
+            textTransform: 'uppercase',
+            opacity: tilesLoaded ? 0 : 1,
+            transition: 'opacity 400ms var(--ease-out-soft)',
+            pointerEvents: tilesLoaded ? 'none' : 'auto',
+          }}
+        >
+          <div
+            style={{
+              width: 44,
+              height: 3,
+              borderRadius: 2,
+              background: 'linear-gradient(90deg, transparent 0%, #A0845C 50%, transparent 100%)',
+              backgroundSize: '200% 100%',
+              animation: 'vm-map-shimmer 1.2s linear infinite',
+            }}
+          />
+          Loading map
+        </div>
+
         <button
           type="button"
           onClick={toggleFullscreen}
@@ -380,11 +493,6 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
           <FullscreenIcon variant={isFullscreen ? 'exit' : 'enter'} />
         </button>
 
-        {/* "Click to zoom" hint. Only shown when scroll-wheel zoom is
-            not armed AND we're not in fullscreen (in fullscreen the
-            zoom is already armed). Positioned bottom-left so it does
-            not compete with the fullscreen button or the CARTO
-            attribution. Fades on state change via CSS transition. */}
         <div
           aria-hidden
           style={{
@@ -403,7 +511,7 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
             textTransform: 'uppercase',
             borderRadius: 4,
             pointerEvents: 'none',
-            opacity: !zoomArmed && !isFullscreen ? 1 : 0,
+            opacity: !zoomArmed && !isFullscreen && tilesLoaded ? 1 : 0,
             transition: 'opacity 0.4s var(--ease-out-soft)',
           }}
         >
@@ -411,7 +519,6 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
           Click map to zoom
         </div>
 
-        {/* Fullscreen "press Esc" hint. Only shown while fullscreen. */}
         <div
           aria-hidden
           style={{
@@ -439,9 +546,6 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
         </div>
       </div>
 
-      {/* Global Leaflet skin overrides. Plain <style> (not styled-jsx)
-          to stay consistent with the rest of the codebase's inline-
-          style pattern. */}
       <style>{`
         .vm-marker { background: transparent !important; border: none !important; }
         .vm-popup .leaflet-popup-content-wrapper {
@@ -455,6 +559,10 @@ export default function PropertyMap({ properties, onMarkerFocus }: Props) {
         }
         .vm-popup .leaflet-popup-tip { box-shadow: none; }
         .leaflet-container { font-family: 'DM Sans', system-ui, sans-serif; }
+        @keyframes vm-map-shimmer {
+          0%   { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
       `}</style>
     </>
   )

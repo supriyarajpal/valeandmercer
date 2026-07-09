@@ -113,7 +113,12 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
                 inset: 0,
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover',
+                // `contain` (not cover) so the FULL photo shows at its
+                // native aspect ratio — no cropping. Any letterbox band
+                // that opens up is filled by the section background
+                // (#28231C), which is set on the outer <section> below.
+                objectFit: 'contain',
+                objectPosition: 'center',
                 // Frame 0 sits at 0.7 so the full hero copy reads over
                 // the dual scrim. Any other frame restores to true
                 // brightness — the scrim below is fading out at the same

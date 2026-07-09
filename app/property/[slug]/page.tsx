@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PropertyEnquiryActions from '@/components/PropertyEnquiryActions'
 import PropertyHeroCarousel from '@/components/PropertyHeroCarousel'
+import PropertyLocationMap from '@/components/PropertyLocationMap'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 import {
   AGENT_CONTACT,
@@ -202,6 +203,13 @@ function PropertyBody({ property }: { property: Property }) {
 function PropertySidebar({ property }: { property: Property }) {
   const subject = encodeURIComponent(`Enquiry: ${property.title} (Ref ${property.ref})`)
   return (
+    // `alignSelf: 'start'` is inherited from the parent grid's
+    // `alignItems: 'start'`, so `position: sticky` still works. Adding
+    // the map below the Enquire card makes the sidebar taller — on
+    // shorter viewports the tail can clip while stuck, but the section
+    // is short enough overall that the containing block unsticks it
+    // near the end of the body copy on the left. Trade-off preserved
+    // vs. adding internal overflow scroll.
     <aside style={{ position: 'sticky', top: 140 }}>
       <Reveal y={20} amount={0.1}>
         <div style={{ background: '#34302B', color: '#F2EFE9', padding: '36px 32px 32px', borderRadius: 10, boxShadow: '0 24px 60px -30px rgba(52,48,43,0.35)' }}>
@@ -234,6 +242,15 @@ function PropertySidebar({ property }: { property: Property }) {
           </div>
         </div>
       </Reveal>
+
+      {property.coordinates && (
+        <Reveal y={20} amount={0.1}>
+          <div style={{ marginTop: 32 }}>
+            <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Location</p>
+            <PropertyLocationMap property={property} />
+          </div>
+        </Reveal>
+      )}
     </aside>
   )
 }
