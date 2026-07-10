@@ -61,8 +61,8 @@ export default function GetInTouch() {
   const inp: React.CSSProperties = {
     background: 'transparent',
     border: 'none',
-    borderBottom: '1px solid #C8C0B4',
-    color: '#4A4036',
+    borderBottom: '1px solid var(--border-strong)',
+    color: 'var(--text)',
     fontSize: 16,
     padding: '14px 0',
     minHeight: 48,
@@ -76,14 +76,14 @@ export default function GetInTouch() {
     el.style.background = 'rgba(160,132,92,0.06)'
   }
   const focusOff = (el: HTMLElement) => {
-    el.style.borderColor = '#C8C0B4'
+    el.style.borderColor = 'var(--border-strong)'
     el.style.background = 'transparent'
   }
   const lab: React.CSSProperties = {
     fontSize: 9,
     letterSpacing: '0.18em',
     textTransform: 'uppercase',
-    color: '#9A9188',
+    color: 'var(--text-faint)',
     display: 'block',
     marginBottom: 6,
   }
@@ -113,13 +113,13 @@ export default function GetInTouch() {
               initial={reduce ? false : { opacity: 0, y: 22 }}
               animate={reduce ? undefined : headlineInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
               transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
-              style={{ color: '#4A4036', marginBottom: 28, fontSize: 'clamp(40px, 6vw, 72px)' }}
+              style={{ color: 'var(--text)', marginBottom: 28, fontSize: 'clamp(40px, 6vw, 72px)' }}
             >
               Let us find your <span style={{ color: '#A0845C', fontStyle: 'italic' }}>next chapter</span>
             </motion.h2>
 
             <Reveal as="div" delay={0.35} y={20} amount={0.2}>
-              <p style={{ fontSize: 16, lineHeight: 2, color: '#4A4036', opacity: 0.78, marginBottom: 22, maxWidth: 460 }}>
+              <p style={{ fontSize: 16, lineHeight: 2, color: 'var(--text)', opacity: 0.78, marginBottom: 22, maxWidth: 460 }}>
                 Drop us a message and we will get back to you. No pitch, no pressure.
               </p>
             </Reveal>
@@ -127,7 +127,7 @@ export default function GetInTouch() {
             <Reveal as="div" delay={0.55} y={20} amount={0.2}>
               <div style={{ borderTop: '0.5px solid rgba(52,48,43,0.2)', paddingTop: 14, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 <span style={lab}>Email</span>
-                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 16, color: '#4A4036' }}>
+                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 16, color: 'var(--text)' }}>
                   info@valeandmercer.co.uk
                 </a>
               </div>
@@ -137,11 +137,16 @@ export default function GetInTouch() {
           <Reveal y={28} delay={0.05} amount={0.2}>
             <div>
               {status === 'sent' ? (
-                <div style={{ padding: '56px 32px', background: 'rgba(255,255,255,0.6)', border: '0.5px solid #DDD7CC', borderRadius: 10, textAlign: 'center', backdropFilter: 'blur(10px)' }}>
-                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: 32, fontWeight: 300, color: '#4A4036', marginBottom: 14 }}>Thank you</div>
-                  <p style={{ fontSize: 14, color: '#6B6258', lineHeight: 1.9, maxWidth: 360, margin: '0 auto' }}>
-                    We have received your message and will be in touch within 24 hours.
-                  </p>
+                <div style={{ position: 'relative' }}>
+                  {/* Gold/bronze blob backdrop so the cream glass panel has real
+                      texture for backdrop-filter to blur (no-op over flat cream). */}
+                  <div aria-hidden style={{ position: 'absolute', inset: '-6%', zIndex: 0, pointerEvents: 'none', filter: 'blur(30px)', background: 'radial-gradient(38% 45% at 26% 30%, rgba(160,132,92,0.5), transparent 70%), radial-gradient(42% 45% at 80% 74%, rgba(122,96,62,0.42), transparent 72%), radial-gradient(40% 40% at 62% 18%, rgba(189,160,122,0.4), transparent 72%)' }} />
+                  <div className="glass-cream" style={{ position: 'relative', zIndex: 1, padding: '56px 32px', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
+                    <div style={{ fontFamily: 'var(--font-serif)', fontSize: 32, fontWeight: 300, color: 'var(--text)', marginBottom: 14 }}>Thank you</div>
+                    <p style={{ fontSize: 14, color: 'var(--text-muted)', lineHeight: 1.9, maxWidth: 360, margin: '0 auto' }}>
+                      We have received your message and will be in touch within 24 hours.
+                    </p>
+                  </div>
                 </div>
               ) : (
                 <Stagger as="div" stagger={0.07} style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
@@ -234,7 +239,7 @@ function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onCha
             cursor: 'pointer',
           }}
         />
-        <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
+        <span style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.8, letterSpacing: '0.01em' }}>
           I agree to Vale &amp; Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
           <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a>.
         </span>
@@ -254,6 +259,7 @@ function SubmitButton({ onClick, status }: { onClick: () => void; status: 'idle'
     <button
       onClick={onClick}
       disabled={disabled}
+      className="btn-press"
       style={{
         position: 'relative',
         background: '#34302B',
@@ -264,10 +270,11 @@ function SubmitButton({ onClick, status }: { onClick: () => void; status: 'idle'
         padding: '20px 28px',
         minHeight: 56,
         border: 'none',
+        borderRadius: 'var(--radius-pill)',
         cursor: disabled ? 'wait' : 'pointer',
         width: '100%',
         overflow: 'hidden',
-        transition: 'color 0.4s var(--ease-out-soft)',
+        transition: 'color var(--dur) var(--ease-apple), transform var(--dur) var(--ease-apple)',
       }}
       onMouseEnter={e => {
         const fill = e.currentTarget.querySelector<HTMLSpanElement>('[data-fill]')
@@ -278,7 +285,7 @@ function SubmitButton({ onClick, status }: { onClick: () => void; status: 'idle'
         if (fill) fill.style.transform = 'translateX(-101%)'
       }}
     >
-      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#A0845C', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
+      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#A0845C', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-apple)', zIndex: 0 }} />
       <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
         {status === 'sending' ? 'Sending...' : 'Send Message'}
         {status !== 'sending' && <span aria-hidden>→</span>}

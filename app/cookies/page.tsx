@@ -10,23 +10,23 @@ export const metadata: Metadata = {
 
 export default function CookiesPage() {
   const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'16px'}
-  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#4A4036',fontWeight:500,borderBottom:'1px solid #C8C0B4'}
-  const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'#6B6258',borderBottom:'0.5px solid #DDD7CC',verticalAlign:'top',lineHeight:1.7}
-  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'14px',marginTop:'0'}
-  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'#4A4036',marginBottom:'10px',marginTop:'20px'}
-  const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'12px'}
-  const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'4px'}
-  const sectionStyle:React.CSSProperties = {marginBottom:'40px',paddingBottom:'40px',borderBottom:'0.5px solid #DDD7CC'}
-  const codeStyle:React.CSSProperties = {fontFamily:'monospace',fontSize:'12px',background:'#DDD7CC',padding:'2px 5px',borderRadius:'2px',color:'#4A4036'}
+  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'var(--border)',color:'var(--text)',fontWeight:500,borderBottom:'1px solid var(--border-strong)'}
+  const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'var(--text-muted)',borderBottom:'0.5px solid var(--border)',verticalAlign:'top',lineHeight:1.7}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'var(--text)',marginBottom:'14px',marginTop:'0'}
+  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'var(--text)',marginBottom:'10px',marginTop:'20px'}
+  const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'12px'}
+  const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'4px'}
+  const sectionStyle:React.CSSProperties = {marginBottom:'40px',paddingBottom:'40px',borderBottom:'0.5px solid var(--border)'}
+  const codeStyle:React.CSSProperties = {fontFamily:'monospace',fontSize:'12px',background:'var(--border)',padding:'2px 5px',borderRadius:'2px',color:'var(--text)'}
 
   return (
     <>
       <Navbar />
-      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'var(--surface)',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'860px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Cookie Policy</h1>
-          <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>VM-CP-001 | Version 1.1 | May 2026 | Company Registration No: 17212434</p>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'var(--text)',marginBottom:'8px'}}>Cookie Policy</h1>
+          <p style={{fontSize:'12px',color:'var(--text-faint)',marginBottom:'32px'}}>VM-CP-001 | Version 1.1 | May 2026 | Company Registration No: 17212434</p>
 
           <div style={{background:'#34302B',padding:'28px 32px',marginBottom:'16px'}}>
             <p style={{fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#A0845C',marginBottom:'14px'}}>At a Glance</p>
@@ -40,8 +40,8 @@ export default function CookiesPage() {
             </div>
           </div>
 
-          <div style={{background:'#DDD7CC',padding:'14px 20px',marginBottom:'40px',fontSize:'12px',color:'#6B6258',lineHeight:1.8}}>
-            <p style={{fontWeight:500,color:'#4A4036',marginBottom:'6px',fontSize:'12px'}}>Jump to section:</p>
+          <div style={{background:'var(--border)',padding:'14px 20px',marginBottom:'40px',fontSize:'12px',color:'var(--text-muted)',lineHeight:1.8}}>
+            <p style={{fontWeight:500,color:'var(--text)',marginBottom:'6px',fontSize:'12px'}}>Jump to section:</p>
             <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
               {[['1','What Are Cookies'],['2','Who We Are'],['3','Legal Framework'],['4','Cookies We Use'],['5','Third Party Cookies'],['6','Managing Preferences'],['7','Consent and Withdrawal'],['8','International Transfers'],['9','Changes to This Policy'],['10','Contact and Complaints']].map(([id,label])=>(
                 <a key={id} href={'#cp-'+id} style={{fontSize:'11px',color:'#A0845C',textDecoration:'none',borderBottom:'1px solid #A0845C',paddingBottom:'1px'}}>{label}</a>
@@ -79,7 +79,7 @@ export default function CookiesPage() {
             </ol>
             <p style={pStyle}>The DUAA 2025, which came into force on 5 February 2026, introduced a limited exemption for qualifying first-party analytics cookies. Where it does not apply, in particular for all advertising and marketing cookies, <strong>explicit prior consent is mandatory, and no cookie is set until that consent is given.</strong></p>
             <p style={pStyle}>Consent must be freely given, specific, informed, unambiguous, and as easy to withdraw as to give, via the "Cookie Settings" link in the footer of every page.</p>
-            <div style={{background:'#DDD7CC',padding:'16px 20px',borderLeft:'3px solid #A0845C',marginTop:'12px'}}>
+            <div style={{background:'var(--border)',padding:'16px 20px',borderLeft:'3px solid #A0845C',marginTop:'12px'}}>
               <p style={{...pStyle,marginBottom:'4px'}}><strong>Advertising and Marketing Cookies: Important Notice</strong></p>
               <p style={{...pStyle,marginBottom:0}}>Vale and Mercer Ltd runs Google Ads advertising campaigns. All advertising and remarketing cookies require your <strong>explicit prior consent</strong> under PECR. These cookies are <strong>blocked by default</strong> and only activated if you click "Accept Marketing" on the consent banner.</p>
             </div>
@@ -96,7 +96,7 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Data Collected</th><th style={thStyle}>Duration</th></tr></thead>
                 <tbody>
                   {[['__vercel_live_token','Vercel Inc','Enables the website to be served correctly and securely','Technical routing data only (no personal data identifiable to you)','Session'],['_vercel_jwt','Vercel Inc','Authentication and security token for protected deployments','Encrypted token (no readable personal data)','Session'],['cookie_consent','Vale and Mercer Ltd','Stores your cookie consent preferences so you are not asked again on every page visit','Your consent choices: Accept/Decline per category; timestamp of consent','1 year']].map(([name,by,purpose,data,dur],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={tdStyle}>{data}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={tdStyle}>{data}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -111,12 +111,12 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Duration</th><th style={thStyle}>Consent</th></tr></thead>
                 <tbody>
                   {[['_ga','Google Analytics 4 (Google LLC)','Distinguishes unique website visitors using a randomly generated identifier','2 years','Yes (via banner)'],['_ga_[ID]','Google Analytics 4','Stores and counts page views for this specific Vale and Mercer GA4 property','2 years','Yes (via banner)'],['_gid','Google Analytics 4','Distinguishes users over a 24-hour period','24 hours','Yes (via banner)']].map(([name,by,purpose,dur,consent],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div style={{background:'#DDD7CC',padding:'14px 18px',marginBottom:'16px'}}>
+            <div style={{background:'var(--border)',padding:'14px 18px',marginBottom:'16px'}}>
               <p style={{...pStyle,fontWeight:500,marginBottom:'6px'}}>GA4 Privacy Configuration applied by Vale and Mercer Ltd:</p>
               <ul style={{paddingLeft:'18px',margin:0}}>
                 {['Google Signals: Disabled (no cross-device tracking)','Data sharing with Google products and services: Disabled','Data retention period: 2 months minimum (deleted automatically)','IP anonymisation: Enabled (your precise IP address is never stored)','Demographic and interest reporting: Disabled'].map(item=>(
@@ -126,7 +126,7 @@ export default function CookiesPage() {
             </div>
 
             <h3 style={h3Style}>4.3 Advertising and Marketing Cookies</h3>
-            <div style={{background:'#DDD7CC',padding:'14px 18px',marginBottom:'12px',borderLeft:'3px solid #A0845C'}}>
+            <div style={{background:'var(--border)',padding:'14px 18px',marginBottom:'12px',borderLeft:'3px solid #A0845C'}}>
               <p style={{...pStyle,fontWeight:500,marginBottom:'4px'}}>Current Status: Not yet active</p>
               <p style={{...pStyle,marginBottom:0}}>Google Ads cookies described in this section are not currently active on this website and will only be used if and when campaigns are launched. This Cookie Policy will be updated before any such cookies are activated, and where required by law, your consent will be obtained first.</p>
             </div>
@@ -136,7 +136,7 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Duration</th><th style={thStyle}>Consent</th></tr></thead>
                 <tbody>
                   {[['_gcl_au','Google Ads (Google LLC)','Conversion tracking: links a click on a Vale and Mercer Ltd Google Ad to a subsequent action taken on this website','3 months','Yes (explicit)'],['IDE','Google LLC (DoubleClick)','Remarketing: records that you visited this website so Google can show you Vale and Mercer Ltd advertisements on other websites','13 months','Yes (explicit)'],['DSID','Google LLC (DoubleClick)','Used in conjunction with IDE to sync your advertising ID across Google ad platforms','2 weeks','Yes (explicit)'],['__gads / __gpi','Google LLC','Stores advertising preferences and prevents the same ad from being shown too many times','13 months','Yes (explicit)'],['_gac_[ID]','Google Ads (Google LLC)','Links Google Ads campaign data to conversions recorded in GA4','90 days','Yes (explicit)']].map(([name,by,purpose,dur,consent],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -156,7 +156,7 @@ export default function CookiesPage() {
                 <thead><tr><th style={thStyle}>Third Party</th><th style={thStyle}>Role on This Site</th><th style={thStyle}>Their Privacy and Cookie Policy</th></tr></thead>
                 <tbody>
                   {[['Google LLC','Analytics (GA4) and advertising (Google Ads, DoubleClick)','policies.google.com/privacy'],['Vercel Inc','Website infrastructure and hosting','vercel.com/legal/privacy-policy']].map(([party,role,link],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={{...tdStyle,fontWeight:500}}>{party}</td><td style={tdStyle}>{role}</td><td style={tdStyle}><a href={'https://'+link} target="_blank" rel="noreferrer" style={{color:'#A0845C',fontSize:'12px'}}>{link}</a></td></tr>
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={{...tdStyle,fontWeight:500}}>{party}</td><td style={tdStyle}>{role}</td><td style={tdStyle}><a href={'https://'+link} target="_blank" rel="noreferrer" style={{color:'#A0845C',fontSize:'12px'}}>{link}</a></td></tr>
                   ))}
                 </tbody>
               </table>
@@ -208,14 +208,14 @@ export default function CookiesPage() {
             <h2 style={h2Style}>10. Contact and Complaints</h2>
             <p style={pStyle}><strong>Data Protection enquiries and cookie questions:</strong><br/>Email: <a href="mailto:privacy@valeandmercer.co.uk" style={{color:'#A0845C'}}>privacy@valeandmercer.co.uk</a></p>
             <p style={pStyle}>If you believe Vale and Mercer Ltd has not handled your cookie data correctly, you have the right to lodge a complaint with the Information Commissioner's Office:</p>
-            <div style={{background:'#DDD7CC',padding:'16px 20px',fontSize:'13px',color:'#6B6258',lineHeight:1.9}}>
+            <div style={{background:'var(--border)',padding:'16px 20px',fontSize:'13px',color:'var(--text-muted)',lineHeight:1.9}}>
               <p>Website: <a href="https://ico.org.uk/make-a-complaint" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>ico.org.uk/make-a-complaint</a></p>
               <p>Telephone: 0303 123 1113</p>
               <p>Post: Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</p>
             </div>
           </div>
 
-          <div style={{borderTop:'0.5px solid #DDD7CC',paddingTop:'24px',fontSize:'11px',color:'#9A9188',lineHeight:1.8}}>
+          <div style={{borderTop:'0.5px solid var(--border)',paddingTop:'24px',fontSize:'11px',color:'var(--text-faint)',lineHeight:1.8}}>
             <p>Vale and Mercer Ltd, Registered in England and Wales</p>
             <p>Company Registration No: 17212434 | ICO Registration No: ZC155397</p>
             <p>Document Reference: VM-CP-001 | Version 1.1 | May 2026</p>

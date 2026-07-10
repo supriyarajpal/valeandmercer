@@ -10,19 +10,19 @@ export const metadata: Metadata = {
 }
 
 export default function TermsPage() {
-  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'12px',marginTop:'0'}
-  const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'12px'}
-  const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'4px'}
-  const sectionStyle:React.CSSProperties = {marginBottom:'36px',paddingBottom:'36px',borderBottom:'0.5px solid #DDD7CC'}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'var(--text)',marginBottom:'12px',marginTop:'0'}
+  const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'12px'}
+  const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'4px'}
+  const sectionStyle:React.CSSProperties = {marginBottom:'36px',paddingBottom:'36px',borderBottom:'0.5px solid var(--border)'}
 
   return (
     <>
       <Navbar />
-      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'var(--surface)',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'780px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Website Terms of Use</h1>
-          <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>VM-TOU-001 | Version 1.0 | June 2026 | Company Registration No: 17212434</p>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'var(--text)',marginBottom:'8px'}}>Website Terms of Use</h1>
+          <p style={{fontSize:'12px',color:'var(--text-faint)',marginBottom:'32px'}}>VM-TOU-001 | Version 1.0 | June 2026 | Company Registration No: 17212434</p>
 
           <div id="s1" style={sectionStyle}>
             <h2 style={h2Style}>1. Who We Are</h2>
@@ -31,9 +31,9 @@ export default function TermsPage() {
               <table style={{width:'100%',borderCollapse:'collapse',fontSize:'13px'}}>
                 <tbody>
                   {[['Company Name','Vale and Mercer Ltd'],['Company Registration No','17212434'],['Registered Office','124 City Road, London EC1V 2NX'],['Email','privacy@valeandmercer.co.uk'],['ICO Registration No','ZC155397']].map(([k,v])=>(
-                    <tr key={k} style={{borderBottom:'0.5px solid #DDD7CC'}}>
-                      <td style={{padding:'10px 12px 10px 0',color:'#9A9188',width:'40%',fontWeight:500,fontSize:'13px'}}>{k}</td>
-                      <td style={{padding:'10px 0',color:'#6B6258',fontSize:'13px'}}>{k==='Email'?<a href="mailto:privacy@valeandmercer.co.uk" style={{color:'#A0845C'}}>{v}</a>:v}</td>
+                    <tr key={k} style={{borderBottom:'0.5px solid var(--border)'}}>
+                      <td style={{padding:'10px 12px 10px 0',color:'var(--text-faint)',width:'40%',fontWeight:500,fontSize:'13px'}}>{k}</td>
+                      <td style={{padding:'10px 0',color:'var(--text-muted)',fontSize:'13px'}}>{k==='Email'?<a href="mailto:privacy@valeandmercer.co.uk" style={{color:'#A0845C'}}>{v}</a>:v}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -118,7 +118,7 @@ export default function TermsPage() {
             <p style={pStyle}>We may update these Terms of Use from time to time. The version number and date at the top of this page show when they were last updated. Your continued use of this website after any changes constitutes your acceptance of the updated Terms.</p>
           </div>
 
-          <div style={{borderTop:'0.5px solid #DDD7CC',paddingTop:'24px',fontSize:'11px',color:'#9A9188',lineHeight:1.8}}>
+          <div style={{borderTop:'0.5px solid var(--border)',paddingTop:'24px',fontSize:'11px',color:'var(--text-faint)',lineHeight:1.8}}>
             <p>Vale and Mercer Ltd, Registered in England and Wales</p>
             <p>Company Registration No: 17212434 | ICO Registration No: ZC155397</p>
           </div>

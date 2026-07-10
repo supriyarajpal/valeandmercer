@@ -16,7 +16,7 @@ type Props = {
 
 export default function ArticleLayout({ category, title, meta, image, imageAlt, sections, signoff }: Props) {
   return (
-    <main style={{ background: '#F2EFE9', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
+    <main style={{ background: 'var(--surface)', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 var(--gutter)' }}>
         <Reveal y={20} amount={0.3}>
           <Link
@@ -33,15 +33,15 @@ export default function ArticleLayout({ category, title, meta, image, imageAlt, 
         </Reveal>
 
         <Reveal y={28} delay={0.05} amount={0.3}>
-          <h1 style={{ color: '#4A4036', marginBottom: 18, lineHeight: 1.05, fontSize: 'clamp(38px, 6vw, 64px)' }}>{title}</h1>
+          <h1 style={{ color: 'var(--text)', marginBottom: 18, lineHeight: 1.05, fontSize: 'clamp(38px, 6vw, 64px)' }}>{title}</h1>
         </Reveal>
 
         <Reveal y={20} delay={0.1} amount={0.3}>
-          <p style={{ fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: '#9A9188', marginBottom: 48 }}>{meta}</p>
+          <p style={{ fontSize: 12, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 48 }}>{meta}</p>
         </Reveal>
 
         <Reveal y={32} delay={0.15} amount={0.15}>
-          <div className="img-zoom" style={{ height: 440, overflow: 'hidden', marginBottom: 56, borderRadius: 10 }}>
+          <div className="img-zoom" style={{ height: 440, overflow: 'hidden', marginBottom: 56, borderRadius: 'var(--radius-lg)' }}>
             <img
               src={image}
               alt={imageAlt}
@@ -54,15 +54,15 @@ export default function ArticleLayout({ category, title, meta, image, imageAlt, 
         {sections.map((section, i) => (
           <Reveal key={section.h} y={28} delay={i === 0 ? 0 : 0} amount={0.25}>
             <div style={{ marginBottom: 40 }}>
-              <h2 style={{ color: '#4A4036', marginBottom: 14, fontSize: 28, lineHeight: 1.2 }}>{section.h}</h2>
-              <p style={{ fontSize: 16, lineHeight: 1.95, color: '#4A4036', opacity: 0.78 }}>{section.p}</p>
+              <h2 style={{ color: 'var(--text)', marginBottom: 14, fontSize: 28, lineHeight: 1.2 }}>{section.h}</h2>
+              <p style={{ fontSize: 16, lineHeight: 1.95, color: 'var(--text)', opacity: 0.78 }}>{section.p}</p>
             </div>
           </Reveal>
         ))}
 
         <Reveal y={20} amount={0.3}>
-          <div style={{ borderTop: '0.5px solid #DDD7CC', paddingTop: 32, marginTop: 56 }}>
-            <p style={{ fontSize: 13, color: '#9A9188', letterSpacing: '0.04em' }}>{signoff}</p>
+          <div style={{ borderTop: '0.5px solid var(--border)', paddingTop: 32, marginTop: 56 }}>
+            <p style={{ fontSize: 13, color: 'var(--text-faint)', letterSpacing: '0.04em' }}>{signoff}</p>
           </div>
         </Reveal>
       </div>

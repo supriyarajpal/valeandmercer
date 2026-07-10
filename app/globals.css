@@ -20,6 +20,26 @@
   --c-gold: #A0845C;
   --c-bone: #F2EFE9;
 
+  /* ---- Semantic theme tokens -----------------------------------------
+     Light is the default here; the html[data-theme='dark'] block below
+     overrides these same names. Components reference these tokens for
+     page/section backgrounds, primary text, and hairline borders, so a
+     single attribute on <html> re-themes the whole site.
+     Intentionally FIXED across both themes (not listed here): the gold
+     accent (#A0845C) and the deliberately-dark surfaces (the #34302B /
+     #28231C / #26221C family used by the hero, footer and dark cards) —
+     those read correctly on light and dark alike, and the light text
+     sitting on them (#F2EFE9 as a `color`) is left untouched. */
+  --surface: #F2EFE9;         /* page + section background (cream) */
+  --surface-2: #FFFFFF;       /* raised cards */
+  --surface-3: #F5F2EE;       /* subtle alternate background */
+  --text: #4A4036;            /* primary text */
+  --text-muted: #6B6258;      /* secondary text */
+  --text-faint: #9A9188;      /* tertiary / label text */
+  --border: #DDD7CC;          /* hairline dividers + card borders */
+  --border-strong: #C8C0B4;   /* input underlines + stronger dividers */
+  color-scheme: light;
+
   --ls-tight: -0.02em;
   --ls-snug: -0.01em;
   --ls-wide: 0.12em;
@@ -32,6 +52,60 @@
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out-soft: cubic-bezier(0.76, 0, 0.24, 1);
+  /* Apple-style ease + a small duration scale. Use --ease-apple for
+     hover/press micro-interactions across buttons, cards and links. */
+  --ease-apple: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 200ms;
+  --dur: 300ms;
+  --dur-slow: 400ms;
+
+  /* ---- Radius scale ---------------------------------------------------
+     Applied consistently: pill for every interactive button + tag chip,
+     --radius-lg for cards / panels / images, --radius-md for inputs and
+     smaller inner surfaces. Do not introduce one-off radii. */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  /* ---- Liquid glass ---------------------------------------------------
+     Tinted with the brand palette (ink #28231C / cream #F2EFE9 / gold
+     #A0845C) rather than neutral white/gray. `--glass-*` are the shared
+     knobs; the .glass / .glass-cream / .glass-strong utilities below wire
+     them up so the effect is defined once and reused everywhere. */
+  --glass-blur: 24px;
+  --glass-saturate: 180%;
+  --glass-bg: rgba(40, 35, 28, 0.42);            /* dark ink glass */
+  --glass-bg-strong: rgba(40, 35, 28, 0.56);     /* enough show-through for the blur, opaque enough for legible white text */
+  --glass-bg-cream: rgba(242, 239, 233, 0.5);    /* light cream glass */
+  --glass-bg-cream-strong: rgba(242, 239, 233, 0.72);
+  --glass-border: 1px solid rgba(242, 239, 233, 0.10);
+  --glass-border-cream: 1px solid rgba(52, 48, 43, 0.10);
+  --glass-border-gold: 1px solid rgba(160, 132, 92, 0.30);
+  --glass-highlight: inset 0 1px 0 rgba(242, 239, 233, 0.15);
+  --glass-highlight-cream: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  --glass-shadow: 0 8px 32px -8px rgba(40, 35, 28, 0.45);
+}
+
+/* ---- Dark theme -----------------------------------------------------
+   Set on <html> by the no-FOUC script in app/layout.tsx (before paint)
+   and toggled by components/ThemeToggle.tsx. Only the semantic tokens
+   flip; the gold accent and dark-surface family are deliberately left
+   fixed (see the :root note above). Warm charcoals — not pure black —
+   to stay in the brand's warm palette. */
+html[data-theme='dark'] {
+  --surface: #1B1712;
+  --surface-2: #241F18;
+  --surface-3: #201B15;
+  --text: #ECE7DF;
+  --text-muted: #B3A99B;
+  --text-faint: #8B8175;
+  --border: #352E24;
+  --border-strong: #40382C;
+  --c-bg: #1B1712;
+  --c-ink: #ECE7DF;
+  color-scheme: dark;
 }
 
 *, *::before, *::after {
@@ -41,14 +115,18 @@
 }
 
 html {
-  background: var(--c-bg);
+  background: var(--surface);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  /* Smooth the light/dark flip on the root surfaces. Individual sections
+     that reference var(--surface) inherit this feel via their own bg. */
+  transition: background-color 0.4s var(--ease-apple);
 }
 
 body {
   background: transparent;
   color: var(--c-ink);
+  transition: color 0.4s var(--ease-apple);
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.7;
@@ -128,12 +206,88 @@ a { color: inherit; text-decoration: none; }
 }
 .img-zoom:hover img { transform: scale(1.06); }
 
-/* Card hover lift */
+/* Card hover lift — Apple-style: a gentle rise + subtle scale with the
+   shadow deepening in sync. Kept restrained (scale 1.02), never bouncy. */
 .card-lift {
-  transition: transform 0.5s var(--ease-out-soft), box-shadow 0.5s var(--ease-out-soft);
+  transition: transform var(--dur-slow) var(--ease-apple), box-shadow var(--dur-slow) var(--ease-apple);
   will-change: transform;
 }
-.card-lift:hover { transform: translateY(-4px); }
+.card-lift:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 30px 60px -24px rgba(40, 35, 28, 0.34);
+}
+.card-lift:active { transform: translateY(-2px) scale(1.01); }
+
+/* ---- Liquid glass utilities -----------------------------------------
+   One definition, reused everywhere. `.glass` = dark ink glass (navbars,
+   overlays, dark panels); `.glass-cream` = light glass over cream/bright
+   backgrounds; `.glass-strong` bumps opacity where legibility over busy
+   imagery matters. All include the 1px hairline border + inner highlight
+   + soft drop shadow that give real glass its sense of depth. */
+/* NOTE: write ONLY the standard `backdrop-filter` here and let the CSS
+   pipeline (lightningcss) autoprefix. Hand-writing `-webkit-backdrop-filter`
+   alongside it caused lightningcss to emit ONLY the -webkit- form and drop
+   the standard property, which silently disabled the blur in Firefox. */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+.glass-cream {
+  background: var(--glass-bg-cream);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: var(--glass-border-cream);
+  box-shadow: var(--glass-highlight-cream), var(--glass-shadow);
+}
+
+/* Fallback for browsers without backdrop-filter — bump opacity so the
+   panels stay legible without the blur. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .glass-strong { background: rgba(40, 35, 28, 0.9); }
+  .glass-cream { background: rgba(242, 239, 233, 0.94); }
+}
+
+/* ---- Buttons --------------------------------------------------------
+   `.btn-press` adds the Apple-style tactile feedback (smooth scale-down
+   on press) to any button/link; combine with a `--radius-pill` corner.
+   Existing components keep their bespoke sliding-fill hover but adopt
+   this class for the press feel + consistent easing. */
+.btn-press {
+  transition: transform var(--dur) var(--ease-apple),
+              box-shadow var(--dur) var(--ease-apple),
+              color var(--dur) var(--ease-apple),
+              background var(--dur) var(--ease-apple),
+              border-color var(--dur) var(--ease-apple);
+  will-change: transform;
+}
+.btn-press:active { transform: scale(0.96); }
+
+/* Glass-fill ghost button (secondary / "View Property" style). */
+.btn-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(var(--glass-saturate));
+  border: var(--glass-border-gold);
+  box-shadow: var(--glass-highlight);
+  border-radius: var(--radius-pill);
+  transition: transform var(--dur) var(--ease-apple),
+              background var(--dur) var(--ease-apple),
+              box-shadow var(--dur) var(--ease-apple),
+              border-color var(--dur) var(--ease-apple);
+  will-change: transform;
+}
+.btn-glass:hover {
+  background: var(--glass-bg-strong);
+  box-shadow: var(--glass-highlight), 0 12px 30px -10px rgba(40, 35, 28, 0.5);
+  border-color: rgba(160, 132, 92, 0.55);
+}
+.btn-glass:active { transform: scale(0.96); }
 
 /* Form: name row collapses to single column on narrow screens so
    First/Last name fields don't get cramped under 360px viewports. */

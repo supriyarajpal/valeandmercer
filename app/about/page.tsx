@@ -75,33 +75,33 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 760, margin: '0 auto' }}>
             <Reveal y={28} amount={0.25}>
-              <p style={{ fontSize: 16, lineHeight: 2.1, color: '#6B6258', marginBottom: 24 }}>
+              <p style={{ fontSize: 16, lineHeight: 2.1, color: 'var(--text-muted)', marginBottom: 24 }}>
                 Whether you are a landlord, a tenant, a first-time buyer or someone who has done this before and wants it done properly this time, the standard should be the same. Attentive, straight, and personal from first call to final key.
               </p>
             </Reveal>
             <Reveal y={28} delay={0.1} amount={0.25}>
-              <p style={{ fontSize: 16, lineHeight: 2.1, color: '#6B6258' }}>
+              <p style={{ fontSize: 16, lineHeight: 2.1, color: 'var(--text-muted)' }}>
                 Vale and Mercer exists for clients who care not only about the outcome, but about the way the process is handled. We are a team, working closely, keeping clients informed with clarity and discretion, and managing the detail properly in the background.
               </p>
             </Reveal>
           </div>
         </section>
 
-        <section style={{ background: '#DDD7CC', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: 'var(--border)', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-            <Stagger as="div" stagger={0.12} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 1, background: '#C8C0B4' }}>
+            <Stagger as="div" stagger={0.12} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 1, background: 'var(--border-strong)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
               {principles.map(item => (
                 <StaggerItem key={item.icon} as="div">
                   <div
                     className="card-lift"
-                    style={{ background: '#F2EFE9', padding: '44px 32px', height: '100%' }}
+                    style={{ background: 'var(--surface)', padding: '44px 32px', height: '100%' }}
                   >
                     <div style={{ fontFamily: 'var(--font-serif)', fontSize: 44, fontWeight: 300, color: 'rgba(160,132,92,0.28)', lineHeight: 1, marginBottom: 22 }}>{item.icon}</div>
-                    <h3 style={{ fontSize: 26, color: '#4A4036', marginBottom: 14 }}>{item.title}</h3>
-                    <p style={{ fontSize: 13.5, lineHeight: 1.9, color: '#6B6258' }}>{item.body}</p>
+                    <h3 style={{ fontSize: 26, color: 'var(--text)', marginBottom: 14 }}>{item.title}</h3>
+                    <p style={{ fontSize: 13.5, lineHeight: 1.9, color: 'var(--text-muted)' }}>{item.body}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -109,11 +109,11 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 880, margin: '0 auto', position: 'relative' }}>
             <Reveal y={32} amount={0.25}>
               <div aria-hidden style={{ position: 'absolute', inset: '-40px', background: 'radial-gradient(closest-side, rgba(160,132,92,0.9) 0%, rgba(122,96,62,0.6) 35%, rgba(74,55,32,0.3) 65%, rgba(52,48,43,0) 100%)', filter: 'blur(70px)', zIndex: 0, pointerEvents: 'none' }} />
-              <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', background: 'rgba(52,48,43,0.82)', backdropFilter: 'blur(14px) saturate(140%)', WebkitBackdropFilter: 'blur(14px) saturate(140%)', padding: '72px 36px', boxShadow: '0 30px 80px -10px rgba(122,96,62,0.55), 0 0 0 1px rgba(160,132,92,0.18) inset', overflow: 'hidden', borderRadius: 10 }}>
+              <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', background: 'rgba(52,48,43,0.82)', backdropFilter: 'blur(14px) saturate(140%)', WebkitBackdropFilter: 'blur(14px) saturate(140%)', padding: '72px 36px', boxShadow: '0 30px 80px -10px rgba(122,96,62,0.55), 0 0 0 1px rgba(160,132,92,0.18) inset', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
                 <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'radial-gradient(120% 80% at 50% 0%, rgba(160,132,92,0.35) 0%, rgba(52,48,43,0) 60%)', filter: 'blur(40px)', pointerEvents: 'none' }} />
                 <div style={{ position: 'relative' }}>
                   <h2 style={{ color: '#FFFFFF', marginBottom: 18, fontSize: 'clamp(30px, 5vw, 50px)', textShadow: '0 2px 24px rgba(52,48,43,0.6)' }}>

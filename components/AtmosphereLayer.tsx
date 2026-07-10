@@ -44,7 +44,7 @@ export default function AtmosphereLayer() {
   }
 
   return (
-    <div aria-hidden style={{ ...base, zIndex: -1, background: '#F2EFE9' }}>
+    <div aria-hidden style={{ ...base, zIndex: -1, background: 'var(--surface)' }}>
       <motion.div style={{ ...base, background: '#A0845C', opacity: goldOp, willChange: 'opacity' }} />
       <motion.div style={{ ...base, background: '#34302B', opacity: brownOp, willChange: 'opacity' }} />
     </div>

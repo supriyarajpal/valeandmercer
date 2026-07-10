@@ -72,8 +72,8 @@ export default function ValuationsPage() {
   const inp: React.CSSProperties = {
     background: 'transparent',
     border: 'none',
-    borderBottom: '1px solid #C8C0B4',
-    color: '#4A4036',
+    borderBottom: '1px solid var(--border-strong)',
+    color: 'var(--text)',
     fontSize: 15,
     padding: '12px 0',
     outline: 'none',
@@ -85,12 +85,12 @@ export default function ValuationsPage() {
     fontSize: 9,
     letterSpacing: '0.18em',
     textTransform: 'uppercase',
-    color: '#9A9188',
+    color: 'var(--text-faint)',
     marginBottom: 8,
   }
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => { e.currentTarget.style.borderColor = '#A0845C' }
-  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => { e.currentTarget.style.borderColor = '#C8C0B4' }
+  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => { e.currentTarget.style.borderColor = 'var(--border-strong)' }
 
   return (
     <>
@@ -147,15 +147,21 @@ export default function ValuationsPage() {
           </div>
         </section>
 
-        <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 900, margin: '0 auto' }}>
             {status === 'sent' ? (
               <Reveal y={24}>
-                <div style={{ textAlign: 'center', padding: '96px 40px', background: '#FFFFFF', border: '0.5px solid #DDD7CC', borderRadius: 10 }}>
-                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: 56, fontWeight: 300, color: '#4A4036', marginBottom: 20 }}>Request received</div>
-                  <p style={{ fontSize: 15, lineHeight: 1.9, color: '#6B6258', maxWidth: 440, margin: '0 auto' }}>
-                    Thank you for booking a valuation with Vale and Mercer. One of our senior agents will be in touch within 24 hours to confirm your appointment.
-                  </p>
+                <div style={{ position: 'relative' }}>
+                  {/* Gold/bronze blob backdrop so the cream glass panel has
+                      real texture to blur (backdrop-filter is a no-op over
+                      the flat cream page otherwise). */}
+                  <div aria-hidden style={{ position: 'absolute', inset: '-6%', zIndex: 0, pointerEvents: 'none', filter: 'blur(30px)', background: 'radial-gradient(38% 45% at 26% 30%, rgba(160,132,92,0.5), transparent 70%), radial-gradient(42% 45% at 80% 74%, rgba(122,96,62,0.42), transparent 72%), radial-gradient(40% 40% at 62% 18%, rgba(189,160,122,0.4), transparent 72%)' }} />
+                  <div className="glass-cream" style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '96px 40px', borderRadius: 'var(--radius-lg)' }}>
+                    <div style={{ fontFamily: 'var(--font-serif)', fontSize: 56, fontWeight: 300, color: 'var(--text)', marginBottom: 20 }}>Request received</div>
+                    <p style={{ fontSize: 15, lineHeight: 1.9, color: 'var(--text-muted)', maxWidth: 440, margin: '0 auto' }}>
+                      Thank you for booking a valuation with Vale and Mercer. One of our senior agents will be in touch within 24 hours to confirm your appointment.
+                    </p>
+                  </div>
                 </div>
               </Reveal>
             ) : (
@@ -235,7 +241,7 @@ export default function ValuationsPage() {
                 </Reveal>
 
                 <Reveal y={20} amount={0.2}>
-                  <div style={{ borderTop: '0.5px solid #DDD7CC', paddingTop: 22 }}>
+                  <div style={{ borderTop: '0.5px solid var(--border)', paddingTop: 22 }}>
                     {status === 'error' && <p style={{ fontSize: 12, color: '#c0392b', marginBottom: 18 }}>Something went wrong. Please try again or call us directly.</p>}
                     <div style={{ marginBottom: 22 }}>
                       <ConsentCheckbox
@@ -248,7 +254,7 @@ export default function ValuationsPage() {
                       />
                     </div>
                     <SubmitBtn status={status} onClick={handleSubmit} />
-                    <p style={{ fontSize: 11, color: '#9A9188', marginTop: 14, lineHeight: 1.8 }}>No obligation. We will contact you within 24 hours to confirm your appointment.</p>
+                    <p style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 14, lineHeight: 1.8 }}>No obligation. We will contact you within 24 hours to confirm your appointment.</p>
                   </div>
                 </Reveal>
               </>
@@ -301,7 +307,7 @@ function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onCha
             cursor: 'pointer',
           }}
         />
-        <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
+        <span style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.8, letterSpacing: '0.01em' }}>
           I agree to Vale &amp; Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
           <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a>.
         </span>
@@ -321,6 +327,7 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
     <button
       onClick={onClick}
       disabled={disabled}
+      className="btn-press"
       style={{
         position: 'relative',
         background: '#34302B',
@@ -330,9 +337,10 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
         textTransform: 'uppercase',
         padding: '18px 48px',
         border: 'none',
+        borderRadius: 'var(--radius-pill)',
         cursor: disabled ? 'wait' : 'pointer',
         overflow: 'hidden',
-        transition: 'color 0.4s var(--ease-out-soft)',
+        transition: 'color var(--dur) var(--ease-apple), transform var(--dur) var(--ease-apple)',
       }}
       onMouseEnter={e => {
         const fill = e.currentTarget.querySelector<HTMLSpanElement>('[data-fill]')
@@ -343,7 +351,7 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
         if (fill) fill.style.transform = 'translateX(-101%)'
       }}
     >
-      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#A0845C', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
+      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#A0845C', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-apple)', zIndex: 0 }} />
       <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
         {disabled ? 'Submitting...' : 'Book Free Valuation'}
         {!disabled && <span aria-hidden>→</span>}

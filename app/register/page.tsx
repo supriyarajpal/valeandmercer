@@ -59,8 +59,8 @@ export default function RegisterPage() {
   const inp: React.CSSProperties = {
     background: 'transparent',
     border: 'none',
-    borderBottom: '1px solid #C8C0B4',
-    color: '#4A4036',
+    borderBottom: '1px solid var(--border-strong)',
+    color: 'var(--text)',
     fontSize: 15,
     padding: '12px 0',
     outline: 'none',
@@ -72,40 +72,45 @@ export default function RegisterPage() {
     fontSize: 9,
     letterSpacing: '0.18em',
     textTransform: 'uppercase',
-    color: '#9A9188',
+    color: 'var(--text-faint)',
     marginBottom: 8,
     display: 'block',
   }
 
   const onFocus = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => { e.currentTarget.style.borderColor = '#A0845C' }
-  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => { e.currentTarget.style.borderColor = '#C8C0B4' }
+  const onBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => { e.currentTarget.style.borderColor = 'var(--border-strong)' }
 
   return (
     <>
       <Navbar />
-      <main style={{ background: '#F2EFE9', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
+      <main style={{ background: 'var(--surface)', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
         <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 var(--gutter)' }}>
           <Reveal y={28} amount={0.2}>
             <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Stay Informed</p>
           </Reveal>
           <Reveal y={28} delay={0.05} amount={0.2}>
-            <h1 style={{ color: '#4A4036', marginBottom: 18 }}>
+            <h1 style={{ color: 'var(--text)', marginBottom: 18 }}>
               Be first to hear about <span style={{ color: '#A0845C', fontStyle: 'italic' }}>new listings</span>
             </h1>
           </Reveal>
           <Reveal y={20} delay={0.1} amount={0.2}>
-            <p style={{ fontSize: 15, lineHeight: 2, color: '#6B6258', marginBottom: 56 }}>
+            <p style={{ fontSize: 15, lineHeight: 2, color: 'var(--text-muted)', marginBottom: 56 }}>
               Tell us what you need and we will get in touch when something fits. No spam.
             </p>
           </Reveal>
 
           {status === 'sent' ? (
             <Reveal y={24}>
-              <div style={{ textAlign: 'center', padding: '96px 32px', background: '#FFFFFF', border: '0.5px solid #DDD7CC', borderRadius: 10 }}>
-                <div style={{ fontFamily: 'var(--font-serif)', fontSize: 52, fontWeight: 300, color: '#4A4036', marginBottom: 18 }}>Thank you</div>
-                <p style={{ fontSize: 15, lineHeight: 2, color: '#6B6258' }}>
-                  We have your details. We will be in touch as soon as something suitable comes up.
-                </p>
+              <div style={{ position: 'relative' }}>
+                {/* Gold/bronze blob backdrop so the cream glass panel has real
+                    texture for backdrop-filter to blur (no-op over flat cream). */}
+                <div aria-hidden style={{ position: 'absolute', inset: '-6%', zIndex: 0, pointerEvents: 'none', filter: 'blur(30px)', background: 'radial-gradient(38% 45% at 26% 30%, rgba(160,132,92,0.5), transparent 70%), radial-gradient(42% 45% at 80% 74%, rgba(122,96,62,0.42), transparent 72%), radial-gradient(40% 40% at 62% 18%, rgba(189,160,122,0.4), transparent 72%)' }} />
+                <div className="glass-cream" style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '96px 32px', borderRadius: 'var(--radius-lg)' }}>
+                  <div style={{ fontFamily: 'var(--font-serif)', fontSize: 52, fontWeight: 300, color: 'var(--text)', marginBottom: 18 }}>Thank you</div>
+                  <p style={{ fontSize: 15, lineHeight: 2, color: 'var(--text-muted)' }}>
+                    We have your details. We will be in touch as soon as something suitable comes up.
+                  </p>
+                </div>
               </div>
             </Reveal>
           ) : (
@@ -187,7 +192,7 @@ function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onCha
             cursor: 'pointer',
           }}
         />
-        <span style={{ fontSize: 11, color: '#6B6258', lineHeight: 1.8, letterSpacing: '0.01em' }}>
+        <span style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.8, letterSpacing: '0.01em' }}>
           I agree to Vale &amp; Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
           <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a>.
         </span>
@@ -207,6 +212,7 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
     <button
       onClick={onClick}
       disabled={disabled}
+      className="btn-press"
       style={{
         position: 'relative',
         background: '#34302B',
@@ -216,9 +222,10 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
         textTransform: 'uppercase',
         padding: '18px 28px',
         border: 'none',
+        borderRadius: 'var(--radius-pill)',
         cursor: disabled ? 'wait' : 'pointer',
         overflow: 'hidden',
-        transition: 'color 0.4s var(--ease-out-soft)',
+        transition: 'color var(--dur) var(--ease-apple), transform var(--dur) var(--ease-apple)',
         width: '100%',
       }}
       onMouseEnter={e => {
@@ -230,7 +237,7 @@ function SubmitBtn({ status, onClick }: { status: string; onClick: () => void })
         if (fill) fill.style.transform = 'translateX(-101%)'
       }}
     >
-      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#A0845C', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
+      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#A0845C', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-apple)', zIndex: 0 }} />
       <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 12 }}>
         {disabled ? 'Sending...' : 'Request Property Alerts'}
         {!disabled && <span aria-hidden>→</span>}

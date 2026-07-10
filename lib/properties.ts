@@ -2,7 +2,7 @@
 // called `status` in the pre-Phase-22 model); `status` is now the workflow
 // state (live vs draft), which gates whether the record appears in listing
 // grids. Draft records still get an SSG detail page so a preview URL exists,
-// but are excluded from the /rent grid and homepage feature strip until
+// but are excluded from the /let listings grid and homepage feature strip until
 // their compliance data (EPC + council tax) is confirmed.
 
 export type ListingType        = 'To Let' | 'For Sale'
@@ -60,11 +60,21 @@ export type Property = {
   location: string
   nearby: NearbyPoint[]
   income: IncomeRequirements
+  // `image` is the hero/first frame; `gallery` is every subsequent frame.
+  // PHOTO ORDER CONVENTION — order images (hero first, then gallery) by
+  // room in this fixed sequence so every property reads consistently:
+  //   1. Living room  2. Kitchen  3. Bedroom  4. Bathroom/washroom
+  //   5. Any other shots (private balcony/terrace, views, internal halls)
+  //   6. Communal / building amenities (lobby, gym, pool, exterior)
+  //   7. Floor plan — ALWAYS last
+  // Skip any category a property doesn't have; keep the rest in order.
+  // (PropertyHeroCarousel also force-pushes floor-plan filenames last as a
+  // safety net, but the array itself should already follow this order.)
   image: string
   gallery?: string[]
   teaser?: string
   featured?: boolean
-  // Approximate street-level coordinates for the /rent map. Not the
+  // Approximate street-level coordinates for the /let listings map. Not the
   // exact door — coarse enough to feel appropriate for a rental listing.
   coordinates?: Coordinates
 }
@@ -76,7 +86,7 @@ export type Property = {
 // the sidebar UI; role label ("Lettings · Vale and Mercer") carries
 // the human context instead.
 export const AGENT_CONTACT = {
-  email: 'raghav@valeandmercer.co.uk',
+  email: 'enquire@valeandmercer.co.uk',
 } as const
 
 export const RENT_TERMS = {
@@ -145,15 +155,16 @@ export const properties: Property[] = [
       foreignGuarantor: 'Not considered',
       adverseCredit: 'No active CCJ',
     },
+    // Order: living(2) · kitchen(7) · bedroom(8) · bath(6) · other(3,4,WA) · communal(5)
     image: '/images/lawn-house-close-2860/2.jpeg',
     gallery: [
-      '/images/lawn-house-close-2860/3.jpeg',
-      '/images/lawn-house-close-2860/4.jpeg',
-      '/images/lawn-house-close-2860/5.jpeg',
-      '/images/lawn-house-close-2860/6.jpeg',
       '/images/lawn-house-close-2860/7.jpeg',
       '/images/lawn-house-close-2860/8.jpeg',
+      '/images/lawn-house-close-2860/6.jpeg',
+      '/images/lawn-house-close-2860/3.jpeg',
+      '/images/lawn-house-close-2860/4.jpeg',
       '/images/lawn-house-close-2860/WhatsApp%20Image%202026-07-09%20at%2000.12.10.jpeg',
+      '/images/lawn-house-close-2860/5.jpeg',
     ],
     teaser: 'Brand new 1-bed in Canary Wharf with a private terrace, stunning Dock views and underfloor heating throughout.',
     featured: true,
@@ -403,23 +414,24 @@ export const properties: Property[] = [
       foreignGuarantor: 'Not considered',
       adverseCredit: 'No active CCJ',
     },
-    image: '/images/marsh-wall-5958/1.jpeg',
+    // Order: living(15,2) · kitchen(10,3,4,5) · bedroom(13,16) · bath(12,8) · other(7) · communal(1,11,6,9) · floorplan(14)
+    image: '/images/marsh-wall-5958/15.jpeg',
     gallery: [
-      '/images/marsh-wall-5958/10.jpeg',
-      '/images/marsh-wall-5958/11.jpeg',
-      '/images/marsh-wall-5958/12.jpeg',
-      '/images/marsh-wall-5958/13.jpeg',
-      '/images/marsh-wall-5958/14.jpeg',
-      '/images/marsh-wall-5958/15.jpeg',
-      '/images/marsh-wall-5958/16.jpeg',
       '/images/marsh-wall-5958/2.jpeg',
+      '/images/marsh-wall-5958/10.jpeg',
       '/images/marsh-wall-5958/3.jpeg',
       '/images/marsh-wall-5958/4.jpeg',
       '/images/marsh-wall-5958/5.jpeg',
-      '/images/marsh-wall-5958/6.jpeg',
-      '/images/marsh-wall-5958/7.jpeg',
+      '/images/marsh-wall-5958/13.jpeg',
+      '/images/marsh-wall-5958/16.jpeg',
+      '/images/marsh-wall-5958/12.jpeg',
       '/images/marsh-wall-5958/8.jpeg',
+      '/images/marsh-wall-5958/7.jpeg',
+      '/images/marsh-wall-5958/1.jpeg',
+      '/images/marsh-wall-5958/11.jpeg',
+      '/images/marsh-wall-5958/6.jpeg',
       '/images/marsh-wall-5958/9.jpeg',
+      '/images/marsh-wall-5958/14.jpeg',
     ],
     teaser: 'Fully furnished 3-bed in Canary Wharf with high ceilings, a pool, gym and access to London\'s highest communal garden.',
     featured: true,
@@ -520,25 +532,26 @@ export const properties: Property[] = [
       foreignGuarantor: 'Not considered',
       adverseCredit: 'No active CCJ',
     },
+    // Order: living(1,19,3,4) · kitchen(15) · bedroom(12,14,17,7) · bath(5,9) · other(16) · communal(10,18,2,6,8) · floorplan(11)
     image: '/images/westferry-circus-4078/1.jpeg',
     gallery: [
-      '/images/westferry-circus-4078/10.jpeg',
-      '/images/westferry-circus-4078/11.jpeg',
-      '/images/westferry-circus-4078/12.jpeg',
-      '/images/westferry-circus-4078/14.jpeg',
-      '/images/westferry-circus-4078/15.jpeg',
-      '/images/westferry-circus-4078/16.jpeg',
-      '/images/westferry-circus-4078/17.jpeg',
-      '/images/westferry-circus-4078/18.jpeg',
       '/images/westferry-circus-4078/19.jpeg',
-      '/images/westferry-circus-4078/2.jpeg',
       '/images/westferry-circus-4078/3.jpeg',
       '/images/westferry-circus-4078/4.jpeg',
-      '/images/westferry-circus-4078/5.jpeg',
-      '/images/westferry-circus-4078/6.jpeg',
+      '/images/westferry-circus-4078/15.jpeg',
+      '/images/westferry-circus-4078/12.jpeg',
+      '/images/westferry-circus-4078/14.jpeg',
+      '/images/westferry-circus-4078/17.jpeg',
       '/images/westferry-circus-4078/7.jpeg',
-      '/images/westferry-circus-4078/8.jpeg',
+      '/images/westferry-circus-4078/5.jpeg',
       '/images/westferry-circus-4078/9.jpeg',
+      '/images/westferry-circus-4078/16.jpeg',
+      '/images/westferry-circus-4078/10.jpeg',
+      '/images/westferry-circus-4078/18.jpeg',
+      '/images/westferry-circus-4078/2.jpeg',
+      '/images/westferry-circus-4078/6.jpeg',
+      '/images/westferry-circus-4078/8.jpeg',
+      '/images/westferry-circus-4078/11.jpeg',
     ],
     teaser: 'Spacious 2-bed, 966 sq. ft. on the 3rd floor with a private balcony and Canary Wharf skyline views.',
     featured: true,
@@ -590,12 +603,14 @@ export const properties: Property[] = [
       foreignGuarantor: 'Not considered',
       adverseCredit: 'No active CCJ',
     },
-    image: '/images/westferry-circus-4160/westferry-circus-4160-1.jpeg',
+    // This listing's supplied photos are all building/communal + one
+    // skyline view; no interior room shots. Order: other/view(5) · communal(1,2,3,4)
+    image: '/images/westferry-circus-4160/westferry-circus-4160-5.jpeg',
     gallery: [
+      '/images/westferry-circus-4160/westferry-circus-4160-1.jpeg',
       '/images/westferry-circus-4160/westferry-circus-4160-2.jpeg',
       '/images/westferry-circus-4160/westferry-circus-4160-3.jpeg',
       '/images/westferry-circus-4160/westferry-circus-4160-4.jpeg',
-      '/images/westferry-circus-4160/westferry-circus-4160-5.jpeg',
     ],
     teaser: '2-bed on the 10th floor, 966 sq. ft. with air conditioning, a private balcony and sweeping Canary Wharf views.',
     featured: true,
@@ -647,19 +662,27 @@ export const properties: Property[] = [
       foreignGuarantor: 'Not considered',
       adverseCredit: 'No active CCJ',
     },
-    image: '/images/westferry-circus-4377/1.jpeg',
+    // Order: living(18,19,28,6) · kitchen(12,9) · bedroom(1,11,14,2,5,8) · bath(10) · other(16,29,7) · communal(13,15,17,20-27,3) · floorplan(4)
+    image: '/images/westferry-circus-4377/18.jpeg',
     gallery: [
-      '/images/westferry-circus-4377/10.jpeg',
-      '/images/westferry-circus-4377/11.jpeg',
-      '/images/westferry-circus-4377/12.jpeg',
-      '/images/westferry-circus-4377/13.jpeg',
-      '/images/westferry-circus-4377/14.jpeg',
-      '/images/westferry-circus-4377/15.jpeg',
-      '/images/westferry-circus-4377/16.jpeg',
-      '/images/westferry-circus-4377/17.jpeg',
-      '/images/westferry-circus-4377/18.jpeg',
       '/images/westferry-circus-4377/19.jpeg',
+      '/images/westferry-circus-4377/28.jpeg',
+      '/images/westferry-circus-4377/6.jpeg',
+      '/images/westferry-circus-4377/12.jpeg',
+      '/images/westferry-circus-4377/9.jpeg',
+      '/images/westferry-circus-4377/1.jpeg',
+      '/images/westferry-circus-4377/11.jpeg',
+      '/images/westferry-circus-4377/14.jpeg',
       '/images/westferry-circus-4377/2.jpeg',
+      '/images/westferry-circus-4377/5.jpeg',
+      '/images/westferry-circus-4377/8.jpeg',
+      '/images/westferry-circus-4377/10.jpeg',
+      '/images/westferry-circus-4377/16.jpeg',
+      '/images/westferry-circus-4377/29.jpeg',
+      '/images/westferry-circus-4377/7.jpeg',
+      '/images/westferry-circus-4377/13.jpeg',
+      '/images/westferry-circus-4377/15.jpeg',
+      '/images/westferry-circus-4377/17.jpeg',
       '/images/westferry-circus-4377/20.jpeg',
       '/images/westferry-circus-4377/21.jpeg',
       '/images/westferry-circus-4377/22.jpeg',
@@ -668,18 +691,160 @@ export const properties: Property[] = [
       '/images/westferry-circus-4377/25.jpeg',
       '/images/westferry-circus-4377/26.jpeg',
       '/images/westferry-circus-4377/27.jpeg',
-      '/images/westferry-circus-4377/28.jpeg',
-      '/images/westferry-circus-4377/29.jpeg',
       '/images/westferry-circus-4377/3.jpeg',
       '/images/westferry-circus-4377/4.jpeg',
-      '/images/westferry-circus-4377/5.jpeg',
-      '/images/westferry-circus-4377/6.jpeg',
-      '/images/westferry-circus-4377/7.jpeg',
-      '/images/westferry-circus-4377/8.jpeg',
-      '/images/westferry-circus-4377/9.jpeg',
     ],
     teaser: 'Luxurious interior-designed 2-bed on the 10th floor with a private balcony and panoramic Canary Wharf skyline views.',
     featured: true,
+  },
+  // Added per client 2026-07-11. Photos to be uploaded to
+  // public/images/bywell-place-1bed/ in the standard room order:
+  // Order: living(1) · kitchen(2) · bedroom(3). No floor plan supplied.
+  {
+    id: '30717',
+    slug: 'bywell-place-1bed',
+    coordinates: { lat: 51.5145, lng: 0.0083 },
+    listingType: 'To Let',
+    status: 'live',
+    ref: '30717',
+    title: 'Bywell Place',
+    rent: '£2,579pcm',
+    rentPW: '£595pw',
+    beds: 1,
+    baths: 1,
+    area: 'E16 · Canning Town',
+    available: '15 September',
+    holdingDeposit: '£595',
+    securityDeposit: '£2,976',
+    sqft: 563,
+    floor: '5th floor',
+    epc: 'B',
+    tags: [
+      'Furnished', 'New Build', 'Ample Storage', 'Big Windows', 'High Ceilings',
+      'Modern', 'Terrace', 'Open Plan Kitchen', 'Dishwasher', 'Freezer', 'Dryer',
+      'Washer', 'Elevator',
+    ],
+    headline: '1-Bedroom Flat to Rent in Canning Town | Bywell Place, London | Available 15th September | 563 sq. ft. | 5th Floor | EPC: B | Council Tax Band: B',
+    description: 'This newly-built 1-bedroom flat is available to rent in Canning Town on Bywell Place. Occupying 563 sq. ft. on the fifth floor, the modern property benefits from big windows that draw in plenty of natural light, high ceilings and generous built-in storage. It comes with a private balcony and an open-plan kitchen fitted with integrated appliances, and sits just moments from Canning Town Tube station.',
+    amenities: 'Open-plan kitchen with integrated appliances including a dishwasher, freezer and washer/dryer. Private balcony. Lift access.',
+    keyFeatures: [
+      'Brand new build',
+      'Private balcony',
+      'Open-plan kitchen with integrated dishwasher, freezer and washer/dryer',
+    ],
+    compliance: {
+      epc: 'B',
+      councilTax: 'Band B',
+    },
+    location: 'Situated on a well-connected road, the flat is just moments from Canning Town Tube station. Canning Town is well served by bus routes, the Jubilee line and the DLR, making it an ideal base for commuters and young professionals.',
+    nearby: [
+      { name: 'Plaistow',                   distance: '1.0 miles', kind: 'Tube' },
+      { name: 'Rokeby School',              distance: '0.2 miles', kind: 'School' },
+      { name: "St Luke's Primary School",   distance: '0.3 miles', kind: 'School' },
+      { name: 'Keir Hardie Primary School', distance: '0.4 miles', kind: 'School' },
+    ],
+    income: {
+      rentPM: '£2,579',
+      ukIncome: '£77,370pa',
+      ukGuarantor: '£92,844pa',
+      foreignGuarantor: 'Not considered',
+      adverseCredit: 'No active CCJ',
+    },
+    // Photos displayed in the exact uploaded numeric order (1..20); the
+    // carousel keeps this sequence (no filename matches the floor-plan regex).
+    image: '/images/bywell-place-1bed/1.jpeg',
+    gallery: [
+      '/images/bywell-place-1bed/2.jpeg',
+      '/images/bywell-place-1bed/3.jpeg',
+      '/images/bywell-place-1bed/4.jpeg',
+      '/images/bywell-place-1bed/5.jpeg',
+      '/images/bywell-place-1bed/6.jpeg',
+      '/images/bywell-place-1bed/7.jpeg',
+      '/images/bywell-place-1bed/8.jpeg',
+      '/images/bywell-place-1bed/9.jpeg',
+      '/images/bywell-place-1bed/10.jpeg',
+      '/images/bywell-place-1bed/11.jpeg',
+      '/images/bywell-place-1bed/12.jpeg',
+      '/images/bywell-place-1bed/13.jpeg',
+      '/images/bywell-place-1bed/14.jpeg',
+      '/images/bywell-place-1bed/15.jpeg',
+      '/images/bywell-place-1bed/16.jpeg',
+      '/images/bywell-place-1bed/17.jpeg',
+      '/images/bywell-place-1bed/18.jpeg',
+      '/images/bywell-place-1bed/19.jpeg',
+      '/images/bywell-place-1bed/20.jpeg',
+    ],
+  },
+  // Added per client 2026-07-11. Photos to be uploaded to
+  // public/images/silvertown-square-2bed/ in the standard room order:
+  // Order: living(1) · kitchen(2,3) · bedroom(4,5) · bath(6) · communal/dining(7) · floor plan(8, last).
+  {
+    id: '30752',
+    slug: 'silvertown-square-2bed',
+    coordinates: { lat: 51.5025, lng: 0.0365 },
+    listingType: 'To Let',
+    status: 'live',
+    ref: '30752',
+    title: 'Silvertown Square',
+    rent: '£3,000pcm',
+    rentPW: '£692pw',
+    beds: 2,
+    baths: 2,
+    area: 'E16 · Royal Docks',
+    available: '2 September',
+    holdingDeposit: '£692',
+    securityDeposit: '£3,462',
+    sqft: 786,
+    floor: null,
+    epc: 'B',
+    tags: [
+      'Furnished', 'Dishwasher', 'Dryer', 'Freezer', 'Modern', 'Student Friendly',
+      'Washer', 'Elevator', 'HMO Licence', 'Terrace', 'Big Windows',
+      'Ample Storage', 'High Ceilings', 'Open Plan Kitchen',
+    ],
+    headline: '2-Bedroom Flat to Rent in Royal Docks | Silvertown Square, London | Available 2nd September | 786 sq. ft. | EPC: B | Council Tax Band: B',
+    description: 'This well-presented 2-bedroom, 2-bathroom flat is available to rent in the Royal Docks on Silvertown Square. Occupying 786 sq. ft., the modern property benefits from big windows, high ceilings and generous built-in storage. It comes with a private balcony and a fully fitted open-plan kitchen with integrated appliances, and sits just moments from Canning Town Underground station.',
+    amenities: 'Fully fitted open-plan kitchen with integrated dishwasher, freezer and washer/dryer. Private balcony. Lift access. HMO licence in place — student-friendly.',
+    keyFeatures: [
+      'Private balcony',
+      'HMO licence — student-friendly',
+      'Open-plan kitchen with integrated dishwasher, freezer and washer/dryer',
+    ],
+    compliance: {
+      epc: 'B',
+      councilTax: 'Band B',
+    },
+    location: 'Situated in the Royal Docks, the flat is just moments from Canning Town Underground station. The area is well served by bus routes, the DLR, the Jubilee line and the Elizabeth line, making it an ideal base for commuters, young professionals and students.',
+    nearby: [
+      { name: 'North Greenwich',            distance: '0.8 miles', kind: 'Tube' },
+      { name: "St Luke's Primary School",   distance: '0.1 miles', kind: 'School' },
+      { name: 'Faraday School',             distance: '0.3 miles', kind: 'School' },
+      { name: 'Hallsville Primary School',  distance: '0.3 miles', kind: 'School' },
+    ],
+    income: {
+      rentPM: '£3,000',
+      ukIncome: '£90,000pa',
+      ukGuarantor: '£108,000pa',
+      foreignGuarantor: 'Not considered',
+      adverseCredit: 'No active CCJ',
+    },
+    // Photos displayed in the exact uploaded numeric order (1..13); the
+    // carousel keeps this sequence (no filename matches the floor-plan regex).
+    image: '/images/silvertown-square-2bed/1.jpeg',
+    gallery: [
+      '/images/silvertown-square-2bed/2.jpeg',
+      '/images/silvertown-square-2bed/3.jpeg',
+      '/images/silvertown-square-2bed/4.jpeg',
+      '/images/silvertown-square-2bed/5.jpeg',
+      '/images/silvertown-square-2bed/6.jpeg',
+      '/images/silvertown-square-2bed/7.jpeg',
+      '/images/silvertown-square-2bed/8.jpeg',
+      '/images/silvertown-square-2bed/9.jpeg',
+      '/images/silvertown-square-2bed/10.jpeg',
+      '/images/silvertown-square-2bed/11.jpeg',
+      '/images/silvertown-square-2bed/12.jpeg',
+      '/images/silvertown-square-2bed/13.jpeg',
+    ],
   },
 ]
 

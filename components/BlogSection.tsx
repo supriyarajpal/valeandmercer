@@ -9,9 +9,9 @@ const posts = [
   {
     slug: 'london-property-market-2025',
     category: 'Market Insight',
-    title: 'The London property market in 2025',
+    title: 'The London property market in 2026',
     excerpt: 'Supply is up, rates have settled a little, and buyers are moving again. Here is what we are seeing.',
-    date: 'May 2025',
+    date: 'May 2026',
     readTime: '4 min',
     image: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1400&q=85',
   },
@@ -20,7 +20,7 @@ const posts = [
     category: 'Buying Guide',
     title: 'Your complete guide to buying in Chelsea SW3',
     excerpt: 'What to expect, where to look, and what the streets actually feel like. A practical guide to buying in SW3.',
-    date: 'April 2025',
+    date: 'April 2026',
     readTime: '6 min',
     image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1400&q=85',
   },
@@ -29,7 +29,7 @@ const posts = [
     category: 'Student Living',
     title: 'Renting in London as a student',
     excerpt: 'What nobody tells you before you start. A straight guide to renting in London as a student.',
-    date: 'March 2025',
+    date: 'March 2026',
     readTime: '5 min',
     image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=85',
   },
@@ -43,7 +43,7 @@ export default function BlogSection() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16, marginBottom: 56 }}>
             <div>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 12 }}>Journal</p>
-              <h2 style={{ color: '#4A4036' }}>Insight and <span style={{ color: '#A0845C', fontStyle: 'italic' }}>advice</span></h2>
+              <h2 style={{ color: 'var(--text)' }}>Insight and <span style={{ color: '#A0845C', fontStyle: 'italic' }}>advice</span></h2>
             </div>
             <Link href="/blog" className="link-underline" style={{ fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#A0845C', whiteSpace: 'nowrap' }}>
               All articles <span aria-hidden style={{ marginLeft: 6 }}>→</span>
@@ -77,8 +77,8 @@ function BlogCard({ post, index }: { post: typeof posts[number]; index: number }
         className="card-lift"
         style={{
           display: 'block',
-          background: '#FFFFFF',
-          borderRadius: 10,
+          background: 'var(--surface-2)',
+          borderRadius: 'var(--radius-lg)',
           overflow: 'hidden',
           boxShadow: '0 1px 0 rgba(52,48,43,0.04), 0 16px 32px -22px rgba(52,48,43,0.2)',
           height: '100%',
@@ -107,12 +107,12 @@ function BlogCard({ post, index }: { post: typeof posts[number]; index: number }
         <div style={{ padding: '24px 26px 28px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
             <span style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#A0845C' }}>{post.category}</span>
-            <span style={{ fontSize: 10, color: '#9A9188' }}>{post.readTime}</span>
+            <span style={{ fontSize: 10, color: 'var(--text-faint)' }}>{post.readTime}</span>
           </div>
-          <h3 style={{ color: '#4A4036', marginBottom: 12, fontSize: 'clamp(18px, 4vw, 22px)', lineHeight: 1.25 }}>{post.title}</h3>
-          <p style={{ fontSize: 13, lineHeight: 1.85, color: '#6B6258', marginBottom: 18 }}>{post.excerpt}</p>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 14, borderTop: '0.5px solid #DDD7CC' }}>
-            <span style={{ fontSize: 10, color: '#9A9188', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{post.date}</span>
+          <h3 style={{ color: 'var(--text)', marginBottom: 12, fontSize: 'clamp(18px, 4vw, 22px)', lineHeight: 1.25 }}>{post.title}</h3>
+          <p style={{ fontSize: 13, lineHeight: 1.85, color: 'var(--text-muted)', marginBottom: 18 }}>{post.excerpt}</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 14, borderTop: '0.5px solid var(--border)' }}>
+            <span style={{ fontSize: 10, color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.12em' }}>{post.date}</span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A0845C' }}>
               Read more
               <span data-arrow aria-hidden style={{ fontSize: 13, transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>

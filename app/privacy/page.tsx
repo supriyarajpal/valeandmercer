@@ -11,22 +11,22 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'16px'}
-  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'#DDD7CC',color:'#4A4036',fontWeight:500,borderBottom:'1px solid #C8C0B4'}
-  const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'#6B6258',borderBottom:'0.5px solid #DDD7CC',verticalAlign:'top',lineHeight:1.7}
-  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'#4A4036',marginBottom:'14px',marginTop:'0'}
-  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'#4A4036',marginBottom:'10px',marginTop:'20px'}
-  const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'12px'}
-  const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'#6B6258',marginBottom:'4px'}
-  const sectionStyle:React.CSSProperties = {marginBottom:'40px',paddingBottom:'40px',borderBottom:'0.5px solid #DDD7CC'}
+  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'var(--border)',color:'var(--text)',fontWeight:500,borderBottom:'1px solid var(--border-strong)'}
+  const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'var(--text-muted)',borderBottom:'0.5px solid var(--border)',verticalAlign:'top',lineHeight:1.7}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'var(--text)',marginBottom:'14px',marginTop:'0'}
+  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'var(--text)',marginBottom:'10px',marginTop:'20px'}
+  const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'12px'}
+  const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'4px'}
+  const sectionStyle:React.CSSProperties = {marginBottom:'40px',paddingBottom:'40px',borderBottom:'0.5px solid var(--border)'}
 
   return (
     <>
       <Navbar />
-      <main style={{background:'#F2EFE9',paddingTop:'120px',paddingBottom:'80px'}}>
+      <main style={{background:'var(--surface)',paddingTop:'120px',paddingBottom:'80px'}}>
         <div style={{maxWidth:'860px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
-          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>Privacy Notice</h1>
-          <p style={{fontSize:'12px',color:'#9A9188',marginBottom:'32px'}}>VM-PN-001 | Version 2.0 | May 2026 | Company Registration No: 17212434</p>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'var(--text)',marginBottom:'8px'}}>Privacy Notice</h1>
+          <p style={{fontSize:'12px',color:'var(--text-faint)',marginBottom:'32px'}}>VM-PN-001 | Version 2.0 | May 2026 | Company Registration No: 17212434</p>
 
           <div style={{background:'#34302B',padding:'28px 32px',marginBottom:'48px'}}>
             <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(15px,2vw,19px)',fontWeight:300,color:'#F2EFE9',lineHeight:1.7,fontStyle:'italic'}}>
@@ -34,8 +34,8 @@ export default function PrivacyPage() {
             </p>
           </div>
 
-          <div style={{background:'#DDD7CC',padding:'14px 20px',marginBottom:'40px',fontSize:'12px',color:'#6B6258',lineHeight:1.8}}>
-            <p style={{fontWeight:500,color:'#4A4036',marginBottom:'6px',fontSize:'12px'}}>Jump to section:</p>
+          <div style={{background:'var(--border)',padding:'14px 20px',marginBottom:'40px',fontSize:'12px',color:'var(--text-muted)',lineHeight:1.8}}>
+            <p style={{fontWeight:500,color:'var(--text)',marginBottom:'6px',fontSize:'12px'}}>Jump to section:</p>
             <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
               {[['1','Who We Are'],['2','What This Notice Covers'],['3','Data We Collect'],['4','Legitimate Interests'],['5','Who We Share Data With'],['6','International Transfers'],['7','How Long We Keep Data'],['8','Your Rights'],['9','Cookies'],['10','Direct Marketing'],['11','Data Security'],['12','Changes'],['13','How to Complain']].map(([id,label])=>(
                 <a key={id} href={'#pn-'+id} style={{fontSize:'11px',color:'#A0845C',textDecoration:'none',borderBottom:'1px solid #A0845C',paddingBottom:'1px'}}>{label}</a>
@@ -85,7 +85,7 @@ export default function PrivacyPage() {
                 <div style={{overflowX:'auto'}}>
                   <table style={{...tableStyle,minWidth:'500px'}}>
                     <thead><tr><th style={{...thStyle,width:'35%'}}>Data Collected</th><th style={thStyle}>Purpose</th><th style={{...thStyle,width:'25%'}}>Lawful Basis</th></tr></thead>
-                    <tbody>{rows.map(([d,p,b],i)=><tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}>{d}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>)}</tbody>
+                    <tbody>{rows.map(([d,p,b],i)=><tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}>{d}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>)}</tbody>
                   </table>
                 </div>
               </div>
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
                 <thead><tr><th style={thStyle}>Recipient</th><th style={thStyle}>Purpose</th><th style={thStyle}>Basis for Sharing</th></tr></thead>
                 <tbody>
                   {[['Rightmove Ltd (when subscribed)','To list and advertise your property on Rightmove','Contract: listing instruction'],['Zoopla Ltd (when subscribed)','To list and advertise your property on Zoopla','Contract: listing instruction'],['Lettings Hub (tenant referencing, when subscribed)','To conduct independent tenant referencing and credit checks','Contract: tenancy application'],['Government-approved tenancy deposit protection scheme (DPS, TDS, or MyDeposits)','To register and protect tenant deposits as required by law','Legal Obligation: Housing Act 2004'],['Solicitors and conveyancers','To facilitate the legal completion of sales transactions','Contract'],['HMRC','Anti-money laundering reporting, PAYE, Non-Resident Landlord scheme reporting','Legal Obligation'],['Home Office','Right to Rent verification (if required)','Legal Obligation: Immigration Act 2014'],['Property maintenance contractors','To arrange and carry out repairs and inspections (name and address only)','Contract: property management'],['Microsoft Corporation (Microsoft 365 / Outlook)','Cloud email platform used for client correspondence','Contract. Microsoft acts as our data processor'],['Google LLC (Google Workspace, Google Ads, when activated)','Cloud storage and digital advertising','Contract / Consent. Google acts as our data processor'],['DocuSign Inc (when subscribed)','Electronic signature processing for tenancy agreements','Contract. DocuSign acts as our data processor'],['Accountants and financial advisers','Bookkeeping, financial compliance, and tax filing','Legal Obligation / Contract'],['ICO','Regulatory compliance: registration and mandatory breach reporting','Legal Obligation: DPA 2018']].map(([r,p,b],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={{...tdStyle,fontWeight:500}}>{r}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={{...tdStyle,fontWeight:500}}>{r}</td><td style={tdStyle}>{p}</td><td style={{...tdStyle,color:'#A0845C',fontSize:'12px'}}>{b}</td></tr>
                   ))}
                 </tbody>
               </table>
@@ -133,12 +133,12 @@ export default function PrivacyPage() {
                 <thead><tr><th style={thStyle}>Data Category</th><th style={thStyle}>Retention Period</th><th style={thStyle}>When Clock Starts</th><th style={thStyle}>Legal Basis</th></tr></thead>
                 <tbody>
                   {[['Completed sale files (vendor and buyer)','6 years','Date of sale completion or instruction withdrawal','Limitation Act 1980'],['AML identity verification documents (mandatory, cannot be deleted early)','5 years minimum','Date business relationship ends','Money Laundering Regulations 2017, Reg. 40 (mandatory)'],['Tenancy files (landlord and tenant data)','6 years','Date tenancy ends','Limitation Act 1980'],['Right to Rent check documents','1 year','Date tenancy ends','Immigration Act 2014'],['Tenancy deposit protection records','6 years','Date tenancy ends','Housing Act 2004'],['Buyer/applicant records (no transaction formed)','12 months','Date of last contact','Legitimate interests (proportionate)'],['Website contact form enquiries (no relationship formed)','12 months','Date of submission','Legitimate interests (proportionate)'],['Email marketing consent records','Duration of consent + 1 year','Date of unsubscription or withdrawal','PECR 2003'],['Financial records (invoices, bank statements)','6 years','End of financial year to which records relate','Companies Act 2006; HMRC requirements']].map(([d,r,w,l],i)=>(
-                    <tr key={i} style={{background:i%2===0?'#F2EFE9':'#F5F2EE'}}><td style={tdStyle}>{d}</td><td style={{...tdStyle,color:'#A0845C',fontWeight:500}}>{r}</td><td style={tdStyle}>{w}</td><td style={{...tdStyle,fontSize:'12px'}}>{l}</td></tr>
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}>{d}</td><td style={{...tdStyle,color:'#A0845C',fontWeight:500}}>{r}</td><td style={tdStyle}>{w}</td><td style={{...tdStyle,fontSize:'12px'}}>{l}</td></tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <div style={{background:'#DDD7CC',padding:'16px 20px',borderLeft:'3px solid #A0845C',marginTop:'12px'}}>
+            <div style={{background:'var(--border)',padding:'16px 20px',borderLeft:'3px solid #A0845C',marginTop:'12px'}}>
               <p style={{...pStyle,marginBottom:0}}><strong>Important regarding AML documents:</strong> We are required by the Money Laundering Regulations 2017 to retain your identity verification documents for a minimum of five years following the end of our business relationship with you. A request for erasure of these documents cannot be fulfilled during this mandatory retention period. We will inform you of this if you make such a request.</p>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function PrivacyPage() {
             <p style={pStyle}><strong>Email:</strong> <a href="mailto:privacy@valeandmercer.co.uk" style={{color:'#A0845C'}}>privacy@valeandmercer.co.uk</a><br/><strong>Post:</strong> Vale and Mercer Ltd, 124 City Road, London EC1V 2NX</p>
             <p style={pStyle}>We aim to respond to all complaints within <strong>14 days</strong>.</p>
             <p style={pStyle}>If you are not satisfied with our response, you have the right to lodge a complaint with the <strong>Information Commissioner's Office (ICO)</strong>:</p>
-            <div style={{background:'#DDD7CC',padding:'16px 20px',fontSize:'13px',color:'#6B6258',lineHeight:1.9}}>
+            <div style={{background:'var(--border)',padding:'16px 20px',fontSize:'13px',color:'var(--text-muted)',lineHeight:1.9}}>
               <p>Website: <a href="https://ico.org.uk/make-a-complaint" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>ico.org.uk/make-a-complaint</a></p>
               <p>Telephone: 0303 123 1113 (Monday to Friday, 9am–5pm)</p>
               <p>Post: Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</p>
@@ -196,7 +196,7 @@ export default function PrivacyPage() {
             <p style={{...pStyle,marginTop:'12px'}}>You also have the right to seek judicial remedy through the courts.</p>
           </div>
 
-          <div style={{borderTop:'0.5px solid #DDD7CC',paddingTop:'24px',fontSize:'11px',color:'#9A9188',lineHeight:1.8}}>
+          <div style={{borderTop:'0.5px solid var(--border)',paddingTop:'24px',fontSize:'11px',color:'var(--text-faint)',lineHeight:1.8}}>
             <p>Vale and Mercer Ltd, Registered in England and Wales</p>
             <p>Company Registration No: 17212434 | ICO Registration No: ZC155397</p>
             <p>Document Reference: VM-PN-001 | Version 2.0 | May 2026</p>

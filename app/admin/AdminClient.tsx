@@ -32,16 +32,16 @@ export default function AdminClient() {
     setCode(entry)
   }
 
-  const s = {background:'transparent',border:'none',borderBottom:'1px solid #DDD7CC',color:'#4A4036',fontSize:'14px',padding:'10px 0',outline:'none',width:'100%'}
-  const l = {fontSize:'9px',letterSpacing:'0.15em',textTransform:'uppercase' as const,color:'#9A9188',display:'block',marginBottom:'4px'}
+  const s = {background:'transparent',border:'none',borderBottom:'1px solid var(--border)',color:'var(--text)',fontSize:'14px',padding:'10px 0',outline:'none',width:'100%'}
+  const l = {fontSize:'9px',letterSpacing:'0.15em',textTransform:'uppercase' as const,color:'var(--text-faint)',display:'block',marginBottom:'4px'}
 
   if (!authed) return (
-    <div style={{minHeight:'100vh',background:'#F2EFE9',display:'flex',alignItems:'center',justifyContent:'center'}}>
-      <div style={{background:'#fff',padding:'48px',minWidth:'320px',border:'0.5px solid #DDD7CC'}}>
-        <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'#4A4036',marginBottom:'8px'}}>
+    <div style={{minHeight:'100vh',background:'var(--surface)',display:'flex',alignItems:'center',justifyContent:'center'}}>
+      <div style={{background:'#fff',padding:'48px',minWidth:'320px',border:'0.5px solid var(--border)'}}>
+        <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'24px',fontWeight:300,color:'var(--text)',marginBottom:'8px'}}>
           Vale <span style={{color:'#A0845C'}}>&</span> Mercer
         </div>
-        <div style={{fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#9A9188',marginBottom:'32px'}}>Admin Panel</div>
+        <div style={{fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--text-faint)',marginBottom:'32px'}}>Admin Panel</div>
         <label style={l}>Password</label>
         <input type="password" style={{...s,marginBottom:'24px'}} value={password} onChange={e=>setPassword(e.target.value)} />
         <button onClick={()=>password==='valemercer2025'?setAuthed(true):alert('Wrong password')} style={{background:'#34302B',color:'#F2EFE9',fontSize:'11px',letterSpacing:'0.18em',textTransform:'uppercase',padding:'14px 28px',border:'none',cursor:'pointer',width:'100%'}}>
@@ -52,13 +52,13 @@ export default function AdminClient() {
   )
 
   return (
-    <div style={{minHeight:'100vh',background:'#F2EFE9',padding:'40px 1.5rem'}}>
+    <div style={{minHeight:'100vh',background:'var(--surface)',padding:'40px 1.5rem'}}>
       <div style={{maxWidth:'900px',margin:'0 auto'}}>
 
-        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'48px',paddingBottom:'24px',borderBottom:'0.5px solid #DDD7CC'}}>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'48px',paddingBottom:'24px',borderBottom:'0.5px solid var(--border)'}}>
           <div>
-            <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'32px',fontWeight:300,color:'#4A4036'}}>Add New Property</div>
-            <div style={{fontSize:'11px',color:'#9A9188',marginTop:'4px'}}>Fill in the details and generate the code to paste into properties.ts</div>
+            <div style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'32px',fontWeight:300,color:'var(--text)'}}>Add New Property</div>
+            <div style={{fontSize:'11px',color:'var(--text-faint)',marginTop:'4px'}}>Fill in the details and generate the code to paste into properties.ts</div>
           </div>
           <a href="/" style={{fontSize:'11px',letterSpacing:'0.15em',textTransform:'uppercase',color:'#A0845C',textDecoration:'none'}}>Back to site</a>
         </div>
@@ -109,7 +109,7 @@ export default function AdminClient() {
 
         <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'32px'}}>
           <input type="checkbox" id="feat" checked={form.featured} onChange={e=>setForm({...form,featured:e.target.checked})} />
-          <label htmlFor="feat" style={{fontSize:'13px',color:'#6B6258'}}>Show on homepage as featured property</label>
+          <label htmlFor="feat" style={{fontSize:'13px',color:'var(--text-muted)'}}>Show on homepage as featured property</label>
         </div>
 
         <button onClick={generate} style={{background:'#34302B',color:'#F2EFE9',fontSize:'11px',letterSpacing:'0.2em',textTransform:'uppercase',padding:'16px 48px',border:'none',cursor:'pointer',marginBottom:'32px',display:'block'}}>
@@ -124,9 +124,9 @@ export default function AdminClient() {
               </div>
               <pre style={{color:'#F2EFE9',fontSize:'12px',lineHeight:1.9,overflow:'auto',whiteSpace:'pre-wrap',margin:0}}>{code}</pre>
             </div>
-            <div style={{background:'#DDD7CC',padding:'24px'}}>
-              <div style={{fontSize:'10px',letterSpacing:'0.2em',textTransform:'uppercase',color:'#6B6258',marginBottom:'12px'}}>Next steps</div>
-              <div style={{fontSize:'12px',color:'#6B6258',lineHeight:2}}>
+            <div style={{background:'var(--border)',padding:'24px'}}>
+              <div style={{fontSize:'10px',letterSpacing:'0.2em',textTransform:'uppercase',color:'var(--text-muted)',marginBottom:'12px'}}>Next steps</div>
+              <div style={{fontSize:'12px',color:'var(--text-muted)',lineHeight:2}}>
                 1. Copy the code above<br/>
                 2. Open lib/properties.ts in VS Code<br/>
                 3. Paste inside the properties array before the closing bracket<br/>

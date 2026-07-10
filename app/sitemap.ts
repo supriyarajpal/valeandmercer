@@ -1,4 +1,5 @@
 import type { MetadataRoute } from 'next'
+import { getLiveProperties } from '@/lib/properties'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
@@ -24,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL + '/let',        lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
     { url: SITE_URL + '/sell',       lastModified: now, changeFrequency: 'weekly',  priority: 0.9 },
     { url: SITE_URL + '/buy',        lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
-    { url: SITE_URL + '/rent',       lastModified: now, changeFrequency: 'weekly',  priority: 0.8 },
     { url: SITE_URL + '/valuations', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: SITE_URL + '/fees',       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: SITE_URL + '/register',          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -43,5 +43,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }))
 
-  return [...staticRoutes, ...blogRoutes]
+  // Live property detail pages (draft records are noindex, so excluded).
+  const propertyRoutes: MetadataRoute.Sitemap = getLiveProperties().map(p => ({
+    url: SITE_URL + '/property/' + p.slug,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...propertyRoutes, ...blogRoutes]
 }

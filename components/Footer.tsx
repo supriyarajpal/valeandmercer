@@ -9,7 +9,6 @@ const navItems = [
   { label: 'Lettings',         href: '/let' },
   { label: 'New Homes',        href: '/buy' },
   { label: 'Student Lettings', href: '/student-lettings' },
-  { label: 'Rentals',          href: '/rent' },
   { label: 'Book Valuation',   href: '/valuations' },
 ]
 
@@ -114,8 +113,8 @@ export default function Footer() {
             <StaggerItem>
               <div style={{ marginBottom: 16 }}>
                 <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(242,239,233,0.2)', marginBottom: 4 }}>Email</div>
-                <a href="mailto:raghav@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 11, color: 'rgba(242,239,233,0.4)', letterSpacing: '0.01em' }}>
-                  raghav@valeandmercer.co.uk
+                <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 11, color: 'rgba(242,239,233,0.4)', letterSpacing: '0.01em' }}>
+                  info@valeandmercer.co.uk
                 </a>
               </div>
             </StaggerItem>

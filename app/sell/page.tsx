@@ -57,15 +57,15 @@ export default function SellPage() {
           </div>
         </PageHero>
 
-        <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)' }}>
+        <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-            <Stagger as="div" stagger={0.1} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 1, background: '#C8C0B4', marginBottom: 80 }}>
+            <Stagger as="div" stagger={0.1} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 1, background: 'var(--border-strong)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: 80 }}>
               {steps.map(s => (
                 <StaggerItem key={s.step} as="div">
-                  <div style={{ background: '#F2EFE9', padding: '40px 28px', height: '100%' }}>
+                  <div style={{ background: 'var(--surface)', padding: '40px 28px', height: '100%' }}>
                     <div style={{ fontFamily: 'var(--font-serif)', fontSize: 40, fontWeight: 300, color: 'rgba(160,132,92,0.28)', lineHeight: 1, marginBottom: 14 }}>{s.step}</div>
-                    <h3 style={{ fontSize: 22, color: '#4A4036', marginBottom: 10 }}>{s.title}</h3>
-                    <p style={{ fontSize: 14, lineHeight: 1.95, color: '#6B6258' }}>{s.body}</p>
+                    <h3 style={{ fontSize: 22, color: 'var(--text)', marginBottom: 10 }}>{s.title}</h3>
+                    <p style={{ fontSize: 14, lineHeight: 1.95, color: 'var(--text-muted)' }}>{s.body}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -74,13 +74,13 @@ export default function SellPage() {
             <Reveal y={28} amount={0.25}>
               <div style={{ maxWidth: 720 }}>
                 <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Why Vale and Mercer</p>
-                <h2 style={{ color: '#4A4036', marginBottom: 22 }}>
+                <h2 style={{ color: 'var(--text)', marginBottom: 22 }}>
                   Selling your home <span style={{ color: '#A0845C', fontStyle: 'italic' }}>the right way</span>
                 </h2>
-                <p style={{ fontSize: 15, lineHeight: 1.95, color: '#6B6258', marginBottom: 16 }}>
+                <p style={{ fontSize: 15, lineHeight: 1.95, color: 'var(--text-muted)', marginBottom: 16 }}>
                   The right buyer does not just want to know the square footage. They want to picture their life there. We write listings with that in mind.
                 </p>
-                <p style={{ fontSize: 15, lineHeight: 1.95, color: '#6B6258', marginBottom: 32 }}>
+                <p style={{ fontSize: 15, lineHeight: 1.95, color: 'var(--text-muted)', marginBottom: 32 }}>
                   We keep our client numbers small so nothing gets missed.
                 </p>
                 <ArrowButton href="/valuations" label="Book Your Free Valuation" variant="dark" />

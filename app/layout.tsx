@@ -72,8 +72,19 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Theme bootstrap — runs synchronously BEFORE first paint so the
+            correct light/dark palette is applied with no flash. Reads the
+            saved choice, falling back to the OS preference. Kept as a tiny
+            raw inline script (not next/script) precisely so it executes
+            ahead of paint; ThemeToggle takes over interactively. */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();`,
+          }}
+        />
         {/* `afterInteractive` so a slow / blocked Cookiebot CDN (corp
             firewalls, strict ad blockers, restricted regions) can't hang
             page hydration. The consent banner still appears moments after

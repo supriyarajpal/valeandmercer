@@ -36,7 +36,7 @@ export default function BuyingSection() {
   const innerY = useTransform(imageProgress, [0, 1], isMobile ? ['0%', '0%'] : ['8%', '-8%'])
 
   return (
-    <section ref={sectionRef} style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
+    <section ref={sectionRef} style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 64, alignItems: 'center' }}>
         <motion.div
           ref={imageRef}
@@ -44,7 +44,7 @@ export default function BuyingSection() {
             position: 'relative',
             height: 560,
             overflow: 'hidden',
-            borderRadius: 10,
+            borderRadius: 'var(--radius-lg)',
             clipPath: isMobile || reduce ? 'inset(0%)' : clipPath,
             willChange: 'clip-path',
           }}
@@ -64,20 +64,20 @@ export default function BuyingSection() {
           <SlowReveal delay={0}><p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Our Services</p></SlowReveal>
 
           <SlowReveal delay={0.05}>
-            <h2 style={{ fontSize: 'clamp(28px, 5vw, 46px)', color: '#4A4036', marginBottom: 20 }}>
+            <h2 style={{ fontSize: 'clamp(28px, 5vw, 46px)', color: 'var(--text)', marginBottom: 20 }}>
               For landlords who care<br />and tenants who deserve<br />
               <span style={{ color: '#A0845C', fontStyle: 'italic' }}>better than average.</span>
             </h2>
           </SlowReveal>
 
           <SlowReveal delay={0.55}>
-            <p style={{ fontSize: 13, lineHeight: 1.95, color: '#4A4036', opacity: 0.78, marginBottom: 18, maxWidth: 520 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.95, color: 'var(--text)', opacity: 0.78, marginBottom: 18, maxWidth: 520 }}>
               The right tenant doesn&rsquo;t happen by accident. It happens because we took the time to understand what you actually need.
             </p>
           </SlowReveal>
 
           <SlowReveal delay={0.7}>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 18, lineHeight: 1.7, color: '#4A4036', opacity: 0.7, marginBottom: 32, fontStyle: 'italic', maxWidth: 520 }}>
+            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 18, lineHeight: 1.7, color: 'var(--text)', opacity: 0.7, marginBottom: 32, fontStyle: 'italic', maxWidth: 520 }}>
               We sit. We listen. We find. Straight and simple.
             </p>
           </SlowReveal>

@@ -97,40 +97,75 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
     >
       {/* All slides stacked; opacity crossfade drives the transition.
           Non-current frames are lazy-loaded so a 30-photo gallery doesn't
-          eagerly pull every image on first paint. */}
+          eagerly pull every image on first paint.
+
+          Each slide is a "blurred fill" pair so photos of ANY aspect ratio
+          (portrait, landscape, square) display at their true ratio with no
+          letterbox strips and no cropping:
+            – Background: the same photo, object-fit:cover + scale(1.1) +
+              heavy blur, so any area the sharp copy doesn't cover is filled
+              with a soft, darkened glow of the photo itself rather than a
+              flat band. The scale hides the blur's feathered edge.
+            – Foreground: the same photo, object-fit:contain, fully sharp
+              and uncropped — this is what the viewer actually reads.
+          The frame-0 dim (0.7) and crossfade both live on the wrapper so
+          the two layers always move together. */}
       <div style={{ position: 'absolute', inset: 0 }}>
         {images.map((src, i) => {
           const isCurrent = i === idx
           return (
-            <img
+            <div
               key={src + i}
-              src={src}
-              alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : ''}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchPriority={i === 0 ? 'high' : 'auto'}
+              aria-hidden={!isCurrent}
               style={{
                 position: 'absolute',
                 inset: 0,
-                width: '100%',
-                height: '100%',
-                // `contain` (not cover) so the FULL photo shows at its
-                // native aspect ratio — no cropping. Any letterbox band
-                // that opens up is filled by the section background
-                // (#28231C), which is set on the outer <section> below.
-                objectFit: 'contain',
-                objectPosition: 'center',
-                // Frame 0 sits at 0.7 so the full hero copy reads over
-                // the dual scrim. Any other frame restores to true
-                // brightness — the scrim below is fading out at the same
-                // time so we can't leave the image dimmed. Placeholder
-                // path stays at 1 unconditionally (neutral gradient, not
-                // a photo). Two-way: navigating back to slide 0 dims
-                // again in sync with the scrim fade-in.
+                // Frame 0 sits at 0.7 so the full hero copy reads over the
+                // dual scrim. Any other frame restores to true brightness —
+                // the scrim fades out in sync so the image is never left
+                // dimmed. Placeholder path stays at 1 (neutral gradient, not
+                // a photo). Two-way: navigating back to slide 0 dims again
+                // as the scrim fades back in.
                 opacity: isCurrent ? (usingPlaceholder ? 1 : (showFullText ? 0.7 : 1)) : 0,
                 transition: 'opacity 500ms ease',
                 pointerEvents: 'none',
               }}
-            />
+            >
+              {/* Blurred background fill — decorative, hidden from a11y. */}
+              <img
+                src={src}
+                alt=""
+                aria-hidden
+                loading={i === 0 ? 'eager' : 'lazy'}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  filter: 'blur(36px) brightness(0.82)',
+                  transform: 'scale(1.1)',
+                  pointerEvents: 'none',
+                }}
+              />
+              {/* Sharp, uncropped foreground — the real photo. */}
+              <img
+                src={src}
+                alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : ''}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchPriority={i === 0 ? 'high' : 'auto'}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  objectPosition: 'center',
+                  pointerEvents: 'none',
+                }}
+              />
+            </div>
           )
         })}
       </div>
@@ -198,11 +233,13 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
             display: 'inline-flex',
             alignItems: 'center',
             gap: 8,
-            padding: '7px 14px',
-            border: '0.5px solid rgba(242,239,233,0.28)',
-            background: 'rgba(20,17,14,0.4)',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
+            padding: '8px 16px',
+            border: '1px solid rgba(242,239,233,0.14)',
+            borderRadius: 'var(--radius-pill)',
+            background: 'rgba(40,35,28,0.40)',
+            backdropFilter: 'blur(14px) saturate(180%)',
+            WebkitBackdropFilter: 'blur(14px) saturate(180%)',
+            boxShadow: 'inset 0 1px 0 rgba(242,239,233,0.14)',
             fontSize: 10,
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
@@ -395,10 +432,13 @@ function CarouselArrow({ direction, onClick }: { direction: 'prev' | 'next'; onC
         [isPrev ? 'left' : 'right']: 'var(--gutter)',
         transform: 'translateY(-50%)',
         zIndex: 20,
-        background: 'rgba(20,17,14,0.35)',
-        border: '0.5px solid rgba(242,239,233,0.28)',
-        backdropFilter: 'blur(6px)',
-        WebkitBackdropFilter: 'blur(6px)',
+        // Circular liquid-glass control.
+        background: 'rgba(40,35,28,0.40)',
+        border: '1px solid rgba(242,239,233,0.14)',
+        borderRadius: 'var(--radius-pill)',
+        backdropFilter: 'blur(16px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+        boxShadow: 'inset 0 1px 0 rgba(242,239,233,0.14), 0 8px 24px -10px rgba(40,35,28,0.5)',
         color: '#F2EFE9',
         cursor: 'pointer',
         width: 48,
@@ -408,10 +448,10 @@ function CarouselArrow({ direction, onClick }: { direction: 'prev' | 'next'; onC
         justifyContent: 'center',
         fontSize: 18,
         lineHeight: 1,
-        transition: 'background 0.3s var(--ease-out-soft), border-color 0.3s var(--ease-out-soft)',
+        transition: 'background var(--dur) var(--ease-apple), border-color var(--dur) var(--ease-apple)',
       }}
-      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(20,17,14,0.6)' }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(20,17,14,0.35)' }}
+      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(40,35,28,0.6)'; e.currentTarget.style.borderColor = 'rgba(160,132,92,0.5)' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(40,35,28,0.40)'; e.currentTarget.style.borderColor = 'rgba(242,239,233,0.14)' }}
     >
       {isPrev ? '←' : '→'}
     </button>

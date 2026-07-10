@@ -81,7 +81,7 @@ export default function Testimonials() {
                   width: cardWidth,
                   background: 'rgba(242,239,233,0.04)',
                   border: '0.5px solid rgba(242,239,233,0.1)',
-                  borderRadius: 8,
+                  borderRadius: 'var(--radius-lg)',
                   padding: '36px 32px 32px',
                   display: 'flex',
                   flexDirection: 'column',
@@ -114,15 +114,17 @@ function ArrowButton({ dir, disabled, onClick, aria }: { dir: 1 | -1; disabled: 
       onClick={onClick}
       disabled={disabled}
       aria-label={aria}
+      className="btn-press"
       style={{
         width: 44,
         height: 44,
         border: '1px solid rgba(242,239,233,0.3)',
+        borderRadius: 'var(--radius-pill)',
         background: 'transparent',
         color: '#F2EFE9',
         cursor: disabled ? 'default' : 'pointer',
         opacity: disabled ? 0.3 : 1,
-        transition: 'all 0.4s var(--ease-out-soft)',
+        transition: 'background var(--dur) var(--ease-apple), border-color var(--dur) var(--ease-apple), transform var(--dur) var(--ease-apple)',
         fontSize: 16,
         display: 'flex',
         alignItems: 'center',

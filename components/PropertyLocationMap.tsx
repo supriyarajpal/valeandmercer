@@ -8,7 +8,7 @@
 //   2. Leaflet's stylesheet must be linked into the parent page's
 //      initial CSS bundle. Importing it here — from a real client
 //      component that the server page renders — keeps the CSS pinned to
-//      the property route's bundle the same way `app/rent/page.tsx`
+//      the property route's bundle the same way `app/let/page.tsx`
 //      does for the grid map.
 
 import 'leaflet/dist/leaflet.css'
@@ -24,13 +24,13 @@ const PropertyMap = dynamic(() => import('@/components/PropertyMap'), {
       style={{
         width: '100%',
         height: MAP_HEIGHT,
-        borderRadius: 12,
-        background: '#F2EFE9',
-        border: '0.5px solid #DDD7CC',
+        borderRadius: 'var(--radius-lg)',
+        background: 'var(--surface)',
+        border: '0.5px solid var(--border)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: '#9A9188',
+        color: 'var(--text-faint)',
         fontSize: 11,
         letterSpacing: '0.24em',
         textTransform: 'uppercase',
@@ -59,7 +59,7 @@ export default function PropertyLocationMap({ property }: { property: Property }
           fontSize: 10,
           letterSpacing: '0.14em',
           textTransform: 'uppercase',
-          color: '#9A9188',
+          color: 'var(--text-faint)',
           marginTop: 12,
         }}
       >

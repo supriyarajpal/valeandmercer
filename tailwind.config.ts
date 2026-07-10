@@ -22,6 +22,30 @@ const config: Config = {
         serif: ['Cormorant Garamond', 'Georgia', 'serif'],
         sans: ['DM Sans', 'system-ui', 'sans-serif'],
       },
+      // Mirror the design tokens from globals.css so Tailwind utility
+      // classes (rounded-lg, ease-apple, etc.) resolve to the same values
+      // as the CSS variables — one source of truth for the design system.
+      borderRadius: {
+        sm: 'var(--radius-sm)',
+        md: 'var(--radius-md)',
+        lg: 'var(--radius-lg)',
+        xl: 'var(--radius-xl)',
+        pill: 'var(--radius-pill)',
+      },
+      transitionTimingFunction: {
+        apple: 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'out-soft': 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
+      transitionDuration: {
+        250: '250ms',
+        350: '350ms',
+      },
+      backdropBlur: {
+        glass: 'var(--glass-blur)',
+      },
+      boxShadow: {
+        glass: 'var(--glass-highlight), var(--glass-shadow)',
+      },
     },
   },
   plugins: [],

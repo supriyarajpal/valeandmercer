@@ -18,26 +18,26 @@ const services = [
   },
   {
     title: 'Student Lets',
-    href: '/rent',
+    href: '/let',
     desc: 'Your first home in London is a big deal. Clear communication, no hidden costs, and someone who actually picks up the phone.',
   },
 ]
 
 export default function AboutStrip() {
   return (
-    <section style={{ background: '#F2EFE9', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
+    <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)', position: 'relative', zIndex: 1 }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <Reveal y={28} amount={0.2}>
           <div style={{ marginBottom: 64, maxWidth: 720 }}>
             <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Who We Are</p>
-            <h2 style={{ color: '#4A4036', marginBottom: 24 }}>
+            <h2 style={{ color: 'var(--text)', marginBottom: 24 }}>
               Every home has a story.<br />
               <span style={{ color: '#A0845C', fontStyle: 'italic' }}>We help write the next chapter.</span>
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 2, color: '#4A4036', opacity: 0.78, marginBottom: 14 }}>
+            <p style={{ fontSize: 15, lineHeight: 2, color: 'var(--text)', opacity: 0.78, marginBottom: 14 }}>
               We started Vale and Mercer because London deserved an agency that actually listened.
             </p>
-            <p style={{ fontSize: 15, lineHeight: 2, color: '#4A4036', opacity: 0.78, marginBottom: 28 }}>
+            <p style={{ fontSize: 15, lineHeight: 2, color: 'var(--text)', opacity: 0.78, marginBottom: 28 }}>
               Small enough that nothing falls through the cracks. Experienced enough that nothing needs to.
             </p>
             <Link href="/about" className="link-underline" style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A0845C' }}>
@@ -75,9 +75,9 @@ function ArcCard({ title, href, desc, index }: { title: string; href: string; de
         className="card-lift"
         style={{
           display: 'block',
-          background: '#FFFFFF',
+          background: 'var(--surface-2)',
           padding: '36px 32px',
-          borderRadius: 10,
+          borderRadius: 'var(--radius-lg)',
           border: '0.5px solid rgba(52,48,43,0.06)',
           boxShadow: '0 1px 0 rgba(52,48,43,0.02), 0 18px 36px -22px rgba(52,48,43,0.2)',
           height: '100%',
@@ -92,9 +92,9 @@ function ArcCard({ title, href, desc, index }: { title: string; href: string; de
         }}
       >
         <div style={{ width: 22, height: 1, background: '#A0845C', marginBottom: 20 }} />
-        <h3 style={{ color: '#4A4036', marginBottom: 14, fontSize: 24 }}>{title}</h3>
-        <p style={{ fontSize: 13.5, lineHeight: 1.85, color: '#6B6258', marginBottom: 20 }}>{desc}</p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 16, borderTop: '0.5px solid #DDD7CC' }}>
+        <h3 style={{ color: 'var(--text)', marginBottom: 14, fontSize: 24 }}>{title}</h3>
+        <p style={{ fontSize: 13.5, lineHeight: 1.85, color: 'var(--text-muted)', marginBottom: 20 }}>{desc}</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 16, borderTop: '0.5px solid var(--border)' }}>
           <span style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A0845C' }}>Find out more</span>
           <span data-arrow style={{ color: '#A0845C', fontSize: 13, transition: 'transform 0.4s var(--ease-out-soft)' }} aria-hidden>→</span>
         </div>

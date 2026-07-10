@@ -161,7 +161,7 @@ function PrimaryCTA({ href, label }: { href: string; label: string }) {
         e.currentTarget.style.color = '#F2EFE9'
       }}
     >
-      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: '#F2EFE9', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
+      <span data-fill aria-hidden style={{ position: 'absolute', inset: 0, background: 'var(--surface)', transform: 'translateX(-101%)', transition: 'transform 0.5s var(--ease-out-soft)', zIndex: 0 }} />
       <span style={{ position: 'relative', zIndex: 1, display: 'inline-flex', alignItems: 'center', gap: 12 }}>{label}<span aria-hidden style={{ fontSize: 14 }}>→</span></span>
     </Link>
   )

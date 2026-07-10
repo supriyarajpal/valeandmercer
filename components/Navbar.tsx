@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion, type Variants } from 'framer-motion'
 import { useFirstLoad } from '@/components/MotionProvider'
+import ThemeToggle from '@/components/ThemeToggle'
 
 const links = [
   { label: 'Lettings', href: '/let' },
@@ -30,13 +31,20 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [hideEyebrow, setHideEyebrow] = useState(false)
   const [mobile, setMobile] = useState(true)
+  // Tracks the active colour theme. In dark mode the page background behind
+  // a transparent (un-scrolled) navbar is dark on EVERY route — not just the
+  // darkHeroPages — so the "over cream → dark text" branch below would leave
+  // the wordmark/links invisible. Mirroring the <html data-theme> attribute
+  // here lets those branches switch to light text. Reactive via a
+  // MutationObserver so a ThemeToggle flip repaints the bar immediately.
+  const [isDark, setIsDark] = useState(false)
   const pathname = usePathname()
   const reduce = useReducedMotion()
   const firstLoad = useFirstLoad()
 
   const isDarkHero = pathIsDarkHero(pathname)
   // On individual property pages we swap the site eyebrow ("Est. London")
-  // for an inline "Back to Rentals" link so the eyebrow doubles as the
+  // for an inline "Back to Lettings" link so the eyebrow doubles as the
   // page's back-navigation. Behaviour is scoped strictly to `/property/*`;
   // every other route keeps the marque as-is.
   const isPropertyDetail = pathname.startsWith('/property/')
@@ -69,6 +77,14 @@ export default function Navbar() {
 
   useEffect(() => setMenuOpen(false), [pathname])
 
+  useEffect(() => {
+    const read = () => setIsDark(document.documentElement.dataset.theme === 'dark')
+    read()
+    const obs = new MutationObserver(read)
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => obs.disconnect()
+  }, [])
+
   // Single source of truth: "is the visible backdrop behind the navbar
   // currently dark?" Drives logo/link/hamburger/border colour.
   //
@@ -81,7 +97,7 @@ export default function Navbar() {
   //
   // This replaces the old per-page `darkHeroPages`-after-scroll logic
   // that left the wordmark light on cream sections after scroll.
-  const isOverDark = !scrolled && (menuOpen || isDarkHero)
+  const isOverDark = !scrolled && (menuOpen || isDarkHero || isDark)
 
   // Phase 15: scrolled navbar = dark charcoal translucent glass.
   //   background:                rgba(52,48,43,0.55)
@@ -108,7 +124,10 @@ export default function Navbar() {
   // Phase 7 values did over the raw dark hero photograph). Do NOT
   // collapse this back to a single boolean unless you also unify the
   // values — top-of-page behaviour must remain byte-identical.
-  const navShadow = scrolled ? '0 1px 0 rgba(52,48,43,0.06)' : 'none'
+  // Glass depth: an inner top highlight (light catching the top edge) plus
+  // a soft ambient drop shadow, so the scrolled bar reads as a pane of
+  // frosted glass rather than a flat tint.
+  const navShadow = scrolled ? 'inset 0 1px 0 rgba(242,239,233,0.12), 0 8px 30px -12px rgba(40,35,28,0.5)' : 'none'
 
   const logoColor       = scrolled
     ? 'rgba(242,239,233,0.9)'
@@ -141,11 +160,15 @@ export default function Navbar() {
         transition={{ duration: 0.6, delay: reduce ? 0 : firstLoad ? 0.85 : 0, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-          background: scrolled ? 'rgba(52,48,43,0.55)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
-          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(160%)' : 'none',
+          // Liquid glass on scroll: ink-tinted translucent fill + blur +
+          // saturation boost, a hairline bottom border, and the highlight/
+          // shadow pair from navShadow. Values mirror the --glass-* tokens.
+          background: scrolled ? 'rgba(40,35,28,0.5)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(22px) saturate(180%)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(22px) saturate(180%)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(242,239,233,0.08)' : '1px solid transparent',
           boxShadow: navShadow,
-          transition: 'background 0.5s var(--ease-out-soft), box-shadow 0.5s var(--ease-out-soft), backdrop-filter 0.5s',
+          transition: 'background 0.5s var(--ease-apple), box-shadow 0.5s var(--ease-apple), border-color 0.5s var(--ease-apple), backdrop-filter 0.5s',
         }}
       >
         <div style={{ padding: '18px var(--gutter)' }}>
@@ -177,6 +200,8 @@ export default function Navbar() {
             </motion.div>
 
           {mobile ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
+            <ThemeToggle color={hamburgerColor} />
             <motion.button
               onClick={() => setMenuOpen(v => !v)}
               initial={reduce ? false : { opacity: 0 }}
@@ -207,6 +232,7 @@ export default function Navbar() {
               <span style={{ display: 'block', width: 24, height: 1.5, background: hamburgerColor, transition: 'opacity 0.3s, background 0.4s', opacity: menuOpen ? 0 : 1 }} />
               <span style={{ display: 'block', width: 24, height: 1.5, background: hamburgerColor, transition: 'transform 0.4s, background 0.4s', transform: menuOpen ? 'rotate(-45deg) translate(4px,-5px)' : 'none' }} />
             </motion.button>
+            </div>
           ) : (
             <motion.div variants={container} initial="hidden" animate="show" style={{
               display: 'flex',
@@ -225,8 +251,11 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
               ))}
+              <motion.div variants={item} style={{ display: 'inline-flex' }}>
+                <ThemeToggle color={linkColor} />
+              </motion.div>
               <motion.div variants={item}>
-                <Link href="/valuations" style={{ fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', border: btnBorder, color: linkColor, padding: '9px 16px', transition: 'all 0.5s var(--ease-out-soft)' }}>
+                <Link href="/valuations" className="btn-press" style={{ display: 'inline-flex', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase', border: btnBorder, color: linkColor, padding: '10px 20px', borderRadius: 'var(--radius-pill)', transition: 'color 0.5s var(--ease-apple), border-color 0.5s var(--ease-apple), background 0.3s var(--ease-apple), transform 0.3s var(--ease-apple)' }}>
                   Book Valuation
                 </Link>
               </motion.div>
@@ -265,11 +294,11 @@ export default function Navbar() {
               <div style={{ width: 32, height: 1, background: '#A0845C', flexShrink: 0 }} />
               {isPropertyDetail ? (
                 <Link
-                  href="/rent"
+                  href="/let"
                   className="eyebrow link-underline"
                   style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)', display: 'inline-flex', alignItems: 'center', gap: 6 }}
                 >
-                  <span aria-hidden style={{ fontSize: 12, lineHeight: 1 }}>←</span> Back to Rentals
+                  <span aria-hidden style={{ fontSize: 12, lineHeight: 1 }}>←</span> Back to Lettings
                 </Link>
               ) : (
                 <span className="eyebrow" style={{ color: linkColor, transition: 'color 0.5s var(--ease-out-soft)' }}>Est. London</span>
@@ -288,7 +317,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            style={{ position: 'fixed', inset: 0, zIndex: 99, background: 'rgba(52,48,43,0.97)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
+            style={{ position: 'fixed', inset: 0, zIndex: 99, background: 'rgba(40,35,28,0.72)', backdropFilter: 'blur(28px) saturate(180%)', WebkitBackdropFilter: 'blur(28px) saturate(180%)' }}
           >
             <motion.div
               variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } } }}

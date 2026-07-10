@@ -60,7 +60,7 @@ export default async function PropertyDetailPage(
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home',           item: SITE_URL + '/' },
-      { '@type': 'ListItem', position: 2, name: 'London Rentals', item: SITE_URL + '/rent' },
+      { '@type': 'ListItem', position: 2, name: 'London Lettings', item: SITE_URL + '/let' },
       { '@type': 'ListItem', position: 3, name: property.title,   item: SITE_URL + '/property/' + property.slug },
     ],
   }
@@ -117,7 +117,7 @@ function PropertyBody({ property }: { property: Property }) {
     // the gap under the hero carousel — combined with the carousel's own
     // reduced bottom padding, this lands the hero-to-Overview transition
     // at roughly one normal section gap instead of two.
-    <main style={{ background: '#F2EFE9', padding: '40px var(--gutter) var(--section-y)' }}>
+    <main style={{ background: 'var(--surface)', padding: '40px var(--gutter) var(--section-y)' }}>
       <div
         style={{
           maxWidth: 1240,
@@ -147,7 +147,7 @@ function PropertyBody({ property }: { property: Property }) {
             <SectionBlock eyebrow="Key Features" title="Highlights">
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 12 }}>
                 {property.keyFeatures.map(feature => (
-                  <li key={feature} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', fontSize: 15, color: '#4A4036', lineHeight: 1.75 }}>
+                  <li key={feature} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>
                     <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#A0845C', marginTop: 9, flexShrink: 0 }} />
                     <span>{feature}</span>
                   </li>
@@ -212,7 +212,15 @@ function PropertySidebar({ property }: { property: Property }) {
     // vs. adding internal overflow scroll.
     <aside style={{ position: 'sticky', top: 140 }}>
       <Reveal y={20} amount={0.1}>
-        <div style={{ background: '#34302B', color: '#F2EFE9', padding: '36px 32px 32px', borderRadius: 10, boxShadow: '0 24px 60px -30px rgba(52,48,43,0.35)' }}>
+        <div style={{ position: 'relative' }}>
+          {/* Backdrop scoped ONLY to this card: a small blurred gold/bronze/
+              ink blob clipped to the card's own rounded box, giving the
+              panel's backdrop-filter real texture to frost. It cannot leak
+              onto the page — overflow:hidden + inset:0 keep it card-sized. */}
+          <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
+            <div style={{ position: 'absolute', inset: '-15%', filter: 'blur(22px)', background: 'radial-gradient(45% 35% at 24% 18%, rgba(160,132,92,0.75), transparent 68%), radial-gradient(52% 42% at 88% 84%, rgba(122,96,62,0.65), transparent 70%), radial-gradient(50% 40% at 60% 52%, rgba(40,35,28,0.55), transparent 72%)' }} />
+          </div>
+          <div className="glass-strong" style={{ position: 'relative', zIndex: 1, color: '#F2EFE9', padding: '36px 32px 32px', borderRadius: 'var(--radius-lg)' }}>
           <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 12 }}>Enquire</p>
           <div style={{ fontFamily: 'var(--font-serif)', fontSize: 22, fontWeight: 300, marginBottom: 6, letterSpacing: '-0.01em' }}>
             Vale and Mercer
@@ -240,6 +248,7 @@ function PropertySidebar({ property }: { property: Property }) {
           <div style={{ marginTop: 28, paddingTop: 22, borderTop: '0.5px solid rgba(242,239,233,0.14)', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.5)' }}>
             Property Ref · {property.ref}
           </div>
+          </div>
         </div>
       </Reveal>
 
@@ -265,12 +274,12 @@ function SectionBlock({ eyebrow, title, children, first }: { eyebrow: string; ti
       <section
         style={{
           marginBottom: 40,
-          borderTop: first ? 'none' : '0.5px solid #DDD7CC',
+          borderTop: first ? 'none' : '0.5px solid var(--border)',
           paddingTop: first ? 0 : 42,
         }}
       >
         <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>{eyebrow}</p>
-        <h2 style={{ color: '#4A4036', fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.2, marginBottom: 24, maxWidth: 720 }}>{title}</h2>
+        <h2 style={{ color: 'var(--text)', fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.2, marginBottom: 24, maxWidth: 720 }}>{title}</h2>
         {children}
       </section>
     </Reveal>
@@ -278,7 +287,7 @@ function SectionBlock({ eyebrow, title, children, first }: { eyebrow: string; ti
 }
 
 function BodyPara({ children }: { children: React.ReactNode }) {
-  return <p style={{ fontSize: 15.5, lineHeight: 1.95, color: '#4A4036', opacity: 0.85, maxWidth: 780 }}>{children}</p>
+  return <p style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85, maxWidth: 780 }}>{children}</p>
 }
 
 function TagPills({ tags }: { tags: string[] }) {
@@ -300,7 +309,7 @@ function TagPills({ tags }: { tags: string[] }) {
             style={{
               fontSize: 11,
               letterSpacing: '0.06em',
-              color: '#4A4036',
+              color: 'var(--text)',
               padding: '7px 14px',
               borderRadius: 999,
               background: 'rgba(221,215,204,0.5)',
@@ -326,12 +335,12 @@ function DataRows({ rows }: { rows: Array<{ label: string; value: string }> }) {
             gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
             gap: 20,
             padding: '16px 0',
-            borderTop: i === 0 ? 'none' : '0.5px solid #DDD7CC',
+            borderTop: i === 0 ? 'none' : '0.5px solid var(--border)',
             fontSize: 14,
           }}
         >
           <span style={{ color: '#7A7268', letterSpacing: '0.02em' }}>{row.label}</span>
-          <span style={{ color: '#4A4036' }}>{row.value}</span>
+          <span style={{ color: 'var(--text)' }}>{row.value}</span>
         </div>
       ))}
     </div>
@@ -353,13 +362,13 @@ function NearbyList({ points }: { points: NearbyPoint[] }) {
 function NearbyGroup({ title, points }: { title: string; points: NearbyPoint[] }) {
   return (
     <div>
-      <p className="eyebrow" style={{ color: '#9A9188', marginBottom: 14 }}>{title}</p>
+      <p className="eyebrow" style={{ color: 'var(--text-faint)', marginBottom: 14 }}>{title}</p>
       <Stagger as="ul" stagger={0.06} style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 10 }}>
         {points.map(point => (
           <StaggerItem key={point.name + point.distance} as="li">
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 20, padding: '10px 0', borderBottom: '0.5px solid #DDD7CC', fontSize: 13 }}>
-              <span style={{ color: '#4A4036' }}>{point.name}</span>
-              <span style={{ color: '#9A9188', whiteSpace: 'nowrap' }}>{point.distance}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 20, padding: '10px 0', borderBottom: '0.5px solid var(--border)', fontSize: 13 }}>
+              <span style={{ color: 'var(--text)' }}>{point.name}</span>
+              <span style={{ color: 'var(--text-faint)', whiteSpace: 'nowrap' }}>{point.distance}</span>
             </div>
           </StaggerItem>
         ))}

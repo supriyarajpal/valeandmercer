@@ -10,9 +10,9 @@
 //   The map used to intermittently render with blank tiles. Root cause
 //   was that the init `useEffect` depended on `properties` and
 //   `onMarkerFocus`. Both are reference-unstable on the parents:
-//     * app/rent/page.tsx computes `getLiveProperties().filter(...)`
-//       during render without useMemo, so a fresh array reference is
-//       produced every render.
+//     * components/LettingsListings.tsx computes
+//       `getLiveProperties().filter(...)` during render without useMemo,
+//       so a fresh array reference is produced every render.
 //     * components/PropertyLocationMap.tsx passes `properties={[property]}`,
 //       a fresh literal every render.
 //     * Callers pass an inline `onMarkerFocus` when the parent's own
@@ -35,8 +35,9 @@
 //   a real failure mode we've seen.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-// NOTE: Leaflet's stylesheet must ALSO be imported at the page level
-// (see app/rent/page.tsx and components/PropertyLocationMap.tsx).
+// NOTE: Leaflet's stylesheet is also imported globally in app/globals.css
+// and at the page level on routes that host a map (app/let/page.tsx; see
+// also components/PropertyLocationMap.tsx).
 // Importing it here alone is not enough when this component is loaded
 // via `next/dynamic({ ssr: false })` — Next bundles the CSS but does
 // not always link it into the parent page's initial CSS bundle, and
@@ -58,7 +59,7 @@ type Props = {
   // If set, the map opens centred on the single property at exactly
   // this zoom level instead of running fitBounds. Only meaningful when
   // `properties.length === 1`; ignored otherwise so the multi-marker
-  // /rent view keeps its auto-fit behaviour.
+  // lettings view keeps its auto-fit behaviour.
   initialZoom?: number
 }
 
@@ -121,7 +122,7 @@ function buildPopupHtml(p: Property): string {
         <span>${p.baths} bath${p.baths === 1 ? '' : 's'}</span>
       </div>
       <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:300;color:#4A4036;margin-bottom:14px">${p.rent}</div>
-      <a href="/property/${p.slug}" data-vm-view-property="${p.slug}" style="display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#A0845C;text-decoration:none;padding-top:12px;border-top:0.5px solid #DDD7CC">
+      <a href="/property/${p.slug}" data-vm-view-property="${p.slug}" style="display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#A0845C;text-decoration:none;padding-top:12px;border-top:0.5px solid var(--border)">
         View Property <span aria-hidden style="font-size:12px">→</span>
       </a>
     </div>
@@ -428,7 +429,7 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
         position: 'fixed',
         top: 0, right: 0, bottom: 0, left: 0,
         zIndex: 500,
-        background: '#F2EFE9',
+        background: 'var(--surface)',
         borderRadius: 0,
         border: 'none',
         overflow: 'hidden',
@@ -437,10 +438,10 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
         position: 'relative',
         width: '100%',
         height: height ?? 'clamp(360px, 55vh, 560px)',
-        borderRadius: 12,
+        borderRadius: 'var(--radius-lg)',
         overflow: 'hidden',
-        background: '#F2EFE9',
-        border: '0.5px solid #DDD7CC',
+        background: 'var(--surface)',
+        border: '0.5px solid var(--border)',
         zIndex: 1,
       }
 
@@ -464,13 +465,13 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
             position: 'absolute',
             inset: 0,
             zIndex: 15,
-            background: '#F2EFE9',
+            background: 'var(--surface)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             gap: 14,
-            color: '#9A9188',
+            color: 'var(--text-faint)',
             fontSize: 10,
             letterSpacing: '0.24em',
             textTransform: 'uppercase',
@@ -584,7 +585,7 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
         .vm-popup .leaflet-popup-content-wrapper {
           border-radius: 6px;
           box-shadow: 0 20px 40px -20px rgba(20,17,14,0.35);
-          border: 0.5px solid #DDD7CC;
+          border: 0.5px solid var(--border);
         }
         .vm-popup .leaflet-popup-content {
           margin: 16px 18px 14px;

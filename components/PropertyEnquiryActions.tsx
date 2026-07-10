@@ -15,7 +15,7 @@ type Props = {
   rent: string
 }
 
-const AGENT_EMAIL   = 'raghav@valeandmercer.co.uk'
+const AGENT_EMAIL   = 'enquire@valeandmercer.co.uk'
 const AGENT_TEL_URL = 'tel:+447517696926'                    // no spaces per RFC 3966
 const AGENT_TEL_LBL = '+44 7517 696926'
 const AGENT_WA      = '447517696926'                          // wa.me uses country code without '+'
@@ -131,18 +131,22 @@ function EnquiryDisclosure({
     fontSize: 11,
     letterSpacing: '0.18em',
     textTransform: 'uppercase' as const,
-    padding: '15px 26px',
+    padding: '15px 24px',
+    borderRadius: 'var(--radius-pill)',
     cursor: 'pointer',
-    transition: 'background 0.4s var(--ease-out-soft), color 0.4s var(--ease-out-soft), border-color 0.4s var(--ease-out-soft)',
+    transition: 'background var(--dur) var(--ease-apple), color var(--dur) var(--ease-apple), border-color var(--dur) var(--ease-apple), transform var(--dur) var(--ease-apple)',
   }
+  // gold = primary; the ghost variant is a subtle glass tint that reads as
+  // frosted over the glass Enquire panel behind it.
   const btnVariant = variant === 'gold'
     ? { background: '#A0845C', color: '#F2EFE9', border: '1px solid #A0845C' }
-    : { background: 'transparent', color: 'rgba(242,239,233,0.9)', border: '1px solid rgba(242,239,233,0.4)' }
+    : { background: 'rgba(242,239,233,0.06)', color: 'rgba(242,239,233,0.9)', border: '1px solid rgba(242,239,233,0.28)' }
 
   return (
     <div>
       <button
         type="button"
+        className="btn-press"
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={onToggle}
@@ -174,12 +178,13 @@ function EnquiryDisclosure({
             style={{ overflow: 'hidden' }}
           >
             <ul
+              className="glass"
               style={{
                 listStyle: 'none',
                 margin: '8px 0 0',
                 padding: 0,
-                border: '0.5px solid rgba(242,239,233,0.14)',
-                background: 'rgba(242,239,233,0.03)',
+                borderRadius: 'var(--radius-md)',
+                overflow: 'hidden',
               }}
             >
               <EnquiryItem
