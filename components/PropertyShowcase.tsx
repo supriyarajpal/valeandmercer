@@ -266,14 +266,18 @@ function ProgressDots({ count, scrollYProgress }: { count: number; scrollYProgre
 }
 
 function Dot({ index, count, scrollYProgress }: { index: number; count: number; scrollYProgress: MotionValue<number> }) {
-  const widthBp = focusBreakpoints(index, count, 22, 7)
-  const opacityBp = focusBreakpoints(index, count, 1, 0.45)
+  const widthBp = focusBreakpoints(index, count, 22, 8)
+  // Higher inactive-opacity floor (0.75, was 0.45) so the dots read clearly
+  // against the light page background — at 0.45 the inactive dots all but
+  // vanished on cream. The soft dark drop-shadow below adds definition on
+  // light and is invisible on the dark theme, so it's safe in both.
+  const opacityBp = focusBreakpoints(index, count, 1, 0.75)
   const width = useTransform(scrollYProgress, widthBp.points, widthBp.values)
   const opacity = useTransform(scrollYProgress, opacityBp.points, opacityBp.values)
 
   return (
     <motion.span
-      style={{ width, height: 7, borderRadius: 999, background: '#A0845C', opacity, display: 'inline-block' }}
+      style={{ width, height: 8, borderRadius: 999, background: '#A0845C', opacity, display: 'inline-block', boxShadow: '0 1px 4px rgba(0,0,0,0.35)' }}
     />
   )
 }
@@ -391,20 +395,20 @@ function ShowcaseCardInner({ item }: { item: Listing }) {
         loading="lazy"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
       />
-      {/* Legibility scrim — a double vignette: strong at the TOP (behind the
-          badge/title/description) and strong at the BOTTOM (behind the
-          meta/CTA), with a light band left across the middle so the
-          photograph still reads. Deliberately heavier than a single flat
-          tint so text stays readable over the brightest images in the set
-          (e.g. Marsh Wall's pale wood-tone kitchen), not just dark ones.
-          Uses the darker ink (40,35,28) rather than the mid charcoal for
-          more contrast per unit of opacity. */}
+      {/* Legibility scrim — a full-image PURE-BLACK gradient (not the warm
+          ink used before, which barely darkened warm/wood-tone photos). It
+          covers the ENTIRE image, heaviest at the top (title/description)
+          and bottom (meta/CTA) but never lighter than ~0.30 anywhere, so
+          near-white text keeps real contrast wherever it lands — including
+          the worst case, Marsh Wall's warm wood shelving behind the title.
+          Black drops luminance far more per unit of opacity than a tinted
+          scrim, which is what actually makes the text pop here. */}
       <span
         aria-hidden
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(180deg, rgba(40,35,28,0.88) 0%, rgba(40,35,28,0.60) 20%, rgba(40,35,28,0.22) 42%, rgba(40,35,28,0.24) 56%, rgba(40,35,28,0.66) 80%, rgba(40,35,28,0.92) 100%)',
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.58) 26%, rgba(0,0,0,0.38) 48%, rgba(0,0,0,0.42) 70%, rgba(0,0,0,0.72) 100%)',
         }}
       />
       <span
@@ -426,21 +430,21 @@ function ShowcaseCardInner({ item }: { item: Listing }) {
           <span style={{ display: 'inline-block', fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '6px 14px', borderRadius: 'var(--radius-pill)', marginBottom: 24 }}>
             {item.label}
           </span>
-          <h3 style={{ color: '#F2EFE9', marginBottom: 14, fontSize: 'clamp(20px, 2.4vw, 26px)', lineHeight: 1.2, textShadow: '0 2px 8px rgba(0,0,0,0.55)' }}>
+          <h3 style={{ color: '#F2EFE9', marginBottom: 14, fontSize: 'clamp(20px, 2.4vw, 26px)', lineHeight: 1.2, textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.9)' }}>
             {item.area}
           </h3>
-          <p style={{ fontSize: 12.5, lineHeight: 1.8, color: 'rgba(242,239,233,0.86)', maxWidth: 340, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+          <p style={{ fontSize: 12.5, lineHeight: 1.8, color: 'rgba(242,239,233,0.94)', maxWidth: 340, textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.9)' }}>
             {item.desc}
           </p>
         </div>
         <div>
           {item.meta && (
-            <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.78)', marginBottom: 16, textShadow: '0 2px 8px rgba(0,0,0,0.55)' }}>
+            <div style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.9)', marginBottom: 16, textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.9)' }}>
               {item.meta}
             </div>
           )}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 24, borderTop: '0.5px solid rgba(242,239,233,0.18)' }}>
-            <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#A0845C', textShadow: '0 2px 8px rgba(0,0,0,0.55)' }}>{item.ctaLabel ?? 'Register Interest'}</span>
+            <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#A0845C', textShadow: '0 2px 12px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.9)' }}>{item.ctaLabel ?? 'Register Interest'}</span>
             <span data-arrow style={{ color: '#A0845C', fontSize: 14, transition: 'transform 0.4s var(--ease-out-soft)' }} aria-hidden>→</span>
           </div>
         </div>
@@ -489,8 +493,8 @@ function ViewAllCardInner({ item }: { item: Listing }) {
         if (arrow) arrow.style.transform = 'translateX(0)'
       }}
     >
-      {/* Decorative gold corner glow — echoes StatsStrip so the panel reads
-          on-brand rather than as a flat rectangle. */}
+      {/* Decorative gold corner glow so the panel reads on-brand rather
+          than as a flat rectangle. */}
       <span
         aria-hidden
         style={{

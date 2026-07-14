@@ -186,7 +186,7 @@ export default function Navbar() {
           WebkitBackdropFilter: scrolled ? 'blur(22px) saturate(180%)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(242,239,233,0.08)' : '1px solid transparent',
           boxShadow: navShadow,
-          transition: 'background 0.5s var(--ease-apple), box-shadow 0.5s var(--ease-apple), border-color 0.5s var(--ease-apple), backdrop-filter 0.5s',
+          transition: 'background 0.6s var(--ease-apple), box-shadow 0.6s var(--ease-apple), border-color 0.6s var(--ease-apple), backdrop-filter 0.6s var(--ease-apple)',
         }}
       >
         <div style={{ padding: '18px var(--gutter)' }}>

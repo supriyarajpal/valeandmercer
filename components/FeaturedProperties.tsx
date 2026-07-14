@@ -22,8 +22,7 @@ export type Listing = {
 // shows the first few live, photo-backed `featured` records and then hands
 // off to /let, where every live listing is browsable. Kept to 3 so the
 // pinned scroll stays short and each card gets real focus time; the full
-// count lives on /let (and the StatsStrip "Live Listings" figure, which
-// still reflects the true total from lib/properties.ts).
+// count lives on /let, which lists every live record from lib/properties.ts.
 const HOMEPAGE_FEATURED_COUNT = 3
 
 // Live rentals with real photography flagged featured:true in lib/properties.

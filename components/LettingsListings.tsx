@@ -55,17 +55,23 @@ function neighbourhoodOf(area: string): string {
 export default function LettingsListings() {
   const availableNow = getLiveProperties().filter(p => p.listingType === 'To Let')
 
-  // Group by neighbourhood; sort groups alphabetically for a stable read.
-  const groups = useMemo(() => {
+  // Non-Canary-Wharf listings grouped by neighbourhood (sorted), each group
+  // rendered as its own small heading + card. The GROUPS are laid out side by
+  // side as grid columns (see render below), so single-listing areas fill the
+  // row instead of stacking vertically with dead space beside them. Canary
+  // Wharf is split out into its own separate section further down.
+  const { otherGroups, canaryWharf } = useMemo(() => {
     const map = new Map<string, Property[]>()
+    const canaryWharf: Property[] = []
     for (const p of availableNow) {
-      const key = neighbourhoodOf(p.area)
-      const bucket = map.get(key)
+      const n = neighbourhoodOf(p.area)
+      if (n === 'Canary Wharf') { canaryWharf.push(p); continue }
+      const bucket = map.get(n)
       if (bucket) bucket.push(p)
-      else map.set(key, [p])
+      else map.set(n, [p])
     }
-    return [...map.entries()]
-      .sort((a, b) => a[0].localeCompare(b[0]))
+    const otherGroups = [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]))
+    return { otherGroups, canaryWharf }
   }, [availableNow])
 
   const handleMarkerFocus = useCallback((slug: string) => {
@@ -115,16 +121,52 @@ export default function LettingsListings() {
               </div>
             </Reveal>
 
-            {groups.map(([area, list], groupIdx) => (
-              <div key={area} style={{ marginBottom: groupIdx === groups.length - 1 ? 0 : 56 }}>
+            {/* Non-Canary-Wharf neighbourhoods, each a small heading + count
+                above its card(s), laid out SIDE BY SIDE as grid columns
+                (auto-fill minmax(300px)) — so single-listing areas fill the
+                row rather than stacking vertically with dead space beside
+                them. This is the single, canonical render of these listings;
+                there is no second per-neighbourhood block below. */}
+            {otherGroups.length > 0 && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '44px 24px', alignItems: 'start', marginBottom: canaryWharf.length > 0 ? 72 : 0 }}>
+                {otherGroups.map(([area, list]) => (
+                  <div key={area}>
+                    <Reveal y={16} amount={0.15}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+                        <div style={{ width: 18, height: 1, background: '#A0845C', flexShrink: 0 }} />
+                        <h3 style={{ fontSize: 17, color: 'var(--text)', letterSpacing: '-0.01em' }}>
+                          {area}
+                        </h3>
+                        <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
+                          {list.length} {list.length === 1 ? 'listing' : 'listings'}
+                        </span>
+                      </div>
+                    </Reveal>
+                    <Stagger as="div" stagger={0.08} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                      {list.map(prop => (
+                        <StaggerItem key={prop.slug} as="div">
+                          <PropertyCard property={prop} />
+                        </StaggerItem>
+                      ))}
+                    </Stagger>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Canary Wharf kept as its own cluster (it holds several
+                listings, so it fills a row on its own) rather than mixed
+                into the combined grid above. */}
+            {canaryWharf.length > 0 && (
+              <div>
                 <Reveal y={16} amount={0.15}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 22 }}>
                     <div style={{ width: 22, height: 1, background: '#A0845C', flexShrink: 0 }} />
                     <h3 style={{ fontSize: 20, color: 'var(--text)', letterSpacing: '-0.01em' }}>
-                      {area}
+                      Canary Wharf
                     </h3>
                     <span style={{ fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
-                      {list.length} {list.length === 1 ? 'listing' : 'listings'}
+                      {canaryWharf.length} {canaryWharf.length === 1 ? 'listing' : 'listings'}
                     </span>
                   </div>
                 </Reveal>
@@ -132,20 +174,16 @@ export default function LettingsListings() {
                 <Stagger
                   as="div"
                   stagger={0.08}
-                  // auto-fill (not auto-fit): a neighbourhood group with a
-                  // single listing keeps the standard card width instead of
-                  // stretching one card across the whole row. Empty tracks are
-                  // preserved so every card matches the multi-card groups.
                   style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24, alignItems: 'stretch' }}
                 >
-                  {list.map(prop => (
+                  {canaryWharf.map(prop => (
                     <StaggerItem key={prop.slug} as="div" style={{ height: '100%' }}>
                       <PropertyCard property={prop} />
                     </StaggerItem>
                   ))}
                 </Stagger>
               </div>
-            ))}
+            )}
           </section>
         )}
 
@@ -274,7 +312,7 @@ function PropertyCard({ property }: { property: Property }) {
             loading="lazy"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 1, transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
           />
-          {/* Subtle bottom fade only — keeps the pill/label legible without
+          {/* Subtle bottom fade only — keeps the badge legible without
               dimming the photograph itself. */}
           <span aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(52,48,43,0) 55%, rgba(52,48,43,0.55) 100%)' }} />
           <span style={{ position: 'absolute', top: 16, left: 16, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
@@ -283,6 +321,9 @@ function PropertyCard({ property }: { property: Property }) {
         </div>
 
         <div style={{ padding: '26px 28px 28px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
+          {/* 1. locality (gold small-caps)  2. property name (serif). Below
+              these: specs, divider, price + arrow, and price-per-week /
+              availability. Single shared layout for EVERY card on the page. */}
           <div>
             <p style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,132,92,0.85)', marginBottom: 8 }}>
               {property.area}
