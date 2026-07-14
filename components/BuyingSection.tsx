@@ -131,6 +131,7 @@ function ArrowCTA({ href, label }: { href: string; label: string }) {
         color: '#F2EFE9',
         background: '#34302B',
         padding: '15px 26px',
+        borderRadius: 'var(--radius-pill)',
         overflow: 'hidden',
         transition: 'color 0.4s var(--ease-out-soft)',
       }}

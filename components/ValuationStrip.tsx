@@ -147,6 +147,7 @@ function PrimaryCTA({ href, label }: { href: string; label: string }) {
         color: '#F2EFE9',
         background: '#A0845C',
         padding: '18px 32px',
+        borderRadius: 'var(--radius-pill)',
         overflow: 'hidden',
         transition: 'color 0.4s var(--ease-out-soft)',
       }}

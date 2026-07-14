@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import TickerStrip from '@/components/TickerStrip'
 import FeaturedProperties from '@/components/FeaturedProperties'
+import StatsStrip from '@/components/StatsStrip'
 import BuyingSection from '@/components/BuyingSection'
 import ValuationStrip from '@/components/ValuationStrip'
 import AboutStrip from '@/components/AboutStrip'
@@ -39,6 +40,7 @@ export default function Home() {
       <Hero />
       <TickerStrip />
       <FeaturedProperties />
+      <StatsStrip />
       <BuyingSection />
       <ValuationStrip />
       <AboutStrip />

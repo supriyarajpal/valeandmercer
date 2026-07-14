@@ -228,23 +228,13 @@ export default function LettingsListings() {
 
 function PropertyCard({ property }: { property: Property }) {
   const bedLabel = property.beds === 0 ? 'Studio' : `${property.beds} bed${property.beds === 1 ? '' : 's'}`
+  const href = `/property/${property.slug}`
   return (
     <Link
       id={`property-${property.slug}`}
-      href={`/property/${property.slug}`}
+      href={href}
       className="card-lift"
-      style={{
-        textDecoration: 'none',
-        display: 'flex',
-        flexDirection: 'column',
-        background: '#34302B',
-        height: '100%',
-        minHeight: 400,
-        position: 'relative',
-        overflow: 'hidden',
-        borderRadius: 'var(--radius-lg)',
-        boxShadow: '0 20px 40px -20px rgba(52,48,43,0.18)',
-      }}
+      style={{ textDecoration: 'none', position: 'relative', display: 'block', height: '100%', minHeight: 400 }}
       onMouseEnter={e => {
         const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
         const img = e.currentTarget.querySelector<HTMLImageElement>('img')
@@ -258,51 +248,71 @@ function PropertyCard({ property }: { property: Property }) {
         if (img) img.style.transform = 'scale(1)'
       }}
     >
-      <div style={{ position: 'relative', overflow: 'hidden', height: 200, background: '#26221C' }}>
-        <img
-          src={property.image}
-          alt={`${property.title}, ${property.area}`}
-          loading="lazy"
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 1, transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
-        />
-        {/* Subtle bottom fade only — keeps the pill/label legible without
-            dimming the photograph itself. */}
-        <span aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(52,48,43,0) 55%, rgba(52,48,43,0.55) 100%)' }} />
-        <span style={{ position: 'absolute', top: 16, left: 16, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
-          {property.listingType}
-        </span>
+      {/* Same glassmorphism backdrop as the property page's Enquire
+          sidebar (app/property/[slug]/page.tsx PropertySidebar): a
+          blurred gold/bronze/ink gradient blob, clipped to the card's
+          own rounded box so it can't bleed onto neighbouring cards. */}
+      <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
+        <div style={{ position: 'absolute', inset: '-15%', filter: 'blur(22px)', background: 'radial-gradient(45% 35% at 24% 18%, rgba(160,132,92,0.75), transparent 68%), radial-gradient(52% 42% at 88% 84%, rgba(122,96,62,0.65), transparent 70%), radial-gradient(50% 40% at 60% 52%, rgba(40,35,28,0.55), transparent 72%)' }} />
       </div>
 
-      <div style={{ padding: '26px 28px 28px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-        <div>
-          <p style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,132,92,0.85)', marginBottom: 8 }}>
-            {property.area}
-          </p>
-          <h3 style={{ fontSize: 20, color: '#F2EFE9', lineHeight: 1.2 }}>
-            {property.title}
-          </h3>
+      {/* `.glass-strong`'s default background (--glass-bg-strong, 0.56
+          opacity) and hairline border read fine on the Enquire sidebar,
+          which sits over a fixed cream page background — but here the
+          panel sits over its OWN blob, whose brighter gold patch can
+          land right behind the area-label text and wash it out, and the
+          class's border read as an unwanted outline against the busy
+          backdrop. Override both: a darker, more opaque tint keeps text
+          legible regardless of where the blob's bright spot falls, and
+          dropping the border/inset-highlight removes the outline while
+          keeping the soft drop shadow for depth. */}
+      <div className="glass-strong" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', borderRadius: 'var(--radius-lg)', background: 'rgba(30,26,20,0.82)', border: 'none', boxShadow: 'var(--glass-shadow)' }}>
+        <div style={{ position: 'relative', overflow: 'hidden', height: 200, background: '#26221C' }}>
+          <img
+            src={property.image}
+            alt={`${property.title}, ${property.area}`}
+            loading="lazy"
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 1, transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
+          />
+          {/* Subtle bottom fade only — keeps the pill/label legible without
+              dimming the photograph itself. */}
+          <span aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(52,48,43,0) 55%, rgba(52,48,43,0.55) 100%)' }} />
+          <span style={{ position: 'absolute', top: 16, left: 16, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
+            {property.listingType}
+          </span>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.55)' }}>
-          <span>{bedLabel}</span>
-          <span style={{ opacity: 0.35 }}>·</span>
-          <span>{property.baths} bath{property.baths === 1 ? '' : 's'}</span>
-          {property.sqft != null && (<>
-            <span style={{ opacity: 0.35 }}>·</span>
-            <span>{property.sqft} sq. ft.</span>
-          </>)}
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginTop: 'auto', paddingTop: 20, borderTop: '0.5px solid rgba(242,239,233,0.15)' }}>
+        <div style={{ padding: '26px 28px 28px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
           <div>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 23, fontWeight: 300, color: '#F2EFE9', letterSpacing: '-0.01em' }}>
-              {property.rent}
-            </div>
-            <div style={{ fontSize: 11, color: 'rgba(242,239,233,0.5)' }}>
-              {property.rentPW} · Available {property.available}
-            </div>
+            <p style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,132,92,0.85)', marginBottom: 8 }}>
+              {property.area}
+            </p>
+            <h3 style={{ fontSize: 20, color: '#F2EFE9', lineHeight: 1.2 }}>
+              {property.title}
+            </h3>
           </div>
-          <span data-arrow aria-hidden style={{ color: '#A0845C', fontSize: 14, transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.55)' }}>
+            <span>{bedLabel}</span>
+            <span style={{ opacity: 0.35 }}>·</span>
+            <span>{property.baths} bath{property.baths === 1 ? '' : 's'}</span>
+            {property.sqft != null && (<>
+              <span style={{ opacity: 0.35 }}>·</span>
+              <span>{property.sqft} sq. ft.</span>
+            </>)}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginTop: 'auto', paddingTop: 20, borderTop: '0.5px solid rgba(242,239,233,0.15)' }}>
+            <div>
+              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 23, fontWeight: 300, color: '#F2EFE9', letterSpacing: '-0.01em' }}>
+                {property.rent}
+              </div>
+              <div style={{ fontSize: 11, color: 'rgba(242,239,233,0.5)' }}>
+                {property.rentPW} · Available {property.available}
+              </div>
+            </div>
+            <span data-arrow aria-hidden style={{ color: '#A0845C', fontSize: 14, transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>
+          </div>
         </div>
       </div>
     </Link>

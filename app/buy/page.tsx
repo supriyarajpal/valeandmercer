@@ -47,7 +47,7 @@ export default function BuyPage() {
                   }}
                 >
                   <div aria-hidden style={{ position: 'absolute', inset: '-60px', background: 'radial-gradient(closest-side, rgba(160,132,92,0.9) 0%, rgba(122,96,62,0.6) 35%, rgba(74,55,32,0.25) 65%, rgba(52,48,43,0) 100%)', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none' }} />
-                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(52,48,43,0.88)', boxShadow: '0 30px 80px -10px rgba(122,96,62,0.6), 0 0 0 1px rgba(160,132,92,0.2) inset', zIndex: 1, borderRadius: 4 }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'rgba(52,48,43,0.88)', boxShadow: '0 30px 80px -10px rgba(122,96,62,0.6), 0 0 0 1px rgba(160,132,92,0.2) inset', zIndex: 1, borderRadius: 'var(--radius-lg)' }} />
                   <div style={{ position: 'relative', zIndex: 2, padding: '36px 30px', minHeight: 220, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                     <div>
                       <span style={{ display: 'inline-block', fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)', marginBottom: 18 }}>{item.type}</span>

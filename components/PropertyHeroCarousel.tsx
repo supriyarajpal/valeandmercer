@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import type { GalleryPhoto } from '@/lib/properties'
 
 // Shared drop-shadow — every text element in the hero needs this so it
 // stays legible across bright/dark photographs. Mirrors the pattern used
@@ -11,22 +12,25 @@ const HERO_TEXT_SHADOW = '0 2px 18px rgba(20,17,14,0.75), 0 1px 3px rgba(20,17,1
 // Filenames that look like floor plans are pushed to the last slide so
 // the carousel reads photos-then-plan by default. Semantic per-room
 // ordering still needs manual curation of the gallery array in
-// lib/properties.ts — this is the last-mile fallback.
+// lib/properties.ts — this is the last-mile fallback. A photo already
+// labelled "Floor Plan" (lib/properties.ts) is just as reliable a signal
+// as the filename match, so either one qualifies.
 const FLOOR_PLAN_RE = /floor[\s_-]?plan|floorplan|\/plan[\s_.-]|-plan\.|_plan\./i
 
-function orderForCarousel(images: string[]): string[] {
-  const nonPlans: string[] = []
-  const plans:    string[] = []
-  for (const src of images) {
-    if (FLOOR_PLAN_RE.test(src)) plans.push(src)
-    else nonPlans.push(src)
+function orderForCarousel(images: GalleryPhoto[]): GalleryPhoto[] {
+  const nonPlans: GalleryPhoto[] = []
+  const plans:    GalleryPhoto[] = []
+  for (const img of images) {
+    if (img.label === 'Floor Plan' || FLOOR_PLAN_RE.test(img.src)) plans.push(img)
+    else nonPlans.push(img)
   }
   return [...nonPlans, ...plans]
 }
 
 export interface PropertyHeroCarouselProps {
   heroImage: string
-  gallery: string[]
+  heroLabel?: string
+  gallery: GalleryPhoto[]
   usingPlaceholder: boolean
   title: string
   area: string
@@ -43,7 +47,7 @@ export interface PropertyHeroCarouselProps {
 
 export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
   const {
-    heroImage, gallery, usingPlaceholder,
+    heroImage, heroLabel, gallery, usingPlaceholder,
     title, area, propertyRef, listingType, rent, rentPW,
     beds, baths, sqft, floor, available,
   } = props
@@ -51,17 +55,25 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
   const reduce = useReducedMotion()
 
   const images = useMemo(
-    () => orderForCarousel([heroImage, ...(gallery ?? [])]),
-    [heroImage, gallery],
+    () => orderForCarousel([{ src: heroImage, label: heroLabel }, ...(gallery ?? [])]),
+    [heroImage, heroLabel, gallery],
   )
   const multi = images.length > 1
 
   const [idx, setIdx] = useState(0)
-  // Full hero copy shows exactly when the first slide is on screen —
-  // whether that's the initial load OR the user navigated back to it.
-  // Two-way toggle: `idx > 0` collapses to the minimised bottom-left
-  // label, `idx === 0` restores the full title/price/details stack.
-  const showFullText = idx === 0
+  // Gallery starts closed: the arriving visitor sees the full hero copy
+  // (title/price/details) over a dimmed first photo, with a "View
+  // Images" button and no carousel controls — nothing to browse yet.
+  // Clicking the button opens the gallery: `idx` is untouched (still 0,
+  // the same first photo already on screen — never skips to the second),
+  // the copy collapses to the minimised bottom-left label, the dim scrim
+  // lifts, and arrows/dots/keyboard nav become active. This is
+  // deliberately decoupled from `idx` — collapsing on "any idx > 0" (the
+  // old behaviour) would make the button's own click-driven state
+  // indistinguishable from an in-gallery prev/next.
+  const [galleryOpen, setGalleryOpen] = useState(false)
+  const showFullText = !galleryOpen
+  const openGallery = useCallback(() => setGalleryOpen(true), [])
 
   const go = useCallback((i: number) => {
     setIdx(((i % images.length) + images.length) % images.length)
@@ -69,19 +81,21 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
   const prev = useCallback(() => go(idx - 1), [go, idx])
   const next = useCallback(() => go(idx + 1), [go, idx])
 
-  // Keyboard nav — arrow keys move between slides while the hero is in
-  // view. No listener when the gallery has only one image.
+  // Keyboard nav — arrow keys move between slides once the gallery is
+  // open. No listener when the gallery has only one image or hasn't
+  // been opened yet (mirrors the arrows/dots being hidden pre-open).
   useEffect(() => {
-    if (!multi) return
+    if (!multi || !galleryOpen) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft')  prev()
       else if (e.key === 'ArrowRight') next()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [multi, prev, next])
+  }, [multi, galleryOpen, prev, next])
 
   const bedLabel = beds === 0 ? 'Studio' : `${beds} bed${beds === 1 ? '' : 's'}`
+  const currentLabel = images[idx]?.label
 
   return (
     <section
@@ -111,21 +125,23 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
           The frame-0 dim (0.7) and crossfade both live on the wrapper so
           the two layers always move together. */}
       <div style={{ position: 'absolute', inset: 0 }}>
-        {images.map((src, i) => {
+        {images.map((img, i) => {
           const isCurrent = i === idx
           return (
             <div
-              key={src + i}
+              key={img.src + i}
               aria-hidden={!isCurrent}
               style={{
                 position: 'absolute',
                 inset: 0,
-                // Frame 0 sits at 0.7 so the full hero copy reads over the
-                // dual scrim. Any other frame restores to true brightness —
-                // the scrim fades out in sync so the image is never left
-                // dimmed. Placeholder path stays at 1 (neutral gradient, not
-                // a photo). Two-way: navigating back to slide 0 dims again
-                // as the scrim fades back in.
+                // Dimmed while the full hero copy is showing (pre-gallery,
+                // or navigated back to it) so the title/price/details read
+                // over the dual scrim; any other frame restores to true
+                // brightness once the gallery opens. Position in the array
+                // is untouched by this — only `galleryOpen` gates it, so
+                // opening the gallery brightens the SAME first photo
+                // rather than requiring a navigation to slide 2. Placeholder
+                // path stays at 1 (neutral gradient, not a photo).
                 opacity: isCurrent ? (usingPlaceholder ? 1 : (showFullText ? 0.7 : 1)) : 0,
                 transition: 'opacity 500ms ease',
                 pointerEvents: 'none',
@@ -133,7 +149,7 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
             >
               {/* Blurred background fill — decorative, hidden from a11y. */}
               <img
-                src={src}
+                src={img.src}
                 alt=""
                 aria-hidden
                 loading={i === 0 ? 'eager' : 'lazy'}
@@ -151,7 +167,7 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
               />
               {/* Sharp, uncropped foreground — the real photo. */}
               <img
-                src={src}
+                src={img.src}
                 alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : ''}
                 loading={i === 0 ? 'eager' : 'lazy'}
                 fetchPriority={i === 0 ? 'high' : 'auto'}
@@ -252,8 +268,10 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
       )}
 
       {/* Prev / next arrows — vertically centred at the edges. Hidden when
-          only one image exists (i.e. placeholder-only listings). */}
-      {multi && (
+          only one image exists (i.e. placeholder-only listings), AND
+          before the gallery is opened — nothing to browse until the
+          visitor clicks "View Images". */}
+      {multi && galleryOpen && (
         <>
           <CarouselArrow direction="prev" onClick={prev} />
           <CarouselArrow direction="next" onClick={next} />
@@ -274,6 +292,32 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
               style={{ display: 'flex', flexDirection: 'column', gap: 4 }}
             >
+              {/* Per-image room caption — "Bedroom", "Kitchen", etc, from
+                  the current slide's `label` (lib/properties.ts). Omitted
+                  entirely for frames without a confident label rather than
+                  guessing. Sits directly above the property title so both
+                  read as one bottom-left cluster. */}
+              {currentLabel && (
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignSelf: 'flex-start',
+                    fontSize: 9,
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(242,239,233,0.9)',
+                    background: 'rgba(40,35,28,0.45)',
+                    border: '1px solid rgba(242,239,233,0.16)',
+                    borderRadius: 'var(--radius-pill)',
+                    padding: '5px 12px',
+                    marginBottom: 4,
+                    backdropFilter: 'blur(10px) saturate(180%)',
+                    WebkitBackdropFilter: 'blur(10px) saturate(180%)',
+                  }}
+                >
+                  {currentLabel}
+                </span>
+              )}
               <div
                 style={{
                   fontFamily: 'var(--font-serif)',
@@ -379,6 +423,43 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
                 <span aria-hidden style={{ opacity: 0.4 }}>·</span>
                 <span>Available {available}</span>
               </div>
+
+              {/* Gate into the gallery. Only shown pre-open — once
+                  clicked, this whole "full" block exits and the mini
+                  label + carousel controls take over (see `galleryOpen`). */}
+              {multi && (
+                <button
+                  type="button"
+                  onClick={openGallery}
+                  className="btn-press"
+                  style={{
+                    marginTop: 28,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    fontSize: 11,
+                    letterSpacing: '0.18em',
+                    textTransform: 'uppercase',
+                    color: '#F2EFE9',
+                    background: 'rgba(40,35,28,0.40)',
+                    border: '1px solid rgba(242,239,233,0.3)',
+                    borderRadius: 'var(--radius-pill)',
+                    padding: '14px 26px',
+                    cursor: 'pointer',
+                    backdropFilter: 'blur(14px) saturate(180%)',
+                    WebkitBackdropFilter: 'blur(14px) saturate(180%)',
+                    boxShadow: 'inset 0 1px 0 rgba(242,239,233,0.14)',
+                    textShadow: HERO_TEXT_SHADOW,
+                    transition: 'background var(--dur) var(--ease-apple), border-color var(--dur) var(--ease-apple)',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(40,35,28,0.6)'; e.currentTarget.style.borderColor = 'rgba(160,132,92,0.6)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(40,35,28,0.40)'; e.currentTarget.style.borderColor = 'rgba(242,239,233,0.3)' }}
+                >
+                  <GalleryIcon />
+                  View Images
+                  <span aria-hidden style={{ fontSize: 13 }}>→</span>
+                </button>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
@@ -386,7 +467,7 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
 
       {/* Dots + counter overlay, bottom-right so it never fights the
           minimised label in the bottom-left. */}
-      {multi && (
+      {multi && galleryOpen && (
         <div
           style={{
             position: 'absolute',
@@ -419,6 +500,16 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
 }
 
 /* ------------------------------------------------------------------ */
+
+// Simple stacked-photos glyph for the "View Images" button.
+function GalleryIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden focusable="false" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="7" width="15" height="14" rx="2" />
+      <path d="M7 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-2" />
+    </svg>
+  )
+}
 
 function CarouselArrow({ direction, onClick }: { direction: 'prev' | 'next'; onClick: () => void }) {
   const isPrev = direction === 'prev'

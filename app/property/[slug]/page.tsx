@@ -75,6 +75,7 @@ export default async function PropertyDetailPage(
       <Navbar />
       <PropertyHeroCarousel
         heroImage={property.image}
+        heroLabel={property.imageLabel}
         gallery={property.gallery ?? []}
         usingPlaceholder={isUsingPlaceholder(property.image)}
         title={property.title}

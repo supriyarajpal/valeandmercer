@@ -107,7 +107,13 @@ export default function Hero() {
           flexDirection: 'column',
           justifyContent: 'flex-end',
           width: '100%',
-          padding: 'clamp(96px, 11vh, 140px) clamp(20px, 4vw, 40px) 24px',
+          // Top padding clears the fixed navbar + homepage-only NavTicker
+          // strip using their real measured height (--nav-total-height,
+          // set by Navbar.tsx) rather than a guessed vh value — a fixed
+          // guess fell short on short/wide viewports (e.g. 1280x720) once
+          // the ticker added extra height, letting the headline creep up
+          // underneath it.
+          padding: 'calc(var(--nav-total-height, 150px) + 24px) clamp(20px, 4vw, 40px) 24px',
           y: l2,
           opacity: contentOpacity,
           willChange: 'transform, opacity',
@@ -238,6 +244,7 @@ function ArrowLink({ href, label, primary }: { href: string; label: string; prim
         border: primary ? '1px solid #F2EFE9' : '1px solid rgba(242,239,233,0.35)',
         padding: '18px 26px',
         minHeight: 48,
+        borderRadius: 'var(--radius-pill)',
         overflow: 'hidden',
         transition: 'color 0.4s var(--ease-out-soft), border-color 0.4s var(--ease-out-soft)',
       }}

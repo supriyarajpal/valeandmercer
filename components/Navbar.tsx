@@ -1,16 +1,18 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion, type Variants } from 'framer-motion'
 import { useFirstLoad } from '@/components/MotionProvider'
 import ThemeToggle from '@/components/ThemeToggle'
+import NavTicker from '@/components/NavTicker'
 
 const links = [
   { label: 'Lettings', href: '/let' },
   { label: 'New Homes', href: '/buy' },
   { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Fees', href: '/fees' },
 ]
 
 const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/student-lettings']
@@ -27,6 +29,7 @@ function pathIsDarkHero(pathname: string): boolean {
 }
 
 export default function Navbar() {
+  const navRef = useRef<HTMLElement>(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [hideEyebrow, setHideEyebrow] = useState(false)
@@ -48,6 +51,12 @@ export default function Navbar() {
   // page's back-navigation. Behaviour is scoped strictly to `/property/*`;
   // every other route keeps the marque as-is.
   const isPropertyDetail = pathname.startsWith('/property/')
+  // Live status ticker (components/NavTicker.tsx) is homepage-only —
+  // it's genuinely useful context ("N live listings", areas covered)
+  // right where a first-time visitor lands, and keeping it off every
+  // other route avoids re-tuning this shared component's layout for
+  // pages that don't need it.
+  const isHome = pathname === '/'
 
   useEffect(() => {
     const checkSize = () => setMobile(window.innerWidth < 900)
@@ -76,6 +85,22 @@ export default function Navbar() {
   }, [menuOpen])
 
   useEffect(() => setMenuOpen(false), [pathname])
+
+  // Publishes the nav's real rendered height (nav rows + eyebrow +
+  // homepage-only NavTicker, whichever combination is currently showing)
+  // as a CSS var. Hero reads it to reserve exactly enough clearance —
+  // a fixed px/vh guess drifted out of sync whenever the ticker was
+  // present, letting the headline creep up underneath it on short
+  // viewports.
+  useEffect(() => {
+    const el = navRef.current
+    if (!el) return
+    const publish = () => document.documentElement.style.setProperty('--nav-total-height', `${el.offsetHeight}px`)
+    publish()
+    const obs = new ResizeObserver(publish)
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
 
   useEffect(() => {
     const read = () => setIsDark(document.documentElement.dataset.theme === 'dark')
@@ -155,6 +180,7 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
+        ref={navRef}
         initial={reduce ? false : { y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: reduce ? 0 : firstLoad ? 0.85 : 0, ease: [0.22, 1, 0.36, 1] }}
@@ -171,6 +197,17 @@ export default function Navbar() {
           transition: 'background 0.5s var(--ease-apple), box-shadow 0.5s var(--ease-apple), border-color 0.5s var(--ease-apple), backdrop-filter 0.5s',
         }}
       >
+        {/* Homepage-only status strip — rendered as the FIRST child of the
+            fixed nav wrapper so it forms its own slim bar ABOVE the main
+            logo/links row, not below it. Still physically inside the same
+            fixed element as the nav content below, so it scrolls/pins as
+            one unit with the nav (no separate positioning, no risk of it
+            overlapping or covering the nav or hero — it just adds to the
+            nav's total height, which Hero already reads via
+            --nav-total-height). Own background, no shared backdrop-filter
+            pass, so it can't affect the nav's own glass blur below it. */}
+        {isHome && <NavTicker />}
+
         <div style={{ padding: '18px var(--gutter)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           {/*

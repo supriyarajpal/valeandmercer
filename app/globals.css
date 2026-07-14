@@ -3,6 +3,46 @@
    linked regardless of how/when the PropertyMap chunk loads. */
 @import 'leaflet/dist/leaflet.css';
 
+/* Leaflet 1.9 sets `mix-blend-mode: plus-lighter` on every tile <img>
+   (.leaflet-container img.leaflet-tile in leaflet.css) to paper over a
+   Chromium sub-pixel seam bug between adjacent tiles. That's an additive
+   blend against whatever sits behind the tile pane — and our map wrapper
+   sits on `var(--surface)`, a near-white cream (#F2EFE9 in light mode).
+   Additive-blending real map imagery against a backdrop that's already
+   almost pure white clips nearly every pixel to white, so the whole
+   basemap (streets, labels, land colour) washes out to blank while only
+   the pin markers — plain HTML/SVG, not blended <img> tiles — stay
+   visible. Force normal compositing so the tiles actually render.
+   `!important` is required, not just belt-and-braces: Next.js splits
+   `leaflet/dist/leaflet.css` into its own chunk with its own <link>,
+   which lands AFTER the globals.css chunk's <link> in the rendered
+   HTML — so on same-specificity selectors leaflet's rule wins the
+   cascade by source order no matter where this block sits in this
+   file. Only !important reliably beats that. */
+.leaflet-container .leaflet-tile-pane img.leaflet-tile,
+.leaflet-container img.leaflet-tile {
+  mix-blend-mode: normal !important;
+}
+
+/* Leaflet also ships `.leaflet-tile { visibility: hidden }` /
+   `.leaflet-tile-loaded { visibility: inherit }` — each tile stays
+   invisible until Leaflet's JS sees the <img>'s native `load` event
+   and adds `.leaflet-tile-loaded`. Verified (headless + confirmed
+   pattern matches the single-marker property-detail map): the tile
+   PNG reliably finishes downloading (200 response, full natural
+   width/height, `img.complete === true`) but Leaflet's own listener
+   intermittently never fires — most reliably on the single-point
+   `setView`/`initialZoom` path used by the property detail sidebar
+   map, vs. the multi-marker `fitBounds` path on /let, which is less
+   prone to it. Net effect: fully-loaded map imagery stuck invisible
+   forever, indistinguishable from a blank map. Since the pixels are
+   already there whenever the <img> exists, gate on that instead of
+   Leaflet's JS bookkeeping — always show tiles as soon as they're in
+   the DOM. */
+.leaflet-container .leaflet-tile-pane img.leaflet-tile {
+  visibility: visible !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -298,6 +338,22 @@ a { color: inherit; text-decoration: none; }
 }
 @media (max-width: 560px) {
   .form-name-row { grid-template-columns: 1fr; }
+}
+
+/* Stats strip (components/StatsStrip.tsx) — explicit breakpoints rather
+   than `auto-fit`. auto-fit computes column count from raw min-content
+   fit, which for an odd item count (4) stranded a single orphaned item
+   alone on its own row at in-between (tablet) widths, leaving visible
+   empty track space beside it. Stepping 1 -> 2 -> N columns keeps every
+   row fully populated at every width. --stat-cols (set inline per the
+   actual item count) drives the top tier so 3 vs 4 stats both still
+   span the full row evenly. */
+.stats-grid { grid-template-columns: 1fr; }
+@media (min-width: 560px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(var(--stat-cols, 4), 1fr); }
 }
 
 /* Custom chevron for native selects — appearance:none hides the

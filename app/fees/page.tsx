@@ -85,7 +85,7 @@ export default function FeesPage() {
 
           <div style={sectionStyle}>
             <h2 style={h2Style}>Residential Sales</h2>
-            <div style={{background:'#34302B',padding:'20px 24px',marginBottom:'16px',display:'inline-block'}}>
+            <div style={{background:'#34302B',padding:'20px 24px',marginBottom:'16px',display:'inline-block',borderRadius:'var(--radius-lg)'}}>
               <p style={{fontSize:'13px',color:'rgba(242,239,233,0.6)',marginBottom:'4px'}}>Fee</p>
               <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'28px',fontWeight:300,color:'#F2EFE9'}}>1.5% of the agreed sale price (indicative; please contact us to discuss)</p>
               <p style={{fontSize:'11px',color:'rgba(242,239,233,0.4)',marginTop:'4px'}}>Not subject to VAT</p>
