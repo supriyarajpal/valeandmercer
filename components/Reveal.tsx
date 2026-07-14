@@ -72,7 +72,10 @@ export function Reveal({
   children,
   delay = 0,
   y = 32,
-  duration = 0.7,
+  // Slowed from 0.7 → 0.9s for a more deliberate, premium section reveal —
+  // paired with the ease-out curve below so each element decelerates in
+  // rather than arriving briskly. Callers can still override per-instance.
+  duration = 0.9,
   once = true,
   amount = 0.2,
   as = 'div',
@@ -115,7 +118,9 @@ type StaggerProps = {
 
 export function Stagger({
   children,
-  stagger = 0.12,
+  // Wider gap between children (0.12 → 0.16s) so grouped elements cascade
+  // in more slowly and deliberately rather than near-simultaneously.
+  stagger = 0.16,
   delayChildren = 0,
   amount = 0.2,
   once = true,
@@ -163,7 +168,8 @@ type StaggerItemProps = {
 export function StaggerItem({
   children,
   y = 24,
-  duration = 0.6,
+  // Slowed from 0.6 → 0.8s to match the calmer Reveal timing.
+  duration = 0.8,
   as = 'div',
   style,
   className,

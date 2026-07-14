@@ -92,12 +92,15 @@
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out-soft: cubic-bezier(0.76, 0, 0.24, 1);
-  /* Apple-style ease + a small duration scale. Use --ease-apple for
-     hover/press micro-interactions across buttons, cards and links. */
+  /* Apple-style ease + a duration scale. Use --ease-apple for hover/press
+     micro-interactions across buttons, cards and links. Durations are
+     intentionally on the slow/unhurried side (hover interactions land in
+     the ~400-550ms range) so motion reads as a premium glide rather than a
+     snappy flick — matching the showcase's scroll feel. */
   --ease-apple: cubic-bezier(0.4, 0, 0.2, 1);
-  --dur-fast: 200ms;
-  --dur: 300ms;
-  --dur-slow: 400ms;
+  --dur-fast: 280ms;
+  --dur: 400ms;
+  --dur-slow: 550ms;
 
   /* ---- Radius scale ---------------------------------------------------
      Applied consistently: pill for every interactive button + tag chip,
@@ -249,7 +252,7 @@ a { color: inherit; text-decoration: none; }
 /* Card hover lift — Apple-style: a gentle rise + subtle scale with the
    shadow deepening in sync. Kept restrained (scale 1.02), never bouncy. */
 .card-lift {
-  transition: transform var(--dur-slow) var(--ease-apple), box-shadow var(--dur-slow) var(--ease-apple);
+  transition: transform var(--dur-slow) var(--ease-out-soft), box-shadow var(--dur-slow) var(--ease-out-soft);
   will-change: transform;
 }
 .card-lift:hover {
@@ -300,11 +303,11 @@ a { color: inherit; text-decoration: none; }
    Existing components keep their bespoke sliding-fill hover but adopt
    this class for the press feel + consistent easing. */
 .btn-press {
-  transition: transform var(--dur) var(--ease-apple),
-              box-shadow var(--dur) var(--ease-apple),
-              color var(--dur) var(--ease-apple),
-              background var(--dur) var(--ease-apple),
-              border-color var(--dur) var(--ease-apple);
+  transition: transform var(--dur) var(--ease-out-soft),
+              box-shadow var(--dur) var(--ease-out-soft),
+              color var(--dur) var(--ease-out-soft),
+              background var(--dur) var(--ease-out-soft),
+              border-color var(--dur) var(--ease-out-soft);
   will-change: transform;
 }
 .btn-press:active { transform: scale(0.96); }
@@ -316,10 +319,10 @@ a { color: inherit; text-decoration: none; }
   border: var(--glass-border-gold);
   box-shadow: var(--glass-highlight);
   border-radius: var(--radius-pill);
-  transition: transform var(--dur) var(--ease-apple),
-              background var(--dur) var(--ease-apple),
-              box-shadow var(--dur) var(--ease-apple),
-              border-color var(--dur) var(--ease-apple);
+  transition: transform var(--dur) var(--ease-out-soft),
+              background var(--dur) var(--ease-out-soft),
+              box-shadow var(--dur) var(--ease-out-soft),
+              border-color var(--dur) var(--ease-out-soft);
   will-change: transform;
 }
 .btn-glass:hover {

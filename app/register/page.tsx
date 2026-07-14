@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
+import { submitToWeb3Forms } from '@/lib/web3forms'
 
 export default function RegisterPage() {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', interest: 'Renting', budget: '', consent: false })
@@ -16,42 +17,27 @@ export default function RegisterPage() {
     }
     setConsentError(false)
     setStatus('sending')
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
-    if (!accessKey) {
-      // eslint-disable-next-line no-console
-      console.error('NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY is not set')
-      setStatus('error')
-      return
-    }
+    // Client-side submission to Web3Forms (its free tier is browser-only).
+    // The access key resolves via lib/web3forms — env var when set, public
+    // fallback otherwise — so it never depends on a build-time Vercel var.
     const fullName = [form.firstName, form.lastName].filter(Boolean).join(' ').trim() || 'Unknown'
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: accessKey,
-          subject: 'Property Alert Registration: ' + fullName,
-          from_name: 'Vale and Mercer Website',
-          replyto: form.email,
-          'Form': 'Property Alert Registration',
-          'Name': fullName,
-          'Email': form.email,
-          'Phone': form.phone,
-          'Looking for': form.interest,
-          'Budget': form.budget,
-          'Consent given': 'Yes (given at submission)',
-        }),
+      const ok = await submitToWeb3Forms({
+        subject: 'Property Alert Registration: ' + fullName,
+        from_name: 'Vale and Mercer Website',
+        replyto: form.email,
+        'Form': 'Property Alert Registration',
+        'Name': fullName,
+        'Email': form.email,
+        'Phone': form.phone,
+        'Looking for': form.interest,
+        'Budget': form.budget,
+        'Consent given': 'Yes (given at submission)',
       })
-      const result = await res.json().catch(() => null)
-      if (res.ok && result?.success) setStatus('sent')
-      else {
-        // eslint-disable-next-line no-console
-        console.error('Web3Forms rejected the submission', result)
-        setStatus('error')
-      }
+      setStatus(ok ? 'sent' : 'error')
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.error('Web3Forms network error', err)
+      console.error('Registration submission network error', err)
       setStatus('error')
     }
   }
