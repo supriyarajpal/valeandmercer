@@ -69,17 +69,34 @@ export default function Footer() {
             </StaggerItem>
             <StaggerItem>
               <div style={{ borderTop: '0.5px solid rgba(242,239,233,0.08)', paddingTop: 16 }}>
-                <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-block', marginBottom: 10 }}>
-                  <div style={{ background: '#fff', padding: '8px 12px', display: 'inline-flex', alignItems: 'center' }}>
-                    <svg width="80" height="28" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect x="0" y="8" width="6" height="26" fill="#333" />
-                      <rect x="9" y="14" width="6" height="20" fill="#9B59B6" />
-                      <rect x="18" y="19" width="6" height="15" fill="#C39BD3" />
-                      <text x="28" y="22" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold" fill="#333">Property</text>
-                      <text x="28" y="36" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold" fill="#333">Redress</text>
-                    </svg>
+                {/* Accreditation badges sit side by side on one row. Both use
+                    the same white plate + 8px/12px padding and the same 28px
+                    logo height so they read as a matched pair regardless of
+                    each logo's own aspect ratio. */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap', marginBottom: 10 }}>
+                  <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-flex' }}>
+                    <div style={{ background: '#fff', padding: '8px 12px', display: 'inline-flex', alignItems: 'center' }}>
+                      <svg width="80" height="28" viewBox="0 0 120 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="0" y="8" width="6" height="26" fill="#333" />
+                        <rect x="9" y="14" width="6" height="20" fill="#9B59B6" />
+                        <rect x="18" y="19" width="6" height="15" fill="#C39BD3" />
+                        <text x="28" y="22" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold" fill="#333">Property</text>
+                        <text x="28" y="36" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold" fill="#333">Redress</text>
+                      </svg>
+                    </div>
+                  </a>
+                  {/* Same 44px-tall white plate as the Property Redress badge
+                      (11px vertical padding + 22px logo = 44), so the two sit
+                      as a matched pair on one baseline. Width scales with the
+                      logo's own (wide) aspect ratio. */}
+                  <div style={{ background: '#fff', padding: '11px 14px', display: 'inline-flex', alignItems: 'center' }}>
+                    <img
+                      src="/images/footer-image.svg"
+                      alt="ARLA Propertymark"
+                      style={{ height: 22, width: 'auto', display: 'block' }}
+                    />
                   </div>
-                </a>
+                </div>
                 <p style={{ fontSize: 10, color: 'rgba(242,239,233,0.25)', lineHeight: 1.8 }}>
                   Member of Property Redress Scheme<br />
                   <span style={{ color: '#A0845C' }}>Membership No: PRS058796</span>
