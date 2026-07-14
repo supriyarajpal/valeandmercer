@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
-import TickerStrip from '@/components/TickerStrip'
 import FeaturedProperties from '@/components/FeaturedProperties'
 import StatsStrip from '@/components/StatsStrip'
 import BuyingSection from '@/components/BuyingSection'
@@ -38,7 +37,6 @@ export default function Home() {
       />
       <Navbar />
       <Hero />
-      <TickerStrip />
       <FeaturedProperties />
       <StatsStrip />
       <BuyingSection />

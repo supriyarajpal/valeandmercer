@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence, useReducedMotion, type Variants } from 'framer-motion'
 import { useFirstLoad } from '@/components/MotionProvider'
 import ThemeToggle from '@/components/ThemeToggle'
-import NavTicker from '@/components/NavTicker'
 
 const links = [
   { label: 'Lettings', href: '/let' },
@@ -51,12 +50,6 @@ export default function Navbar() {
   // page's back-navigation. Behaviour is scoped strictly to `/property/*`;
   // every other route keeps the marque as-is.
   const isPropertyDetail = pathname.startsWith('/property/')
-  // Live status ticker (components/NavTicker.tsx) is homepage-only —
-  // it's genuinely useful context ("N live listings", areas covered)
-  // right where a first-time visitor lands, and keeping it off every
-  // other route avoids re-tuning this shared component's layout for
-  // pages that don't need it.
-  const isHome = pathname === '/'
 
   useEffect(() => {
     const checkSize = () => setMobile(window.innerWidth < 900)
@@ -86,12 +79,11 @@ export default function Navbar() {
 
   useEffect(() => setMenuOpen(false), [pathname])
 
-  // Publishes the nav's real rendered height (nav rows + eyebrow +
-  // homepage-only NavTicker, whichever combination is currently showing)
-  // as a CSS var. Hero reads it to reserve exactly enough clearance —
-  // a fixed px/vh guess drifted out of sync whenever the ticker was
-  // present, letting the headline creep up underneath it on short
-  // viewports.
+  // Publishes the nav's real rendered height (nav rows + eyebrow,
+  // whichever combination is currently showing) as a CSS var. Hero and
+  // the pinned property showcase read it to reserve exactly enough
+  // clearance — a fixed px/vh guess drifts out of sync as the eyebrow
+  // collapses on scroll.
   useEffect(() => {
     const el = navRef.current
     if (!el) return
@@ -197,17 +189,6 @@ export default function Navbar() {
           transition: 'background 0.5s var(--ease-apple), box-shadow 0.5s var(--ease-apple), border-color 0.5s var(--ease-apple), backdrop-filter 0.5s',
         }}
       >
-        {/* Homepage-only status strip — rendered as the FIRST child of the
-            fixed nav wrapper so it forms its own slim bar ABOVE the main
-            logo/links row, not below it. Still physically inside the same
-            fixed element as the nav content below, so it scrolls/pins as
-            one unit with the nav (no separate positioning, no risk of it
-            overlapping or covering the nav or hero — it just adds to the
-            nav's total height, which Hero already reads via
-            --nav-total-height). Own background, no shared backdrop-filter
-            pass, so it can't affect the nav's own glass blur below it. */}
-        {isHome && <NavTicker />}
-
         <div style={{ padding: '18px var(--gutter)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           {/*

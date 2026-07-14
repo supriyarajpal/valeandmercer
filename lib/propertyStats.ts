@@ -2,8 +2,7 @@ import { getLiveProperties } from '@/lib/properties'
 
 // Every number here is derived directly from lib/properties.ts at call
 // time — nothing hardcoded, nothing invented. Consumed by StatsStrip
-// (kinetic counters) and NavTicker (rotating status line) so the two
-// features can never show inconsistent figures.
+// (kinetic counters) so its figures always reflect real inventory.
 
 export type PropertyStats = {
   totalLive: number

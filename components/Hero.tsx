@@ -107,12 +107,11 @@ export default function Hero() {
           flexDirection: 'column',
           justifyContent: 'flex-end',
           width: '100%',
-          // Top padding clears the fixed navbar + homepage-only NavTicker
-          // strip using their real measured height (--nav-total-height,
-          // set by Navbar.tsx) rather than a guessed vh value — a fixed
-          // guess fell short on short/wide viewports (e.g. 1280x720) once
-          // the ticker added extra height, letting the headline creep up
-          // underneath it.
+          // Top padding clears the fixed navbar using its real measured
+          // height (--nav-total-height, set by Navbar.tsx) rather than a
+          // guessed vh value — a fixed guess fell short on short/wide
+          // viewports (e.g. 1280x720), letting the headline creep up
+          // underneath the bar.
           padding: 'calc(var(--nav-total-height, 150px) + 24px) clamp(20px, 4vw, 40px) 24px',
           y: l2,
           opacity: contentOpacity,

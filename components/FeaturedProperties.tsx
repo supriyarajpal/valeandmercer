@@ -5,22 +5,38 @@ import PropertyShowcase from '@/components/PropertyShowcase'
 import { properties } from '@/lib/properties'
 
 export type Listing = {
+  // 'cta' is the terminal "view all listings" card (see below); every
+  // other card is a real property. Optional so existing property rows
+  // don't need to set it.
+  variant?: 'property' | 'cta'
   label: string
   area: string
   desc: string
-  image: string
+  image?: string       // omitted on the CTA card (no photo)
   href: string
   meta?: string        // small line above CTA — e.g. "£4,050pcm · 2 beds"
   ctaLabel?: string    // "Register Interest" for coming-soon, "View Property" for live
 }
 
+// The homepage showcase is a curated teaser, NOT the full inventory: it
+// shows the first few live, photo-backed `featured` records and then hands
+// off to /let, where every live listing is browsable. Kept to 3 so the
+// pinned scroll stays short and each card gets real focus time; the full
+// count lives on /let (and the StatsStrip "Live Listings" figure, which
+// still reflects the true total from lib/properties.ts).
+const HOMEPAGE_FEATURED_COUNT = 3
+
 // Live rentals with real photography flagged featured:true in lib/properties.
-// Only live records (status === 'live') with `featured: true` appear here.
-const listings: Listing[] = properties
+// Only live records (status === 'live') with `featured: true` are eligible;
+// we then take the first HOMEPAGE_FEATURED_COUNT (their source order gives a
+// natural spread of bed counts and buildings rather than near-duplicates).
+const featured: Listing[] = properties
   .filter(p => p.status === 'live' && p.featured)
+  .slice(0, HOMEPAGE_FEATURED_COUNT)
   .map(p => {
     const beds = p.beds === 0 ? 'Studio' : `${p.beds} bed${p.beds === 1 ? '' : 's'}`
     return {
+      variant: 'property' as const,
       label: p.listingType,
       area: `${p.title} · ${p.area}`,
       desc: p.teaser ?? p.description,
@@ -30,6 +46,20 @@ const listings: Listing[] = properties
       ctaLabel: 'View Property',
     }
   })
+
+// Terminal card in the scroll sequence — a clear hand-off to the full
+// lettings grid. Rendered as its own step (its own dot, its own centred
+// resting position) after the last featured card.
+const viewAllCard: Listing = {
+  variant: 'cta',
+  label: '',
+  area: 'View all listings',
+  desc: 'See every available home across London — full details, photography and floor plans.',
+  href: '/let',
+  ctaLabel: 'View all listings',
+}
+
+const listings: Listing[] = [...featured, viewAllCard]
 
 // Scroll-pinned horizontal reveal (components/PropertyShowcase.tsx) —
 // same listings/copy as before, replacing the static grid. Falls back to
