@@ -55,23 +55,33 @@ function neighbourhoodOf(area: string): string {
 export default function LettingsListings() {
   const availableNow = getLiveProperties().filter(p => p.listingType === 'To Let')
 
-  // Non-Canary-Wharf listings grouped by neighbourhood (sorted), each group
-  // rendered as its own small heading + card. The GROUPS are laid out side by
-  // side as grid columns (see render below), so single-listing areas fill the
-  // row instead of stacking vertically with dead space beside them. Canary
-  // Wharf is split out into its own separate section further down.
+  // Non-Canary-Wharf listings grouped for the heading row: each group renders a
+  // small-caps label + listing count directly above its card(s), and the groups
+  // sit side by side as grid columns (see render below), so single-listing
+  // areas fill the row rather than stacking vertically. Canary Wharf is split
+  // out into its own separate section further down.
+  //
+  // Grouping key is the neighbourhood (segment after "·"), EXCEPT the two
+  // client-added listings below, which are shown as their own street-named
+  // groups per explicit client request — so Jude Street stays separate from
+  // Bywell Place's "Canning Town" group instead of merging into it, and Newport
+  // Avenue reads as "Newport Avenue" rather than its "Blackwall" locality. Each
+  // card still carries its own locality tag (e.g. "E14 · Blackwall") regardless.
+  const STREET_GROUPED_SLUGS = new Set(['newport-avenue-2bed-2500', 'jude-street-2bed-2947'])
   const { otherGroups, canaryWharf } = useMemo(() => {
     const map = new Map<string, Property[]>()
     const canaryWharf: Property[] = []
     for (const p of availableNow) {
       const n = neighbourhoodOf(p.area)
       if (n === 'Canary Wharf') { canaryWharf.push(p); continue }
-      const bucket = map.get(n)
+      const key = STREET_GROUPED_SLUGS.has(p.slug) ? p.title : n
+      const bucket = map.get(key)
       if (bucket) bucket.push(p)
-      else map.set(n, [p])
+      else map.set(key, [p])
     }
     const otherGroups = [...map.entries()].sort((a, b) => a[0].localeCompare(b[0]))
     return { otherGroups, canaryWharf }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availableNow])
 
   const handleMarkerFocus = useCallback((slug: string) => {
@@ -121,21 +131,20 @@ export default function LettingsListings() {
               </div>
             </Reveal>
 
-            {/* Non-Canary-Wharf neighbourhoods, each a small heading + count
-                above its card(s), laid out SIDE BY SIDE as grid columns
-                (auto-fill minmax(300px)) — so single-listing areas fill the
-                row rather than stacking vertically with dead space beside
-                them. This is the single, canonical render of these listings;
-                there is no second per-neighbourhood block below. */}
+            {/* Non-Canary-Wharf groups: each a small-caps heading + listing
+                count directly above its card(s), laid out SIDE BY SIDE as grid
+                columns (auto-fill minmax(320px)) — the heading row runs
+                horizontally, one label per column, rather than stacking. This
+                is the single, canonical render of these listings. */}
             {otherGroups.length > 0 && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '64px 36px', alignItems: 'start', marginBottom: canaryWharf.length > 0 ? 88 : 0 }}>
-                {otherGroups.map(([area, list]) => (
-                  <div key={area}>
+                {otherGroups.map(([label, list]) => (
+                  <div key={label}>
                     <Reveal y={16} amount={0.15}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
                         <div style={{ width: 18, height: 1, background: '#A0845C', flexShrink: 0 }} />
                         <h3 style={{ fontSize: 17, color: 'var(--text)', letterSpacing: '-0.01em' }}>
-                          {area}
+                          {label}
                         </h3>
                         <span style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
                           {list.length} {list.length === 1 ? 'listing' : 'listings'}

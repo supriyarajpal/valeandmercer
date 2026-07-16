@@ -4,33 +4,34 @@ import { useReducedMotion } from 'framer-motion'
 import { Reveal } from '@/components/Reveal'
 import { AREA_MAPS } from '@/components/areaMaps'
 
-// The neighbourhoods we actually operate in — the same five that the /let
-// listings group by (see lib/properties.ts area fields: "E14 · Millwall",
-// "E14 · Cubitt Town", "E16 · Canning Town", Canary Wharf, Royal Docks).
+// The neighbourhoods we actually operate in — the seven the /let listings
+// group by (see lib/properties.ts area fields: "E14 · Millwall",
+// "E14 · Cubitt Town", "E16 · Canning Town", Canary Wharf, Royal Docks,
+// plus "E16 · Canning Town"/Jude Street and "E14 · Blackwall"/Newport Avenue).
 // Each gets its own desaturated, premium panel colour that complements the
-// cream/ink/gold palette, a photo (matched by filename), and a line-art map
+// cream/ink/gold palette, a photo (matched by filename), a line-art map
 // fragment generated from REAL OpenStreetMap street geometry (see areaMaps.ts
-// and AreaGraphic).
-type Area = { name: string; slug: string; color: string; image: string }
+// and AreaGraphic), and its own one-line tagline capturing something true
+// about the place.
+type Area = { name: string; slug: string; color: string; image: string; tagline: string }
 
 const AREAS: Area[] = [
-  { name: 'Canary Wharf', slug: 'canary-wharf', color: '#33424E', image: '/images/areas/canary-wharf.jpg' },  // deep slate navy
-  { name: 'Millwall',     slug: 'millwall',     color: '#586A54', image: '/images/areas/millwall.webp' },     // muted sage
-  { name: 'Cubitt Town',  slug: 'cubitt-town',  color: '#8C5B44', image: '/images/areas/cubitt-town.jpg' },   // desaturated terracotta
-  { name: 'Canning Town', slug: 'canning-town', color: '#3A3530', image: '/images/areas/canning-town.jpeg' }, // warm charcoal
-  { name: 'Royal Docks',  slug: 'royal-docks',  color: '#6A6642', image: '/images/areas/royal-docks.jpeg' },  // muted olive
+  { name: 'Canary Wharf',   slug: 'canary-wharf',   color: '#33424E', image: '/images/areas/canary-wharf.jpg',   tagline: 'Where ambition finds its address.' },  // deep slate navy
+  { name: 'Millwall',       slug: 'millwall',       color: '#586A54', image: '/images/areas/millwall.webp',      tagline: 'Life, unhurried by the water.' },       // muted sage
+  { name: 'Cubitt Town',    slug: 'cubitt-town',    color: '#8C5B44', image: '/images/areas/cubitt-town.jpg',    tagline: 'A postcode that feels like home.' },    // desaturated terracotta
+  { name: 'Canning Town',   slug: 'canning-town',   color: '#3A3530', image: '/images/areas/canning-town.jpeg',  tagline: 'On the rise, and worth knowing.' },     // warm charcoal
+  { name: 'Royal Docks',    slug: 'royal-docks',    color: '#6A6642', image: '/images/areas/royal-docks.jpeg',   tagline: 'Where London opens to the water.' },    // muted olive
+  { name: 'Jude Street',    slug: 'jude-street',    color: '#5B4A63', image: '/images/areas/jude-street.jpg',    tagline: 'Quietly central, close to everything.' }, // muted aubergine
+  { name: 'Newport Avenue', slug: 'newport-avenue', color: '#3F5A5A', image: '/images/areas/newport-avenue.jpg', tagline: 'Riverside living, close to the Wharf.' }, // muted deep teal
 ]
-
-// One quiet line, in our own voice, reinforcing local knowledge.
-const TAGLINE = 'Where we know every street.'
 
 const CYCLE_MS = 1700
 
 // A single COMPACT module (photo tile + colour panel side by side) that
-// auto-cycles through all five areas in place — no longer five full-height
+// auto-cycles through all seven areas in place — no longer seven full-height
 // scrolling rows. Both tiles crossfade to the next area together on a timer;
 // auto-advance pauses on hover and after manual navigation, and is disabled
-// entirely for prefers-reduced-motion (dots still work). All five layers are
+// entirely for prefers-reduced-motion (dots still work). All seven layers are
 // stacked and opacity-crossfaded, so the colour changes with the content.
 export default function AreasWeCover() {
   const reduce = useReducedMotion()
@@ -79,7 +80,7 @@ export default function AreasWeCover() {
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
-            {/* Photo tile — five crossfading layers. */}
+            {/* Photo tile — seven crossfading layers. */}
             <div className="vm-areas-tile">
               {AREAS.map((area, i) => (
                 <div key={area.slug} className="vm-areas-layer" aria-hidden={i !== active} style={{ opacity: i === active ? 1 : 0, zIndex: i === active ? 1 : 0 }}>
@@ -88,7 +89,7 @@ export default function AreasWeCover() {
               ))}
             </div>
 
-            {/* Colour panel tile — five crossfading layers (colour + content). */}
+            {/* Colour panel tile — seven crossfading layers (colour + content). */}
             <div className="vm-areas-tile">
               {AREAS.map((area, i) => (
                 <div key={area.slug} className="vm-areas-layer" aria-hidden={i !== active} style={{ opacity: i === active ? 1 : 0, zIndex: i === active ? 1 : 0 }}>
@@ -174,7 +175,7 @@ function AreaPanel({ area }: { area: Area }) {
       </div>
 
       <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontWeight: 300, fontSize: 'clamp(15px, 1.6vw, 18px)', color: 'rgba(242,239,233,0.82)' }}>
-        {TAGLINE}
+        {area.tagline}
       </span>
     </div>
   )

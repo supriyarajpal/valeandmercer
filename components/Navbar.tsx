@@ -9,9 +9,7 @@ import ThemeToggle from '@/components/ThemeToggle'
 const links = [
   { label: 'Lettings', href: '/let' },
   { label: 'New Homes', href: '/buy' },
-  { label: 'About', href: '/about' },
   { label: 'Blog', href: '/blog' },
-  { label: 'Fees', href: '/fees' },
 ]
 
 const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/student-lettings']

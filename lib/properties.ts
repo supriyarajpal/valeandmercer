@@ -699,6 +699,169 @@ export const properties: Property[] = [
       { src: '/images/silvertown-square-2bed/13.jpeg', label: 'Bedroom' },
     ],
   },
+  // Added per client 2026-07-17. Ref 32743. Locality is E14 · Blackwall
+  // (authoritative structured header), forming its own neighbourhood group on
+  // /let; the body copy loosely refers to Poplar (adjacent E14). Size not
+  // supplied in the source, so sqft is intentionally left null (not guessed).
+  // Deposits follow the site-wide convention — holding = 1 week's rent (£577),
+  // security = 5 weeks' rent (£2,885). Photo order verified against the actual
+  // uploaded folder: living → kitchen → bedroom → bathroom → hallway →
+  // building exterior; no floor plan supplied.
+  {
+    id: '32743',
+    slug: 'newport-avenue-2bed-2500',
+    coordinates: { lat: 51.5094, lng: 0.001 },
+    listingType: 'To Let',
+    status: 'live',
+    ref: '32743',
+    title: 'Newport Avenue',
+    rent: '£2,500pcm',
+    rentPW: '£577pw',
+    beds: 2,
+    baths: 2,
+    area: 'E14 · Blackwall',
+    available: 'now',
+    holdingDeposit: '£577',
+    securityDeposit: '£2,885',
+    sqft: null,
+    floor: null,
+    epc: 'C',
+    tags: [
+      'Furnished', 'Parking', 'Washer', 'Big Windows', 'Ample Storage',
+      'Concierge', 'Modern', 'Freezer',
+    ],
+    headline: '2-Bedroom Flat to Rent in Blackwall | Newport Avenue, London | Available Now | EPC: C | Council Tax Band: F',
+    description: '2-bed, 2-bath flat to rent in Poplar on Newport Avenue. Modern living environment, large windows, high ceilings, generous built-in storage, open-plan kitchen with integrated appliances. Concierge, parking available. Moments from Westferry DLR, Canary Wharf Jubilee Line, and the Elizabeth Line.',
+    amenities: 'Open-plan kitchen with integrated appliances including a washer and freezer. Large windows and high ceilings with generous built-in storage. Concierge. Parking available.',
+    keyFeatures: [
+      'Large windows and high ceilings with generous built-in storage',
+      'Open-plan kitchen with integrated appliances',
+      'Concierge and parking available',
+    ],
+    compliance: {
+      epc: 'C',
+      councilTax: 'Band F',
+    },
+    location: 'Situated on Newport Avenue in Blackwall, the flat is moments from Westferry DLR, with the Canary Wharf Jubilee line and the Elizabeth line close by. The area is well served by the DLR and road links, making it an ideal base for commuters and young professionals.',
+    nearby: [
+      { name: 'North Greenwich',         distance: '0.6 miles', kind: 'Tube' },
+      { name: 'Canary Wharf',            distance: '0.8 miles', kind: 'Tube' },
+      { name: 'Woolmore Primary School', distance: '0.3 miles', kind: 'School' },
+      { name: 'Culloden Primary School', distance: '0.4 miles', kind: 'School' },
+      { name: 'Faraday School',          distance: '0.5 miles', kind: 'School' },
+    ],
+    income: {
+      rentPM: '£2,500',
+      ukIncome: '£75,000pa',
+      ukGuarantor: '£90,000pa',
+      foreignGuarantor: 'Not considered',
+      adverseCredit: 'No active CCJ',
+    },
+    // Order: living(1,2) · kitchen(3,4) · bedroom(5-9) · bath(10,11,12) ·
+    // hallway(13) · building exterior(14). No floor plan supplied.
+    image: '/images/newport-avenue-2bed-2500/1.jpeg',
+    imageLabel: 'Living Room',
+    gallery: [
+      { src: '/images/newport-avenue-2bed-2500/2.jpeg', label: 'Living Room' },
+      { src: '/images/newport-avenue-2bed-2500/3.jpeg', label: 'Kitchen' },
+      { src: '/images/newport-avenue-2bed-2500/4.jpeg', label: 'Kitchen' },
+      { src: '/images/newport-avenue-2bed-2500/5.jpeg', label: 'Bedroom' },
+      { src: '/images/newport-avenue-2bed-2500/6.jpeg', label: 'Bedroom' },
+      { src: '/images/newport-avenue-2bed-2500/7.jpeg', label: 'Bedroom' },
+      { src: '/images/newport-avenue-2bed-2500/8.jpeg', label: 'Bedroom' },
+      { src: '/images/newport-avenue-2bed-2500/9.jpeg', label: 'Bedroom' },
+      { src: '/images/newport-avenue-2bed-2500/10.jpeg', label: 'Bathroom' },
+      { src: '/images/newport-avenue-2bed-2500/11.jpeg', label: 'Bathroom' },
+      { src: '/images/newport-avenue-2bed-2500/12.jpeg', label: 'Bathroom' },
+      { src: '/images/newport-avenue-2bed-2500/13.jpeg', label: 'Hallway' },
+      { src: '/images/newport-avenue-2bed-2500/14.jpeg', label: 'Building Exterior' },
+    ],
+    teaser: 'Furnished 2-bed in Blackwall with large windows, high ceilings, concierge and parking — moments from Westferry DLR and Canary Wharf.',
+  },
+  // Added per client 2026-07-17. Ref 30678. Locality is E16 · Canning Town
+  // (Canning Town South ward) — the same neighbourhood group as Bywell Place
+  // on /let, so both list together under one "Canning Town" heading (the
+  // grouping key is the segment after "·"). The source header didn't print a
+  // locality name, but Custom House/Canning Town South is confirmed by the
+  // Jude Street, E16 geocode. Security deposit was garbled in the source brief;
+  // derived from the site-wide convention (5 weeks' rent = £3,400; holding =
+  // 1 week = £680, as supplied). The uploaded folder DOES include a floor plan
+  // (contradicting the pre-upload note of "no floor plan") — placed last per
+  // convention. One exterior shot in the folder was an exact duplicate and
+  // was dropped.
+  {
+    id: '30678',
+    slug: 'jude-street-2bed-2947',
+    coordinates: { lat: 51.5116, lng: 0.0128 },
+    listingType: 'To Let',
+    status: 'live',
+    ref: '30678',
+    title: 'Jude Street',
+    rent: '£2,947pcm',
+    rentPW: '£680pw',
+    beds: 2,
+    baths: 2,
+    area: 'E16 · Canning Town',
+    available: '26 September',
+    holdingDeposit: '£680',
+    securityDeposit: '£3,400',
+    sqft: 712,
+    floor: '3rd floor',
+    epc: 'C',
+    tags: [
+      'Furnished', '3rd Floor', 'Concierge', 'Elevator', 'Terrace',
+      'Open Plan Kitchen', 'Dishwasher', 'Freezer', 'Washer', 'Big Windows',
+      'Ample Storage',
+    ],
+    headline: '2-Bedroom Flat to Rent in Canning Town | Jude Street, London | Available 26th September | 712 sq. ft. | 3rd Floor | EPC: C | Council Tax Band: C',
+    description: 'Flat to rent in Canning Town South on Jude Street, 2 bed, 2 bath, 712 sq ft, third floor. Big windows, ample storage, private balcony, abundant natural light. Open-plan kitchen with dishwasher, freezer, washer, lift, concierge. Moments from Canning Town, North Greenwich, and Canary Wharf tube stations.',
+    amenities: 'Open-plan kitchen with integrated dishwasher, freezer and washer. Private balcony/terrace. Lift access. Concierge. Big windows and generous built-in storage.',
+    keyFeatures: [
+      'Private balcony with abundant natural light',
+      'Open-plan kitchen with integrated dishwasher, freezer and washer',
+      'Lift access and concierge',
+    ],
+    compliance: {
+      epc: 'C',
+      councilTax: 'Band C',
+    },
+    location: 'Situated on Jude Street in Canning Town South, the flat is moments from Canning Town station, with North Greenwich and Canary Wharf close by. The area is well served by the Jubilee line, the DLR and the Elizabeth line, making it an ideal base for commuters and young professionals.',
+    nearby: [
+      { name: 'North Greenwich',            distance: '0.9 miles', kind: 'Tube' },
+      { name: "St Luke's Primary School",   distance: '0.1 miles', kind: 'School' },
+      { name: 'Hallsville Primary School',  distance: '0.3 miles', kind: 'School' },
+      { name: 'Faraday School',             distance: '0.3 miles', kind: 'School' },
+    ],
+    income: {
+      rentPM: '£2,947',
+      ukIncome: '£88,410pa',
+      ukGuarantor: '£106,092pa',
+      foreignGuarantor: 'Not considered',
+      adverseCredit: 'No active CCJ',
+    },
+    // Order verified against the actual uploaded photos:
+    // living(1,2,3) · kitchen(4) · bedroom(5,6) · bath(7,8,9) · balcony(10) ·
+    // view(11) · hallway(12) · building exterior(13,14) · floor plan(15, last).
+    image: '/images/jude-street-2bed-2947/1.jpeg',
+    imageLabel: 'Living Room',
+    gallery: [
+      { src: '/images/jude-street-2bed-2947/2.jpeg', label: 'Living Room' },
+      { src: '/images/jude-street-2bed-2947/3.jpeg', label: 'Living Room' },
+      { src: '/images/jude-street-2bed-2947/4.jpeg', label: 'Kitchen' },
+      { src: '/images/jude-street-2bed-2947/5.jpeg', label: 'Bedroom' },
+      { src: '/images/jude-street-2bed-2947/6.jpeg', label: 'Bedroom' },
+      { src: '/images/jude-street-2bed-2947/7.jpeg', label: 'Bathroom' },
+      { src: '/images/jude-street-2bed-2947/8.jpeg', label: 'Bathroom' },
+      { src: '/images/jude-street-2bed-2947/9.jpeg', label: 'Bathroom' },
+      { src: '/images/jude-street-2bed-2947/10.jpeg', label: 'Balcony' },
+      { src: '/images/jude-street-2bed-2947/11.jpeg', label: 'View' },
+      { src: '/images/jude-street-2bed-2947/12.jpeg', label: 'Hallway' },
+      { src: '/images/jude-street-2bed-2947/13.jpeg', label: 'Building Exterior' },
+      { src: '/images/jude-street-2bed-2947/14.jpeg', label: 'Building Exterior' },
+      { src: '/images/jude-street-2bed-2947/15.jpeg', label: 'Floor Plan' },
+    ],
+    teaser: 'Furnished 2-bed on the third floor with a private balcony, open-plan kitchen, lift and concierge — moments from Canning Town station.',
+  },
 ]
 
 export function getPropertyBySlug(slug: string): Property | undefined {
