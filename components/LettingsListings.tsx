@@ -171,14 +171,13 @@ export default function LettingsListings() {
                   </div>
                 </Reveal>
 
-                {/* Masonry column flow: the varied natural-aspect frames pack
-                    into a gallery-wall rhythm instead of a rigid grid whose
-                    rows would size to the tallest card and leave gaps. */}
-                <div style={{ columnWidth: '340px', columnGap: 36 }}>
+                {/* Uniform grid: now that every card shares a fixed 4:3 image
+                    frame, a plain auto-fill grid lines the cards up cleanly in
+                    rows (matching the other neighbourhoods) instead of the old
+                    masonry flow that suited varied natural-aspect frames. */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '48px 36px', alignItems: 'start' }}>
                   {canaryWharf.map(prop => (
-                    <div key={prop.slug} style={{ breakInside: 'avoid', marginBottom: 48 }}>
-                      <PropertyCard property={prop} />
-                    </div>
+                    <PropertyCard key={prop.slug} property={prop} />
                   ))}
                 </div>
               </div>
@@ -290,15 +289,17 @@ function PropertyCard({ property }: { property: Property }) {
       {/* The frame — cream matting (surface-2), generous padding on all
           sides, lifted off the page with a soft shadow like hung artwork. */}
       <div style={{ position: 'relative', background: 'var(--surface-2)', padding: 'clamp(24px, 3vw, 38px)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(52,48,43,0.06)', boxShadow: '0 16px 36px -22px rgba(40,35,28,0.42), 0 2px 6px -3px rgba(40,35,28,0.12)' }}>
-        {/* The photo, with a thin gold hairline directly around it. Natural
-            aspect ratio (height:auto) so each frame's proportion follows its
-            own photo — some taller, some wider. */}
-        <div style={{ position: 'relative', overflow: 'hidden', border: '1px solid rgba(160,132,92,0.5)', borderRadius: 2, background: '#26221C' }}>
+        {/* The photo, with a thin gold hairline directly around it. Fixed 4:3
+            frame applied uniformly to every card — so every image renders at
+            the same proportions and cards line up cleanly in rows regardless
+            of each photo's native dimensions. object-fit:cover fills the frame
+            without distortion (mild crop rather than letterboxing). */}
+        <div style={{ position: 'relative', aspectRatio: '4 / 3', overflow: 'hidden', border: '1px solid rgba(160,132,92,0.5)', borderRadius: 2, background: '#26221C' }}>
           <img
             src={property.image}
             alt={`${property.title}, ${property.area}`}
             loading="lazy"
-            style={{ display: 'block', width: '100%', height: 'auto', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
+            style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
           />
           {/* TO LET badge — small, understated, sitting ON the photo, top-left. */}
           <span style={{ position: 'absolute', top: 12, left: 12, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>

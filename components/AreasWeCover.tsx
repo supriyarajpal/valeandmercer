@@ -24,7 +24,7 @@ const AREAS: Area[] = [
 // One quiet line, in our own voice, reinforcing local knowledge.
 const TAGLINE = 'Where we know every street.'
 
-const CYCLE_MS = 2800
+const CYCLE_MS = 1700
 
 // A single COMPACT module (photo tile + colour panel side by side) that
 // auto-cycles through all five areas in place — no longer five full-height
