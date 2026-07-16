@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import ArrowButton from '@/components/ArrowButton'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 import { getLiveProperties, type Property } from '@/lib/properties'
@@ -128,7 +128,7 @@ export default function LettingsListings() {
                 them. This is the single, canonical render of these listings;
                 there is no second per-neighbourhood block below. */}
             {otherGroups.length > 0 && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '44px 24px', alignItems: 'start', marginBottom: canaryWharf.length > 0 ? 72 : 0 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '64px 36px', alignItems: 'start', marginBottom: canaryWharf.length > 0 ? 88 : 0 }}>
                 {otherGroups.map(([area, list]) => (
                   <div key={area}>
                     <Reveal y={16} amount={0.15}>
@@ -142,7 +142,7 @@ export default function LettingsListings() {
                         </span>
                       </div>
                     </Reveal>
-                    <Stagger as="div" stagger={0.08} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                    <Stagger as="div" stagger={0.08} style={{ display: 'flex', flexDirection: 'column', gap: 48 }}>
                       {list.map(prop => (
                         <StaggerItem key={prop.slug} as="div">
                           <PropertyCard property={prop} />
@@ -171,17 +171,16 @@ export default function LettingsListings() {
                   </div>
                 </Reveal>
 
-                <Stagger
-                  as="div"
-                  stagger={0.08}
-                  style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24, alignItems: 'stretch' }}
-                >
+                {/* Masonry column flow: the varied natural-aspect frames pack
+                    into a gallery-wall rhythm instead of a rigid grid whose
+                    rows would size to the tallest card and leave gaps. */}
+                <div style={{ columnWidth: '340px', columnGap: 36 }}>
                   {canaryWharf.map(prop => (
-                    <StaggerItem key={prop.slug} as="div" style={{ height: '100%' }}>
+                    <div key={prop.slug} style={{ breakInside: 'avoid', marginBottom: 48 }}>
                       <PropertyCard property={prop} />
-                    </StaggerItem>
+                    </div>
                   ))}
-                </Stagger>
+                </div>
               </div>
             )}
           </section>
@@ -259,9 +258,12 @@ export default function LettingsListings() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Individual property card — dark ink surface, gold accents,         */
-/* linking to /property/[slug]. Same visual language as coming-soon   */
-/* cards but with the rent, area and bed/bath details filled in.      */
+/* Gallery-frame property card — the photograph sits inside generous   */
+/* cream matting with a thin gold hairline directly around it (framed  */
+/* artwork, not an app card). The label (locality · name · specs) lives */
+/* in open space BELOW the frame, never overlaid on the photo. The     */
+/* image renders at its natural aspect ratio, so frame proportions vary */
+/* photo to photo for a gallery-wall rhythm rather than a uniform box.  */
 /* ------------------------------------------------------------------ */
 
 function PropertyCard({ property }: { property: Property }) {
@@ -271,13 +273,12 @@ function PropertyCard({ property }: { property: Property }) {
     <Link
       id={`property-${property.slug}`}
       href={href}
-      className="card-lift"
-      style={{ textDecoration: 'none', position: 'relative', display: 'block', height: '100%', minHeight: 400 }}
+      style={{ textDecoration: 'none', position: 'relative', display: 'block' }}
       onMouseEnter={e => {
         const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
         const img = e.currentTarget.querySelector<HTMLImageElement>('img')
         if (arrow) arrow.style.transform = 'translateX(6px)'
-        if (img) img.style.transform = 'scale(1.05)'
+        if (img) img.style.transform = 'scale(1.04)'
       }}
       onMouseLeave={e => {
         const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
@@ -286,76 +287,168 @@ function PropertyCard({ property }: { property: Property }) {
         if (img) img.style.transform = 'scale(1)'
       }}
     >
-      {/* Same glassmorphism backdrop as the property page's Enquire
-          sidebar (app/property/[slug]/page.tsx PropertySidebar): a
-          blurred gold/bronze/ink gradient blob, clipped to the card's
-          own rounded box so it can't bleed onto neighbouring cards. */}
-      <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
-        <div style={{ position: 'absolute', inset: '-15%', filter: 'blur(22px)', background: 'radial-gradient(45% 35% at 24% 18%, rgba(160,132,92,0.75), transparent 68%), radial-gradient(52% 42% at 88% 84%, rgba(122,96,62,0.65), transparent 70%), radial-gradient(50% 40% at 60% 52%, rgba(40,35,28,0.55), transparent 72%)' }} />
-      </div>
-
-      {/* `.glass-strong`'s default background (--glass-bg-strong, 0.56
-          opacity) and hairline border read fine on the Enquire sidebar,
-          which sits over a fixed cream page background — but here the
-          panel sits over its OWN blob, whose brighter gold patch can
-          land right behind the area-label text and wash it out, and the
-          class's border read as an unwanted outline against the busy
-          backdrop. Override both: a darker, more opaque tint keeps text
-          legible regardless of where the blob's bright spot falls, and
-          dropping the border/inset-highlight removes the outline while
-          keeping the soft drop shadow for depth. */}
-      <div className="glass-strong" style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', borderRadius: 'var(--radius-lg)', background: 'rgba(30,26,20,0.82)', border: 'none', boxShadow: 'var(--glass-shadow)' }}>
-        <div style={{ position: 'relative', overflow: 'hidden', height: 200, background: '#26221C' }}>
+      {/* The frame — cream matting (surface-2), generous padding on all
+          sides, lifted off the page with a soft shadow like hung artwork. */}
+      <div style={{ position: 'relative', background: 'var(--surface-2)', padding: 'clamp(24px, 3vw, 38px)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(52,48,43,0.06)', boxShadow: '0 16px 36px -22px rgba(40,35,28,0.42), 0 2px 6px -3px rgba(40,35,28,0.12)' }}>
+        {/* The photo, with a thin gold hairline directly around it. Natural
+            aspect ratio (height:auto) so each frame's proportion follows its
+            own photo — some taller, some wider. */}
+        <div style={{ position: 'relative', overflow: 'hidden', border: '1px solid rgba(160,132,92,0.5)', borderRadius: 2, background: '#26221C' }}>
           <img
             src={property.image}
             alt={`${property.title}, ${property.area}`}
             loading="lazy"
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 1, transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
+            style={{ display: 'block', width: '100%', height: 'auto', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
           />
-          {/* Subtle bottom fade only — keeps the badge legible without
-              dimming the photograph itself. */}
-          <span aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(52,48,43,0) 55%, rgba(52,48,43,0.55) 100%)' }} />
-          <span style={{ position: 'absolute', top: 16, left: 16, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
+          {/* TO LET badge — small, understated, sitting ON the photo, top-left. */}
+          <span style={{ position: 'absolute', top: 12, left: 12, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
             {property.listingType}
           </span>
         </div>
 
-        <div style={{ padding: '26px 28px 28px', display: 'flex', flexDirection: 'column', gap: 14, flex: 1 }}>
-          {/* 1. locality (gold small-caps)  2. property name (serif). Below
-              these: specs, divider, price + arrow, and price-per-week /
-              availability. Single shared layout for EVERY card on the page. */}
-          <div>
-            <p style={{ fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(160,132,92,0.85)', marginBottom: 8 }}>
-              {property.area}
-            </p>
-            <h3 style={{ fontSize: 20, color: '#F2EFE9', lineHeight: 1.2 }}>
-              {property.title}
-            </h3>
-          </div>
+        {/* Favourite heart — sits in the matting, top-right, off the photo. */}
+        <FavoriteHeart slug={property.slug} title={property.title} />
+      </div>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.55)' }}>
-            <span>{bedLabel}</span>
-            <span style={{ opacity: 0.35 }}>·</span>
-            <span>{property.baths} bath{property.baths === 1 ? '' : 's'}</span>
-            {property.sqft != null && (<>
-              <span style={{ opacity: 0.35 }}>·</span>
-              <span>{property.sqft} sq. ft.</span>
-            </>)}
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginTop: 'auto', paddingTop: 20, borderTop: '0.5px solid rgba(242,239,233,0.15)' }}>
-            <div>
-              <div style={{ fontFamily: 'var(--font-serif)', fontSize: 23, fontWeight: 300, color: '#F2EFE9', letterSpacing: '-0.01em' }}>
-                {property.rent}
-              </div>
-              <div style={{ fontSize: 11, color: 'rgba(242,239,233,0.5)' }}>
-                {property.rentPW} · Available {property.available}
-              </div>
-            </div>
-            <span data-arrow aria-hidden style={{ color: '#A0845C', fontSize: 14, transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>
-          </div>
+      {/* Label — in open space BELOW the frame, real vertical gap, never a
+          panel butted against the image. */}
+      <div style={{ marginTop: 'clamp(16px, 1.8vw, 24px)', padding: '0 2px' }}>
+        {/* Locality — small, quiet italic line. */}
+        <div style={{ fontStyle: 'italic', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.01em', marginBottom: 8 }}>
+          {property.area}
+        </div>
+        {/* Property name — the dominant text element: large serif headline. */}
+        <h3 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(22px, 2.4vw, 30px)', color: 'var(--text)', lineHeight: 1.12, letterSpacing: '-0.01em', marginBottom: 14 }}>
+          {property.title}
+        </h3>
+        {/* One minimal spec line — beds · baths · price, generously spaced
+            small caps, no divider rule or boxed price. Price is emphasised;
+            the arrow CTA follows it immediately. */}
+        <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px 12px', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+          <span>{bedLabel}</span>
+          <span aria-hidden style={{ color: 'var(--border-strong)' }}>·</span>
+          <span>{property.baths} bath{property.baths === 1 ? '' : 's'}</span>
+          <span aria-hidden style={{ color: 'var(--border-strong)' }}>·</span>
+          <span style={{ fontSize: 14, letterSpacing: '0.06em', color: 'var(--text)' }}>{property.rent}</span>
+          <span data-arrow aria-hidden style={{ color: '#A0845C', fontSize: 15, letterSpacing: 0, transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>
         </div>
       </div>
     </Link>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* Favourite heart — top-right of each Lettings card. Outline by       */
+/* default, fills gold on tap with a smooth fill + a pop micro-        */
+/* interaction. Persists favourited slugs in localStorage so the mark  */
+/* survives navigation/reload. Client-only; no backend.               */
+/* ------------------------------------------------------------------ */
+
+const FAVORITES_KEY = 'vm-favourites'
+
+function readFavourites(): string[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = window.localStorage.getItem(FAVORITES_KEY)
+    const parsed = raw ? JSON.parse(raw) : []
+    return Array.isArray(parsed) ? parsed.filter((s): s is string => typeof s === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+function writeFavourites(list: string[]): void {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(list))
+  } catch {
+    /* private-mode / quota — favouriting is best-effort, never fatal */
+  }
+}
+
+function FavoriteHeart({ slug, title }: { slug: string; title: string }) {
+  // Starts false on both server and first client render (localStorage is not
+  // available at SSR), then syncs to the stored value after mount — so there's
+  // no hydration mismatch, just a one-frame settle for already-favourited cards.
+  const [fav, setFav] = useState(false)
+
+  useEffect(() => {
+    setFav(readFavourites().includes(slug))
+  }, [slug])
+
+  // The card itself is a <Link>; a <button> nested in an <a> is invalid, so
+  // this is a role="button" span — valid inside the anchor, moves with the
+  // card's hover-lift, and toggles without navigating.
+  const activate = (el: HTMLElement) => {
+    const next = !fav
+    setFav(next)
+    const list = readFavourites()
+    writeFavourites(next ? Array.from(new Set([...list, slug])) : list.filter(s => s !== slug))
+
+    // Satisfying pop on every activation (Web Animations API retriggers cleanly).
+    el.animate?.(
+      [
+        { transform: 'scale(1)' },
+        { transform: 'scale(1.28)', offset: 0.35 },
+        { transform: 'scale(0.92)', offset: 0.7 },
+        { transform: 'scale(1)' },
+      ],
+      { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+    )
+  }
+
+  const onClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    activate(e.currentTarget)
+  }
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault()
+      e.stopPropagation()
+      activate(e.currentTarget)
+    }
+  }
+
+  return (
+    <span
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+      aria-pressed={fav}
+      aria-label={fav ? `Remove ${title} from favourites` : `Add ${title} to favourites`}
+      style={{
+        // Sits in the cream matting (top-right corner), off the photo, so no
+        // dark glass backing is needed — a quiet gold outline that fills gold.
+        position: 'absolute',
+        top: 6,
+        right: 6,
+        zIndex: 3,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 26,
+        height: 26,
+        padding: 0,
+        borderRadius: '50%',
+        cursor: 'pointer',
+        background: 'transparent',
+        border: 'none',
+        lineHeight: 0,
+      }}
+    >
+      <svg viewBox="0 0 24 24" width={16} height={16} aria-hidden style={{ display: 'block', overflow: 'visible' }}>
+        <path
+          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+          fill={fav ? '#A0845C' : 'rgba(160,132,92,0)'}
+          stroke={fav ? '#A0845C' : 'rgba(160,132,92,0.7)'}
+          strokeWidth={1.6}
+          strokeLinejoin="round"
+          style={{ transition: 'fill 230ms var(--ease-apple), stroke 230ms var(--ease-apple)' }}
+        />
+      </svg>
+    </span>
   )
 }

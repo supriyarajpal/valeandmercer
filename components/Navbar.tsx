@@ -45,11 +45,12 @@ export default function Navbar() {
   const firstLoad = useFirstLoad()
 
   const isDarkHero = pathIsDarkHero(pathname)
-  // On individual property pages we swap the site eyebrow ("Est. London")
-  // for an inline "Back to Lettings" link so the eyebrow doubles as the
-  // page's back-navigation. Behaviour is scoped strictly to `/property/*`;
-  // every other route keeps the marque as-is.
+  // The site eyebrow ("Est. London") is homepage-exclusive — it belongs to
+  // the home hero marque only. On individual property pages the eyebrow row
+  // is repurposed as an inline "Back to Lettings" link (page back-nav). On
+  // every other route the eyebrow row is not rendered at all.
   const isPropertyDetail = pathname.startsWith('/property/')
+  const isHome = pathname === '/'
 
   useEffect(() => {
     const checkSize = () => setMobile(window.innerWidth < 900)
@@ -292,6 +293,10 @@ export default function Navbar() {
             Off by 0.4px — within imperceptible. Left edge stays at
             var(--gutter) because both rows share the same padded wrapper.
           */}
+          {/* Eyebrow row: homepage shows the "Est. London" marque; property
+              pages show a "Back to Lettings" link; every other route renders
+              nothing here. */}
+          {(isHome || isPropertyDetail) && (
           <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }}>
             <div
               aria-hidden={hideEyebrow}
@@ -323,6 +328,7 @@ export default function Navbar() {
               )}
             </div>
           </motion.div>
+          )}
         </div>
         </div>
       </motion.nav>

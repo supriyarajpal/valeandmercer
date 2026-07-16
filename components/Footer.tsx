@@ -51,7 +51,7 @@ export default function Footer() {
       initial={reduce ? false : { opacity: 0, scale: 0.98, y: 24 }}
       animate={reduce ? undefined : inView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.98, y: 24 }}
       transition={{ duration: 1.4, ease: EASE }}
-      style={{ background: '#34302B', color: '#F2EFE9', transformOrigin: 'center bottom', willChange: 'transform, opacity' }}
+      style={{ background: '#3E3931', color: '#F2EFE9', transformOrigin: 'center bottom', willChange: 'transform, opacity' }}
     >
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '56px 20px 32px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 40 }}>
           <Stagger as="div" stagger={0.08}>

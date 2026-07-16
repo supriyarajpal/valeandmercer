@@ -165,22 +165,33 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
                   pointerEvents: 'none',
                 }}
               />
-              {/* Sharp, uncropped foreground — the real photo. */}
-              <img
-                src={img.src}
-                alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : ''}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                fetchPriority={i === 0 ? 'high' : 'auto'}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  objectPosition: 'center',
-                  pointerEvents: 'none',
-                }}
-              />
+              {/* Sharp, uncropped foreground — the real photo. Centered in
+                  an absolute-fill flex box and auto-sized (max 100% w/h) so
+                  the <img> element box hugs the photo's true rectangle
+                  rather than the full letterboxed frame. This is visually
+                  identical to the previous object-fit:contain (same scale,
+                  same centre) but lets the gallery border trace the actual
+                  photo edges. */}
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+                <img
+                  src={img.src}
+                  alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : ''}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={i === 0 ? 'high' : 'auto'}
+                  style={{
+                    display: 'block',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
+                    width: 'auto',
+                    height: 'auto',
+                    // Thin WHITE hairline hugging each photo — but ONLY once
+                    // the full gallery/lightbox view is open (galleryOpen).
+                    // The pre-gallery hero image stays borderless.
+                    border: galleryOpen ? '1px solid rgba(255,255,255,0.2)' : 'none',
+                    pointerEvents: 'none',
+                  }}
+                />
+              </div>
             </div>
           )
         })}

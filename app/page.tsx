@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import FeaturedProperties from '@/components/FeaturedProperties'
+import AreasWeCover from '@/components/AreasWeCover'
 import BuyingSection from '@/components/BuyingSection'
 import ValuationStrip from '@/components/ValuationStrip'
 import AboutStrip from '@/components/AboutStrip'
@@ -37,6 +38,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <FeaturedProperties />
+      <AreasWeCover />
       <BuyingSection />
       <ValuationStrip />
       <AboutStrip />
