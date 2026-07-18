@@ -96,6 +96,18 @@ export default function Footer() {
                       style={{ height: 22, width: 'auto', display: 'block' }}
                     />
                   </div>
+                  {/* Same 44px-tall white plate as the other two badges, but a
+                      taller logo (32px vs 22px) inside its 6px padding: this is
+                      a text-heavy 3-line lockup, so it needs more height to read
+                      at the same weight as "Property Redress"/"arla". The source
+                      PNG is cropped tight to its content so it fills the plate. */}
+                  <div style={{ background: '#fff', padding: '6px 12px', display: 'inline-flex', alignItems: 'center' }}>
+                    <img
+                      src="/images/tenancy-deposit.png"
+                      alt="Tenancy Deposit Scheme"
+                      style={{ height: 32, width: 'auto', display: 'block' }}
+                    />
+                  </div>
                 </div>
                 <p style={{ fontSize: 10, color: 'rgba(242,239,233,0.25)', lineHeight: 1.8 }}>
                   Member of Property Redress Scheme<br />
