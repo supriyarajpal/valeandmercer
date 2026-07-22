@@ -81,6 +81,53 @@ export default function FeesPage() {
 
             <h3 style={h3Style}>Full Management</h3>
             <p style={pStyle}>Everything in Rent Collection, plus a dedicated property manager as your single point of contact, periodic property inspections, maintenance coordination, 24/7 emergency out-of-hours contact, preparation and service of legal notices where required, proactive rent review and compliance reminders, and check-out inspection and tenancy deposit return management.</p>
+
+            <h3 style={h3Style}>Pre-Tenancy Compliance</h3>
+            <p style={pStyle}>Certain certificates are a legal requirement before a property can be let. Where you do not already hold valid, in-date certificates, we can arrange them on your behalf through vetted, accredited contractors and hold copies on file with your compliance dates tracked.</p>
+            <div style={{overflowX:'auto',marginBottom:'12px'}}>
+              <table style={{...tableStyle,minWidth:'500px'}}>
+                <thead><tr><th style={thStyle}>Certificate</th><th style={thStyle}>When Required</th><th style={thStyle}>Fee</th></tr></thead>
+                <tbody>
+                  {[
+                    ['Energy Performance Certificate (EPC)','Before marketing; valid 10 years. Minimum band E now, rising to band C for all tenancies from 1 October 2030','£120'],
+                    ['Gas Safety Record (CP12)','Annually, where gas is present','£100'],
+                    ['Electrical Installation Condition Report (EICR)','Every 5 years','£140'],
+                    ['Legionella Risk Assessment','Landlords have a legal duty to assess the risk','£85'],
+                    ['Smoke and carbon monoxide alarm supply and fit','Required in all let properties','at cost'],
+                  ].map(([c,w,f],i)=>(
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}>
+                      <td style={{...tdStyle,fontWeight:500}}>{c}</td>
+                      <td style={tdStyle}>{w}</td>
+                      <td style={{...tdStyle,color:'#A0845C'}}>{f}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={{...pStyle,fontStyle:'italic',fontSize:'12px',color:'var(--text-faint)'}}>Certificate fees cover arranging the inspection, the contractor&apos;s work, and issuing the certificate.</p>
+
+            <h3 style={h3Style}>Additional Landlord Services</h3>
+            <p style={pStyle}>Optional services outside your chosen management level. Charged only when used, always agreed in advance.</p>
+            <div style={{overflowX:'auto',marginBottom:'12px'}}>
+              <table style={{...tableStyle,minWidth:'500px'}}>
+                <thead><tr><th style={thStyle}>Service</th><th style={thStyle}>Description</th><th style={thStyle}>Fee</th></tr></thead>
+                <tbody>
+                  {[
+                    ['Inventory and check-in report','Independent schedule of condition and meter readings at the start of a tenancy','from £120'],
+                    ['Check-out report','Independent condition report at the end of a tenancy','from £100'],
+                    ['Refurbishment and works management','Overseeing works between tenancies, from sourcing contractors to sign-off','10% of works value'],
+                    ['Non-resident landlord handling','Managing HMRC returns and annual certificate for landlords living overseas','£100 per year'],
+                    ['Rent protection and legal expenses cover','Optional cover against tenant rent arrears, including legal costs for possession','By enquiry — please contact us'],
+                  ].map(([s,d,f],i)=>(
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}>
+                      <td style={{...tdStyle,fontWeight:500}}>{s}</td>
+                      <td style={tdStyle}>{d}</td>
+                      <td style={{...tdStyle,color:'#A0845C'}}>{f}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div style={sectionStyle}>
@@ -120,7 +167,6 @@ export default function FeesPage() {
                     ['Late rent','Rent 14+ days overdue','3% above Bank of England base rate'],
                     ['Lost keys / security device','If you lose keys or a fob','Actual cost of replacement'],
                     ['Tenancy variation','If you request a change, e.g. adding a new flatmate','£50'],
-                    ['Early termination','If you wish to leave before your tenancy ends','Landlord\'s reasonable re-letting costs and rent until a replacement tenant moves in'],
                   ].map(([c,w,a],i)=>(
                     <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}>
                       <td style={{...tdStyle,fontWeight:500}}>{c}</td>
@@ -131,6 +177,7 @@ export default function FeesPage() {
                 </tbody>
               </table>
             </div>
+            <p style={pStyle}><strong style={{fontWeight:500,color:'var(--text)'}}>Ending your tenancy.</strong> All assured tenancies are now periodic — there is no fixed term. You may end your tenancy at any time by giving at least two months&apos; written notice. Rent remains payable to the end of your notice period. We do not charge any fee for ending a tenancy.</p>
             <p style={{...pStyle,fontStyle:'italic',fontSize:'12px',color:'var(--text-faint)'}}>All other fees including referencing, credit checks, administration, check-out, and renewal fees are prohibited under the Tenant Fees Act 2019. Vale and Mercer Ltd does not charge tenants for any of these.</p>
           </div>
 
