@@ -47,7 +47,7 @@ const orgJsonLd = {
   name: 'Vale and Mercer Ltd',
   alternateName: 'Vale & Mercer',
   url: SITE_URL,
-  logo: SITE_URL + '/icon.svg',
+  logo: SITE_URL + '/icon.png',
   email: 'info@valeandmercer.co.uk',
   description: 'London residential property agency offering lettings, new homes, and student lets.',
   areaServed: { '@type': 'City', name: 'London' },
