@@ -5,6 +5,8 @@ import MotionProvider from '@/components/MotionProvider'
 import './globals.css'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
+// Meta (Facebook) Pixel ID. Not sensitive — handled like the Web3Forms key.
+const META_PIXEL_ID = '1051400940780137'
 const OG_IMAGE = 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&h=630&fit=crop&q=85'
 const DESCRIPTION = 'London lettings, sales and property valuations. Independent London estate agency for residential lettings, new homes, and student lets. Personal service and honest advice from Vale and Mercer.'
 
@@ -96,8 +98,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           data-blockingmode="auto"
           strategy="afterInteractive"
         />
+        {/* Meta (Facebook) Pixel — `afterInteractive` so the tracker loads
+            after hydration and never blocks initial paint. Fires a PageView
+            on every route because it lives in the root layout. */}
+        <Script id="meta-pixel" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '${META_PIXEL_ID}');
+            fbq('track', 'PageView');
+          `}
+        </Script>
       </head>
       <body>
+        {/* Meta Pixel fallback for browsers with JavaScript disabled. */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
