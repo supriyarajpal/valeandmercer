@@ -10,6 +10,11 @@ const links = [
   { label: 'Lettings', href: '/let' },
   { label: 'New Homes', href: '/buy' },
   { label: 'Blog', href: '/blog' },
+  // Instant Valuation (automated online estimate) sits last so it pairs
+  // with the Book Valuation CTA that follows it — the two valuation
+  // actions (instant estimate vs. booking a full in-person valuation)
+  // read as a group. Also mirrored into the mobile menu below via ...links.
+  { label: 'Instant Valuation', href: '/instant-valuation' },
 ]
 
 const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/student-lettings']
