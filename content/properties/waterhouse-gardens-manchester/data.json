@@ -1,0 +1,60 @@
+{
+  "name": "Waterhouse Gardens",
+  "address": "Dutton Street, Manchester",
+  "postcode": "M3 1LE",
+  "locality": "Manchester",
+  "price": "Register your interest",
+  "developer": "Salboy",
+  "totalUnits": 556,
+  "unitMix": [
+    { "type": "Apartments" },
+    { "type": "Duplexes" },
+    { "type": "Penthouses" }
+  ],
+  "headline": "A new pulse in the city",
+  "description": "A commanding new landmark, Waterhouse Gardens is a residential-led development surrounded by landscaped public spaces, boutique traders and independent eateries. A community of high-spec apartments, duplexes and penthouses are coupled with a private clubhouse offering high-end amenities and services to residents. It sits at the centre of a three-acre estate of 556 high-spec residential units across five towers.",
+  "developmentAmenities": [
+    "The Waterhouse Club — private residents' clubhouse",
+    "Concierge",
+    "Co-working lounge and adaptable meeting room",
+    "Private dining",
+    "Residents' lounge and games area with table tennis and pool table",
+    "Cinema",
+    "Swimming pool and spa with plunge pool, experience shower, steam room and sauna",
+    "Relaxation suite with vitality pool, lounge area and sunken garden",
+    "2,500 sq. ft gymnasium and fitness studio",
+    "Half-size basketball court and squash court",
+    "Cycle store",
+    "Private podium garden"
+  ],
+  "specification": [
+    {
+      "heading": "Living space",
+      "items": [
+        "Recessed downlighting",
+        "Laminate wood flooring"
+      ]
+    },
+    {
+      "heading": "Kitchen",
+      "items": [
+        "Bespoke cabinetry with gloss finishes",
+        "Integrated modern appliances",
+        "Warm-toned lighting",
+        "Integrated fridge & freezer",
+        "Stainless steel oven",
+        "Induction hob"
+      ]
+    },
+    {
+      "heading": "Bathrooms",
+      "items": [
+        "Contemporary appliances, tiling and lighting",
+        "Full-sized LED backlit mirror",
+        "Bath and shower with bath screen and control valve",
+        "Tiling to bathroom and en-suites"
+      ]
+    }
+  ],
+  "locationNotes": "Situated a short distance from central Manchester, connecting the popular Greengate and N.O.M.A neighbourhoods with the historic Medieval Quarter."
+}

@@ -1,0 +1,93 @@
+{
+  "name": "St. George's Terrace",
+  "locality": "York",
+  "price": "Register your interest",
+  "developer": "Torsion Homes",
+  "totalUnits": 35,
+  "unitMix": [
+    { "unit": "0.01", "type": "1 bed", "size": "632.3 sq ft" },
+    { "unit": "0.02", "type": "1 bed", "size": "583.5 sq ft" },
+    { "unit": "0.03", "type": "1 bed", "size": "566.9 sq ft" },
+    { "unit": "0.04", "type": "2 bed", "size": "802.3 sq ft" },
+    { "unit": "0.05", "type": "2 bed", "size": "783.0 sq ft" },
+    { "unit": "0.06", "type": "1 bed", "size": "559.3 sq ft" },
+    { "unit": "0.07", "type": "2 bed", "size": "851.4 sq ft" },
+    { "unit": "0.08", "type": "2 bed", "size": "902.1 sq ft" },
+    { "unit": "1.01", "type": "1 bed", "size": "567.8 sq ft" },
+    { "unit": "1.02", "type": "1 bed", "size": "518.9 sq ft" },
+    { "unit": "1.03", "type": "1 bed", "size": "502.3 sq ft" },
+    { "unit": "1.04", "type": "1 bed", "size": "540.9 sq ft" },
+    { "unit": "1.05", "type": "2 bed", "size": "762.9 sq ft" },
+    { "unit": "1.06", "type": "2 bed", "size": "733.7 sq ft" },
+    { "unit": "1.07", "type": "1 bed", "size": "626.3 sq ft" },
+    { "unit": "1.08", "type": "2 bed", "size": "850.9 sq ft" },
+    { "unit": "1.09", "type": "2 bed", "size": "830.9 sq ft" },
+    { "unit": "2.01", "type": "1 bed", "size": "567.7 sq ft" },
+    { "unit": "2.02", "type": "1 bed", "size": "518.9 sq ft" },
+    { "unit": "2.03", "type": "1 bed", "size": "501.8 sq ft" },
+    { "unit": "2.04", "type": "1 bed", "size": "540.5 sq ft" },
+    { "unit": "2.05", "type": "2 bed", "size": "762.8 sq ft" },
+    { "unit": "2.06", "type": "2 bed", "size": "733.0 sq ft" },
+    { "unit": "2.07", "type": "1 bed", "size": "626.2 sq ft" },
+    { "unit": "2.08", "type": "2 bed", "size": "849.9 sq ft" },
+    { "unit": "2.09", "type": "2 bed", "size": "830.2 sq ft" },
+    { "unit": "3.01", "type": "1 bed", "size": "543.1 sq ft" },
+    { "unit": "3.02", "type": "1 bed", "size": "487.3 sq ft" },
+    { "unit": "3.03", "type": "1 bed", "size": "473.7 sq ft" },
+    { "unit": "3.04", "type": "1 bed", "size": "515.7 sq ft" },
+    { "unit": "3.05", "type": "1 bed", "size": "587.5 sq ft" },
+    { "unit": "3.06", "type": "1 bed", "size": "551.4 sq ft" },
+    { "unit": "3.07", "type": "2 bed (duplex)", "size": "722.5 sq ft" },
+    { "unit": "3.08", "type": "3 bed (duplex)", "size": "1384.6 sq ft" },
+    { "unit": "3.09", "type": "3 bed (duplex)", "size": "1232.0 sq ft" }
+  ],
+  "headline": "An exclusive development",
+  "description": "Comprising just 35 individually designed apartments, St. George's Terrace offers a rare opportunity to own within one of York's most tightly held locations. The architecture has been carefully considered to sit comfortably within its historic setting, while the interiors deliver the clean lines, natural light and level of specification expected of modern city living. This is a boutique scheme, defined by quality over quantity. Its exceptional positioning within the very heart of the city underpins its long-term desirability.",
+  "highlightedFeatures": ["Many homes benefit from private balconies"],
+  "specification": [
+    {
+      "heading": "Kitchen",
+      "items": [
+        "High quality handleless kitchen cabinets incorporating the latest soft closing doors and drawer systems",
+        "Integrated LED lighting to wall mounted cabinets, worktop edge and plinth",
+        "Low profile worktops with undermounted sink and single lever mixer tap"
+      ]
+    },
+    {
+      "heading": "Appliances (Bosch or similar)",
+      "items": [
+        "Integrated fridge/freezer",
+        "Induction hob",
+        "Integrated dishwasher",
+        "Integrated washer/dryer",
+        "Integrated combi oven",
+        "Integrated single oven"
+      ]
+    },
+    {
+      "heading": "Flooring & General",
+      "items": [
+        "High quality LVT flooring",
+        "Porcelain tiling to bathrooms and ensuites",
+        "Carpets included",
+        "All terraces to be accessed via glazed French doors",
+        "Paving to terraces"
+      ]
+    },
+    {
+      "heading": "Bathrooms",
+      "items": [
+        "Porcelanosa (or equivalent) ceramic basin",
+        "WC with soft-close seat and dual push flush plate",
+        "Porcelain wall and floor tiling",
+        "Acrylic bath",
+        "Bath panels clad in porcelain to match floor tiles",
+        "High-quality chrome brassware",
+        "Thermostatically controlled shower",
+        "Frameless glass shower screens",
+        "Wall-mounted chrome heated towel rail"
+      ]
+    }
+  ],
+  "locationNotes": "Clifford's Tower: 4 min walk; The Shambles: 7 min walk; York Minster: 11 min walk; Bishopthorpe Road: 13 min walk; Museum Gardens: 13 min walk; York Racecourse: 7 min drive. Direct rail to London in 1hr 46min; 25 min to Leeds."
+}

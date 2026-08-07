@@ -1,0 +1,83 @@
+{
+  "name": "Aire Gardens",
+  "postcode": "LS11",
+  "locality": "South Bank, Leeds",
+  "price": "Register your interest",
+  "tenure": "999 year lease",
+  "developer": "Hilton Developments (part of Sekhon Group)",
+  "completion": "Q2 2028 (anticipated)",
+  "totalUnits": 98,
+  "sizeRange": "431–793 sq ft",
+  "unitMix": [
+    { "type": "1 bedroom", "size": "431–793 sq ft" }
+  ],
+  "paymentStructure": "20/80 payment structure",
+  "headline": "A collection of design-led city apartments in a rare park-side setting",
+  "description": "Aire Gardens is a collection of design-led city apartments set within a rare park-side setting at the heart of Leeds, adjacent to the South Bank regeneration and moments from the emerging Aire Park. Comprising 98 contemporary one-bedroom apartments ranging from 431 to 793 square feet, the development is arranged around a central open-air atrium with a retractable roof — a light-filled communal space that reflects the surrounding parkland. Just a short walk from Leeds Train Station, it places residents within immediate reach of the city's financial district, retail core and major transport links.",
+  "highlightedFeatures": [
+    "Central open-air atrium with a retractable roof",
+    "Park-side setting adjacent to Aire Park and the South Bank regeneration",
+    "A short walk from Leeds Train Station"
+  ],
+  "developmentAmenities": [
+    "Residents' gym",
+    "Communal residents' lounge",
+    "Dedicated residents' dining area",
+    "Residents' games room",
+    "Communal social areas",
+    "Central atrium with open-air roof"
+  ],
+  "specification": [
+    {
+      "heading": "General Specification",
+      "items": [
+        "Walls: Light beige matt emulsion",
+        "Ceilings: White matt emulsion",
+        "Doors: Dark brown solid wood internal doors",
+        "Architraves: White eggshell finish",
+        "Door Handles: Brushed brass",
+        "Sockets & Switches: Brushed brass finish",
+        "Lighting: Recessed low-energy LED downlights with white bezels",
+        "Media & Connectivity: TV and telephone sockets in living rooms and bedrooms; Sky+ enabled socket in the living room",
+        "Heating & Ventilation: Wi-Fi-enabled electric panel heaters; Mechanical Ventilation with Heat Recovery (MVHR) system per apartment",
+        "Hot Water: Hot water cylinder with electric immersion heater controller",
+        "Windows: Double-glazed throughout; one-way mirror film on the courtyard windows",
+        "Flooring: Herringbone luxury vinyl tile flooring throughout"
+      ]
+    },
+    {
+      "heading": "Premium Specification",
+      "items": [
+        "Underfloor heating",
+        "Upgraded undermount white ceramic sink and brass tap",
+        "Upgraded LED shower panel system with rain head & massage jets"
+      ]
+    },
+    {
+      "heading": "Kitchen",
+      "items": [
+        "Bespoke fitted kitchens with contemporary design",
+        "Cabinetry: floor and wall units with handleless design; soft-close doors and drawers; matt cream and chocolate wood-effect finish",
+        "Worktops: light stone-effect worktop",
+        "Sink & Tap: black sink with black tap",
+        "Lighting: LED strip lighting beneath wall cabinets",
+        "Appliances: integrated Bosch appliances (or similar quality), including electric fan oven, induction hob, extractor hood, integrated fridge freezer, integrated dishwasher, and washer dryer located in the utility store"
+      ]
+    },
+    {
+      "heading": "Bathroom",
+      "items": [
+        "Luxury contemporary bathroom suite",
+        "Sanitaryware: white bathroom suite (brand to be confirmed); back-to-wall WC with concealed cistern and dual flush",
+        "Heating: electric brushed brass heated towel radiator",
+        "Tiles: high-quality beige porcelain tiles for floors and walls",
+        "Brassware: brushed brass basin tap; brushed brass bath filler; shower mixer; shower head with hand shower and hose",
+        "Furniture: vanity cabinet; wall mirror",
+        "Bath / Shower: bath or shower tray, depending on apartment type; clear glass bath or shower screen",
+        "Water System: thermostatically controlled pressurised hot and cold water"
+      ]
+    }
+  ],
+  "nearestStation": { "name": "Leeds Train Station" },
+  "locationNotes": "Nestled between Aire Park and the South Bank regeneration district. Leeds Train Station is a short walk away, and the city's financial district, retail core, dining scene and cultural venues are all within easy walking distance. By rail from Leeds: London 1hr 59min, Manchester 47min, Liverpool 1hr 25min, Newcastle 1hr 25min, Birmingham 1hr 58min, Edinburgh 2hr 50min."
+}

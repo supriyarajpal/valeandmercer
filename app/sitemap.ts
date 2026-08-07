@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getLiveProperties } from '@/lib/properties'
+import { getAllDevelopmentSlugs } from '@/lib/developments'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
@@ -51,5 +52,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...propertyRoutes, ...blogRoutes]
+  // New-homes development detail pages (/buy/<slug>) — one per development.
+  const developmentRoutes: MetadataRoute.Sitemap = getAllDevelopmentSlugs().map(slug => ({
+    url: SITE_URL + '/buy/' + slug,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  return [...staticRoutes, ...propertyRoutes, ...developmentRoutes, ...blogRoutes]
 }

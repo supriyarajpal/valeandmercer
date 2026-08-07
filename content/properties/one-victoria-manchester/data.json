@@ -1,0 +1,99 @@
+{
+  "name": "One Victoria",
+  "address": "Great Ducie Street, Manchester",
+  "postcode": "M3",
+  "locality": "Manchester",
+  "price": "Register your interest",
+  "developer": "One Heritage Group",
+  "totalUnits": 129,
+  "unitMix": [
+    { "type": "1 Bedroom", "beds": 1, "size": "NIA 51.5 sqm / 554.3 sqft" },
+    { "type": "2 Bedroom", "beds": 2, "size": "NIA 72.0 sqm / 775.0 sqft" },
+    { "type": "3 Bedroom", "beds": 3, "size": "NIA 87.7 sqm / 934.0 sqft" }
+  ],
+  "warranty": "10-year insurance-backed warranty",
+  "headline": "Magnificent Manchester",
+  "description": "One Victoria enjoys a fantastic location close to Manchester's hippest districts and centres of work, only a three-minute walk from Manchester Victoria train and tram terminal. Totalling 129 highly rentable apartments, its sleek interiors are designed to appeal to the city's growing league of young professionals. Comprising two blocks, One East and One West, One Victoria is within easy walking distance of the Northern Quarter, the Central Retail District and the area around Manchester Cathedral known as the Medieval Quarter.",
+  "highlightedFeatures": [
+    "Two blocks: One East (84 apartments over 14 floors) and One West (45 apartments over 10 storeys)",
+    "Exclusive residents' only 10th-floor roof garden",
+    "Two- and three-bed apartments have a bathroom to every bedroom"
+  ],
+  "developmentAmenities": [
+    "Communal landscaped roof garden (10th floor, residents only)",
+    "Dedicated reception to both One East and One West blocks",
+    "Floating concierge between One East and One West blocks",
+    "Daytime concierge",
+    "Express elevators",
+    "Video intercom entry system linked to your mobile",
+    "CCTV",
+    "Secure post boxes",
+    "Secure parcel room",
+    "On-site secure bike storage"
+  ],
+  "specification": [
+    {
+      "heading": "Kitchens",
+      "items": [
+        "Bespoke modern custom designed kitchen",
+        "Designer finishes and splashback",
+        "Feature under-cabinet lighting",
+        "Brass tap and cupboard handles",
+        "Brass sockets and switches to the kitchen area",
+        "Fully integrated CDA appliances (5-year warranty provided): dishwasher, fridge freezer, oven, induction hob, integrated microwave and wine cooler (wine cooler fitted as standard to two- and three-bed apartments)"
+      ]
+    },
+    {
+      "heading": "Bathrooms",
+      "items": [
+        "Contemporary high quality white three-piece suite",
+        "Black fittings",
+        "Wall-mounted wash basin and WC with concealed cistern and soft-close seat",
+        "Heated towel rail",
+        "Ceramic part-tiled walls and flooring",
+        "Mirrored wall"
+      ]
+    },
+    {
+      "heading": "Internal Finishes",
+      "items": [
+        "White satinwood internal doors",
+        "Chrome ironmongery",
+        "White emulsion to walls and ceilings",
+        "Satinwood finish to internal skirtings and architraves",
+        "Blackout roller blinds throughout",
+        "White sockets and switches"
+      ]
+    },
+    {
+      "heading": "Flooring",
+      "items": [
+        "Amtico flooring laid in a herringbone pattern to the kitchen, living, dining area and hall",
+        "Amtico flooring laid in a straight plank to the bedrooms with an inset luxury grey carpet",
+        "Tiling to bathroom and en-suites"
+      ]
+    },
+    {
+      "heading": "Electrical",
+      "items": [
+        "Energy efficient recessed downlights",
+        "Fibre optic broadband",
+        "Lighting to the balcony",
+        "Equipment to support provision of BT, Sky Q and Virgin Media in living areas and bedrooms",
+        "App-controlled slim-line electric panel heaters"
+      ]
+    },
+    {
+      "heading": "Sustainability",
+      "items": [
+        "Energy efficient recessed downlights",
+        "Mechanical ventilation system with heat recovery",
+        "Purge vent doors to all apartments",
+        "Rooftop solar panels",
+        "Intelligent lighting in communal areas"
+      ]
+    }
+  ],
+  "nearestStation": { "name": "Manchester Victoria", "time": "3-minute walk" },
+  "locationNotes": "Just north of Manchester City Centre, on the doorstep of the Northern Quarter, the Central Retail District, and the business clusters of Deansgate and Spinningfields. Manchester Victoria train and tram terminal is a 3-minute walk. Manchester Airport is directly connected by train from Manchester Victoria in 28 mins; London Euston is 2hrs 35mins by train. The Medieval Quarter (Manchester Cathedral) is less than a 10-minute walk and Spinningfields is a 15-minute walk."
+}

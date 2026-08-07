@@ -1,0 +1,44 @@
+{
+  "name": "Mulberry House",
+  "address": "John Street, Derby",
+  "postcode": "DE1",
+  "locality": "Derby",
+  "price": "Register your interest",
+  "developer": "Elevate Property Group",
+  "totalUnits": 94,
+  "unitMix": [
+    { "type": "Studio", "count": 19, "size": "355–431 sq ft" },
+    { "type": "1 bed", "count": 54, "size": "420–549 sq ft" },
+    { "type": "1 bed + study", "count": 3, "size": "667 sq ft" },
+    { "type": "2 bed", "count": 13, "size": "667–779 sq ft" },
+    { "type": "3 bed", "count": 5, "size": "947–1012 sq ft" }
+  ],
+  "headline": "Made in Derby",
+  "description": "Mulberry House ushers in new life to the heart of central Derby at this landmark historic site. A short stroll from the River Derwent and nestled between Derby train station and Castleward Park, it offers a collection of 94 carefully crafted studios, one, two and three bedroom apartments set around a central gated courtyard, curated for modern living and set amongst organic landscapes and peaceful surroundings. As the cornerstone of the wider Castleward Urban Village regeneration, Mulberry House blends industrial-luxe design with 21st-century style.",
+  "highlightedFeatures": [
+    "Set around a central gated courtyard",
+    "Cornerstone of the Castleward Urban Village regeneration"
+  ],
+  "specification": [
+    {
+      "heading": "Specification",
+      "items": [
+        "Services: mains electrical services; cold water services sourced from central storage tank and boosted to each flat/apartment",
+        "Heating and hot water: wall-mounted electric panel heaters with smart WiFi controls; hot water generated via electric hot water cylinder",
+        "Electrical: brushed stainless steel effect sockets and switches throughout apartments",
+        "Kitchen: contemporary kitchens with fitted floor and wall units and modern post-formed laminate worktops; includes electric cooker hob and extractor, built-in fridge/freezer, integrated dishwasher and integrated washer/dryer in all apartments",
+        "Sanitaryware: Duravit sanitaryware and Hansgrohe brassware, boosted hot water; one beds have a bath with a shower over; two beds have an en-suite shower room with shower tray and screen, with a bath to the second bathroom",
+        "Doors: contemporary doors throughout including brushed stainless steel ironmongery; fire-rated doors where applicable",
+        "Skirting and architrave: pencil round skirting and architrave finished in white eggshell paint",
+        "Decoration: white emulsion paint to all plastered walls and ceilings",
+        "Ceramic tiling: Porcelanosa tiles to bathroom floors and part-tiled walls in wet areas",
+        "Flooring: carpets in bedrooms and laminate throughout other than in wet areas",
+        "Door entry: keypad entry with intercom access from apartments",
+        "TV distribution: digital aerial and signal distribution to TV point in each apartment",
+        "Telephone and data: Block A – BT Fibre; Blocks B & C – BT Fibre data cable to a single outlet in living room"
+      ]
+    }
+  ],
+  "nearestStation": { "name": "Derby train station" },
+  "locationNotes": "Nestled between Derby train station and Castleward Park, a short stroll from the River Derwent. Walking times: Derbion shopping centre 1 min; Bustler Market 3 min; Derby Theatre 6 min; Showcase Cinema de Lux 6 min. By train from Derby: Nottingham 22 min, Leicester 20 min, Birmingham 34 min, Leeds 77 min, London St Pancras 87 min, Manchester 92 min. East Midlands Airport is under 30 minutes away by road."
+}
