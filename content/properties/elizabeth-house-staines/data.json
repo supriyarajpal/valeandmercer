@@ -1,0 +1,76 @@
+{
+  "name": "Elizabeth House",
+  "address": "56–60 London Road, Staines-upon-Thames",
+  "postcode": "TW18 4HF",
+  "locality": "Staines-upon-Thames",
+  "price": "From £282,316",
+  "tenure": "999-year leasehold",
+  "developer": "Spectrum Squared Limited",
+  "completion": "March 2026 (target practical completion; phased handovers)",
+  "totalUnits": 34,
+  "unitMix": [
+    { "type": "1-Bedroom", "count": 10, "price": "From £282,316" },
+    { "type": "2-Bedroom", "count": 23, "price": "From £403,670" },
+    { "type": "3-Bedroom", "count": 1, "price": "£500,000" }
+  ],
+  "paymentStructure": "£5,000 reservation fee, followed by a 10% deposit. The remaining balance is due on completion.",
+  "warranty": "10-year new build warranty (Advantage)",
+  "headline": "Modern urban living in London's commuter belt",
+  "description": "Elizabeth House is a thoughtfully designed residential scheme in the heart of Staines-upon-Thames. A part-conversion, part-new build, the project converts a purpose-built office block into a stylish and contemporary apartment building, complete with two newly constructed floors. Once completed it will offer 34 self-contained apartments — 10 one-bedroom, 23 two-bedroom and 1 three-bedroom — arranged over five storeys and accessible via a newly extended passenger lift, a short walk from Staines Station and the River Thames.",
+  "highlightedFeatures": [
+    "Part-conversion, part-new build with two additional floors",
+    "54 allocated parking spaces — a ratio exceeding 1:1 per unit",
+    "Open-plan layouts with large windows",
+    "Energy-efficient electric heating and air source hot water system"
+  ],
+  "developmentAmenities": [
+    "Contemporary reception area",
+    "Lift access to all floors",
+    "Secure cycle storage",
+    "Allocated private parking (available to purchase for every unit)"
+  ],
+  "specification": [
+    {
+      "heading": "Decoration",
+      "items": [
+        "White emulsion walls with selected art décor features",
+        "Grey internal doors",
+        "Spot lighting throughout",
+        "LED spot lighting throughout all rooms"
+      ]
+    },
+    {
+      "heading": "Kitchen",
+      "items": [
+        "Grey handleless kitchen units with push-to-open",
+        "AO/Howdens appliances (black/silver finish)"
+      ]
+    },
+    {
+      "heading": "Flooring",
+      "items": [
+        "Light grey laminate flooring (apartments)"
+      ]
+    },
+    {
+      "heading": "Bathrooms",
+      "items": [
+        "Calcutta ceramic wall tiles in bathrooms",
+        "Chrome heated towel rails",
+        "High-efficiency ventilation systems in wet rooms (kitchen & bathroom)"
+      ]
+    },
+    {
+      "heading": "Safety/Security",
+      "items": [
+        "Secure video intercom entry system",
+        "Mains-powered smoke alarms (Building Regulations compliant)",
+        "Fire-rated doors and compartmentalised layout",
+        "Safe escape routes per UK fire safety standards",
+        "Modern UPVC double-glazed windows with secure locks"
+      ]
+    }
+  ],
+  "nearestStation": { "name": "Staines Station", "distance": "0.4 miles", "time": "8 min walk" },
+  "locationNotes": "Nestled in the heart of Staines-upon-Thames on London Road, linking to the town centre, Staines Station and the River Thames. Within 0.4 miles of Staines Station (direct trains to London Waterloo in approx. 35 minutes), 0.6 miles of Elmsleigh & Two Rivers shopping centres, and 0.7 miles from the River Thames. Quick access to the M25 (Junction 13), A30 and A308. Heathrow Airport is 4.6 miles away (around 12 minutes by car)."
+}

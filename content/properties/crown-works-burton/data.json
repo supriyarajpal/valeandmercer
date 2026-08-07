@@ -1,0 +1,70 @@
+{
+  "name": "Crown Works",
+  "address": "New Street, Burton upon Trent",
+  "postcode": "DE14 3SL",
+  "locality": "Burton upon Trent",
+  "price": "Register your interest",
+  "developer": "Prosperity Developments",
+  "unitMix": [
+    { "size": "37.0 m²" },
+    { "size": "37.2 m²" },
+    { "size": "37.3 m²" },
+    { "size": "37.5 m²" },
+    { "size": "37.6 m²" },
+    { "size": "37.9 m²" },
+    { "size": "38.7 m²" },
+    { "size": "38.8 m²" },
+    { "size": "39.6 m²" },
+    { "size": "39.8 m²" },
+    { "size": "39.9 m²" },
+    { "size": "40.4 m²" },
+    { "size": "40.6 m²" },
+    { "size": "40.8 m²" },
+    { "size": "41.2 m²" },
+    { "size": "41.4 m²" },
+    { "size": "42.1 m²" },
+    { "size": "58.5 m²" },
+    { "size": "58.8 m²" },
+    { "size": "61.0 m²" },
+    { "size": "62.1 m²" },
+    { "size": "62.3 m²" },
+    { "size": "62.8 m²" }
+  ],
+  "headline": "A selection of luxury apartments in the historic heart of Burton-upon-Trent",
+  "description": "Crown Works is a selection of luxury apartments in the historic heart of Burton-upon-Trent — a new era of exceptional city living and country leisure designed for first-time buyers and investors seeking a more rewarding home-owning experience. Surrounded by open green space, Burton offers the best of both worlds, with good road and rail connections, a town full of amenities, and easy access to the Peak District National Park and surrounding green spaces.",
+  "specification": [
+    {
+      "heading": "Flooring",
+      "items": [
+        "Safetred anti-slip vinyl flooring",
+        "Bedroom areas fitted with contemporary carpeting"
+      ]
+    },
+    {
+      "heading": "Kitchens",
+      "items": [
+        "Double base units, double and single wall units",
+        "One and a half sink unit with chrome mixer tap",
+        "Laminate worktop",
+        "Tiled or glass splashback",
+        "Brushed metal handles to kitchen units",
+        "Fully integrated appliances to include oven, ceramic hob, extractor, and fridge freezer as per kitchen supplier's proposals"
+      ]
+    },
+    {
+      "heading": "Bathrooms",
+      "items": [
+        "Contemporary bathroom suite",
+        "Self-contained sliding door shower cubicle with tray and overhead adjustable shower head",
+        "Full-height tiling panel to the back and side of shower cubicle",
+        "Contemporary WC to match",
+        "Pedestal basin with high quality chrome mixer tap with tiles as a splashback",
+        "Mirror over basin",
+        "Downlights or single ceiling light positioned as per electrical layout, switch control",
+        "Ceiling/wall mounted extraction fan",
+        "Electric ladder towel rail"
+      ]
+    }
+  ],
+  "locationNotes": "Burton-upon-Trent is a market town in Staffordshire, internationally known as the capital of British brewing. Close to Derby, Nottingham, Leicester and Birmingham; a train to Birmingham New Street takes just 23 minutes. East Midlands Airport and Birmingham International Airport are a short journey away, and there is easy access to the Peak District National Park."
+}

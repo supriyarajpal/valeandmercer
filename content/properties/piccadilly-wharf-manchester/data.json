@@ -1,0 +1,16 @@
+{
+  "name": "Piccadilly Wharf",
+  "locality": "Manchester",
+  "price": "Register your interest",
+  "tenure": "999 year lease",
+  "completion": "Q4 2027 (anticipated)",
+  "totalUnits": 72,
+  "unitMix": [
+    { "type": "1 bed" },
+    { "type": "2 bed" }
+  ],
+  "paymentStructure": "20% deposit",
+  "developmentAmenities": ["24/7 concierge"],
+  "nearestStation": { "name": "Piccadilly Station", "time": "3 mins walk" },
+  "locationNotes": "Piccadilly Station: 3 mins walk; New Islington Marina: 7 mins walk; Northern Quarter: 7 mins walk; Mayfield Regeneration: 9 mins walk; Ancoats: 10 mins walk; Etihad Campus & Co-op Live: 15 mins walk."
+}

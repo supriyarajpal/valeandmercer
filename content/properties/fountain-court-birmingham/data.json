@@ -1,0 +1,46 @@
+{
+  "name": "Fountain Court",
+  "address": "Fountain Court, Steelhouse Lane, Birmingham",
+  "postcode": "B4 6DR",
+  "locality": "Birmingham",
+  "price": "Register your interest",
+  "developer": "Elevate Property Group",
+  "totalUnits": 70,
+  "unitMix": [
+    { "type": "Studio", "count": 8, "size": "535 sq ft" },
+    { "type": "1 bed", "count": 40, "size": "420–584 sq ft" },
+    { "type": "2 bed", "count": 22, "size": "686–935 sq ft" }
+  ],
+  "headline": "Former Barristers' chambers, steeped in the traditions of the judiciary",
+  "description": "Fountain Court is a collection of 70 period-style courtyard apartments — 8 studios, 40 one-beds and 22 two-beds — created within former Barristers' chambers in Birmingham's Steelhouse Lane Conservation Area. Designed in 1963–64 by Holland W Hobbiss & Partners and built in the classical 'Inns of Court' block courtyard style, the building exhibits regal architecture with a majestic Bath-stone cornice and well-preserved period grandeur across five floors, arranged around a central courtyard with terraces, in the Snow Hill and Colmore Business Districts.",
+  "highlightedFeatures": [
+    "Central courtyard with terraces",
+    "Five floors of award-winning design",
+    "Well-preserved period-style architecture in the Steelhouse Lane Conservation Area",
+    "Situated in the Snow Hill and Colmore Business Districts"
+  ],
+  "specification": [
+    {
+      "heading": "Specification",
+      "items": [
+        "Services: electric and water to each apartment with drainage connected to mains",
+        "Heating & hot water: electric heating throughout with WiFi-controlled heaters; hot water cylinder with electric immersion heater controller; MVHR ventilation system per unit",
+        "Electrical: brushed stainless steel light switches and sockets incorporating USB points in kitchen and bedrooms",
+        "Kitchen: contemporary kitchens with fitted floor and wall units, modern square-edge laminate worktops, and high-quality appliances including electric cooker, hob and extractor, built-in fridge/freezer, integrated dishwasher and integrated washer/dryer in all apartments",
+        "Sanitaryware: Villeroy & Boch sanitaryware and brassware; mains pressure hot water; shower tray and screen in 1 beds, with the addition of a bath in 2 beds",
+        "Doors: contemporary doors throughout including brushed stainless steel ironmongery; fire-rated doors where applicable",
+        "Lighting: low-energy recessed LED spots to kitchen and bathrooms; under-cupboard LED to kitchen; pendants to living room and hall",
+        "Fire protection: fire protection sprinklers throughout including stand-alone smoke/heat detectors",
+        "Skirting & architrave: pencil round skirting and architrave finished in white eggshell paint",
+        "Ceramic tiling: high-quality ceramic tiles to bathrooms and part-tiled walls in wet areas",
+        "Flooring: carpets in bedrooms and LVT throughout other than in wet areas",
+        "Acoustics: noise reduction measures including acoustic treatment to floors and internal walls and enhanced acoustic ratings to external windows",
+        "Door entry: keypad entry to communal entrance with video intercom access from apartments, with CCTV monitoring of entrances",
+        "TV distribution: digital aerial and Freeview signal distribution to TV point in living room and bedroom",
+        "Telephone & data: Virgin/BT fibre cable to a single outlet in living room"
+      ]
+    }
+  ],
+  "nearestStation": { "name": "Snow Hill Station", "time": "4 min walk" },
+  "locationNotes": "Aston University: 3 min walk; Snow Hill Station: 4 min walk; Colmore Business District: 4 min walk; HS2 / Curzon Street: 4 min walk; Gun Quarter: 7 min walk; Moor St Station: 8 min walk; Jewellery Quarter: 10 min walk; New Street Station: 12 min walk; Retail (Bullring): 12 min walk."
+}

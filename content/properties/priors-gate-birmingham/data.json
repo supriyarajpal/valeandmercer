@@ -1,0 +1,17 @@
+{
+  "name": "Priors Gate",
+  "address": "Priors Gate, 42-44 Steelhouse Lane, Birmingham",
+  "postcode": "B4",
+  "locality": "Birmingham",
+  "price": "Register your interest",
+  "tenure": "Share of Freehold",
+  "completion": "September 2027",
+  "totalUnits": 59,
+  "unitMix": [
+    { "type": "1-Bed" },
+    { "type": "2-Bed" }
+  ],
+  "paymentStructure": "£5,000 reservation fee. 10% deposit on exchange (less reservation fee). A further 5% in March 2027 with remaining balance on due completion.",
+  "warranty": "ICW",
+  "developmentAmenities": ["Co-working space", "Bike Store"]
+}

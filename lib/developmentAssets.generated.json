@@ -1,0 +1,156 @@
+{
+  "aire-gardens-leeds": {
+    "images": [
+      "/images/developments/aire-gardens-leeds/1.jpg",
+      "/images/developments/aire-gardens-leeds/2.jpg",
+      "/images/developments/aire-gardens-leeds/3.jpg",
+      "/images/developments/aire-gardens-leeds/4.jpg",
+      "/images/developments/aire-gardens-leeds/5.jpg",
+      "/images/developments/aire-gardens-leeds/6.jpg",
+      "/images/developments/aire-gardens-leeds/7.jpg",
+      "/images/developments/aire-gardens-leeds/8.jpg",
+      "/images/developments/aire-gardens-leeds/9.jpg",
+      "/images/developments/aire-gardens-leeds/10.jpg",
+      "/images/developments/aire-gardens-leeds/11.jpg",
+      "/images/developments/aire-gardens-leeds/12.jpg",
+      "/images/developments/aire-gardens-leeds/13.jpg",
+      "/images/developments/aire-gardens-leeds/14.jpg"
+    ],
+    "floorplan": "/images/developments/aire-gardens-leeds/floorplan.jpg",
+    "brochure": "/brochures/aire-gardens-leeds.pdf"
+  },
+  "crown-works-burton": {
+    "images": [],
+    "floorplan": null,
+    "brochure": "/brochures/crown-works-burton.pdf"
+  },
+  "elizabeth-house-staines": {
+    "images": [
+      "/images/developments/elizabeth-house-staines/1.jpg",
+      "/images/developments/elizabeth-house-staines/2.jpg",
+      "/images/developments/elizabeth-house-staines/3.jpg",
+      "/images/developments/elizabeth-house-staines/4.jpg",
+      "/images/developments/elizabeth-house-staines/5.jpg",
+      "/images/developments/elizabeth-house-staines/6.jpg",
+      "/images/developments/elizabeth-house-staines/7.jpg",
+      "/images/developments/elizabeth-house-staines/8.jpg",
+      "/images/developments/elizabeth-house-staines/9.jpg",
+      "/images/developments/elizabeth-house-staines/10.jpg",
+      "/images/developments/elizabeth-house-staines/11.jpg",
+      "/images/developments/elizabeth-house-staines/12.jpg",
+      "/images/developments/elizabeth-house-staines/13.jpg",
+      "/images/developments/elizabeth-house-staines/14.jpg",
+      "/images/developments/elizabeth-house-staines/15.jpg",
+      "/images/developments/elizabeth-house-staines/16.jpg",
+      "/images/developments/elizabeth-house-staines/17.jpg",
+      "/images/developments/elizabeth-house-staines/18.jpg",
+      "/images/developments/elizabeth-house-staines/19.jpg",
+      "/images/developments/elizabeth-house-staines/20.jpg",
+      "/images/developments/elizabeth-house-staines/21.jpg",
+      "/images/developments/elizabeth-house-staines/22.jpg",
+      "/images/developments/elizabeth-house-staines/23.jpg",
+      "/images/developments/elizabeth-house-staines/24.jpg"
+    ],
+    "floorplan": "/images/developments/elizabeth-house-staines/floorplan.jpg",
+    "brochure": "/brochures/elizabeth-house-staines.pdf"
+  },
+  "fountain-court-birmingham": {
+    "images": [
+      "/images/developments/fountain-court-birmingham/1.jpg",
+      "/images/developments/fountain-court-birmingham/2.jpg",
+      "/images/developments/fountain-court-birmingham/3.jpg",
+      "/images/developments/fountain-court-birmingham/4.jpg",
+      "/images/developments/fountain-court-birmingham/5.jpg",
+      "/images/developments/fountain-court-birmingham/6.jpg",
+      "/images/developments/fountain-court-birmingham/7.jpg",
+      "/images/developments/fountain-court-birmingham/8.jpg",
+      "/images/developments/fountain-court-birmingham/9.jpg",
+      "/images/developments/fountain-court-birmingham/10.jpg",
+      "/images/developments/fountain-court-birmingham/11.jpg",
+      "/images/developments/fountain-court-birmingham/12.jpg",
+      "/images/developments/fountain-court-birmingham/13.jpg",
+      "/images/developments/fountain-court-birmingham/14.jpg",
+      "/images/developments/fountain-court-birmingham/15.jpg",
+      "/images/developments/fountain-court-birmingham/16.jpg",
+      "/images/developments/fountain-court-birmingham/17.jpg",
+      "/images/developments/fountain-court-birmingham/18.jpg",
+      "/images/developments/fountain-court-birmingham/19.jpg",
+      "/images/developments/fountain-court-birmingham/20.jpg",
+      "/images/developments/fountain-court-birmingham/21.jpg",
+      "/images/developments/fountain-court-birmingham/22.jpg",
+      "/images/developments/fountain-court-birmingham/23.jpg",
+      "/images/developments/fountain-court-birmingham/24.jpg"
+    ],
+    "floorplan": "/images/developments/fountain-court-birmingham/floorplan.jpg",
+    "brochure": "/brochures/fountain-court-birmingham.pdf"
+  },
+  "graduation-house-nottingham": {
+    "images": [],
+    "floorplan": null,
+    "brochure": "/brochures/graduation-house-nottingham.pdf"
+  },
+  "mulberry-house-derby": {
+    "images": [
+      "/images/developments/mulberry-house-derby/1.jpg",
+      "/images/developments/mulberry-house-derby/2.jpg",
+      "/images/developments/mulberry-house-derby/3.jpg",
+      "/images/developments/mulberry-house-derby/4.jpg",
+      "/images/developments/mulberry-house-derby/5.jpg",
+      "/images/developments/mulberry-house-derby/6.jpg",
+      "/images/developments/mulberry-house-derby/7.jpg",
+      "/images/developments/mulberry-house-derby/8.jpg",
+      "/images/developments/mulberry-house-derby/9.jpg",
+      "/images/developments/mulberry-house-derby/10.jpg",
+      "/images/developments/mulberry-house-derby/11.jpg",
+      "/images/developments/mulberry-house-derby/12.jpg",
+      "/images/developments/mulberry-house-derby/13.jpg",
+      "/images/developments/mulberry-house-derby/14.jpg",
+      "/images/developments/mulberry-house-derby/15.jpg",
+      "/images/developments/mulberry-house-derby/16.jpg",
+      "/images/developments/mulberry-house-derby/17.jpg"
+    ],
+    "floorplan": "/images/developments/mulberry-house-derby/floorplan.jpg",
+    "brochure": "/brochures/mulberry-house-derby.pdf"
+  },
+  "one-victoria-manchester": {
+    "images": [],
+    "floorplan": null,
+    "brochure": "/brochures/one-victoria-manchester.pdf"
+  },
+  "piccadilly-wharf-manchester": {
+    "images": [
+      "/images/developments/piccadilly-wharf-manchester/1.jpg",
+      "/images/developments/piccadilly-wharf-manchester/2.jpg",
+      "/images/developments/piccadilly-wharf-manchester/3.jpg",
+      "/images/developments/piccadilly-wharf-manchester/4.jpg",
+      "/images/developments/piccadilly-wharf-manchester/5.jpg"
+    ],
+    "floorplan": null,
+    "brochure": "/brochures/piccadilly-wharf-manchester.pdf"
+  },
+  "priors-gate-birmingham": {
+    "images": [
+      "/images/developments/priors-gate-birmingham/1.jpg",
+      "/images/developments/priors-gate-birmingham/2.jpg",
+      "/images/developments/priors-gate-birmingham/3.jpg",
+      "/images/developments/priors-gate-birmingham/4.png",
+      "/images/developments/priors-gate-birmingham/5.jpg",
+      "/images/developments/priors-gate-birmingham/6.jpg",
+      "/images/developments/priors-gate-birmingham/7.jpg",
+      "/images/developments/priors-gate-birmingham/8.jpg",
+      "/images/developments/priors-gate-birmingham/9.jpg"
+    ],
+    "floorplan": "/images/developments/priors-gate-birmingham/floorplan.jpg",
+    "brochure": "/brochures/priors-gate-birmingham.pdf"
+  },
+  "st-georges-terrace-york": {
+    "images": [],
+    "floorplan": "/images/developments/st-georges-terrace-york/floorplan.jpg",
+    "brochure": "/brochures/st-georges-terrace-york.pdf"
+  },
+  "waterhouse-gardens-manchester": {
+    "images": [],
+    "floorplan": null,
+    "brochure": "/brochures/waterhouse-gardens-manchester.pdf"
+  }
+}
