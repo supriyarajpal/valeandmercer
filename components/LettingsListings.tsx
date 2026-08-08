@@ -140,12 +140,13 @@ export default function LettingsListings() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Gallery-frame property card — the photograph sits inside generous   */
-/* cream matting with a thin gold hairline directly around it (framed  */
-/* artwork, not an app card). The label (locality · name · specs) lives */
-/* in open space BELOW the frame, never overlaid on the photo. The     */
-/* image renders at its natural aspect ratio, so frame proportions vary */
-/* photo to photo for a gallery-wall rhythm rather than a uniform box.  */
+/* Property card — a full-bleed photo tile at a fixed 3:4 portrait     */
+/* ratio (10px radius, no matting) so every card is the same height    */
+/* and rows align. A bottom ink scrim (ink #28231C at ~82%, fading up) */
+/* carries the label: locality in gold small caps, name in cream serif,*/
+/* then beds · baths · price with the price in gold. TO LET pill sits   */
+/* top-left, the favourite heart top-right. On hover the image zooms a  */
+/* touch and the scrim lifts slightly to reveal a little more image.    */
 /* ------------------------------------------------------------------ */
 
 function PropertyCard({ property }: { property: Property }) {
@@ -153,68 +154,68 @@ function PropertyCard({ property }: { property: Property }) {
   const href = `/property/${property.slug}`
   return (
     <Link
-      id={`property-${property.slug}`}
       href={href}
       style={{ textDecoration: 'none', position: 'relative', display: 'block' }}
       onMouseEnter={e => {
-        const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
         const img = e.currentTarget.querySelector<HTMLImageElement>('img')
-        if (arrow) arrow.style.transform = 'translateX(6px)'
-        if (img) img.style.transform = 'scale(1.04)'
+        const scrim = e.currentTarget.querySelector<HTMLDivElement>('[data-scrim]')
+        if (img) img.style.transform = 'scale(1.06)'
+        if (scrim) scrim.style.transform = 'translateY(-10px)'
       }}
       onMouseLeave={e => {
-        const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
         const img = e.currentTarget.querySelector<HTMLImageElement>('img')
-        if (arrow) arrow.style.transform = 'translateX(0)'
+        const scrim = e.currentTarget.querySelector<HTMLDivElement>('[data-scrim]')
         if (img) img.style.transform = 'scale(1)'
+        if (scrim) scrim.style.transform = 'translateY(0)'
       }}
     >
-      {/* The frame — cream matting (surface-2), generous padding on all
-          sides, lifted off the page with a soft shadow like hung artwork. */}
-      <div style={{ position: 'relative', background: 'var(--surface-2)', padding: 'clamp(24px, 3vw, 38px)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(52,48,43,0.06)', boxShadow: '0 16px 36px -22px rgba(40,35,28,0.42), 0 2px 6px -3px rgba(40,35,28,0.12)' }}>
-        {/* The photo, with a thin gold hairline directly around it. Fixed 4:3
-            frame applied uniformly to every card — so every image renders at
-            the same proportions and cards line up cleanly in rows regardless
-            of each photo's native dimensions. object-fit:cover fills the frame
-            without distortion (mild crop rather than letterboxing). */}
-        <div style={{ position: 'relative', aspectRatio: '4 / 3', overflow: 'hidden', border: '1px solid rgba(160,132,92,0.5)', borderRadius: 2, background: '#26221C' }}>
-          <img
-            src={property.image}
-            alt={`${property.title}, ${property.area}`}
-            loading="lazy"
-            style={{ display: 'block', width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
-          />
-          {/* TO LET badge — small, understated, sitting ON the photo, top-left. */}
-          <span style={{ position: 'absolute', top: 12, left: 12, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
-            {property.listingType}
-          </span>
-        </div>
+      {/* Full-bleed 3:4 portrait tile — the image IS the card (no matting),
+          10px radius, uniform ratio so rows always align. */}
+      <div style={{ position: 'relative', aspectRatio: '3 / 4', overflow: 'hidden', borderRadius: 10, background: '#26221C', boxShadow: '0 18px 40px -24px rgba(40,35,28,0.5), 0 2px 6px -3px rgba(40,35,28,0.12)' }}>
+        <img
+          src={property.image}
+          alt={`${property.title}, ${property.area}`}
+          loading="lazy"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
+        />
 
-        {/* Favourite heart — sits in the matting, top-right, off the photo. */}
+        {/* TO LET pill — top-left, on the photo. */}
+        <span style={{ position: 'absolute', top: 12, left: 12, zIndex: 2, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
+          {property.listingType}
+        </span>
+
+        {/* Favourite heart — top-right, on the photo (unchanged behaviour). */}
         <FavoriteHeart slug={property.slug} title={property.title} />
-      </div>
 
-      {/* Label — in open space BELOW the frame, real vertical gap, never a
-          panel butted against the image. */}
-      <div style={{ marginTop: 'clamp(16px, 1.8vw, 24px)', padding: '0 2px' }}>
-        {/* Locality — small, quiet italic line. */}
-        <div style={{ fontStyle: 'italic', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.01em', marginBottom: 8 }}>
-          {property.area}
-        </div>
-        {/* Property name — the dominant text element: large serif headline. */}
-        <h3 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(22px, 2.4vw, 30px)', color: 'var(--text)', lineHeight: 1.12, letterSpacing: '-0.01em', marginBottom: 14 }}>
-          {property.title}
-        </h3>
-        {/* One minimal spec line — beds · baths · price, generously spaced
-            small caps, no divider rule or boxed price. Price is emphasised;
-            the arrow CTA follows it immediately. */}
-        <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px 12px', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
-          <span>{bedLabel}</span>
-          <span aria-hidden style={{ color: 'var(--border-strong)' }}>·</span>
-          <span>{property.baths} bath{property.baths === 1 ? '' : 's'}</span>
-          <span aria-hidden style={{ color: 'var(--border-strong)' }}>·</span>
-          <span style={{ fontSize: 14, letterSpacing: '0.06em', color: 'var(--text)' }}>{property.rent}</span>
-          <span data-arrow aria-hidden style={{ color: '#A0845C', fontSize: 15, letterSpacing: 0, transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>
+        {/* Ink scrim panel over the bottom of the image (ink #28231C at ~82%,
+            fading up so its top edge melts into the photo). Lifts on hover with
+            the site's slow easing to reveal a little more image. */}
+        <div
+          data-scrim
+          style={{
+            position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 1,
+            padding: 'clamp(18px, 2.2vw, 26px) clamp(16px, 2vw, 20px) clamp(16px, 2vw, 20px)',
+            background: 'linear-gradient(to top, rgba(40,35,28,0.9) 0%, rgba(40,35,28,0.82) 46%, rgba(40,35,28,0.34) 82%, rgba(40,35,28,0) 100%)',
+            transition: 'transform var(--dur-slow) var(--ease-out-soft)',
+            willChange: 'transform',
+          }}
+        >
+          {/* Locality — gold small caps. */}
+          <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#A0845C', marginBottom: 7 }}>
+            {property.area}
+          </div>
+          {/* Property name — cream serif. */}
+          <h3 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(21px, 2.2vw, 27px)', color: '#F2EFE9', lineHeight: 1.14, letterSpacing: '-0.01em', marginBottom: 10 }}>
+            {property.title}
+          </h3>
+          {/* Beds · baths · price — price in gold. */}
+          <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px 10px', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.82)' }}>
+            <span>{bedLabel}</span>
+            <span aria-hidden style={{ opacity: 0.5 }}>·</span>
+            <span>{property.baths} bath{property.baths === 1 ? '' : 's'}</span>
+            <span aria-hidden style={{ opacity: 0.5 }}>·</span>
+            <span style={{ fontSize: 13, letterSpacing: '0.04em', color: '#A0845C' }}>{property.rent}</span>
+          </div>
         </div>
       </div>
     </Link>
@@ -304,22 +305,24 @@ function FavoriteHeart({ slug, title }: { slug: string; title: string }) {
       aria-pressed={fav}
       aria-label={fav ? `Remove ${title} from favourites` : `Add ${title} to favourites`}
       style={{
-        // Sits in the cream matting (top-right corner), off the photo, so no
-        // dark glass backing is needed — a quiet gold outline that fills gold.
+        // Now sits on the photo (top-right), so a small ink glass disc backs
+        // the gold heart to keep it legible over any image.
         position: 'absolute',
-        top: 6,
-        right: 6,
+        top: 10,
+        right: 10,
         zIndex: 3,
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        width: 26,
-        height: 26,
+        width: 30,
+        height: 30,
         padding: 0,
         borderRadius: '50%',
         cursor: 'pointer',
-        background: 'transparent',
-        border: 'none',
+        background: 'rgba(40,35,28,0.4)',
+        border: '1px solid rgba(242,239,233,0.18)',
+        backdropFilter: 'blur(8px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(8px) saturate(160%)',
         lineHeight: 0,
       }}
     >
@@ -327,7 +330,7 @@ function FavoriteHeart({ slug, title }: { slug: string; title: string }) {
         <path
           d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
           fill={fav ? '#A0845C' : 'rgba(160,132,92,0)'}
-          stroke={fav ? '#A0845C' : 'rgba(160,132,92,0.7)'}
+          stroke="#A0845C"
           strokeWidth={1.6}
           strokeLinejoin="round"
           style={{ transition: 'fill 230ms var(--ease-apple), stroke 230ms var(--ease-apple)' }}
