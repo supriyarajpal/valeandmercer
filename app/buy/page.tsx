@@ -5,6 +5,7 @@ import { Reveal } from '@/components/Reveal'
 import DevelopmentsListing, { type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { developments } from '@/lib/developments'
 import { developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
+import { developmentHasAddress, developmentTitle } from '@/lib/developmentTitle'
 
 // /buy — the New Homes listing. The old "Properties coming soon" teaser block
 // (Canary Wharf / Notting Hill / Chelsea) was removed per instruction; the
@@ -13,15 +14,19 @@ import { developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAss
 // hands plain, serialisable card data to the client grid.
 
 export default function BuyPage() {
-  const cards: DevelopmentCardData[] = developments.map(dev => ({
-    slug: dev.slug,
-    name: dev.name ?? dev.slug,
-    locality: dev.locality,
-    price: dev.price,
-    tenure: dev.tenure,
-    heroImage: developmentHeroImage(dev.slug),
-    hasPhotos: developmentHasPhotos(dev.slug),
-  }))
+  // Titles are address-based; a development with no address is excluded
+  // entirely (no card here, and its detail route is not generated).
+  const cards: DevelopmentCardData[] = developments
+    .filter(developmentHasAddress)
+    .map(dev => ({
+      slug: dev.slug,
+      title: developmentTitle(dev)!,
+      name: dev.name ?? dev.slug,
+      price: dev.price,
+      tenure: dev.tenure,
+      heroImage: developmentHeroImage(dev.slug),
+      hasPhotos: developmentHasPhotos(dev.slug),
+    }))
 
   return (
     <>

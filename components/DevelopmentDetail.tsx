@@ -2,25 +2,25 @@
 import { useMemo, useState } from 'react'
 import { Reveal } from '@/components/Reveal'
 import DevelopmentHero from '@/components/DevelopmentHero'
-import DevelopmentEnquireCard from '@/components/DevelopmentEnquireCard'
+import DevelopmentEnquiryActions from '@/components/DevelopmentEnquiryActions'
 import { DevelopmentCard, type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { submitToWeb3Forms } from '@/lib/web3forms'
 import type { Development, UnitMixRow, SpecSection } from '@/lib/developments'
 import type { DevelopmentAssets } from '@/lib/developmentAssets'
 import { SUPPRESS_UNITMIX } from '@/lib/developmentDisplay'
 
-// Two-column development detail page. Layout below the hero: primary content
-// LEFT, a sticky enquire card RIGHT (collapses to one column < 900px), then
-// full-width gallery / CTA / similar / form. Every surface reads from the theme
-// tokens (var(--surface*), var(--text*), var(--border)); the only dark elements
-// are the deliberate brand accents (enquire card, pull-quote tile, CTA banner) —
-// the same fixed-dark family the lettings pages use over cream. Overlay-bearing
-// pieces (hero, enquire card) live in their own components so nothing can escape.
+// Single-column development detail page. Enquiry is a full-width section in the
+// main flow (no sticky side card). The page title is the address-based title
+// (street, city · unit type) passed in from the server. Every surface reads
+// from the theme tokens; the only dark elements are the deliberate brand
+// accents (enquiry panel, pull-quote tile, CTA banner). The developer field is
+// intentionally not rendered anywhere (value stays in data.json).
 
 export default function DevelopmentDetail({
-  development, assets, similar,
+  development, title, assets, similar,
 }: {
   development: Development
+  title: string
   assets: DevelopmentAssets
   similar: DevelopmentCardData[]
 }) {
@@ -33,135 +33,123 @@ export default function DevelopmentDetail({
 
   return (
     <main style={{ background: 'var(--surface)', paddingBottom: 'var(--section-y)' }}>
-      {/* 1 — Hero gallery + Floorplan / Location / Brochure tabs (themed) */}
+      {/* 1 — Full-bleed hero gallery + Floorplan / Location / Brochure tabs */}
       <DevelopmentHero name={d.name ?? d.slug} assets={assets} locationNotes={d.locationNotes} nearestStation={d.nearestStation} />
 
-      {/* Two-column: content left, sticky enquire card right */}
-      <div
-        className="vm-dev-grid"
-        style={{ maxWidth: 1240, margin: '0 auto', padding: '48px var(--gutter) 0', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 340px)', gap: 56, alignItems: 'start' }}
-      >
-        <div style={{ minWidth: 0 }}>
-          {/* 2–4 — ENTRY POINT: name, locality, price, badges */}
-          <Reveal y={24} amount={0.2}>
-            <header style={{ maxWidth: 760 }}>
-              <h1 style={{ color: 'var(--text)', fontSize: 'clamp(34px, 5vw, 58px)', lineHeight: 1.05, marginBottom: 12 }}>{d.name}</h1>
-              {d.locality && (
-                <p style={{ fontStyle: 'italic', fontFamily: 'var(--font-serif)', fontSize: 'clamp(17px, 2.2vw, 23px)', color: '#A0845C', marginBottom: 20 }}>{d.locality}</p>
-              )}
-              {d.price && (
-                <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(24px, 3.4vw, 36px)', color: 'var(--text)', letterSpacing: '-0.01em', marginBottom: 20 }}>{d.price}</div>
-              )}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
-                {d.tenure && <Badge tone="gold">{d.tenure}</Badge>}
-                <Badge tone="outline">New Listing</Badge>
+      <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 var(--gutter)' }}>
+        {/* 2–4 — ENTRY POINT: title (address-based), price, badges */}
+        <Reveal y={24} amount={0.2}>
+          <header style={{ paddingTop: 'clamp(40px, 6vw, 72px)', maxWidth: 900 }}>
+            <h1 style={{ color: 'var(--text)', fontSize: 'clamp(30px, 4.4vw, 50px)', lineHeight: 1.08, marginBottom: 20 }}>{title}</h1>
+            {d.price && (
+              <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(24px, 3.4vw, 36px)', color: 'var(--text)', letterSpacing: '-0.01em', marginBottom: 20 }}>{d.price}</div>
+            )}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+              {d.tenure && <Badge tone="gold">{d.tenure}</Badge>}
+              <Badge tone="outline">New Listing</Badge>
+            </div>
+          </header>
+        </Reveal>
+
+        {/* 5 — Key facts: unit mix + size */}
+        {(showUnitMix || suppressUnitMix || d.sizeRange) && (
+          <Section eyebrow="Key facts" title="Unit mix & sizes">
+            {suppressUnitMix ? (
+              d.totalUnits != null && (
+                <p style={{ fontSize: 16, color: 'var(--text)' }}><strong style={{ fontWeight: 500 }}>{`${d.totalUnits} apartments`}</strong></p>
+              )
+            ) : (
+              showUnitMix && <UnitMixGrid rows={d.unitMix as UnitMixRow[]} />
+            )}
+            {d.sizeRange && (
+              <p style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: showUnitMix || suppressUnitMix ? 20 : 0 }}>
+                <span style={{ letterSpacing: '0.14em', textTransform: 'uppercase', fontSize: 11, color: 'var(--text-faint)', marginRight: 12 }}>Size range</span>
+                {d.sizeRange}
+              </p>
+            )}
+          </Section>
+        )}
+
+        {/* 6 — Collapsible property information (developer NOT rendered) */}
+        <PropertyInformation development={d} />
+
+        {/* 7 — Quick links */}
+        <QuickLinks assets={assets} hasSpec={!!(d.specification && d.specification.length)} />
+
+        {/* 8 — Share row */}
+        <ShareRow name={title} slug={d.slug} />
+
+        {/* 9 — Enquiry: full-width section in the main flow (no side box) */}
+        <EnquirySection name={title} price={d.price} />
+
+        {/* 10 — Overview: headline + description (read more/less) */}
+        {(d.headline || d.description) && (
+          <Section eyebrow="Overview" title={d.headline ?? 'About this development'}>
+            {d.description && <ReadMore text={d.description} />}
+          </Section>
+        )}
+
+        {/* 11 — Highlighted features */}
+        {d.highlightedFeatures && d.highlightedFeatures.length > 0 && (
+          <Section eyebrow="Highlighted Features" title="What stands out">
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 12 }}>
+              {d.highlightedFeatures.map(f => (
+                <li key={f} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#A0845C', marginTop: 9, flexShrink: 0 }} />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+
+        {/* 14 — Location */}
+        {hasLocation && (
+          <Section eyebrow="Location" title="Getting around">
+            {d.locationNotes && <p style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85 }}>{d.locationNotes}</p>}
+            {hasStation && (
+              <div style={{ marginTop: 24, display: 'inline-flex', alignItems: 'center', gap: 16, padding: '16px 22px', borderRadius: 'var(--radius-md)', background: 'var(--surface-2)', border: '0.5px solid var(--border)' }}>
+                <StationIcon />
+                <div>
+                  <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 4 }}>Nearest station</div>
+                  <div style={{ fontSize: 15, color: 'var(--text)' }}>
+                    {d.nearestStation!.name}
+                    {(d.nearestStation!.time || d.nearestStation!.distance) && <span style={{ color: '#A0845C' }}> · {d.nearestStation!.time || d.nearestStation!.distance}</span>}
+                  </div>
+                </div>
               </div>
-            </header>
-          </Reveal>
+            )}
+          </Section>
+        )}
 
-          {/* 5 — Key facts: unit mix + size */}
-          {(showUnitMix || suppressUnitMix || d.sizeRange) && (
-            <Section eyebrow="Key facts" title="Unit mix & sizes">
-              {suppressUnitMix ? (
-                d.totalUnits != null && (
-                  <p style={{ fontSize: 16, color: 'var(--text)' }}><strong style={{ fontWeight: 500 }}>{`${d.totalUnits} apartments`}</strong></p>
-                )
-              ) : (
-                showUnitMix && <UnitMixGrid rows={d.unitMix as UnitMixRow[]} />
-              )}
-              {d.sizeRange && (
-                <p style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: showUnitMix || suppressUnitMix ? 20 : 0 }}>
-                  <span style={{ letterSpacing: '0.14em', textTransform: 'uppercase', fontSize: 11, color: 'var(--text-faint)', marginRight: 12 }}>Size range</span>
-                  {d.sizeRange}
-                </p>
-              )}
-            </Section>
-          )}
-
-          {/* 6 — Collapsible property information */}
-          <PropertyInformation development={d} />
-
-          {/* 7 — Quick links */}
-          <QuickLinks assets={assets} hasSpec={!!(d.specification && d.specification.length)} />
-
-          {/* 8 — Share row */}
-          <ShareRow name={d.name ?? 'this development'} slug={d.slug} />
-
-          {/* 10 — Overview: headline + description (read more/less) */}
-          {(d.headline || d.description) && (
-            <Section eyebrow="Overview" title={d.headline ?? 'About this development'}>
-              {d.description && <ReadMore text={d.description} />}
-            </Section>
-          )}
-
-          {/* 11 — Highlighted features */}
-          {d.highlightedFeatures && d.highlightedFeatures.length > 0 && (
-            <Section eyebrow="Highlighted Features" title="What stands out">
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 12 }}>
-                {d.highlightedFeatures.map(f => (
-                  <li key={f} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#A0845C', marginTop: 9, flexShrink: 0 }} />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </Section>
-          )}
-
-          {/* 14 — Location */}
-          {hasLocation && (
-            <Section eyebrow="Location" title="Getting around">
-              {d.locationNotes && <p style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85 }}>{d.locationNotes}</p>}
-              {hasStation && (
-                <div style={{ marginTop: 24, display: 'inline-flex', alignItems: 'center', gap: 16, padding: '16px 22px', borderRadius: 'var(--radius-md)', background: 'var(--surface-2)', border: '0.5px solid var(--border)' }}>
-                  <StationIcon />
-                  <div>
-                    <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 4 }}>Nearest station</div>
-                    <div style={{ fontSize: 15, color: 'var(--text)' }}>
-                      {d.nearestStation!.name}
-                      {(d.nearestStation!.time || d.nearestStation!.distance) && <span style={{ color: '#A0845C' }}> · {d.nearestStation!.time || d.nearestStation!.distance}</span>}
-                    </div>
-                  </div>
+        {/* 15 — Floorplan & specifications */}
+        {(assets.brochure || assets.floorplan || (d.specification && d.specification.length > 0)) && (
+          <Section id="floorplan-specs" eyebrow="Floorplan & Specifications" title="Plans & finish">
+            {assets.brochure && (
+              <a href={assets.brochure} target="_blank" rel="noopener noreferrer" className="btn-press" style={downloadBtnStyle} onMouseEnter={hoverDownloadOn} onMouseLeave={hoverDownloadOff}>
+                <DownloadIcon /> Download brochure (PDF)
+              </a>
+            )}
+            {assets.floorplan && (
+              <figure style={{ margin: assets.brochure ? '28px 0 0' : 0 }}>
+                <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: 'clamp(12px, 2vw, 24px)' }}>
+                  <img src={assets.floorplan} alt={`${title} floor plan`} loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 4 }} />
                 </div>
-              )}
-            </Section>
-          )}
-
-          {/* 15 — Floorplan & specifications */}
-          {(assets.brochure || assets.floorplan || (d.specification && d.specification.length > 0)) && (
-            <Section id="floorplan-specs" eyebrow="Floorplan & Specifications" title="Plans & finish">
-              {assets.brochure && (
-                <a href={assets.brochure} target="_blank" rel="noopener noreferrer" className="btn-press" style={downloadBtnStyle} onMouseEnter={hoverDownloadOn} onMouseLeave={hoverDownloadOff}>
-                  <DownloadIcon /> Download brochure (PDF)
-                </a>
-              )}
-              {assets.floorplan && (
-                <figure style={{ margin: assets.brochure ? '28px 0 0' : 0 }}>
-                  <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: 'clamp(12px, 2vw, 24px)' }}>
-                    <img src={assets.floorplan} alt={`${d.name} floor plan`} loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 4 }} />
-                  </div>
-                  <figcaption style={{ fontSize: 11, letterSpacing: '0.06em', color: 'var(--text-faint)', marginTop: 10 }}>Indicative floor plan. Areas and layouts subject to change.</figcaption>
-                </figure>
-              )}
-              {d.specification && d.specification.length > 0 && (
-                <div style={{ marginTop: assets.brochure || assets.floorplan ? 36 : 0, display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-                  {d.specification.map(sec => <SpecBlock key={sec.heading} section={sec} />)}
-                </div>
-              )}
-            </Section>
-          )}
-        </div>
-
-        {/* 9 — Sticky enquire card (right column) */}
-        <DevelopmentEnquireCard name={d.name ?? d.slug} price={d.price} />
+                <figcaption style={{ fontSize: 11, letterSpacing: '0.06em', color: 'var(--text-faint)', marginTop: 10 }}>Indicative floor plan. Areas and layouts subject to change.</figcaption>
+              </figure>
+            )}
+            {d.specification && d.specification.length > 0 && (
+              <div style={{ marginTop: assets.brochure || assets.floorplan ? 36 : 0, display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+                {d.specification.map(sec => <SpecBlock key={sec.heading} section={sec} />)}
+              </div>
+            )}
+          </Section>
+        )}
       </div>
-
-      {/* Collapse to single column on narrow screens. */}
-      <style>{`@media (max-width: 900px){ .vm-dev-grid { grid-template-columns: 1fr !important; gap: 40px !important; } }`}</style>
 
       {/* 12 — Interleaved gallery with a pull-quote (full width) */}
       {assets.images.length > 0 && (
-        <InterleavedGallery images={assets.images} name={d.name ?? ''} pullQuote={pullQuote} />
+        <InterleavedGallery images={assets.images} name={title} pullQuote={pullQuote} />
       )}
 
       {/* 13 — Speak to our team banner */}
@@ -178,9 +166,42 @@ export default function DevelopmentDetail({
         )}
 
         {/* 17 — Enquiry form (Web3Forms) */}
-        <EnquiryForm developmentName={d.name ?? d.slug} slug={d.slug} />
+        <EnquiryForm developmentName={title} slug={d.slug} />
       </div>
     </main>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* 9 — Enquiry section (full-width, in the main flow)                  */
+/* ------------------------------------------------------------------ */
+
+function EnquirySection({ name, price }: { name: string; price?: string }) {
+  return (
+    <Reveal y={24} amount={0.15}>
+      <section style={{ marginTop: 40, borderTop: '0.5px solid var(--border)', paddingTop: 42 }}>
+        <div style={{ position: 'relative' }}>
+          {/* Blurred gold/bronze/ink blob backdrop, clipped to this panel. */}
+          <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
+            <div style={{ position: 'absolute', inset: '-15%', filter: 'blur(26px)', background: 'radial-gradient(40% 60% at 18% 20%, rgba(160,132,92,0.6), transparent 70%), radial-gradient(46% 70% at 90% 86%, rgba(122,96,62,0.55), transparent 72%), radial-gradient(50% 60% at 60% 50%, rgba(40,35,28,0.5), transparent 74%)' }} />
+          </div>
+          <div className="glass-strong vm-enquiry-panel" style={{ position: 'relative', zIndex: 1, color: '#F2EFE9', padding: 'clamp(28px, 4vw, 44px)', borderRadius: 'var(--radius-lg)', display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 360px)', gap: 'clamp(24px, 4vw, 56px)', alignItems: 'center' }}>
+            <div>
+              <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 12 }}>Enquire</p>
+              <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(24px, 3vw, 34px)', letterSpacing: '-0.01em', marginBottom: 12 }}>Register your interest</div>
+              <p style={{ fontSize: 14, lineHeight: 1.8, color: 'rgba(242,239,233,0.72)', maxWidth: 440 }}>
+                Speak to us directly about availability and pricing, or use the enquiry form below.
+              </p>
+            </div>
+            <div>
+              <DevelopmentEnquiryActions name={name} price={price} />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* Stack the panel's two columns on narrow screens. */}
+      <style>{`@media (max-width: 720px){ .vm-enquiry-panel { grid-template-columns: 1fr !important; } }`}</style>
+    </Reveal>
   )
 }
 
@@ -214,13 +235,14 @@ function UnitMixGrid({ rows }: { rows: UnitMixRow[] }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 6 — Collapsible property information                                */
+/* 6 — Collapsible property information (developer intentionally omitted) */
 /* ------------------------------------------------------------------ */
 
 function PropertyInformation({ development }: { development: Development }) {
   const d = development
   const rows: Array<{ label: string; value: string }> = []
-  if (d.developer) rows.push({ label: 'Developer', value: d.developer })
+  // NOTE: `developer` is intentionally NOT rendered anywhere on /buy (per spec);
+  // the value remains in data.json.
   if (d.completion) rows.push({ label: 'Completion', value: String(d.completion) })
   if (d.totalUnits != null) rows.push({ label: 'Total units', value: String(d.totalUnits) })
   if (d.paymentStructure) rows.push({ label: 'Payment structure', value: d.paymentStructure })
@@ -239,7 +261,7 @@ function PropertyInformation({ development }: { development: Development }) {
         {open && (
           <div style={{ marginTop: 22 }}>
             {rows.map((row, i) => (
-              <div key={row.label} style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 160px) minmax(0, 1fr)', gap: 20, padding: '15px 0', borderTop: i === 0 ? 'none' : '0.5px solid var(--border)', fontSize: 14.5 }}>
+              <div key={row.label} style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 200px) minmax(0, 1fr)', gap: 20, padding: '15px 0', borderTop: i === 0 ? 'none' : '0.5px solid var(--border)', fontSize: 14.5 }}>
                 <span style={{ color: '#7A7268', letterSpacing: '0.02em' }}>{row.label}</span>
                 <span style={{ color: 'var(--text)', lineHeight: 1.7 }}>{row.value}</span>
               </div>
@@ -313,7 +335,7 @@ function ReadMore({ text }: { text: string }) {
   const [open, setOpen] = useState(false)
   const shown = !long || open ? text : text.slice(0, text.lastIndexOf(' ', LIMIT)) + '…'
   return (
-    <div>
+    <div style={{ maxWidth: 800 }}>
       <p style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85 }}>{shown}</p>
       {long && (
         <button type="button" onClick={() => setOpen(o => !o)} className="link-underline" style={{ marginTop: 14, background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', color: '#A0845C', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
@@ -325,13 +347,10 @@ function ReadMore({ text }: { text: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 12 — Interleaved gallery + pull-quote (uniform tiles)               */
+/* 12 — Interleaved gallery + pull-quote (uniform 4:3 tiles)           */
 /* ------------------------------------------------------------------ */
 
 function InterleavedGallery({ images, name, pullQuote }: { images: string[]; name: string; pullQuote: string | null }) {
-  // Every tile — photos AND the pull-quote — shares one fixed 4:3 aspect ratio,
-  // so columns stay equal-height and rows align. The quote occupies exactly one
-  // tile slot (spliced ~1/3 in) rather than a taller block that breaks the grid.
   const tiles: Array<{ kind: 'img'; src: string } | { kind: 'quote'; text: string }> = images.map(src => ({ kind: 'img' as const, src }))
   if (pullQuote && images.length >= 2) tiles.splice(Math.min(2, tiles.length), 0, { kind: 'quote', text: pullQuote })
 
@@ -432,7 +451,7 @@ function EnquiryForm({ developmentName, slug }: { developmentName: string; slug:
     <section id="enquiry-form" style={{ marginTop: 40, borderTop: '0.5px solid var(--border)', paddingTop: 42 }}>
       <Reveal y={24} amount={0.15}>
         <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Enquiry</p>
-        <h2 style={{ color: 'var(--text)', fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.2, marginBottom: 24 }}>Register your interest in {developmentName}</h2>
+        <h2 style={{ color: 'var(--text)', fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.2, marginBottom: 24 }}>Register your interest</h2>
       </Reveal>
 
       {status === 'sent' ? (
@@ -554,8 +573,6 @@ function scrollToId(id: string) {
 
 function firstSentence(text?: string): string | null {
   if (!text) return null
-  // Up to ~210 chars so a normal opening sentence is captured whole; the quote
-  // tile is 4:3 with overflow:hidden, and this length fits at the tile's font.
   const m = text.match(/^(.{40,210}?[.!?])(\s|$)/)
   return m ? m[1] : null
 }

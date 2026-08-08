@@ -3,15 +3,16 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { DevelopmentAssets } from '@/lib/developmentAssets'
 import type { NearestStation } from '@/lib/developments'
 
-// Development hero: a media panel with Gallery / Floorplan / Location / Brochure
-// tabs. Every surface reads from the theme tokens (var(--surface*), var(--text*),
-// var(--border)) so it renders LIGHT in light mode and dark in dark mode — the
-// previous version hardcoded a full-bleed #28231C section that made the whole
-// page read dark in light mode. Overlays here (arrows, counter) are absolutely
-// positioned INSIDE the image frame (position:relative + overflow:hidden), so
-// they can never escape onto the page.
+// Full-bleed development hero: the gallery image spans edge-to-edge for impact,
+// with the Gallery / Floorplan / Location / Brochure tab strip and the thumbnail
+// row aligned to the content width above/below it. Every surface reads from the
+// theme tokens (light in light mode, dark in dark mode). Overlays (arrows,
+// counter) are absolutely positioned INSIDE the media frame (position:relative +
+// overflow:hidden) so they can never escape onto the page.
 
 type HeroTab = 'gallery' | 'floorplan' | 'location' | 'brochure'
+
+const CONTAINER: React.CSSProperties = { maxWidth: 1240, margin: '0 auto', padding: '0 var(--gutter)' }
 
 export default function DevelopmentHero({
   name, assets, locationNotes, nearestStation,
@@ -40,7 +41,6 @@ export default function DevelopmentHero({
   const prev = useCallback(() => go(idx - 1), [go, idx])
   const next = useCallback(() => go(idx + 1), [go, idx])
 
-  // Left/right arrow keys advance the gallery while that tab is active.
   useEffect(() => {
     if (tab !== 'gallery' || !multi) return
     const onKey = (e: KeyboardEvent) => {
@@ -54,11 +54,14 @@ export default function DevelopmentHero({
   if (tabs.length === 0) return null
   const label: Record<HeroTab, string> = { gallery: 'Gallery', floorplan: 'Floorplan', location: 'Location', brochure: 'Brochure' }
 
+  // Full-bleed media band height.
+  const bandStyle: React.CSSProperties = { position: 'relative', width: '100%', height: 'clamp(420px, 66vh, 760px)', overflow: 'hidden', background: 'var(--surface-3)' }
+
   return (
-    <section style={{ background: 'var(--surface)', padding: '140px var(--gutter) 0' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        {/* Tab bar — themed chips */}
-        <div role="tablist" aria-label="Development media" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 }}>
+    <section style={{ background: 'var(--surface)', padding: '140px 0 0' }}>
+      {/* Tab strip — aligned to content width, themed chips */}
+      <div style={{ ...CONTAINER, marginBottom: 18 }}>
+        <div role="tablist" aria-label="Development media" style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {tabs.map(t => {
             const active = t === tab
             return (
@@ -82,25 +85,26 @@ export default function DevelopmentHero({
             )
           })}
         </div>
+      </div>
 
-        {tab === 'gallery' && images.length > 0 && (
-          <>
-            {/* Image frame — overlays live INSIDE this position:relative box. */}
-            <div style={{ position: 'relative', aspectRatio: '16 / 9', overflow: 'hidden', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', background: 'var(--surface-3)' }}>
-              <img key={images[idx]} src={images[idx]} alt={`${name}, image ${idx + 1} of ${images.length}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              {multi && (
-                <>
-                  <HeroArrow dir="prev" onClick={prev} />
-                  <HeroArrow dir="next" onClick={next} />
-                  {/* Position counter, e.g. 3 / 14 */}
-                  <div aria-live="polite" style={{ position: 'absolute', right: 14, bottom: 14, zIndex: 2, fontSize: 11, letterSpacing: '0.14em', color: '#F2EFE9', background: 'rgba(40,35,28,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid rgba(242,239,233,0.16)' }}>
-                    {idx + 1} / {images.length}
-                  </div>
-                </>
-              )}
-            </div>
+      {/* Full-bleed media band */}
+      {tab === 'gallery' && images.length > 0 && (
+        <>
+          <div style={bandStyle}>
+            <img key={images[idx]} src={images[idx]} alt={`${name}, image ${idx + 1} of ${images.length}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             {multi && (
-              <div style={{ display: 'flex', gap: 8, padding: '12px 0 0', overflowX: 'auto' }}>
+              <>
+                <HeroArrow dir="prev" onClick={prev} />
+                <HeroArrow dir="next" onClick={next} />
+                <div aria-live="polite" style={{ position: 'absolute', right: 'clamp(16px, 4vw, 40px)', bottom: 16, zIndex: 2, fontSize: 11, letterSpacing: '0.14em', color: '#F2EFE9', background: 'rgba(40,35,28,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid rgba(242,239,233,0.16)' }}>
+                  {idx + 1} / {images.length}
+                </div>
+              </>
+            )}
+          </div>
+          {multi && (
+            <div style={{ ...CONTAINER, marginTop: 12 }}>
+              <div style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
                 {images.map((src, i) => (
                   <button
                     key={src}
@@ -113,20 +117,22 @@ export default function DevelopmentHero({
                   </button>
                 ))}
               </div>
-            )}
-          </>
-        )}
+            </div>
+          )}
+        </>
+      )}
 
-        {tab === 'floorplan' && assets.floorplan && (
-          <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 'clamp(16px, 3vw, 40px)', display: 'flex', justifyContent: 'center' }}>
-            <img src={assets.floorplan} alt={`${name} floor plan`} style={{ maxWidth: '100%', height: 'auto', display: 'block' }} />
-          </div>
-        )}
+      {tab === 'floorplan' && assets.floorplan && (
+        <div style={{ ...bandStyle, background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(16px, 3vw, 40px)' }}>
+          <img src={assets.floorplan} alt={`${name} floor plan`} style={{ maxWidth: '100%', maxHeight: '100%', height: 'auto', display: 'block' }} />
+        </div>
+      )}
 
-        {tab === 'location' && (locationNotes || hasStation) && (
-          <div style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 'clamp(28px, 5vw, 56px)' }}>
+      {tab === 'location' && (locationNotes || hasStation) && (
+        <div style={{ ...bandStyle, background: 'var(--surface-2)', display: 'flex', alignItems: 'center' }}>
+          <div style={{ ...CONTAINER, width: '100%' }}>
             <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 16 }}>Location</p>
-            {locationNotes && <p style={{ fontSize: 15.5, lineHeight: 1.9, color: 'var(--text)', opacity: 0.85, maxWidth: 780 }}>{locationNotes}</p>}
+            {locationNotes && <p style={{ fontSize: 'clamp(15px, 1.7vw, 18px)', lineHeight: 1.9, color: 'var(--text)', opacity: 0.85, maxWidth: 820 }}>{locationNotes}</p>}
             {hasStation && (
               <div style={{ marginTop: 20, fontSize: 13, letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
                 Nearest station — <span style={{ color: 'var(--text)' }}>{nearestStation!.name}</span>
@@ -134,17 +140,17 @@ export default function DevelopmentHero({
               </div>
             )}
           </div>
-        )}
+        </div>
+      )}
 
-        {tab === 'brochure' && assets.brochure && (
-          <div style={{ background: 'var(--surface-2)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: 'clamp(40px, 7vw, 88px)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 'clamp(300px, 40vh, 440px)' }}>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.4vw, 34px)', fontWeight: 300, color: 'var(--text)', marginBottom: 20 }}>The full brochure</div>
-            <a href={assets.brochure} target="_blank" rel="noopener noreferrer" className="btn-press" style={{ display: 'inline-flex', alignItems: 'center', gap: 12, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#F2EFE9', background: '#A0845C', padding: '15px 28px', borderRadius: 'var(--radius-pill)', border: '1px solid #A0845C' }}>
-              <DownloadIcon /> Download brochure (PDF)
-            </a>
-          </div>
-        )}
-      </div>
+      {tab === 'brochure' && assets.brochure && (
+        <div style={{ ...bandStyle, background: 'var(--surface-2)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'clamp(32px, 6vw, 72px)' }}>
+          <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.4vw, 34px)', fontWeight: 300, color: 'var(--text)', marginBottom: 20 }}>The full brochure</div>
+          <a href={assets.brochure} target="_blank" rel="noopener noreferrer" className="btn-press" style={{ display: 'inline-flex', alignItems: 'center', gap: 12, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#F2EFE9', background: '#A0845C', padding: '15px 28px', borderRadius: 'var(--radius-pill)', border: '1px solid #A0845C' }}>
+            <DownloadIcon /> Download brochure (PDF)
+          </a>
+        </div>
+      )}
     </section>
   )
 }
@@ -157,8 +163,8 @@ function HeroArrow({ dir, onClick }: { dir: 'prev' | 'next'; onClick: () => void
       aria-label={isPrev ? 'Previous image' : 'Next image'}
       className="btn-press"
       style={{
-        position: 'absolute', top: '50%', [isPrev ? 'left' : 'right']: 14, transform: 'translateY(-50%)', zIndex: 2,
-        width: 46, height: 46, borderRadius: '50%', cursor: 'pointer',
+        position: 'absolute', top: '50%', [isPrev ? 'left' : 'right']: 'clamp(16px, 4vw, 40px)', transform: 'translateY(-50%)', zIndex: 2,
+        width: 48, height: 48, borderRadius: '50%', cursor: 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         color: '#F2EFE9', background: 'rgba(40,35,28,0.5)', border: '1px solid rgba(242,239,233,0.2)',
         backdropFilter: 'blur(12px) saturate(160%)', WebkitBackdropFilter: 'blur(12px) saturate(160%)',
