@@ -1,9 +1,4 @@
 import type { Metadata } from 'next'
-// Leaflet's tile-pane CSS is linked globally from app/globals.css, but we
-// also import it at this page level for parity with the reliability note
-// in PropertyMap — top-level page modules are the most dependable place
-// for Next.js to link route CSS into the initial bundle.
-import 'leaflet/dist/leaflet.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PageHero, { HeroLine, HeroSubtext } from '@/components/PageHero'

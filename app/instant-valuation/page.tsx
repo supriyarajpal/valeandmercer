@@ -32,7 +32,7 @@ export default function InstantValuationPage() {
         <div style={{maxWidth:'860px',margin:'0 auto',padding:'0 20px'}}>
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Valuation</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'var(--text)',marginBottom:'12px'}}>Instant valuation</h1>
-          <p style={{fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'32px',maxWidth:'560px'}}>Enter a few details for an instant online estimate of your property&apos;s value. It&apos;s a starting guide only — a member of the Vale and Mercer team will follow up to arrange a full, tailored valuation.</p>
+          <p style={{fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'32px',maxWidth:'560px'}}>Enter a few details for an instant online estimate of your property&apos;s value. It&apos;s a starting guide only. A member of the Vale and Mercer team will follow up to arrange a full, tailored valuation.</p>
 
           <div style={{border:'0.5px solid var(--border)',borderRadius:'var(--radius-lg)',overflow:'hidden',background:'var(--surface-3)'}}>
             <iframe
