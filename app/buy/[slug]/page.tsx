@@ -7,7 +7,7 @@ import type { DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { SUPPRESS_UNITMIX } from '@/lib/developmentDisplay'
 import { developments, getDevelopmentBySlug } from '@/lib/developments'
 import { getDevelopmentAssets, developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
-import { developmentHasAddress, developmentTitle } from '@/lib/developmentTitle'
+import { developmentHasAddress, developmentTitle, developmentAddressLine, developmentUnitTypes } from '@/lib/developmentTitle'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
@@ -49,10 +49,9 @@ function similarFor(slug: string, locality?: string): DevelopmentCardData[] {
   const rest = others.filter(d => !sameCity.includes(d))
   return [...sameCity, ...rest].slice(0, 2).map(d => ({
     slug: d.slug,
-    title: developmentTitle(d)!,
-    name: d.name ?? d.slug,
+    addressLine: developmentAddressLine(d)!,
+    unitSummary: developmentUnitTypes(d) ?? undefined,
     price: d.price,
-    tenure: d.tenure,
     heroImage: developmentHeroImage(d.slug),
     hasPhotos: developmentHasPhotos(d.slug),
   }))

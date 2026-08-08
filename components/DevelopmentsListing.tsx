@@ -1,25 +1,43 @@
 'use client'
-import Link from 'next/link'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
+import ListingTile, { type ListingTileDetailPart } from '@/components/ListingTile'
 
-// New-homes listing grid, rendered on /buy BELOW the existing "Properties
-// coming soon" block. One card per development. Deliberately mirrors the
-// lettings card in components/LettingsListings.tsx — same 4:3 framed photo in
-// cream matting with a thin gold hairline, and the label sitting in open space
-// BELOW the frame (no text over the photo, so no dark text-shadow is needed).
-// The favourite heart is intentionally omitted here (sales, not lettings).
+// New-homes listing grid on /buy. One card per development, using the shared
+// ListingTile ("Design C") — the same treatment as the lettings cards, with
+// buy-specific data: title = street address + city (never the development or
+// developer name), badge = "New Homes", detail = unit types + price (or
+// "Register your interest" where no price is stated), and no favourite heart.
 
 export type DevelopmentCardData = {
   slug: string
-  // Address-based title: "<street, city> · <unit type>". This is the card
-  // heading (the development name is no longer shown). `name` is retained only
-  // for the image alt text.
-  title: string
-  name: string
+  /** Street address + city — the card title. */
+  addressLine: string
+  /** Unit-type phrase, e.g. "1–3 bed apartments"; omitted when not stated. */
+  unitSummary?: string
+  /** Price figure, or "Register your interest" / undefined where none is stated. */
   price?: string
-  tenure?: string
   heroImage: string
   hasPhotos: boolean
+}
+
+export function DevelopmentCard({ dev }: { dev: DevelopmentCardData }) {
+  const hasPrice = !!dev.price && dev.price.trim() !== 'Register your interest'
+  // Detail line: unit types (if stated) then price — or "Register your interest"
+  // when no figure is stated. Empty parts are dropped by ListingTile.
+  const detail: ListingTileDetailPart[] = []
+  if (dev.unitSummary) detail.push({ text: dev.unitSummary })
+  detail.push({ text: hasPrice ? dev.price! : 'Register your interest', gold: true })
+
+  return (
+    <ListingTile
+      href={`/buy/${dev.slug}`}
+      image={dev.heroImage}
+      imageAlt={dev.hasPhotos ? dev.addressLine : ''}
+      badge="New Homes"
+      title={dev.addressLine}
+      detail={detail}
+    />
+  )
 }
 
 export default function DevelopmentsListing({ developments }: { developments: DevelopmentCardData[] }) {
@@ -35,7 +53,7 @@ export default function DevelopmentsListing({ developments }: { developments: De
           </div>
         </Reveal>
 
-        <Stagger as="div" stagger={0.08} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '64px 36px', alignItems: 'start' }}>
+        <Stagger as="div" stagger={0.08} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '48px 36px', alignItems: 'start' }}>
           {developments.map(dev => (
             <StaggerItem key={dev.slug} as="div">
               <DevelopmentCard dev={dev} />
@@ -44,73 +62,5 @@ export default function DevelopmentsListing({ developments }: { developments: De
         </Stagger>
       </div>
     </section>
-  )
-}
-
-export function DevelopmentCard({ dev }: { dev: DevelopmentCardData }) {
-  return (
-    <Link
-      href={`/buy/${dev.slug}`}
-      style={{ textDecoration: 'none', position: 'relative', display: 'block' }}
-      onMouseEnter={e => {
-        const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
-        const img = e.currentTarget.querySelector<HTMLImageElement>('img')
-        if (arrow) arrow.style.transform = 'translateX(6px)'
-        if (img) img.style.transform = 'scale(1.04)'
-      }}
-      onMouseLeave={e => {
-        const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
-        const img = e.currentTarget.querySelector<HTMLImageElement>('img')
-        if (arrow) arrow.style.transform = 'translateX(0)'
-        if (img) img.style.transform = 'scale(1)'
-      }}
-    >
-      {/* Cream matting frame — same treatment as the lettings card. */}
-      <div style={{ position: 'relative', background: 'var(--surface-2)', padding: 'clamp(24px, 3vw, 38px)', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(52,48,43,0.06)', boxShadow: '0 16px 36px -22px rgba(40,35,28,0.42), 0 2px 6px -3px rgba(40,35,28,0.12)' }}>
-        {/* Fixed 4:3 photo frame with a thin gold hairline. object-fit:cover
-            so photos of any native ratio fill the frame cleanly. */}
-        {/* Photo frame bg matches the lettings card's dark matte (#26221C) when
-            there IS a photo; for a photo-less development we use a light theme
-            token instead so the placeholder reads as a soft cream tile rather
-            than a heavy dark rectangle on the cream grid. */}
-        <div style={{ position: 'relative', aspectRatio: '4 / 3', overflow: 'hidden', border: '1px solid rgba(160,132,92,0.5)', borderRadius: 2, background: dev.hasPhotos ? '#26221C' : 'var(--surface-3)' }}>
-          <img
-            src={dev.heroImage}
-            alt={dev.hasPhotos ? dev.title : ''}
-            loading="lazy"
-            style={{
-              display: 'block', width: '100%', height: '100%',
-              objectFit: dev.hasPhotos ? 'cover' : 'contain',
-              transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform',
-              opacity: dev.hasPhotos ? 1 : 0.5,
-            }}
-          />
-          {/* New Homes marker — small, understated, on the photo, top-left
-              (parallels the lettings card's "TO LET"). */}
-          <span style={{ position: 'absolute', top: 12, left: 12, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
-            New Homes
-          </span>
-        </div>
-      </div>
-
-      {/* Label — open space below the frame, never overlaid on the photo.
-          Heading is the address-based title (street, city · unit type). */}
-      <div style={{ marginTop: 'clamp(16px, 1.8vw, 24px)', padding: '0 2px' }}>
-        <h3 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(19px, 2vw, 25px)', color: 'var(--text)', lineHeight: 1.18, letterSpacing: '-0.01em', marginBottom: 14 }}>
-          {dev.title}
-        </h3>
-        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px 14px' }}>
-          {dev.price && (
-            <span style={{ fontSize: 14, letterSpacing: '0.04em', color: 'var(--text)' }}>{dev.price}</span>
-          )}
-          {dev.tenure && (
-            <span style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#8A6F49', background: 'rgba(160,132,92,0.12)', border: '0.5px solid rgba(160,132,92,0.35)', padding: '4px 10px', borderRadius: 'var(--radius-pill)' }}>
-              {dev.tenure}
-            </span>
-          )}
-          <span data-arrow aria-hidden style={{ color: '#A0845C', fontSize: 15, marginLeft: 'auto', transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>
-        </div>
-      </div>
-    </Link>
   )
 }

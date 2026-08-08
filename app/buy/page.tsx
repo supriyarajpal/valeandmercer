@@ -5,7 +5,7 @@ import { Reveal } from '@/components/Reveal'
 import DevelopmentsListing, { type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { developments } from '@/lib/developments'
 import { developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
-import { developmentHasAddress, developmentTitle } from '@/lib/developmentTitle'
+import { developmentHasAddress, developmentAddressLine, developmentUnitTypes } from '@/lib/developmentTitle'
 
 // /buy — the New Homes listing. The old "Properties coming soon" teaser block
 // (Canary Wharf / Notting Hill / Chelsea) was removed per instruction; the
@@ -20,10 +20,9 @@ export default function BuyPage() {
     .filter(developmentHasAddress)
     .map(dev => ({
       slug: dev.slug,
-      title: developmentTitle(dev)!,
-      name: dev.name ?? dev.slug,
+      addressLine: developmentAddressLine(dev)!,
+      unitSummary: developmentUnitTypes(dev) ?? undefined,
       price: dev.price,
-      tenure: dev.tenure,
       heroImage: developmentHeroImage(dev.slug),
       hasPhotos: developmentHasPhotos(dev.slug),
     }))
