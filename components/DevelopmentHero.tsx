@@ -4,13 +4,14 @@ import type { DevelopmentAssets } from '@/lib/developmentAssets'
 import type { NearestStation } from '@/lib/developments'
 
 // Full-bleed development hero: the gallery image spans edge-to-edge for impact,
-// with the Gallery / Floorplan / Location / Brochure tab strip and the thumbnail
-// row aligned to the content width above/below it. Every surface reads from the
-// theme tokens (light in light mode, dark in dark mode). Overlays (arrows,
-// counter) are absolutely positioned INSIDE the media frame (position:relative +
-// overflow:hidden) so they can never escape onto the page.
+// with the Gallery / Floorplan / Location tab strip and the thumbnail row aligned
+// to the content width above/below it. Every surface reads from the theme tokens
+// (light in light mode, dark in dark mode). Overlays (arrows, counter) are
+// absolutely positioned INSIDE the media frame (position:relative +
+// overflow:hidden) so they can never escape onto the page. (The brochure download
+// was removed site-wide.)
 
-type HeroTab = 'gallery' | 'floorplan' | 'location' | 'brochure'
+type HeroTab = 'gallery' | 'floorplan' | 'location'
 
 const CONTAINER: React.CSSProperties = { maxWidth: 1240, margin: '0 auto', padding: '0 var(--gutter)' }
 
@@ -28,11 +29,10 @@ export default function DevelopmentHero({
     if (assets.images.length > 0) t.push('gallery')
     if (assets.floorplan) t.push('floorplan')
     if (locationNotes || hasStation) t.push('location')
-    if (assets.brochure) t.push('brochure')
     return t
-  }, [assets.images.length, assets.floorplan, assets.brochure, locationNotes, hasStation])
+  }, [assets.images.length, assets.floorplan, locationNotes, hasStation])
 
-  const [tab, setTab] = useState<HeroTab>(tabs[0] ?? 'brochure')
+  const [tab, setTab] = useState<HeroTab>(tabs[0] ?? 'gallery')
   const [idx, setIdx] = useState(0)
   const images = assets.images
   const multi = images.length > 1
@@ -52,7 +52,7 @@ export default function DevelopmentHero({
   }, [tab, multi, prev, next])
 
   if (tabs.length === 0) return null
-  const label: Record<HeroTab, string> = { gallery: 'Gallery', floorplan: 'Floorplan', location: 'Location', brochure: 'Brochure' }
+  const label: Record<HeroTab, string> = { gallery: 'Gallery', floorplan: 'Floorplan', location: 'Location' }
 
   // Full-bleed media band height.
   const bandStyle: React.CSSProperties = { position: 'relative', width: '100%', height: 'clamp(420px, 66vh, 760px)', overflow: 'hidden', background: 'var(--surface-3)' }
@@ -142,15 +142,6 @@ export default function DevelopmentHero({
           </div>
         </div>
       )}
-
-      {tab === 'brochure' && assets.brochure && (
-        <div style={{ ...bandStyle, background: 'var(--surface-2)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 'clamp(32px, 6vw, 72px)' }}>
-          <div style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(24px, 3.4vw, 34px)', fontWeight: 300, color: 'var(--text)', marginBottom: 20 }}>The full brochure</div>
-          <a href={assets.brochure} target="_blank" rel="noopener noreferrer" className="btn-press" style={{ display: 'inline-flex', alignItems: 'center', gap: 12, fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase', color: '#F2EFE9', background: '#A0845C', padding: '15px 28px', borderRadius: 'var(--radius-pill)', border: '1px solid #A0845C' }}>
-            <DownloadIcon /> Download brochure (PDF)
-          </a>
-        </div>
-      )}
     </section>
   )
 }
@@ -176,13 +167,5 @@ function HeroArrow({ dir, onClick }: { dir: 'prev' | 'next'; onClick: () => void
     >
       {isPrev ? '←' : '→'}
     </button>
-  )
-}
-
-function DownloadIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16" />
-    </svg>
   )
 }

@@ -64,7 +64,10 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
   if (!dev || !developmentHasAddress(dev)) notFound()
 
   const title = developmentTitle(dev)!
-  const assets = getDevelopmentAssets(slug)
+  // Brochure download was removed site-wide. The path stays recorded in the
+  // asset manifest for internal reference, but is stripped here so it is neither
+  // rendered nor shipped in the client hydration payload.
+  const assets = { ...getDevelopmentAssets(slug), brochure: null }
   const similar = similarFor(slug, dev.locality)
 
   // Build the prop handed to the client, stripping fields that must not appear
