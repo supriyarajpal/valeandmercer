@@ -33,7 +33,7 @@ export default function DevelopmentDetail({
 
   return (
     <main style={{ background: 'var(--surface)', paddingBottom: 'var(--section-y)' }}>
-      {/* 1 — Full-bleed hero gallery + Floorplan / Location / Brochure tabs */}
+      {/* 1 — Full-bleed hero gallery + Floorplan / Location tabs */}
       <DevelopmentHero name={d.name ?? d.slug} assets={assets} locationNotes={d.locationNotes} nearestStation={d.nearestStation} />
 
       <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 var(--gutter)' }}>
@@ -122,16 +122,11 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 15 — Floorplan & specifications */}
-        {(assets.brochure || assets.floorplan || (d.specification && d.specification.length > 0)) && (
+        {/* 15 — Floorplan & specifications (brochure download intentionally removed) */}
+        {(assets.floorplan || (d.specification && d.specification.length > 0)) && (
           <Section id="floorplan-specs" eyebrow="Floorplan & Specifications" title="Plans & finish">
-            {assets.brochure && (
-              <a href={assets.brochure} target="_blank" rel="noopener noreferrer" className="btn-press" style={downloadBtnStyle} onMouseEnter={hoverDownloadOn} onMouseLeave={hoverDownloadOff}>
-                <DownloadIcon /> Download brochure (PDF)
-              </a>
-            )}
             {assets.floorplan && (
-              <figure style={{ margin: assets.brochure ? '28px 0 0' : 0 }}>
+              <figure style={{ margin: 0 }}>
                 <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: 'clamp(12px, 2vw, 24px)' }}>
                   <img src={assets.floorplan} alt={`${title} floor plan`} loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 4 }} />
                 </div>
@@ -139,7 +134,7 @@ export default function DevelopmentDetail({
               </figure>
             )}
             {d.specification && d.specification.length > 0 && (
-              <div style={{ marginTop: assets.brochure || assets.floorplan ? 36 : 0, display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+              <div style={{ marginTop: assets.floorplan ? 36 : 0, display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
                 {d.specification.map(sec => <SpecBlock key={sec.heading} section={sec} />)}
               </div>
             )}
@@ -280,7 +275,6 @@ function PropertyInformation({ development }: { development: Development }) {
 function QuickLinks({ assets, hasSpec }: { assets: DevelopmentAssets; hasSpec: boolean }) {
   const links: Array<{ label: string; onClick?: () => void; href?: string }> = []
   if (assets.floorplan || hasSpec) links.push({ label: 'Floor plan', onClick: () => scrollToId('floorplan-specs') })
-  if (assets.brochure) links.push({ label: 'Download brochure', href: assets.brochure })
   links.push({ label: 'Enquire', onClick: () => scrollToId('enquiry-form') })
 
   return (
@@ -558,14 +552,6 @@ const chipStyle: React.CSSProperties = {
 const chipOn = (e: React.MouseEvent<HTMLElement>) => { e.currentTarget.style.borderColor = 'rgba(160,132,92,0.6)'; e.currentTarget.style.background = 'var(--surface-3)' }
 const chipOff = (e: React.MouseEvent<HTMLElement>) => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'var(--surface-2)' }
 
-const downloadBtnStyle: React.CSSProperties = {
-  display: 'inline-flex', alignItems: 'center', gap: 12, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase',
-  color: '#F2EFE9', background: '#34302B', border: '1px solid #34302B', padding: '15px 26px', borderRadius: 'var(--radius-pill)',
-  textDecoration: 'none', transition: 'background var(--dur) var(--ease-apple), border-color var(--dur) var(--ease-apple)',
-}
-const hoverDownloadOn = (e: React.MouseEvent<HTMLElement>) => { e.currentTarget.style.background = '#A0845C'; e.currentTarget.style.borderColor = '#A0845C' }
-const hoverDownloadOff = (e: React.MouseEvent<HTMLElement>) => { e.currentTarget.style.background = '#34302B'; e.currentTarget.style.borderColor = '#34302B' }
-
 function scrollToId(id: string) {
   if (typeof document === 'undefined') return
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -575,14 +561,6 @@ function firstSentence(text?: string): string | null {
   if (!text) return null
   const m = text.match(/^(.{40,210}?[.!?])(\s|$)/)
   return m ? m[1] : null
-}
-
-function DownloadIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16" />
-    </svg>
-  )
 }
 
 function StationIcon() {
