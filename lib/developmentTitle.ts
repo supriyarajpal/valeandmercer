@@ -27,9 +27,12 @@ function bedsFromType(type?: string): number | null {
   return m ? parseInt(m[1], 10) : null
 }
 
-// The "unit type" phrase for a title, e.g. "1 bed apartments",
-// "studio–3 bed apartments", or "apartments, duplexes & penthouses".
-export function developmentUnitSummary(dev: Development): string {
+// The "unit type" phrase, e.g. "1 bed apartments", "studio–3 bed apartments",
+// or "apartments, duplexes & penthouses" — or NULL when the unitMix carries no
+// usable type/bedroom data (e.g. only raw sizes). Callers that need to OMIT the
+// field when empty (the listing card) use this directly; callers that need a
+// guaranteed string (the combined page title) use developmentUnitSummary below.
+export function developmentUnitTypes(dev: Development): string | null {
   const rows = Array.isArray(dev.unitMix) ? dev.unitMix : []
   const beds = rows.map(r => bedsFromType(r.type)).filter((n): n is number => n != null)
   if (beds.length > 0) {
@@ -43,7 +46,13 @@ export function developmentUnitSummary(dev: Development): string {
   const types = [...new Set(rows.map(r => r.type).filter((t): t is string => !!t).map(t => t.toLowerCase()))]
   if (types.length === 1) return types[0]
   if (types.length > 1) return `${types.slice(0, -1).join(', ')} & ${types[types.length - 1]}`
-  return 'apartments'
+  return null
+}
+
+// Same as developmentUnitTypes but with a generic fallback, for the combined
+// page title (which must always render a phrase).
+export function developmentUnitSummary(dev: Development): string {
+  return developmentUnitTypes(dev) ?? 'apartments'
 }
 
 // Address + city (city appended only when the address doesn't already include
