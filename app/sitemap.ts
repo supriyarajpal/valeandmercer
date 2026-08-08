@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getLiveProperties } from '@/lib/properties'
-import { getAllDevelopmentSlugs } from '@/lib/developments'
+import { developments } from '@/lib/developments'
+import { developmentHasAddress } from '@/lib/developmentTitle'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
@@ -13,7 +14,6 @@ const BLOG_POSTS: Array<{ slug: string; published: string }> = [
   { slug: 'london-rental-market-2026',           published: '2026-07-08' },
   { slug: 'renters-rights-act-london-2026',      published: '2026-07-08' },
   { slug: 'london-property-market-2025',         published: '2025-05-01' },
-  { slug: 'guide-to-buying-in-chelsea',          published: '2025-04-01' },
   { slug: 'student-lettings-london-guide',       published: '2025-03-01' },
 ]
 
@@ -52,9 +52,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  // New-homes development detail pages (/buy/<slug>) — one per development.
-  const developmentRoutes: MetadataRoute.Sitemap = getAllDevelopmentSlugs().map(slug => ({
-    url: SITE_URL + '/buy/' + slug,
+  // New-homes development detail pages (/buy/<slug>) — only developments with
+  // an address get a page (addressless ones are excluded from the site).
+  const developmentRoutes: MetadataRoute.Sitemap = developments.filter(developmentHasAddress).map(d => ({
+    url: SITE_URL + '/buy/' + d.slug,
     lastModified: now,
     changeFrequency: 'weekly' as const,
     priority: 0.7,

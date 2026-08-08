@@ -11,8 +11,11 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 
 export type DevelopmentCardData = {
   slug: string
+  // Address-based title: "<street, city> · <unit type>". This is the card
+  // heading (the development name is no longer shown). `name` is retained only
+  // for the image alt text.
+  title: string
   name: string
-  locality?: string
   price?: string
   tenure?: string
   heroImage: string
@@ -73,7 +76,7 @@ export function DevelopmentCard({ dev }: { dev: DevelopmentCardData }) {
         <div style={{ position: 'relative', aspectRatio: '4 / 3', overflow: 'hidden', border: '1px solid rgba(160,132,92,0.5)', borderRadius: 2, background: dev.hasPhotos ? '#26221C' : 'var(--surface-3)' }}>
           <img
             src={dev.heroImage}
-            alt={dev.hasPhotos ? `${dev.name}${dev.locality ? ', ' + dev.locality : ''}` : ''}
+            alt={dev.hasPhotos ? dev.title : ''}
             loading="lazy"
             style={{
               display: 'block', width: '100%', height: '100%',
@@ -90,15 +93,11 @@ export function DevelopmentCard({ dev }: { dev: DevelopmentCardData }) {
         </div>
       </div>
 
-      {/* Label — open space below the frame, never overlaid on the photo. */}
+      {/* Label — open space below the frame, never overlaid on the photo.
+          Heading is the address-based title (street, city · unit type). */}
       <div style={{ marginTop: 'clamp(16px, 1.8vw, 24px)', padding: '0 2px' }}>
-        {dev.locality && (
-          <div style={{ fontStyle: 'italic', fontSize: 13, color: 'var(--text-muted)', letterSpacing: '0.01em', marginBottom: 8 }}>
-            {dev.locality}
-          </div>
-        )}
-        <h3 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(22px, 2.4vw, 30px)', color: 'var(--text)', lineHeight: 1.12, letterSpacing: '-0.01em', marginBottom: 14 }}>
-          {dev.name}
+        <h3 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(19px, 2vw, 25px)', color: 'var(--text)', lineHeight: 1.18, letterSpacing: '-0.01em', marginBottom: 14 }}>
+          {dev.title}
         </h3>
         <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '10px 14px' }}>
           {dev.price && (
