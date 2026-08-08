@@ -1,46 +1,8 @@
 'use client'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import ArrowButton from '@/components/ArrowButton'
+import { useEffect, useMemo, useState } from 'react'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 import { getLiveProperties, type Property } from '@/lib/properties'
-
-// Leaflet only runs in the browser. Dynamic import with ssr:false keeps
-// it out of the SSR pass and out of the initial JS bundle for anyone who
-// never scrolls to the map. Lightweight cream placeholder while the map
-// chunk loads so the page doesn't jump. (Leaflet's own CSS is linked
-// globally via app/globals.css, so the tile pane styles are always
-// present regardless of when this chunk loads.)
-const PropertyMap = dynamic(() => import('@/components/PropertyMap'), {
-  ssr: false,
-  loading: () => (
-    <div
-      style={{
-        width: '100%',
-        height: 'clamp(360px, 55vh, 560px)',
-        borderRadius: 'var(--radius-lg)',
-        background: 'var(--surface)',
-        border: '0.5px solid var(--border)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: 'var(--text-faint)',
-        fontSize: 11,
-        letterSpacing: '0.24em',
-        textTransform: 'uppercase',
-      }}
-    >
-      Loading map
-    </div>
-  ),
-})
-
-const properties_teaser = [
-  { area: 'Canary Wharf, East London', desc: 'Lettings coming shortly. Register to hear first.' },
-  { area: 'Notting Hill W11', desc: 'Lettings across Notting Hill and Kensington coming soon.' },
-  { area: 'Kensington W8', desc: 'Premium lettings in Kensington. Register now.' },
-]
 
 // The `area` field is stored as `E14 · Cubitt Town` (postcode district
 // dot neighbourhood). Take the neighbourhood segment for grouping.
@@ -49,9 +11,9 @@ function neighbourhoodOf(area: string): string {
   return parts[parts.length - 1] || area
 }
 
-// Live lettings browse experience — map + area-grouped listing grid +
-// coming-soon teasers. Previously the standalone /rent (Rentals) page;
-// folded into the /let Lettings page so lettings lives on one route.
+// Live lettings browse experience — an area-grouped listing grid of the
+// currently-available rentals. (Previously the standalone /rent page, folded
+// into /let. The location map and the "coming soon" teaser cards were removed.)
 export default function LettingsListings() {
   const availableNow = getLiveProperties().filter(p => p.listingType === 'To Let')
 
@@ -84,19 +46,6 @@ export default function LettingsListings() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availableNow])
 
-  const handleMarkerFocus = useCallback((slug: string) => {
-    // Scroll the matching card into view. Small delay so a marker click
-    // that also opens a popup doesn't compete with the scroll animation.
-    if (typeof window === 'undefined') return
-    window.requestAnimationFrame(() => {
-      const el = document.getElementById(`property-${slug}`)
-      if (!el) return
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      el.classList.add('vm-flash')
-      window.setTimeout(() => el.classList.remove('vm-flash'), 1600)
-    })
-  }, [])
-
   // Top padding uses the standard var(--section-y) so the hero → listings
   // transition matches every other section-after-hero on the site (/sell,
   // /student-lettings, homepage featured). Previously padding-top was 0 —
@@ -105,9 +54,9 @@ export default function LettingsListings() {
   return (
     <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        {/* Map + area-grouped grid — real active listings from lib/properties. */}
+        {/* Area-grouped grid — real active listings from lib/properties. */}
         {availableNow.length > 0 && (
-          <section style={{ marginBottom: 96 }}>
+          <section>
             <Reveal y={20} amount={0.2}>
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 40 }}>
                 <div>
@@ -119,15 +68,6 @@ export default function LettingsListings() {
                 <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
                   {availableNow.length} {availableNow.length === 1 ? 'listing' : 'listings'}
                 </span>
-              </div>
-            </Reveal>
-
-            <Reveal y={20} amount={0.1}>
-              <div style={{ marginBottom: 48 }}>
-                <PropertyMap properties={availableNow} onMarkerFocus={handleMarkerFocus} />
-                <p style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-faint)', marginTop: 12 }}>
-                  Marker locations are indicative to the street, not the door.
-                </p>
               </div>
             </Reveal>
 
@@ -194,73 +134,7 @@ export default function LettingsListings() {
           </section>
         )}
 
-        {/* Coming soon — teaser cards for portfolios not yet live. */}
-        <Reveal y={16} amount={0.2}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', marginBottom: 32 }}>
-            <div>
-              <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 12 }}>Coming soon</p>
-              <h2 style={{ color: 'var(--text)' }}>
-                Building the <span style={{ color: '#A0845C', fontStyle: 'italic' }}>next portfolio</span>
-              </h2>
-            </div>
-            <ArrowButton href="/register" label="Register Your Interest" variant="dark" />
-          </div>
-        </Reveal>
-
-        <Stagger as="div" stagger={0.12} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 1, background: 'var(--border-strong)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-          {properties_teaser.map(item => (
-            <StaggerItem key={item.area} as="div">
-              <Link
-                href="/register"
-                style={{
-                  textDecoration: 'none',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  background: '#34302B',
-                  padding: '40px 32px',
-                  minHeight: 200,
-                  position: 'relative',
-                  overflow: 'hidden',
-                  transition: 'background 0.5s var(--ease-out-soft)',
-                }}
-                onMouseEnter={e => {
-                  const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
-                  if (arrow) arrow.style.transform = 'translateX(6px)'
-                  e.currentTarget.style.background = '#40392E'
-                }}
-                onMouseLeave={e => {
-                  const arrow = e.currentTarget.querySelector<HTMLSpanElement>('[data-arrow]')
-                  if (arrow) arrow.style.transform = 'translateX(0)'
-                  e.currentTarget.style.background = '#34302B'
-                }}
-              >
-                <div>
-                  <span style={{ display: 'inline-block', fontSize: 9, letterSpacing: '0.18em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)', marginBottom: 18 }}>To Let</span>
-                  <h3 style={{ fontSize: 22, color: '#F2EFE9', marginBottom: 10 }}>{item.area}</h3>
-                  <p style={{ fontSize: 13, color: 'rgba(242,239,233,0.6)', lineHeight: 1.75 }}>{item.desc}</p>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 22 }}>
-                  <span style={{ fontSize: 10, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#A0845C' }}>Register Interest</span>
-                  <span data-arrow aria-hidden style={{ color: '#A0845C', fontSize: 13, transition: 'transform 0.4s var(--ease-out-soft)' }}>→</span>
-                </div>
-              </Link>
-            </StaggerItem>
-          ))}
-        </Stagger>
       </div>
-
-      {/* Marker-click highlight for the matching card. Kept as a small
-          inline stylesheet with a scoped class so nothing else on the
-          site can hit it. */}
-      <style>{`
-        .vm-flash { animation: vmFlash 1.6s var(--ease-out-soft); }
-        @keyframes vmFlash {
-          0%   { box-shadow: 0 0 0 0    rgba(160,132,92,0.55), 0 20px 40px -20px rgba(52,48,43,0.18); }
-          40%  { box-shadow: 0 0 0 6px  rgba(160,132,92,0.35), 0 20px 40px -20px rgba(52,48,43,0.18); }
-          100% { box-shadow: 0 0 0 0    rgba(160,132,92,0),    0 20px 40px -20px rgba(52,48,43,0.18); }
-        }
-      `}</style>
     </section>
   )
 }
