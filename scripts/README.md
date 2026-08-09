@@ -82,8 +82,11 @@ scripts/publish-gallery.sh <slug>
 
 Reads `image-selects.txt` and, for the approved lines **in order**:
 
-- copies each image from `extracted-images/` into
-  `public/images/developments/<slug>/` renumbered `1.png … N.png`;
+- publishes each image from `extracted-images/` into
+  `public/images/developments/<slug>/` renumbered `1.jpg … N.jpg`,
+  **web-optimised** on the way (downscaled so the longest side is ≤ 2000px and
+  re-encoded as sRGB JPEG — matching the rest of the site's imagery and keeping
+  the repo small; this also fixes CMYK/16-bit PNGs a browser couldn't display);
 - points that property's `data.json` **`gallery`** array at the new files.
 
 It publishes **only** what's listed in `image-selects.txt`. It replaces this

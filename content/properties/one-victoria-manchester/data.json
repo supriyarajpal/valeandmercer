@@ -7,9 +7,21 @@
   "developer": "One Heritage Group",
   "totalUnits": 129,
   "unitMix": [
-    { "type": "1 Bedroom", "beds": 1, "size": "NIA 51.5 sqm / 554.3 sqft" },
-    { "type": "2 Bedroom", "beds": 2, "size": "NIA 72.0 sqm / 775.0 sqft" },
-    { "type": "3 Bedroom", "beds": 3, "size": "NIA 87.7 sqm / 934.0 sqft" }
+    {
+      "type": "1 Bedroom",
+      "beds": 1,
+      "size": "NIA 51.5 sqm / 554.3 sqft"
+    },
+    {
+      "type": "2 Bedroom",
+      "beds": 2,
+      "size": "NIA 72.0 sqm / 775.0 sqft"
+    },
+    {
+      "type": "3 Bedroom",
+      "beds": 3,
+      "size": "NIA 87.7 sqm / 934.0 sqft"
+    }
   ],
   "warranty": "10-year insurance-backed warranty",
   "headline": "Magnificent Manchester",
@@ -94,6 +106,23 @@
       ]
     }
   ],
-  "nearestStation": { "name": "Manchester Victoria", "time": "3-minute walk" },
-  "locationNotes": "Just north of Manchester City Centre, on the doorstep of the Northern Quarter, the Central Retail District, and the business clusters of Deansgate and Spinningfields. Manchester Victoria train and tram terminal is a 3-minute walk. Manchester Airport is directly connected by train from Manchester Victoria in 28 mins; London Euston is 2hrs 35mins by train. The Medieval Quarter (Manchester Cathedral) is less than a 10-minute walk and Spinningfields is a 15-minute walk."
+  "nearestStation": {
+    "name": "Manchester Victoria",
+    "time": "3-minute walk"
+  },
+  "locationNotes": "Just north of Manchester City Centre, on the doorstep of the Northern Quarter, the Central Retail District, and the business clusters of Deansgate and Spinningfields. Manchester Victoria train and tram terminal is a 3-minute walk. Manchester Airport is directly connected by train from Manchester Victoria in 28 mins; London Euston is 2hrs 35mins by train. The Medieval Quarter (Manchester Cathedral) is less than a 10-minute walk and Spinningfields is a 15-minute walk.",
+  "gallery": [
+    "/images/developments/one-victoria-manchester/1.jpg",
+    "/images/developments/one-victoria-manchester/2.jpg",
+    "/images/developments/one-victoria-manchester/3.jpg",
+    "/images/developments/one-victoria-manchester/4.jpg",
+    "/images/developments/one-victoria-manchester/5.jpg",
+    "/images/developments/one-victoria-manchester/6.jpg",
+    "/images/developments/one-victoria-manchester/7.jpg",
+    "/images/developments/one-victoria-manchester/8.jpg",
+    "/images/developments/one-victoria-manchester/9.jpg",
+    "/images/developments/one-victoria-manchester/10.jpg",
+    "/images/developments/one-victoria-manchester/11.jpg",
+    "/images/developments/one-victoria-manchester/12.jpg"
+  ]
 }
