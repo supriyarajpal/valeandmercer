@@ -70,6 +70,11 @@ export interface Development {
   specification?: SpecSection[]
   nearestStation?: NearestStation
   locationNotes?: string
+  // Published gallery image paths (e.g. "/images/developments/<slug>/1.png"),
+  // written by scripts/publish-gallery.sh. When present this is the authoritative
+  // ordered gallery for the /buy pages; otherwise they fall back to whatever is
+  // in the asset manifest (lib/developmentAssets.generated.json).
+  gallery?: string[]
 }
 
 const PROPERTIES_DIR = path.join(process.cwd(), 'content', 'properties')

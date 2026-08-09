@@ -52,8 +52,9 @@ function similarFor(slug: string, locality?: string): DevelopmentCardData[] {
     addressLine: developmentAddressLine(d)!,
     unitSummary: developmentUnitTypes(d) ?? undefined,
     price: d.price,
-    heroImage: developmentHeroImage(d.slug),
-    hasPhotos: developmentHasPhotos(d.slug),
+    // Prefer a published data.json gallery; fall back to the asset manifest.
+    heroImage: d.gallery?.[0] ?? developmentHeroImage(d.slug),
+    hasPhotos: (d.gallery?.length ?? 0) > 0 || developmentHasPhotos(d.slug),
   }))
 }
 
@@ -67,7 +68,12 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
   // Brochure download was removed site-wide. The path stays recorded in the
   // asset manifest for internal reference, but is stripped here so it is neither
   // rendered nor shipped in the client hydration payload.
-  const assets = { ...getDevelopmentAssets(slug), brochure: null }
+  //
+  // Gallery images: a published data.json `gallery` (from publish-gallery.sh) is
+  // authoritative when present; otherwise fall back to the asset manifest.
+  const base = getDevelopmentAssets(slug)
+  const images = dev.gallery && dev.gallery.length > 0 ? dev.gallery : base.images
+  const assets = { ...base, images, brochure: null }
   const similar = similarFor(slug, dev.locality)
 
   // Build the prop handed to the client, stripping fields that must not appear
