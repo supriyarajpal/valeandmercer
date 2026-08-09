@@ -23,8 +23,9 @@ export default function BuyPage() {
       addressLine: developmentAddressLine(dev)!,
       unitSummary: developmentUnitTypes(dev) ?? undefined,
       price: dev.price,
-      heroImage: developmentHeroImage(dev.slug),
-      hasPhotos: developmentHasPhotos(dev.slug),
+      // Prefer a published data.json gallery; fall back to the asset manifest.
+      heroImage: dev.gallery?.[0] ?? developmentHeroImage(dev.slug),
+      hasPhotos: (dev.gallery?.length ?? 0) > 0 || developmentHasPhotos(dev.slug),
     }))
 
   return (
