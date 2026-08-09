@@ -62,15 +62,14 @@ find "$dest" -maxdepth 1 -type f -name '[0-9]*.png' -delete 2>/dev/null || true
 find "$dest" -maxdepth 1 -type f -name '[0-9]*.jpg' -delete 2>/dev/null || true
 find "$dest" -maxdepth 1 -type f -name '[0-9]*.jpeg' -delete 2>/dev/null || true
 
-gallery_paths=()
-i=0
+# Full source paths, in approved order.
+srcs=()
 for name in "${approved[@]}"; do
-  i=$((i + 1))
-  cp "$extracted/$name" "$dest/$i.png"
-  gallery_paths+=("/images/developments/$slug/$i.png")
+  srcs+=("$extracted/$name")
 done
 
-# Point data.json "gallery" at the new files (data.json is otherwise untouched).
-python3 "$SCRIPT_DIR/gallery_publish_data.py" "$data" "${gallery_paths[@]}"
+# Optimise (downscale + sRGB JPEG) into dest as 1.jpg..N.jpg and set data.json
+# "gallery" to the published paths. data.json is otherwise untouched.
+python3 "$SCRIPT_DIR/gallery_publish.py" "$data" "$dest" "/images/developments/$slug" "${srcs[@]}"
 
-echo "✓ $slug — published $i image(s) to public/images/developments/$slug/ and updated data.json gallery."
+echo "✓ $slug — published ${#approved[@]} image(s) to public/images/developments/$slug/ and updated data.json gallery."

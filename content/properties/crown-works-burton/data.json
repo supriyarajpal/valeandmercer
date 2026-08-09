@@ -6,29 +6,75 @@
   "price": "Register your interest",
   "developer": "Prosperity Developments",
   "unitMix": [
-    { "size": "37.0 m²" },
-    { "size": "37.2 m²" },
-    { "size": "37.3 m²" },
-    { "size": "37.5 m²" },
-    { "size": "37.6 m²" },
-    { "size": "37.9 m²" },
-    { "size": "38.7 m²" },
-    { "size": "38.8 m²" },
-    { "size": "39.6 m²" },
-    { "size": "39.8 m²" },
-    { "size": "39.9 m²" },
-    { "size": "40.4 m²" },
-    { "size": "40.6 m²" },
-    { "size": "40.8 m²" },
-    { "size": "41.2 m²" },
-    { "size": "41.4 m²" },
-    { "size": "42.1 m²" },
-    { "size": "58.5 m²" },
-    { "size": "58.8 m²" },
-    { "size": "61.0 m²" },
-    { "size": "62.1 m²" },
-    { "size": "62.3 m²" },
-    { "size": "62.8 m²" }
+    {
+      "size": "37.0 m²"
+    },
+    {
+      "size": "37.2 m²"
+    },
+    {
+      "size": "37.3 m²"
+    },
+    {
+      "size": "37.5 m²"
+    },
+    {
+      "size": "37.6 m²"
+    },
+    {
+      "size": "37.9 m²"
+    },
+    {
+      "size": "38.7 m²"
+    },
+    {
+      "size": "38.8 m²"
+    },
+    {
+      "size": "39.6 m²"
+    },
+    {
+      "size": "39.8 m²"
+    },
+    {
+      "size": "39.9 m²"
+    },
+    {
+      "size": "40.4 m²"
+    },
+    {
+      "size": "40.6 m²"
+    },
+    {
+      "size": "40.8 m²"
+    },
+    {
+      "size": "41.2 m²"
+    },
+    {
+      "size": "41.4 m²"
+    },
+    {
+      "size": "42.1 m²"
+    },
+    {
+      "size": "58.5 m²"
+    },
+    {
+      "size": "58.8 m²"
+    },
+    {
+      "size": "61.0 m²"
+    },
+    {
+      "size": "62.1 m²"
+    },
+    {
+      "size": "62.3 m²"
+    },
+    {
+      "size": "62.8 m²"
+    }
   ],
   "headline": "A selection of luxury apartments in the historic heart of Burton-upon-Trent",
   "description": "Crown Works is a selection of luxury apartments in the historic heart of Burton-upon-Trent — a new era of exceptional city living and country leisure designed for first-time buyers and investors seeking a more rewarding home-owning experience. Surrounded by open green space, Burton offers the best of both worlds, with good road and rail connections, a town full of amenities, and easy access to the Peak District National Park and surrounding green spaces.",
@@ -66,5 +112,18 @@
       ]
     }
   ],
-  "locationNotes": "Burton-upon-Trent is a market town in Staffordshire, internationally known as the capital of British brewing. Close to Derby, Nottingham, Leicester and Birmingham; a train to Birmingham New Street takes just 23 minutes. East Midlands Airport and Birmingham International Airport are a short journey away, and there is easy access to the Peak District National Park."
+  "locationNotes": "Burton-upon-Trent is a market town in Staffordshire, internationally known as the capital of British brewing. Close to Derby, Nottingham, Leicester and Birmingham; a train to Birmingham New Street takes just 23 minutes. East Midlands Airport and Birmingham International Airport are a short journey away, and there is easy access to the Peak District National Park.",
+  "gallery": [
+    "/images/developments/crown-works-burton/1.jpg",
+    "/images/developments/crown-works-burton/2.jpg",
+    "/images/developments/crown-works-burton/3.jpg",
+    "/images/developments/crown-works-burton/4.jpg",
+    "/images/developments/crown-works-burton/5.jpg",
+    "/images/developments/crown-works-burton/6.jpg",
+    "/images/developments/crown-works-burton/7.jpg",
+    "/images/developments/crown-works-burton/8.jpg",
+    "/images/developments/crown-works-burton/9.jpg",
+    "/images/developments/crown-works-burton/10.jpg",
+    "/images/developments/crown-works-burton/11.jpg"
+  ]
 }

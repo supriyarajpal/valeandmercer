@@ -5,13 +5,27 @@
   "developer": "Prosperity Living",
   "totalUnits": 162,
   "unitMix": [
-    { "type": "Studio" },
-    { "type": "3-bed cluster" },
-    { "type": "4-bed cluster" },
-    { "type": "5-bed cluster" },
-    { "type": "6-bed cluster" },
-    { "type": "7-bed cluster" },
-    { "type": "8-bed cluster" }
+    {
+      "type": "Studio"
+    },
+    {
+      "type": "3-bed cluster"
+    },
+    {
+      "type": "4-bed cluster"
+    },
+    {
+      "type": "5-bed cluster"
+    },
+    {
+      "type": "6-bed cluster"
+    },
+    {
+      "type": "7-bed cluster"
+    },
+    {
+      "type": "8-bed cluster"
+    }
   ],
   "paymentStructure": "Payment Plan 01 (Monthly and Mortgage Plan): 10% initial payment towards the deposit plus £995 legal fees; the 90% balance is then payable over 36 months on a monthly basis.",
   "headline": "A student living investment by Prosperity",
@@ -30,6 +44,23 @@
     "Breakout games room with pool tables, air hockey and table tennis",
     "Smart TVs in each room"
   ],
-  "nearestStation": { "name": "Beeston Train Station" },
-  "locationNotes": "Beeston is 3.4 miles from Nottingham city centre. By train: London St Pancras 1hr 40min, Derby 20min, Leicester 19min, Birmingham New Street 73min, Cardiff 3hrs. Trains from Beeston to Nottingham run every 15 minutes and arrive in 10 minutes; trams run every 7 minutes at peak. The M1 is around a 20-minute drive. Graduation House is a 14-minute direct tram ride to the University of Nottingham (main campus, south entrance), a 17-minute tram ride to Nottingham University Hospitals (Queen's Medical Centre), and a 30-minute bus ride to the University of Nottingham King's Meadow Campus and Nottingham Trent University (main campus)."
+  "nearestStation": {
+    "name": "Beeston Train Station"
+  },
+  "locationNotes": "Beeston is 3.4 miles from Nottingham city centre. By train: London St Pancras 1hr 40min, Derby 20min, Leicester 19min, Birmingham New Street 73min, Cardiff 3hrs. Trains from Beeston to Nottingham run every 15 minutes and arrive in 10 minutes; trams run every 7 minutes at peak. The M1 is around a 20-minute drive. Graduation House is a 14-minute direct tram ride to the University of Nottingham (main campus, south entrance), a 17-minute tram ride to Nottingham University Hospitals (Queen's Medical Centre), and a 30-minute bus ride to the University of Nottingham King's Meadow Campus and Nottingham Trent University (main campus).",
+  "gallery": [
+    "/images/developments/graduation-house-nottingham/1.jpg",
+    "/images/developments/graduation-house-nottingham/2.jpg",
+    "/images/developments/graduation-house-nottingham/3.jpg",
+    "/images/developments/graduation-house-nottingham/4.jpg",
+    "/images/developments/graduation-house-nottingham/5.jpg",
+    "/images/developments/graduation-house-nottingham/6.jpg",
+    "/images/developments/graduation-house-nottingham/7.jpg",
+    "/images/developments/graduation-house-nottingham/8.jpg",
+    "/images/developments/graduation-house-nottingham/9.jpg",
+    "/images/developments/graduation-house-nottingham/10.jpg",
+    "/images/developments/graduation-house-nottingham/11.jpg",
+    "/images/developments/graduation-house-nottingham/12.jpg",
+    "/images/developments/graduation-house-nottingham/13.jpg"
+  ]
 }
