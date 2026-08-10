@@ -4,14 +4,15 @@ import ListingTile, { type ListingTileDetailPart } from '@/components/ListingTil
 
 // New-homes listing grid on /buy. One card per development, using the shared
 // ListingTile ("Design C") — the same treatment as the lettings cards, with
-// buy-specific data: title = street address + city (never the development or
-// developer name), badge = "New Homes", detail = unit types + price (or
-// "Register your interest" where no price is stated), and no favourite heart.
+// buy-specific data: title = the development heading (editorial displayName, else
+// street address + city, else the development's own name; never the developer
+// name), badge = "New Homes", detail = unit types + price (or "Register your
+// interest" where no price is stated), and no favourite heart.
 
 export type DevelopmentCardData = {
   slug: string
-  /** Street address + city — the card title. */
-  addressLine: string
+  /** Card heading — displayName, else street + city, else the development name. */
+  title: string
   /** Unit-type phrase, e.g. "1–3 bed apartments"; omitted when not stated. */
   unitSummary?: string
   /** Price figure, or "Register your interest" / undefined where none is stated. */
@@ -32,9 +33,9 @@ export function DevelopmentCard({ dev }: { dev: DevelopmentCardData }) {
     <ListingTile
       href={`/buy/${dev.slug}`}
       image={dev.heroImage}
-      imageAlt={dev.hasPhotos ? dev.addressLine : ''}
+      imageAlt={dev.hasPhotos ? dev.title : ''}
       badge="New Homes"
-      title={dev.addressLine}
+      title={dev.title}
       detail={detail}
     />
   )

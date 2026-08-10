@@ -5,7 +5,7 @@ import { Reveal } from '@/components/Reveal'
 import DevelopmentsListing, { type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { developments } from '@/lib/developments'
 import { developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
-import { developmentHasAddress, developmentAddressLine, developmentUnitTypes } from '@/lib/developmentTitle'
+import { developmentIsPublished, developmentHeading, developmentUnitTypes } from '@/lib/developmentTitle'
 
 // /buy — the New Homes listing. The old "Properties coming soon" teaser block
 // (Canary Wharf / Notting Hill / Chelsea) was removed per instruction; the
@@ -14,13 +14,14 @@ import { developmentHasAddress, developmentAddressLine, developmentUnitTypes } f
 // hands plain, serialisable card data to the client grid.
 
 export default function BuyPage() {
-  // Titles are address-based; a development with no address is excluded
-  // entirely (no card here, and its detail route is not generated).
+  // Every published development gets a card. The heading is its editorial
+  // displayName, else its street + city, else its own name; only a nameless,
+  // addressless stub is excluded (and its detail route is likewise not generated).
   const cards: DevelopmentCardData[] = developments
-    .filter(developmentHasAddress)
+    .filter(developmentIsPublished)
     .map(dev => ({
       slug: dev.slug,
-      addressLine: developmentAddressLine(dev)!,
+      title: developmentHeading(dev),
       unitSummary: developmentUnitTypes(dev) ?? undefined,
       price: dev.price,
       // Prefer a published data.json gallery; fall back to the asset manifest.

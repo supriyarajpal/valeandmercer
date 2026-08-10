@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getLiveProperties } from '@/lib/properties'
 import { developments } from '@/lib/developments'
-import { developmentHasAddress } from '@/lib/developmentTitle'
+import { developmentIsPublished } from '@/lib/developmentTitle'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
@@ -52,9 +52,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  // New-homes development detail pages (/buy/<slug>) — only developments with
-  // an address get a page (addressless ones are excluded from the site).
-  const developmentRoutes: MetadataRoute.Sitemap = developments.filter(developmentHasAddress).map(d => ({
+  // New-homes development detail pages (/buy/<slug>) — every published
+  // development gets a page (only a nameless, addressless stub is excluded).
+  const developmentRoutes: MetadataRoute.Sitemap = developments.filter(developmentIsPublished).map(d => ({
     url: SITE_URL + '/buy/' + d.slug,
     lastModified: now,
     changeFrequency: 'weekly' as const,

@@ -7,22 +7,22 @@ import type { DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { SUPPRESS_UNITMIX } from '@/lib/developmentDisplay'
 import { developments, getDevelopmentBySlug } from '@/lib/developments'
 import { getDevelopmentAssets, developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
-import { developmentHasAddress, developmentTitle, developmentAddressLine, developmentUnitTypes } from '@/lib/developmentTitle'
+import { developmentIsPublished, developmentTitle, developmentHeading, developmentUnitTypes } from '@/lib/developmentTitle'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
-// Pre-render a detail page for every development that HAS an address. Developments
-// with no address get no page (and no card) — their titles can't be built.
+// Pre-render a detail page for every published development. Only a development
+// with no title at all (no displayName, no address, no name) gets no page.
 export function generateStaticParams() {
-  return developments.filter(developmentHasAddress).map(d => ({ slug: d.slug }))
+  return developments.filter(developmentIsPublished).map(d => ({ slug: d.slug }))
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const dev = getDevelopmentBySlug(slug)
-  if (!dev || !developmentHasAddress(dev)) return { title: 'Development not found' }
+  if (!dev || !developmentIsPublished(dev)) return { title: 'Development not found' }
 
-  const title = developmentTitle(dev)!
+  const title = developmentTitle(dev)
   const where = dev.locality ? ` in ${dev.locality}` : ''
   const desc = (dev.description || dev.headline || `New homes${where} from Vale and Mercer.`).slice(0, 180)
   const hero = developmentHeroImage(slug)
@@ -41,15 +41,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-// Up to two "similar" developments (addressed only) — prefer the same locality,
+// Up to two "similar" developments (published only) — prefer the same locality,
 // then fill from the rest, preserving order.
 function similarFor(slug: string, locality?: string): DevelopmentCardData[] {
-  const others = developments.filter(d => d.slug !== slug && developmentHasAddress(d))
+  const others = developments.filter(d => d.slug !== slug && developmentIsPublished(d))
   const sameCity = locality ? others.filter(d => d.locality === locality) : []
   const rest = others.filter(d => !sameCity.includes(d))
   return [...sameCity, ...rest].slice(0, 2).map(d => ({
     slug: d.slug,
-    addressLine: developmentAddressLine(d)!,
+    title: developmentHeading(d),
     unitSummary: developmentUnitTypes(d) ?? undefined,
     price: d.price,
     // Prefer a published data.json gallery; fall back to the asset manifest.
@@ -61,10 +61,10 @@ function similarFor(slug: string, locality?: string): DevelopmentCardData[] {
 export default async function DevelopmentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const dev = getDevelopmentBySlug(slug)
-  // No address → no page (matches the exclusion from the listing grid).
-  if (!dev || !developmentHasAddress(dev)) notFound()
+  // Not published → no page (matches the exclusion from the listing grid).
+  if (!dev || !developmentIsPublished(dev)) notFound()
 
-  const title = developmentTitle(dev)!
+  const title = developmentTitle(dev)
   // Brochure download was removed site-wide. The path stays recorded in the
   // asset manifest for internal reference, but is stripped here so it is neither
   // rendered nor shipped in the client hydration payload.
