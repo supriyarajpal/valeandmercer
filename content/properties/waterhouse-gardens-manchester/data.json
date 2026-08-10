@@ -7,9 +7,15 @@
   "developer": "Salboy",
   "totalUnits": 556,
   "unitMix": [
-    { "type": "Apartments" },
-    { "type": "Duplexes" },
-    { "type": "Penthouses" }
+    {
+      "type": "Apartments"
+    },
+    {
+      "type": "Duplexes"
+    },
+    {
+      "type": "Penthouses"
+    }
   ],
   "headline": "A new pulse in the city",
   "description": "A commanding new landmark, Waterhouse Gardens is a residential-led development surrounded by landscaped public spaces, boutique traders and independent eateries. A community of high-spec apartments, duplexes and penthouses are coupled with a private clubhouse offering high-end amenities and services to residents. It sits at the centre of a three-acre estate of 556 high-spec residential units across five towers.",
@@ -56,5 +62,20 @@
       ]
     }
   ],
-  "locationNotes": "Situated a short distance from central Manchester, connecting the popular Greengate and N.O.M.A neighbourhoods with the historic Medieval Quarter."
+  "locationNotes": "Situated a short distance from central Manchester, connecting the popular Greengate and N.O.M.A neighbourhoods with the historic Medieval Quarter.",
+  "gallery": [
+    "/images/developments/waterhouse-gardens-manchester/1.jpg",
+    "/images/developments/waterhouse-gardens-manchester/2.jpg",
+    "/images/developments/waterhouse-gardens-manchester/3.jpg",
+    "/images/developments/waterhouse-gardens-manchester/4.jpg",
+    "/images/developments/waterhouse-gardens-manchester/5.jpg",
+    "/images/developments/waterhouse-gardens-manchester/6.jpg",
+    "/images/developments/waterhouse-gardens-manchester/7.jpg",
+    "/images/developments/waterhouse-gardens-manchester/8.jpg",
+    "/images/developments/waterhouse-gardens-manchester/9.jpg",
+    "/images/developments/waterhouse-gardens-manchester/10.jpg",
+    "/images/developments/waterhouse-gardens-manchester/11.jpg",
+    "/images/developments/waterhouse-gardens-manchester/12.jpg",
+    "/images/developments/waterhouse-gardens-manchester/13.jpg"
+  ]
 }

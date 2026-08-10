@@ -1,9 +1,17 @@
-// Address-based titles for the New Homes pages. A development's public title is
-// its street address + city + unit type — e.g.
-//   "8-10 Burton Street, Manchester · 1 bed apartments"
-// A development with NO address gets no title (null) and is excluded entirely
-// (no card, no detail page). Pure functions of the Development record, so this
-// module is safe to import from both Server and Client Components.
+// Titles and publish-visibility for the New Homes pages.
+//
+// A development's public title is resolved in three tiers:
+//   1. an editorial `displayName` (data.json override), used verbatim — e.g.
+//      "LS11 Leeds City Park";
+//   2. otherwise its street address + city + unit type — e.g.
+//      "8-10 Burton Street, Manchester · 1 bed apartments";
+//   3. otherwise its own `name` (e.g. "St. George's Terrace") for a development
+//      that has neither an override nor a street address.
+// Only a development with NONE of the three (no displayName, no address, no
+// name — in practice a nameless stub) is excluded from the site.
+//
+// Pure functions of the Development record, so this module is safe to import
+// from both Server and Client Components.
 //
 // Titles are computed from the FULL development record (including unitMix) even
 // where the unit-mix table is display-suppressed elsewhere (e.g. Fountain
@@ -14,6 +22,18 @@ import type { Development } from './developments'
 
 export function developmentHasAddress(dev: Development): boolean {
   return !!(dev.address && dev.address.trim())
+}
+
+function displayNameOf(dev: Development): string | null {
+  return dev.displayName && dev.displayName.trim() ? dev.displayName.trim() : null
+}
+
+// A development is published (gets a card and a detail page) when it has any
+// resolvable title: an editorial displayName, a street address, or at least its
+// own name. This replaces the old address-only gate so developments named by
+// hand — or carrying only their brochure name — still appear on the site.
+export function developmentIsPublished(dev: Development): boolean {
+  return !!(displayNameOf(dev) || developmentHasAddress(dev) || (dev.name && dev.name.trim()))
 }
 
 // Bedroom count from a unit-mix row's type label, or null if it isn't a
@@ -65,9 +85,21 @@ export function developmentAddressLine(dev: Development): string | null {
   return line
 }
 
-// Full public title, or null when the development has no address.
-export function developmentTitle(dev: Development): string | null {
+// The card / heading title (no unit-type suffix): the editorial displayName,
+// else street + city, else the development's own name. Always a string for any
+// published development.
+export function developmentHeading(dev: Development): string {
+  return displayNameOf(dev) ?? developmentAddressLine(dev) ?? dev.name ?? dev.slug
+}
+
+// Full public title used for the detail-page H1, metadata and breadcrumb.
+// A displayName is used verbatim (it already reads as a complete title);
+// otherwise "street, city · unit type", or the plain name when there is no
+// address. Always a string for any published development.
+export function developmentTitle(dev: Development): string {
+  const custom = displayNameOf(dev)
+  if (custom) return custom
   const addr = developmentAddressLine(dev)
-  if (!addr) return null
-  return `${addr} · ${developmentUnitSummary(dev)}`
+  if (addr) return `${addr} · ${developmentUnitSummary(dev)}`
+  return dev.name ?? dev.slug
 }

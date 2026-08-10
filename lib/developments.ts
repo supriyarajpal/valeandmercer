@@ -51,6 +51,12 @@ export interface NearestStation {
 export interface Development {
   slug: string
   name?: string
+  // Editorial override for the public title, hand-set in data.json. When present
+  // it is used verbatim on the card and detail page INSTEAD of the address-based
+  // title (e.g. "LS11 Leeds City Park", "Mayfield City Centre — 1 & 2 Bedroom
+  // Apartments"). Unlike the brochure-derived fields, this is a deliberate manual
+  // name, so a development with a displayName is published even without an address.
+  displayName?: string
   address?: string
   postcode?: string
   locality?: string
