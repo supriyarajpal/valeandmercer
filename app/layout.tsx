@@ -7,6 +7,9 @@ import './globals.css'
 const SITE_URL = 'https://valeandmercer.co.uk'
 // Meta (Facebook) Pixel ID. Not sensitive — handled like the Web3Forms key.
 const META_PIXEL_ID = '1051400940780137'
+// Google Analytics 4 Measurement ID. Single source of truth — referenced by
+// both the gtag loader and the config call below so it's rotated in one place.
+const GA4_ID = 'G-8G3390QJ82'
 const OG_IMAGE = 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&h=630&fit=crop&q=85'
 const DESCRIPTION = 'London lettings, sales and property valuations. Independent London estate agency for residential lettings, new homes, and student lets. Personal service and honest advice from Vale and Mercer.'
 
@@ -113,6 +116,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '${META_PIXEL_ID}');
             fbq('track', 'PageView');
+          `}
+        </Script>
+        {/* Google Analytics 4 — same `afterInteractive` strategy as the Meta
+            Pixel above so it loads after hydration without blocking paint. The
+            gtag loader and the config call share GA4_ID; `gtag('config', …)`
+            sends one page_view per load, and route changes are auto-tracked by
+            GA4's enhanced measurement, so it fires once per page. */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA4_ID}');
           `}
         </Script>
       </head>
