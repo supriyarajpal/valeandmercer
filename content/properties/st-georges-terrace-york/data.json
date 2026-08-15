@@ -1,7 +1,9 @@
 {
   "name": "St. George's Terrace",
+  "displayName": "Mill Street, York, UK",
   "address": "Mill Street, York",
   "locality": "York",
+  "region": "North Yorkshire",
   "price": "Register your interest",
   "developer": "Torsion Homes",
   "totalUnits": 35,
@@ -90,5 +92,14 @@
       ]
     }
   ],
-  "locationNotes": "Clifford's Tower: 4 min walk; The Shambles: 7 min walk; York Minster: 11 min walk; Bishopthorpe Road: 13 min walk; Museum Gardens: 13 min walk; York Racecourse: 7 min drive. Direct rail to London in 1hr 46min; 25 min to Leeds."
+  "locationNotes": "Clifford's Tower: 4 min walk; The Shambles: 7 min walk; York Minster: 11 min walk; Bishopthorpe Road: 13 min walk; Museum Gardens: 13 min walk; York Racecourse: 7 min drive. Direct rail to London in 1hr 46min; 25 min to Leeds.",
+  "gallery": [
+    "/images/developments/st-georges-terrace-york/1.jpg",
+    "/images/developments/st-georges-terrace-york/2.jpg",
+    "/images/developments/st-georges-terrace-york/3.jpg",
+    "/images/developments/st-georges-terrace-york/4.jpg",
+    "/images/developments/st-georges-terrace-york/5.jpg",
+    "/images/developments/st-georges-terrace-york/6.jpg",
+    "/images/developments/st-georges-terrace-york/7.jpg"
+  ]
 }

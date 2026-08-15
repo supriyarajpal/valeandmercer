@@ -33,9 +33,13 @@ export type ListingTileProps = {
   detail: ListingTileDetailPart[]
   /** When provided, renders the favourite heart (localStorage-backed). */
   favourite?: { slug: string; title: string }
+  /** Image load strategy. Defaults to 'lazy' (good for the long lettings grid);
+   *  the small /buy grid passes 'eager' so below-the-fold cards never flash a
+   *  blank tile before their photo lazy-loads. */
+  loading?: 'lazy' | 'eager'
 }
 
-export default function ListingTile({ href, image, imageAlt, badge, eyebrow, title, detail, favourite }: ListingTileProps) {
+export default function ListingTile({ href, image, imageAlt, badge, eyebrow, title, detail, favourite, loading = 'lazy' }: ListingTileProps) {
   const parts = detail.filter(p => p.text && p.text.trim())
   return (
     <Link
@@ -60,7 +64,7 @@ export default function ListingTile({ href, image, imageAlt, badge, eyebrow, tit
         <img
           src={image}
           alt={imageAlt}
-          loading="lazy"
+          loading={loading}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
         />
 

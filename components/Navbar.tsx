@@ -23,7 +23,9 @@ const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/student-
 // added by prefix rather than needing a one-off `pathname === '/foo'`
 // check. Blog posts (`/blog/[slug]`) use the cream ArticleLayout hero
 // and deliberately are NOT in this list.
-const darkHeroPathPrefixes = ['/property/']
+// '/buy/' = a New Homes DETAIL page (full-bleed video/image hero). The '/buy'
+// LISTING page is not matched (no trailing segment), so it keeps the cream nav.
+const darkHeroPathPrefixes = ['/property/', '/buy/']
 
 function pathIsDarkHero(pathname: string): boolean {
   return darkHeroPages.includes(pathname)

@@ -1,10 +1,14 @@
 {
   "name": "Mulberry House",
+  "displayName": "31 Castleward Blvd, Derby, UK",
   "address": "John Street, Derby",
   "postcode": "DE1",
   "locality": "Derby",
+  "region": "Derbyshire",
   "price": "Register your interest",
+  "tenure": "250 year lease",
   "developer": "Elevate Property Group",
+  "completion": "Complete",
   "totalUnits": 94,
   "unitMix": [
     { "type": "Studio", "count": 19, "size": "355–431 sq ft" },
@@ -13,11 +17,17 @@
     { "type": "2 bed", "count": 13, "size": "667–779 sq ft" },
     { "type": "3 bed", "count": 5, "size": "947–1012 sq ft" }
   ],
+  "warranty": "Full warranty with EWS1 certification",
   "headline": "Made in Derby",
   "description": "Mulberry House ushers in new life to the heart of central Derby at this landmark historic site. A short stroll from the River Derwent and nestled between Derby train station and Castleward Park, it offers a collection of 94 carefully crafted studios, one, two and three bedroom apartments set around a central gated courtyard, curated for modern living and set amongst organic landscapes and peaceful surroundings. As the cornerstone of the wider Castleward Urban Village regeneration, Mulberry House blends industrial-luxe design with 21st-century style.",
   "highlightedFeatures": [
     "Set around a central gated courtyard",
     "Cornerstone of the Castleward Urban Village regeneration"
+  ],
+  "developmentAmenities": [
+    "Secure bike storage",
+    "Fitted wardrobes to all apartments",
+    "Fitted blinds to all apartments"
   ],
   "specification": [
     {
@@ -40,5 +50,28 @@
     }
   ],
   "nearestStation": { "name": "Derby train station" },
-  "locationNotes": "Nestled between Derby train station and Castleward Park, a short stroll from the River Derwent. Walking times: Derbion shopping centre 1 min; Bustler Market 3 min; Derby Theatre 6 min; Showcase Cinema de Lux 6 min. By train from Derby: Nottingham 22 min, Leicester 20 min, Birmingham 34 min, Leeds 77 min, London St Pancras 87 min, Manchester 92 min. East Midlands Airport is under 30 minutes away by road."
+  "locationNotes": "Nestled between Derby train station and Castleward Park, a short stroll from the River Derwent. Walking times: Derbion shopping centre 1 min; Bustler Market 3 min; Derby Theatre 6 min; Showcase Cinema de Lux 6 min. By train from Derby: Nottingham 22 min, Leicester 20 min, Birmingham 34 min, Leeds 77 min, London St Pancras 87 min, Manchester 92 min. East Midlands Airport is under 30 minutes away by road.",
+  "floorplans": [
+    "/images/developments/mulberry-house-derby/floorplans/floorplan-1.png",
+    "/images/developments/mulberry-house-derby/floorplans/floorplan-2.png"
+  ],
+  "gallery": [
+    "/images/developments/mulberry-house-derby/1.jpg",
+    "/images/developments/mulberry-house-derby/2.jpg",
+    "/images/developments/mulberry-house-derby/3.jpg",
+    "/images/developments/mulberry-house-derby/4.jpg",
+    "/images/developments/mulberry-house-derby/5.jpg",
+    "/images/developments/mulberry-house-derby/6.jpg",
+    "/images/developments/mulberry-house-derby/7.jpg",
+    "/images/developments/mulberry-house-derby/11.jpg",
+    "/images/developments/mulberry-house-derby/12.jpg",
+    "/images/developments/mulberry-house-derby/16.jpg",
+    "/images/developments/mulberry-house-derby/13.jpg",
+    "/images/developments/mulberry-house-derby/8.jpg",
+    "/images/developments/mulberry-house-derby/9.jpg",
+    "/images/developments/mulberry-house-derby/14.jpg",
+    "/images/developments/mulberry-house-derby/10.jpg",
+    "/images/developments/mulberry-house-derby/15.jpg",
+    "/images/developments/mulberry-house-derby/17.jpg"
+  ]
 }

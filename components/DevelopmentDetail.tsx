@@ -1,13 +1,15 @@
 'use client'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Reveal } from '@/components/Reveal'
-import DevelopmentHero from '@/components/DevelopmentHero'
+import DevelopmentHeroMedia from '@/components/DevelopmentHeroMedia'
+import DevelopmentStory from '@/components/DevelopmentStory'
+import DevelopmentCarousel from '@/components/DevelopmentCarousel'
 import DevelopmentEnquiryActions from '@/components/DevelopmentEnquiryActions'
 import { DevelopmentCard, type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { submitToWeb3Forms } from '@/lib/web3forms'
 import type { Development, UnitMixRow, SpecSection } from '@/lib/developments'
 import type { DevelopmentAssets } from '@/lib/developmentAssets'
-import { SUPPRESS_UNITMIX } from '@/lib/developmentDisplay'
+import { SUPPRESS_UNITMIX, SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
 
 // Single-column development detail page. Enquiry is a full-width section in the
 // main flow (no sticky side card). The page title is the address-based title
@@ -17,29 +19,38 @@ import { SUPPRESS_UNITMIX } from '@/lib/developmentDisplay'
 // intentionally not rendered anywhere (value stays in data.json).
 
 export default function DevelopmentDetail({
-  development, title, assets, similar,
+  development, title, assets, similar, videoSrc,
 }: {
   development: Development
   title: string
   assets: DevelopmentAssets
   similar: DevelopmentCardData[]
+  videoSrc?: string | null
 }) {
   const d = development
   const hasStation = !!(d.nearestStation && d.nearestStation.name)
   const hasLocation = !!(d.locationNotes || hasStation)
   const suppressUnitMix = SUPPRESS_UNITMIX.has(d.slug)
   const showUnitMix = !suppressUnitMix && Array.isArray(d.unitMix) && d.unitMix.length > 0
-  const pullQuote = useMemo(() => firstSentence(d.description), [d.description])
 
   return (
     <main style={{ background: 'var(--surface)', paddingBottom: 'var(--section-y)' }}>
-      {/* 1 — Full-bleed hero gallery + Floorplan / Location tabs */}
-      <DevelopmentHero name={d.name ?? d.slug} assets={assets} locationNotes={d.locationNotes} nearestStation={d.nearestStation} />
+      {/* 1 — Full-bleed hero: the video (or, with no video, a static image) fills
+          the whole viewport — no overlay text, no controls, no header content.
+          Title / description / key facts all appear below, on scroll. */}
+      <DevelopmentHeroMedia videoSrc={videoSrc} image={assets.images[0]} alt={title} title={title} />
+
+      {/* 2 — Gallery: full-width one-image-at-a-time carousel, immediately after
+          the hero. /let-matched sizing (blurred backfill + fully-visible
+          contain), reusing the shared lightbox. */}
+      {assets.images.length > 0 && (
+        <DevelopmentCarousel images={assets.images} name={title} />
+      )}
 
       <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 var(--gutter)' }}>
-        {/* 2–4 — ENTRY POINT: title (address-based), price, badges */}
+        {/* 2 — ENTRY POINT (below the hero): street-address title, price, badges */}
         <Reveal y={24} amount={0.2}>
-          <header style={{ paddingTop: 'clamp(40px, 6vw, 72px)', maxWidth: 900 }}>
+          <header style={{ paddingTop: 'clamp(48px, 7vw, 88px)', maxWidth: 900 }}>
             <h1 style={{ color: 'var(--text)', fontSize: 'clamp(30px, 4.4vw, 50px)', lineHeight: 1.08, marginBottom: 20 }}>{title}</h1>
             {d.price && (
               <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(24px, 3.4vw, 36px)', color: 'var(--text)', letterSpacing: '-0.01em', marginBottom: 20 }}>{d.price}</div>
@@ -51,7 +62,10 @@ export default function DevelopmentDetail({
           </header>
         </Reveal>
 
-        {/* 5 — Key facts: unit mix + size */}
+        {/* 3 — Description: plain flowing text, no images mixed in. */}
+        <DevelopmentStory headline={d.headline} text={d.description} />
+
+        {/* 4 — Key facts: unit mix + size */}
         {(showUnitMix || suppressUnitMix || d.sizeRange) && (
           <Section eyebrow="Key facts" title="Unit mix & sizes">
             {suppressUnitMix ? (
@@ -74,20 +88,13 @@ export default function DevelopmentDetail({
         <PropertyInformation development={d} />
 
         {/* 7 — Quick links */}
-        <QuickLinks assets={assets} hasSpec={!!(d.specification && d.specification.length)} />
+        <QuickLinks assets={assets} />
 
         {/* 8 — Share row */}
         <ShareRow name={title} slug={d.slug} />
 
         {/* 9 — Enquiry: full-width section in the main flow (no side box) */}
         <EnquirySection name={title} price={d.price} />
-
-        {/* 10 — Overview: headline + description (read more/less) */}
-        {(d.headline || d.description) && (
-          <Section eyebrow="Overview" title={d.headline ?? 'About this development'}>
-            {d.description && <ReadMore text={d.description} />}
-          </Section>
-        )}
 
         {/* 11 — Highlighted features */}
         {d.highlightedFeatures && d.highlightedFeatures.length > 0 && (
@@ -97,6 +104,20 @@ export default function DevelopmentDetail({
                 <li key={f} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>
                   <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#A0845C', marginTop: 9, flexShrink: 0 }} />
                   <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        )}
+
+        {/* 11b — Development amenities (renders whenever data.json supplies them) */}
+        {d.developmentAmenities && d.developmentAmenities.length > 0 && (
+          <Section eyebrow="Amenities" title="Development amenities">
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 12 }}>
+              {d.developmentAmenities.map(a => (
+                <li key={a} style={{ display: 'flex', gap: 14, alignItems: 'flex-start', fontSize: 15, color: 'var(--text)', lineHeight: 1.75 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#A0845C', marginTop: 9, flexShrink: 0 }} />
+                  <span>{a}</span>
                 </li>
               ))}
             </ul>
@@ -122,29 +143,21 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 15 — Floorplan & specifications (brochure download intentionally removed) */}
-        {(assets.floorplan || (d.specification && d.specification.length > 0)) && (
-          <Section id="floorplan-specs" eyebrow="Floorplan & Specifications" title="Plans & finish">
-            {assets.floorplan && (
-              <figure style={{ margin: 0 }}>
-                <div style={{ background: '#FFFFFF', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: 'clamp(12px, 2vw, 24px)' }}>
-                  <img src={assets.floorplan} alt={`${title} floor plan`} loading="lazy" style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 4 }} />
-                </div>
-                <figcaption style={{ fontSize: 11, letterSpacing: '0.06em', color: 'var(--text-faint)', marginTop: 10 }}>Indicative floor plan. Areas and layouts subject to change.</figcaption>
-              </figure>
-            )}
-            {d.specification && d.specification.length > 0 && (
-              <div style={{ marginTop: assets.floorplan ? 36 : 0, display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-                {d.specification.map(sec => <SpecBlock key={sec.heading} section={sec} />)}
-              </div>
-            )}
+        {/* 15 — Specification (floor plans render as their own carousel below) */}
+        {d.specification && d.specification.length > 0 && (
+          <Section eyebrow="Specification" title="Finish & fittings">
+            <div style={{ display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+              {d.specification.map(sec => <SpecBlock key={sec.heading} section={sec} />)}
+            </div>
           </Section>
         )}
       </div>
 
-      {/* 12 — Interleaved gallery with a pull-quote (full width) */}
-      {assets.images.length > 0 && (
-        <InterleavedGallery images={assets.images} name={title} pullQuote={pullQuote} />
+      {/* Floor plans as their OWN gallery — the same full-width carousel/lightbox
+          as the closing gallery (one plan filling the frame, arrows, counter),
+          on a white frame with no blurred backfill so the drawing reads cleanly. */}
+      {assets.floorplans.length > 0 && (
+        <DevelopmentCarousel id="floorplan-specs" images={assets.floorplans} name={`${title} floor plan`} eyebrow="Floor plans" frameBackground="#FFFFFF" blurredBackfill={false} />
       )}
 
       {/* 13 — Speak to our team banner */}
@@ -238,7 +251,8 @@ function PropertyInformation({ development }: { development: Development }) {
   const rows: Array<{ label: string; value: string }> = []
   // NOTE: `developer` is intentionally NOT rendered anywhere on /buy (per spec);
   // the value remains in data.json.
-  if (d.completion) rows.push({ label: 'Completion', value: String(d.completion) })
+  // Completion hidden where the source documents disagree on the date.
+  if (d.completion && !SUPPRESS_COMPLETION.has(d.slug)) rows.push({ label: 'Completion', value: String(d.completion) })
   if (d.totalUnits != null) rows.push({ label: 'Total units', value: String(d.totalUnits) })
   if (d.paymentStructure) rows.push({ label: 'Payment structure', value: d.paymentStructure })
   if (d.warranty) rows.push({ label: 'Warranty', value: d.warranty })
@@ -272,9 +286,10 @@ function PropertyInformation({ development }: { development: Development }) {
 /* 7 — Quick links                                                     */
 /* ------------------------------------------------------------------ */
 
-function QuickLinks({ assets, hasSpec }: { assets: DevelopmentAssets; hasSpec: boolean }) {
+function QuickLinks({ assets }: { assets: DevelopmentAssets }) {
   const links: Array<{ label: string; onClick?: () => void; href?: string }> = []
-  if (assets.floorplan || hasSpec) links.push({ label: 'Floor plan', onClick: () => scrollToId('floorplan-specs') })
+  // The "Floor plan" jump targets the floor-plan carousel (id floorplan-specs).
+  if (assets.floorplans.length > 0) links.push({ label: 'Floor plan', onClick: () => scrollToId('floorplan-specs') })
   links.push({ label: 'Enquire', onClick: () => scrollToId('enquiry-form') })
 
   return (
@@ -323,52 +338,6 @@ function ShareRow({ name, slug }: { name: string; slug: string }) {
 /* 10 — Read more / less                                               */
 /* ------------------------------------------------------------------ */
 
-function ReadMore({ text }: { text: string }) {
-  const LIMIT = 340
-  const long = text.length > LIMIT
-  const [open, setOpen] = useState(false)
-  const shown = !long || open ? text : text.slice(0, text.lastIndexOf(' ', LIMIT)) + '…'
-  return (
-    <div style={{ maxWidth: 800 }}>
-      <p style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85 }}>{shown}</p>
-      {long && (
-        <button type="button" onClick={() => setOpen(o => !o)} className="link-underline" style={{ marginTop: 14, background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', color: '#A0845C', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase' }}>
-          {open ? 'Read less' : 'Read more'}
-        </button>
-      )}
-    </div>
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/* 12 — Interleaved gallery + pull-quote (uniform 4:3 tiles)           */
-/* ------------------------------------------------------------------ */
-
-function InterleavedGallery({ images, name, pullQuote }: { images: string[]; name: string; pullQuote: string | null }) {
-  const tiles: Array<{ kind: 'img'; src: string } | { kind: 'quote'; text: string }> = images.map(src => ({ kind: 'img' as const, src }))
-  if (pullQuote && images.length >= 2) tiles.splice(Math.min(2, tiles.length), 0, { kind: 'quote', text: pullQuote })
-
-  return (
-    <section style={{ background: 'var(--surface)', padding: 'clamp(48px, 7vw, 96px) var(--gutter)' }}>
-      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-        <Reveal y={18} amount={0.15}><p className="eyebrow" style={{ color: '#A0845C', marginBottom: 26 }}>Gallery</p></Reveal>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
-          {tiles.map((tile, i) => tile.kind === 'img' ? (
-            <div key={i} className="img-zoom" style={{ overflow: 'hidden', borderRadius: 'var(--radius-md)', aspectRatio: '4 / 3', background: 'var(--surface-3)', border: '1px solid var(--border)' }}>
-              <img src={tile.src} alt={`${name} gallery image`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
-          ) : (
-            <blockquote key={i} style={{ margin: 0, aspectRatio: '4 / 3', overflow: 'hidden', display: 'flex', alignItems: 'center', padding: 'clamp(18px, 2.2vw, 28px)', borderRadius: 'var(--radius-md)', background: '#28231C', color: '#F2EFE9' }}>
-              <p style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontStyle: 'italic', fontSize: 'clamp(13px, 1.35vw, 17px)', lineHeight: 1.4 }}>
-                <span style={{ color: '#A0845C' }}>“</span>{tile.text}<span style={{ color: '#A0845C' }}>”</span>
-              </p>
-            </blockquote>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 /* ------------------------------------------------------------------ */
 /* 13 — Speak to our team banner (deliberate dark accent)              */
@@ -555,12 +524,6 @@ const chipOff = (e: React.MouseEvent<HTMLElement>) => { e.currentTarget.style.bo
 function scrollToId(id: string) {
   if (typeof document === 'undefined') return
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
-
-function firstSentence(text?: string): string | null {
-  if (!text) return null
-  const m = text.match(/^(.{40,210}?[.!?])(\s|$)/)
-  return m ? m[1] : null
 }
 
 function StationIcon() {

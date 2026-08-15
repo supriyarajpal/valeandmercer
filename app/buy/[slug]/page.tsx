@@ -1,10 +1,12 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import DevelopmentDetail from '@/components/DevelopmentDetail'
 import type { DevelopmentCardData } from '@/components/DevelopmentsListing'
-import { SUPPRESS_UNITMIX } from '@/lib/developmentDisplay'
+import { SUPPRESS_UNITMIX, SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
 import { developments, getDevelopmentBySlug } from '@/lib/developments'
 import { getDevelopmentAssets, developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
 import { developmentIsPublished, developmentTitle, developmentHeading, developmentUnitTypes } from '@/lib/developmentTitle'
@@ -25,7 +27,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const title = developmentTitle(dev)
   const where = dev.locality ? ` in ${dev.locality}` : ''
   const desc = (dev.description || dev.headline || `New homes${where} from Vale and Mercer.`).slice(0, 180)
-  const hero = developmentHeroImage(slug)
+  // Prefer the reordered data.json gallery lead image (a communal/exterior shot
+  // under the photo-order convention) over the raw manifest first image, so the
+  // social-share card never leads with, e.g., a bathroom.
+  const hero = dev.gallery?.[0] ?? developmentHeroImage(slug)
 
   return {
     title: `${title} · New Homes`,
@@ -73,8 +78,18 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
   // authoritative when present; otherwise fall back to the asset manifest.
   const base = getDevelopmentAssets(slug)
   const images = dev.gallery && dev.gallery.length > 0 ? dev.gallery : base.images
-  const assets = { ...base, images, brochure: null }
+  // Floor plans: a data.json `floorplans` array (multi-plan) is authoritative when
+  // present; otherwise fall back to the single manifest plan (already an array).
+  const floorplans = dev.floorplans && dev.floorplans.length > 0 ? dev.floorplans : base.floorplans
+  const assets = { ...base, images, floorplans, brochure: null }
   const similar = similarFor(slug, dev.locality)
+
+  // A property with a video (public/videos/<slug>.mp4) gets a full-bleed autoplay
+  // video hero instead of the static image hero; everything below it (incl. the
+  // scroll gallery) is unchanged. Presence is checked on disk at build time.
+  const videoSrc = fs.existsSync(path.join(process.cwd(), 'public', 'videos', `${slug}.mp4`))
+    ? `/videos/${slug}.mp4`
+    : null
 
   // Build the prop handed to the client, stripping fields that must not appear
   // in the output (data.json itself is untouched):
@@ -86,6 +101,9 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
     ...dev,
     developer: undefined,
     ...(SUPPRESS_UNITMIX.has(slug) ? { unitMix: undefined } : {}),
+    // Completion date is disputed across this development's documents — hide it
+    // from the payload too (see SUPPRESS_COMPLETION for the conflicting values).
+    ...(SUPPRESS_COMPLETION.has(slug) ? { completion: undefined } : {}),
   }
 
   const breadcrumb = {
@@ -106,7 +124,7 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
       <Navbar />
-      <DevelopmentDetail development={safeDev} title={title} assets={assets} similar={similar} />
+      <DevelopmentDetail development={safeDev} title={title} assets={assets} similar={similar} videoSrc={videoSrc} />
       <Footer />
     </>
   )

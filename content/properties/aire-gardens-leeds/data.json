@@ -1,8 +1,9 @@
 {
   "name": "Aire Gardens",
-  "displayName": "LS11 Leeds City Park",
+  "displayName": "Leeds, UK",
   "postcode": "LS11",
   "locality": "South Bank, Leeds",
+  "region": "West Yorkshire",
   "price": "Register your interest",
   "tenure": "999 year lease",
   "developer": "Hilton Developments (part of Sekhon Group)",
@@ -80,5 +81,26 @@
     }
   ],
   "nearestStation": { "name": "Leeds Train Station" },
-  "locationNotes": "Nestled between Aire Park and the South Bank regeneration district. Leeds Train Station is a short walk away, and the city's financial district, retail core, dining scene and cultural venues are all within easy walking distance. By rail from Leeds: London 1hr 59min, Manchester 47min, Liverpool 1hr 25min, Newcastle 1hr 25min, Birmingham 1hr 58min, Edinburgh 2hr 50min."
+  "locationNotes": "Nestled between Aire Park and the South Bank regeneration district. Leeds Train Station is a short walk away, and the city's financial district, retail core, dining scene and cultural venues are all within easy walking distance. By rail from Leeds: London 1hr 59min, Manchester 47min, Liverpool 1hr 25min, Newcastle 1hr 25min, Birmingham 1hr 58min, Edinburgh 2hr 50min.",
+  "floorplans": [
+    "/images/developments/aire-gardens-leeds/floorplans/floorplan-1.png",
+    "/images/developments/aire-gardens-leeds/floorplans/floorplan-2.png",
+    "/images/developments/aire-gardens-leeds/floorplans/floorplan-3.png"
+  ],
+  "gallery": [
+    "/images/developments/aire-gardens-leeds/1.jpg",
+    "/images/developments/aire-gardens-leeds/4.jpg",
+    "/images/developments/aire-gardens-leeds/5.jpg",
+    "/images/developments/aire-gardens-leeds/7.jpg",
+    "/images/developments/aire-gardens-leeds/8.jpg",
+    "/images/developments/aire-gardens-leeds/9.jpg",
+    "/images/developments/aire-gardens-leeds/10.jpg",
+    "/images/developments/aire-gardens-leeds/11.jpg",
+    "/images/developments/aire-gardens-leeds/12.jpg",
+    "/images/developments/aire-gardens-leeds/13.jpg",
+    "/images/developments/aire-gardens-leeds/14.jpg",
+    "/images/developments/aire-gardens-leeds/6.jpg",
+    "/images/developments/aire-gardens-leeds/3.jpg",
+    "/images/developments/aire-gardens-leeds/2.jpg"
+  ]
 }

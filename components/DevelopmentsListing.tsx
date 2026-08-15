@@ -21,7 +21,7 @@ export type DevelopmentCardData = {
   hasPhotos: boolean
 }
 
-export function DevelopmentCard({ dev }: { dev: DevelopmentCardData }) {
+export function DevelopmentCard({ dev, loading }: { dev: DevelopmentCardData; loading?: 'lazy' | 'eager' }) {
   const hasPrice = !!dev.price && dev.price.trim() !== 'Register your interest'
   // Detail line: unit types (if stated) then price — or "Register your interest"
   // when no figure is stated. Empty parts are dropped by ListingTile.
@@ -37,6 +37,7 @@ export function DevelopmentCard({ dev }: { dev: DevelopmentCardData }) {
       badge="New Homes"
       title={dev.title}
       detail={detail}
+      loading={loading}
     />
   )
 }
@@ -57,7 +58,7 @@ export default function DevelopmentsListing({ developments }: { developments: De
         <Stagger as="div" stagger={0.08} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '48px 36px', alignItems: 'start' }}>
           {developments.map(dev => (
             <StaggerItem key={dev.slug} as="div">
-              <DevelopmentCard dev={dev} />
+              <DevelopmentCard dev={dev} loading="eager" />
             </StaggerItem>
           ))}
         </Stagger>

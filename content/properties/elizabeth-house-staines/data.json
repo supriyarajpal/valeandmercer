@@ -1,8 +1,10 @@
 {
   "name": "Elizabeth House",
+  "displayName": "London Rd, Staines, UK",
   "address": "56–60 London Road, Staines-upon-Thames",
   "postcode": "TW18 4HF",
   "locality": "Staines-upon-Thames",
+  "region": "Surrey",
   "price": "From £282,316",
   "tenure": "999-year leasehold",
   "developer": "Spectrum Squared Limited",
@@ -72,5 +74,38 @@
     }
   ],
   "nearestStation": { "name": "Staines Station", "distance": "0.4 miles", "time": "8 min walk" },
-  "locationNotes": "Nestled in the heart of Staines-upon-Thames on London Road, linking to the town centre, Staines Station and the River Thames. Within 0.4 miles of Staines Station (direct trains to London Waterloo in approx. 35 minutes), 0.6 miles of Elmsleigh & Two Rivers shopping centres, and 0.7 miles from the River Thames. Quick access to the M25 (Junction 13), A30 and A308. Heathrow Airport is 4.6 miles away (around 12 minutes by car)."
+  "locationNotes": "Nestled in the heart of Staines-upon-Thames on London Road, linking to the town centre, Staines Station and the River Thames. Within 0.4 miles of Staines Station (direct trains to London Waterloo in approx. 35 minutes), 0.6 miles of Elmsleigh & Two Rivers shopping centres, and 0.7 miles from the River Thames. Quick access to the M25 (Junction 13), A30 and A308. Heathrow Airport is 4.6 miles away (around 12 minutes by car).",
+  "floorplans": [
+    "/images/developments/elizabeth-house-staines/floorplans/floorplan-1.png",
+    "/images/developments/elizabeth-house-staines/floorplans/floorplan-2.png",
+    "/images/developments/elizabeth-house-staines/floorplans/floorplan-3.png",
+    "/images/developments/elizabeth-house-staines/floorplans/floorplan-4.png",
+    "/images/developments/elizabeth-house-staines/floorplans/floorplan-5.png"
+  ],
+  "gallery": [
+    "/images/developments/elizabeth-house-staines/1.jpg",
+    "/images/developments/elizabeth-house-staines/2.jpg",
+    "/images/developments/elizabeth-house-staines/4.jpg",
+    "/images/developments/elizabeth-house-staines/8.jpg",
+    "/images/developments/elizabeth-house-staines/10.jpg",
+    "/images/developments/elizabeth-house-staines/17.jpg",
+    "/images/developments/elizabeth-house-staines/18.jpg",
+    "/images/developments/elizabeth-house-staines/19.jpg",
+    "/images/developments/elizabeth-house-staines/20.jpg",
+    "/images/developments/elizabeth-house-staines/21.jpg",
+    "/images/developments/elizabeth-house-staines/22.jpg",
+    "/images/developments/elizabeth-house-staines/23.jpg",
+    "/images/developments/elizabeth-house-staines/24.jpg",
+    "/images/developments/elizabeth-house-staines/3.jpg",
+    "/images/developments/elizabeth-house-staines/5.jpg",
+    "/images/developments/elizabeth-house-staines/9.jpg",
+    "/images/developments/elizabeth-house-staines/6.jpg",
+    "/images/developments/elizabeth-house-staines/11.jpg",
+    "/images/developments/elizabeth-house-staines/12.jpg",
+    "/images/developments/elizabeth-house-staines/13.jpg",
+    "/images/developments/elizabeth-house-staines/14.jpg",
+    "/images/developments/elizabeth-house-staines/15.jpg",
+    "/images/developments/elizabeth-house-staines/16.jpg",
+    "/images/developments/elizabeth-house-staines/7.jpg"
+  ]
 }

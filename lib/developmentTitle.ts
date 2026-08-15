@@ -75,13 +75,17 @@ export function developmentUnitSummary(dev: Development): string {
   return developmentUnitTypes(dev) ?? 'apartments'
 }
 
-// Address + city (city appended only when the address doesn't already include
-// it, so we never print "…, Derby, Derby").
+// UK address line "[Street], [City], [County/Region]". City is appended only
+// when the address doesn't already include it (so we never print "…, Derby,
+// Derby"); the region (a UK county / metropolitan county) is appended after,
+// only when data.json states it. There is no US-style "state" concept here.
 export function developmentAddressLine(dev: Development): string | null {
   if (!developmentHasAddress(dev)) return null
   let line = dev.address!.trim()
   const city = dev.locality?.split(',').map(s => s.trim()).filter(Boolean).pop()
   if (city && !line.toLowerCase().includes(city.toLowerCase())) line += `, ${city}`
+  const region = dev.region?.trim()
+  if (region && !line.toLowerCase().includes(region.toLowerCase())) line += `, ${region}`
   return line
 }
 

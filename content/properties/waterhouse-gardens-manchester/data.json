@@ -1,8 +1,10 @@
 {
   "name": "Waterhouse Gardens",
+  "displayName": "Dutton Street, Manchester, UK",
   "address": "Dutton Street, Manchester",
   "postcode": "M3 1LE",
   "locality": "Manchester",
+  "region": "Greater Manchester",
   "price": "Register your interest",
   "developer": "Salboy",
   "totalUnits": 556,
@@ -31,7 +33,10 @@
     "2,500 sq. ft gymnasium and fitness studio",
     "Half-size basketball court and squash court",
     "Cycle store",
-    "Private podium garden"
+    "Private podium garden",
+    "Parcel store",
+    "Mailboxes",
+    "Residents' library"
   ],
   "specification": [
     {

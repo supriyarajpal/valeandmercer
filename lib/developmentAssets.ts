@@ -14,21 +14,28 @@ import manifest from './developmentAssets.generated.json'
 export type DevelopmentAssets = {
   /** Numbered gallery photos in order (1.jpg, 2.jpg, …). May be empty. */
   images: string[]
-  /** Rendered floor-plan preview, or null when no floor-plan source existed. */
-  floorplan: string | null
+  /** Ordered floor-plan images. Resolved from data.json `floorplans` when present
+   *  (see app/buy/[slug]/page.tsx); otherwise the single manifest floor plan
+   *  normalised to an array. May be empty. */
+  floorplans: string[]
   /** Downloadable brochure PDF, or null when none was supplied. */
   brochure: string | null
 }
 
-const MAP = manifest as Record<string, DevelopmentAssets>
-const EMPTY: DevelopmentAssets = { images: [], floorplan: null, brochure: null }
+// The manifest still stores a single `floorplan` string; consumers now use an
+// array, so we normalise on read.
+type RawAssets = { images: string[]; floorplan: string | null; brochure: string | null }
+const MAP = manifest as Record<string, RawAssets>
+const EMPTY: DevelopmentAssets = { images: [], floorplans: [], brochure: null }
 
 // Shared SVG shown on cards for a development that has no photographs yet —
 // the same placeholder the lettings side uses, so the two grids read alike.
 export const DEVELOPMENT_PLACEHOLDER = '/images/property-placeholder.svg'
 
 export function getDevelopmentAssets(slug: string): DevelopmentAssets {
-  return MAP[slug] ?? EMPTY
+  const raw = MAP[slug]
+  if (!raw) return EMPTY
+  return { images: raw.images, floorplans: raw.floorplan ? [raw.floorplan] : [], brochure: raw.brochure }
 }
 
 // Card hero: the first real photo, else the shared placeholder. A floor plan is

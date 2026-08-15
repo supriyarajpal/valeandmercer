@@ -1,8 +1,10 @@
 {
   "name": "Fountain Court",
-  "address": "Fountain Court, Steelhouse Lane, Birmingham",
+  "displayName": "5 Steelhouse Ln, Birmingham, UK",
+  "address": "Steelhouse Lane, Birmingham",
   "postcode": "B4 6DR",
   "locality": "Birmingham",
+  "region": "West Midlands",
   "price": "Register your interest",
   "developer": "Elevate Property Group",
   "totalUnits": 70,
@@ -42,5 +44,38 @@
     }
   ],
   "nearestStation": { "name": "Snow Hill Station", "time": "4 min walk" },
-  "locationNotes": "Aston University: 3 min walk; Snow Hill Station: 4 min walk; Colmore Business District: 4 min walk; HS2 / Curzon Street: 4 min walk; Gun Quarter: 7 min walk; Moor St Station: 8 min walk; Jewellery Quarter: 10 min walk; New Street Station: 12 min walk; Retail (Bullring): 12 min walk."
+  "locationNotes": "Aston University: 3 min walk; Snow Hill Station: 4 min walk; Colmore Business District: 4 min walk; HS2 / Curzon Street: 4 min walk; Gun Quarter: 7 min walk; Moor St Station: 8 min walk; Jewellery Quarter: 10 min walk; New Street Station: 12 min walk; Retail (Bullring): 12 min walk.",
+  "floorplans": [
+    "/images/developments/fountain-court-birmingham/floorplans/floorplan-1.png",
+    "/images/developments/fountain-court-birmingham/floorplans/floorplan-2.png",
+    "/images/developments/fountain-court-birmingham/floorplans/floorplan-3.png",
+    "/images/developments/fountain-court-birmingham/floorplans/floorplan-4.png",
+    "/images/developments/fountain-court-birmingham/floorplans/floorplan-5.png"
+  ],
+  "gallery": [
+    "/images/developments/fountain-court-birmingham/1.jpg",
+    "/images/developments/fountain-court-birmingham/2.jpg",
+    "/images/developments/fountain-court-birmingham/3.jpg",
+    "/images/developments/fountain-court-birmingham/4.jpg",
+    "/images/developments/fountain-court-birmingham/16.jpg",
+    "/images/developments/fountain-court-birmingham/23.jpg",
+    "/images/developments/fountain-court-birmingham/9.jpg",
+    "/images/developments/fountain-court-birmingham/15.jpg",
+    "/images/developments/fountain-court-birmingham/24.jpg",
+    "/images/developments/fountain-court-birmingham/5.jpg",
+    "/images/developments/fountain-court-birmingham/6.jpg",
+    "/images/developments/fountain-court-birmingham/7.jpg",
+    "/images/developments/fountain-court-birmingham/13.jpg",
+    "/images/developments/fountain-court-birmingham/17.jpg",
+    "/images/developments/fountain-court-birmingham/18.jpg",
+    "/images/developments/fountain-court-birmingham/19.jpg",
+    "/images/developments/fountain-court-birmingham/20.jpg",
+    "/images/developments/fountain-court-birmingham/21.jpg",
+    "/images/developments/fountain-court-birmingham/8.jpg",
+    "/images/developments/fountain-court-birmingham/12.jpg",
+    "/images/developments/fountain-court-birmingham/22.jpg",
+    "/images/developments/fountain-court-birmingham/10.jpg",
+    "/images/developments/fountain-court-birmingham/11.jpg",
+    "/images/developments/fountain-court-birmingham/14.jpg"
+  ]
 }

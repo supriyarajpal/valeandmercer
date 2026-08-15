@@ -1,7 +1,9 @@
 {
   "name": "Piccadilly Wharf",
-  "displayName": "Mayfield City Centre — 1 & 2 Bedroom Apartments",
+  "displayName": "Store Street, Manchester, UK",
   "locality": "Manchester",
+  "region": "Greater Manchester",
+  "postcode": "M1",
   "price": "Register your interest",
   "tenure": "999 year lease",
   "completion": "Q4 2027 (anticipated)",
@@ -13,5 +15,15 @@
   "paymentStructure": "20% deposit",
   "developmentAmenities": ["24/7 concierge"],
   "nearestStation": { "name": "Piccadilly Station", "time": "3 mins walk" },
-  "locationNotes": "Piccadilly Station: 3 mins walk; New Islington Marina: 7 mins walk; Northern Quarter: 7 mins walk; Mayfield Regeneration: 9 mins walk; Ancoats: 10 mins walk; Etihad Campus & Co-op Live: 15 mins walk."
+  "locationNotes": "Piccadilly Station: 3 mins walk; New Islington Marina: 7 mins walk; Northern Quarter: 7 mins walk; Mayfield Regeneration: 9 mins walk; Ancoats: 10 mins walk; Etihad Campus & Co-op Live: 15 mins walk.",
+  "floorplans": [
+    "/images/developments/piccadilly-wharf-manchester/floorplans/floorplan-1.png"
+  ],
+  "gallery": [
+    "/images/developments/piccadilly-wharf-manchester/1.jpg",
+    "/images/developments/piccadilly-wharf-manchester/2.jpg",
+    "/images/developments/piccadilly-wharf-manchester/4.jpg",
+    "/images/developments/piccadilly-wharf-manchester/5.jpg",
+    "/images/developments/piccadilly-wharf-manchester/3.jpg"
+  ]
 }
