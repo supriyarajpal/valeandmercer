@@ -14,3 +14,17 @@
 // left intact; the server page also strips unitMix from the prop for these slugs
 // so the disputed figures aren't shipped in the hydration payload either.
 export const SUPPRESS_UNITMIX = new Set<string>(['fountain-court-birmingham'])
+
+// Developments whose COMPLETION date is suppressed at the display layer because
+// their source documents disagree on it. Same approach as SUPPRESS_UNITMIX:
+// data.json keeps the primary (brochure) value intact, but the field is hidden
+// on the page — and stripped from the server→client payload — rather than
+// silently shipping a disputed date. Both figures are recorded here for the
+// record:
+//   • aire-gardens-leeds — Q2 2028 (brochure) vs Q1 2028 (investor deck + spec sheet)
+//   • elizabeth-house-staines — March 2026 (brochure) vs September 2026 (factsheet)
+// Remove a slug here once the developer confirms the true completion date.
+export const SUPPRESS_COMPLETION = new Set<string>([
+  'aire-gardens-leeds',
+  'elizabeth-house-staines',
+])

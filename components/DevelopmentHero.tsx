@@ -27,10 +27,10 @@ export default function DevelopmentHero({
   const tabs = useMemo(() => {
     const t: HeroTab[] = []
     if (assets.images.length > 0) t.push('gallery')
-    if (assets.floorplan) t.push('floorplan')
+    if (assets.floorplans.length > 0) t.push('floorplan')
     if (locationNotes || hasStation) t.push('location')
     return t
-  }, [assets.images.length, assets.floorplan, locationNotes, hasStation])
+  }, [assets.images.length, assets.floorplans.length, locationNotes, hasStation])
 
   const [tab, setTab] = useState<HeroTab>(tabs[0] ?? 'gallery')
   const [idx, setIdx] = useState(0)
@@ -41,21 +41,35 @@ export default function DevelopmentHero({
   const prev = useCallback(() => go(idx - 1), [go, idx])
   const next = useCallback(() => go(idx + 1), [go, idx])
 
+  // Floorplan tab has its own sequential gallery (same next/prev pattern).
+  const floorplans = assets.floorplans
+  const [fpIdx, setFpIdx] = useState(0)
+  const fpMulti = floorplans.length > 1
+  const goFp = useCallback((i: number) => setFpIdx(((i % floorplans.length) + floorplans.length) % floorplans.length), [floorplans.length])
+  const prevFp = useCallback(() => goFp(fpIdx - 1), [goFp, fpIdx])
+  const nextFp = useCallback(() => goFp(fpIdx + 1), [goFp, fpIdx])
+
   useEffect(() => {
-    if (tab !== 'gallery' || !multi) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prev()
-      else if (e.key === 'ArrowRight') next()
+      if (tab === 'gallery' && multi) {
+        if (e.key === 'ArrowLeft') prev()
+        else if (e.key === 'ArrowRight') next()
+      } else if (tab === 'floorplan' && fpMulti) {
+        if (e.key === 'ArrowLeft') prevFp()
+        else if (e.key === 'ArrowRight') nextFp()
+      }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [tab, multi, prev, next])
+  }, [tab, multi, fpMulti, prev, next, prevFp, nextFp])
 
   if (tabs.length === 0) return null
   const label: Record<HeroTab, string> = { gallery: 'Gallery', floorplan: 'Floorplan', location: 'Location' }
 
-  // Full-bleed media band height.
-  const bandStyle: React.CSSProperties = { position: 'relative', width: '100%', height: 'clamp(420px, 66vh, 760px)', overflow: 'hidden', background: 'var(--surface-3)' }
+  // Full-bleed media band. Matches the /let hero exactly: a min-height: 72vh
+  // container (was a fixed clamp(420px,66vh,760px) height) so the sharp,
+  // object-fit:contain photo shows at its TRUE aspect ratio with no crop.
+  const bandStyle: React.CSSProperties = { position: 'relative', width: '100%', minHeight: '72vh', overflow: 'hidden', background: 'var(--surface-3)' }
 
   return (
     <section style={{ background: 'var(--surface)', padding: '140px 0 0' }}>
@@ -91,7 +105,14 @@ export default function DevelopmentHero({
       {tab === 'gallery' && images.length > 0 && (
         <>
           <div style={bandStyle}>
-            <img key={images[idx]} src={images[idx]} alt={`${name}, image ${idx + 1} of ${images.length}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            {/* Blurred object-fit:cover backfill so any gap around the photo is a
+                soft glow of the image itself (not a flat band) — identical to the
+                /let hero. */}
+            <img src={images[idx]} alt="" aria-hidden loading="eager" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'blur(36px) brightness(0.82)', transform: 'scale(1.1)' }} />
+            {/* Sharp, object-fit:contain foreground — the whole photo, uncropped. */}
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img key={images[idx]} src={images[idx]} alt={`${name}, image ${idx + 1} of ${images.length}`} style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }} />
+            </div>
             {multi && (
               <>
                 <HeroArrow dir="prev" onClick={prev} />
@@ -122,9 +143,18 @@ export default function DevelopmentHero({
         </>
       )}
 
-      {tab === 'floorplan' && assets.floorplan && (
+      {tab === 'floorplan' && floorplans.length > 0 && (
         <div style={{ ...bandStyle, background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(16px, 3vw, 40px)' }}>
-          <img src={assets.floorplan} alt={`${name} floor plan`} style={{ maxWidth: '100%', maxHeight: '100%', height: 'auto', display: 'block' }} />
+          <img key={floorplans[fpIdx]} src={floorplans[fpIdx]} alt={`${name} floor plan ${fpIdx + 1} of ${floorplans.length}`} style={{ maxWidth: '100%', maxHeight: '100%', height: 'auto', display: 'block' }} />
+          {fpMulti && (
+            <>
+              <HeroArrow dir="prev" onClick={prevFp} />
+              <HeroArrow dir="next" onClick={nextFp} />
+              <div aria-live="polite" style={{ position: 'absolute', right: 'clamp(16px, 4vw, 40px)', bottom: 16, zIndex: 2, fontSize: 11, letterSpacing: '0.14em', color: '#F2EFE9', background: 'rgba(40,35,28,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid rgba(242,239,233,0.16)' }}>
+                {fpIdx + 1} / {floorplans.length}
+              </div>
+            </>
+          )}
         </div>
       )}
 

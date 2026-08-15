@@ -1,10 +1,16 @@
 {
   "name": "Crown Works",
+  "displayName": "Burton-on-Trent, UK",
   "address": "New Street, Burton upon Trent",
   "postcode": "DE14 3SL",
   "locality": "Burton upon Trent",
+  "region": "Staffordshire",
   "price": "Register your interest",
+  "tenure": "999 year lease",
   "developer": "Prosperity Developments",
+  "completion": "Q4 2025",
+  "totalUnits": 74,
+  "sizeRange": "37–62 sq m",
   "unitMix": [
     {
       "size": "37.0 m²"
@@ -76,6 +82,7 @@
       "size": "62.8 m²"
     }
   ],
+  "warranty": "Building warranty provided by NHBC, Zurich Municipal, Premier Guarantee, LABC or Build Zone",
   "headline": "A selection of luxury apartments in the historic heart of Burton-upon-Trent",
   "description": "Crown Works is a selection of luxury apartments in the historic heart of Burton-upon-Trent — a new era of exceptional city living and country leisure designed for first-time buyers and investors seeking a more rewarding home-owning experience. Surrounded by open green space, Burton offers the best of both worlds, with good road and rail connections, a town full of amenities, and easy access to the Peak District National Park and surrounding green spaces.",
   "specification": [
@@ -113,17 +120,26 @@
     }
   ],
   "locationNotes": "Burton-upon-Trent is a market town in Staffordshire, internationally known as the capital of British brewing. Close to Derby, Nottingham, Leicester and Birmingham; a train to Birmingham New Street takes just 23 minutes. East Midlands Airport and Birmingham International Airport are a short journey away, and there is easy access to the Peak District National Park.",
+  "floorplans": [
+    "/images/developments/crown-works-burton/floorplans/floorplan-1.png",
+    "/images/developments/crown-works-burton/floorplans/floorplan-2.png",
+    "/images/developments/crown-works-burton/floorplans/floorplan-3.png",
+    "/images/developments/crown-works-burton/floorplans/floorplan-4.png",
+    "/images/developments/crown-works-burton/floorplans/floorplan-5.png",
+    "/images/developments/crown-works-burton/floorplans/floorplan-6.png",
+    "/images/developments/crown-works-burton/floorplans/floorplan-7.png"
+  ],
   "gallery": [
     "/images/developments/crown-works-burton/1.jpg",
     "/images/developments/crown-works-burton/2.jpg",
     "/images/developments/crown-works-burton/3.jpg",
     "/images/developments/crown-works-burton/4.jpg",
     "/images/developments/crown-works-burton/5.jpg",
+    "/images/developments/crown-works-burton/11.jpg",
     "/images/developments/crown-works-burton/6.jpg",
+    "/images/developments/crown-works-burton/10.jpg",
     "/images/developments/crown-works-burton/7.jpg",
     "/images/developments/crown-works-burton/8.jpg",
-    "/images/developments/crown-works-burton/9.jpg",
-    "/images/developments/crown-works-burton/10.jpg",
-    "/images/developments/crown-works-burton/11.jpg"
+    "/images/developments/crown-works-burton/9.jpg"
   ]
 }

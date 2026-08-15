@@ -60,6 +60,11 @@ export interface Development {
   address?: string
   postcode?: string
   locality?: string
+  // UK county / region for the address line, e.g. "Surrey", "Staffordshire",
+  // "Greater Manchester". Rendered as the third part of "[Street], [City],
+  // [County/Region]". Populated ONLY when a source document states it — never
+  // inferred. There is deliberately no US-style "state" field in this model.
+  region?: string
   price?: string
   tenure?: string
   developer?: string
@@ -81,6 +86,11 @@ export interface Development {
   // ordered gallery for the /buy pages; otherwise they fall back to whatever is
   // in the asset manifest (lib/developmentAssets.generated.json).
   gallery?: string[]
+  // Ordered floor-plan image paths (e.g. "/images/developments/<slug>/floorplans/
+  // floorplan-1.png"), produced by the floorplan ingestion. When present this is
+  // the authoritative floor-plan set for the /buy pages (the Floorplan tab shows
+  // ALL of them); otherwise they fall back to the single manifest floor plan.
+  floorplans?: string[]
 }
 
 const PROPERTIES_DIR = path.join(process.cwd(), 'content', 'properties')
