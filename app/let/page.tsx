@@ -9,8 +9,8 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
-  title: 'London Lettings',
-  description: 'London residential lettings from Vale and Mercer. Browse rental properties available now across East London, and let your own property to well-referenced tenants with honest pricing and full management.',
+  title: 'Flats to Rent Canary Wharf | Letting Agents',
+  description: 'Browse property to rent in Canary Wharf, including 1 and 2 bed flats and short let apartments. Find your next rental with Vale & Mercer today.',
   alternates: { canonical: '/let' },
 }
 

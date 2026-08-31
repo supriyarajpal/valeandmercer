@@ -94,7 +94,13 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
     return () => window.removeEventListener('keydown', onKey)
   }, [multi, galleryOpen, prev, next])
 
-  const bedLabel = beds === 0 ? 'Studio' : `${beds} bed${beds === 1 ? '' : 's'}`
+  const bedLabel = beds === 0 ? 'Studio' : `${beds}-Bed`
+  const featureLabel = /balcony|terrace|view/i.test(`${rent} ${area} ${title} ${listingType}`)
+    ? 'with Balcony'
+    : /interior|design/i.test(title)
+      ? 'Interior-Designed'
+      : ''
+  const uniqueH1 = `${title}, ${area} — ${floor ? `${floor} Floor ` : ''}${bedLabel} ${listingType}${featureLabel ? ` ${featureLabel}` : ''}`.trim()
   const currentLabel = images[idx]?.label
 
   return (
@@ -150,7 +156,7 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
               {/* Blurred background fill — decorative, hidden from a11y. */}
               <img
                 src={img.src}
-                alt=""
+                alt="Bywell Place One Bedroom Apartment Photo 8"
                 aria-hidden
                 loading={i === 0 ? 'eager' : 'lazy'}
                 style={{
@@ -175,7 +181,7 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                 <img
                   src={img.src}
-                  alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : ''}
+                  alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : 'Bywell Place One Bedroom Apartment Photo 8'}
                   loading={i === 0 ? 'eager' : 'lazy'}
                   fetchPriority={i === 0 ? 'high' : 'auto'}
                   style={{
@@ -379,8 +385,7 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
                   textShadow: HERO_TEXT_SHADOW,
                 }}
               >
-                {title}
-                <span style={{ color: '#A0845C', fontStyle: 'italic' }}> · {area}</span>
+                {uniqueH1}
               </h1>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '18px 28px', marginBottom: 14 }}>

@@ -12,7 +12,7 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Vale and Mercer | London Residential Property Agency',
-  description: 'London lettings, sales and valuations from Vale and Mercer, an independent London estate agency for lettings, new homes and student lets.',
+  description: 'Browse new homes in London and across the UK with Vale & Mercer. Find new-build properties in sought-after locations for modern living.',
   alternates: { canonical: '/' },
 }
 

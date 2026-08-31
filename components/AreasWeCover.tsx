@@ -144,7 +144,7 @@ function AreaPhoto({ image }: { image: string }) {
       {!failed && (
         <img
           src={image}
-          alt=""
+          alt="Canning Town Area Guide View, London"
           aria-hidden
           loading="lazy"
           onError={() => setFailed(true)}

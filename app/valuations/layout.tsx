@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
-  title: 'Free London Property Valuations',
-  description: 'Book a free in-person London property valuation with Vale and Mercer. No online tools, no algorithms, just a straight, well-reasoned figure from a senior agent.',
+  title: 'Free Property Valuation London | Canary Wharf & Stratford',
+  description: 'Get a free property valuation in London from local experts. Request accurate rental and property valuations across Canary Wharf, E20 and Stratford today.',
   alternates: { canonical: '/valuations' },
 }
 

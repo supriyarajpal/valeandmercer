@@ -17,8 +17,8 @@ const services = [
     desc: 'The best properties rarely wait. We keep our clients informed before anything reaches the open market.',
   },
   {
-    title: 'Student Lets',
-    href: '/let',
+    title: 'Student Lettings',
+    href: '/student-lettings',
     desc: 'Your first home in London is a big deal. Clear communication, no hidden costs, and someone who actually picks up the phone.',
   },
 ]

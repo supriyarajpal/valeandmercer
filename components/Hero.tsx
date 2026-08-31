@@ -121,10 +121,10 @@ export default function Hero() {
         <div style={{ width: '100%', maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ maxWidth: 640 }}>
             <h1 style={{ color: '#F2EFE9', margin: '0 0 1.6rem', fontSize: 'clamp(44px, 6.5vw, 88px)', lineHeight: 1.2, textShadow: '0 4px 28px rgba(52,48,43,0.55)' }}>
-              <HeroLine text="Where" delay={ENTER_DELAY + 0.05} />
-              <HeroLine text="homes" delay={ENTER_DELAY + 0.18} italic gold />
-              <HeroLine text="find their" delay={ENTER_DELAY + 0.31} />
-              <HeroLine text="people" delay={ENTER_DELAY + 0.44} />
+              <HeroLine text="New Homes" delay={ENTER_DELAY + 0.05} />
+              <HeroLine text="in London" delay={ENTER_DELAY + 0.18} italic gold />
+              <HeroLine text="and Across the" delay={ENTER_DELAY + 0.31} />
+              <HeroLine text="UK" delay={ENTER_DELAY + 0.44} />
             </h1>
 
             <motion.div
