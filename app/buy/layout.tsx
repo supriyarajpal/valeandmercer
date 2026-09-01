@@ -3,8 +3,8 @@ import type { Metadata } from 'next'
 const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
-  title: 'New Homes in London',
-  description: 'New homes and residential sales in London from Vale and Mercer. Register your interest and hear about new listings before they reach the open market.',
+  title: 'Flats and Homes for Sale in Canary Wharf and East London',
+  description: 'Find flats and property for sale in Canary Wharf, Canning Town, cubitt town, Isle of Dogs, Docklands and Royal Docks with Vale & Mercer estate agents.',
   alternates: { canonical: '/buy' },
 }
 

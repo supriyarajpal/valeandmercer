@@ -10,7 +10,7 @@ const SLUG = '/blog/landlord-checklist-preparing-to-let'
 const IMAGE = 'https://images.unsplash.com/photo-1595846519845-68e298c2edd8?w=1400&q=85'
 const IMAGE_ALT = 'A well-staged residential lounge ready for viewings'
 const DATE_PUBLISHED = '2026-07-08'
-const TITLE       = "Getting Your Property Ready to Let: A Landlord's Checklist"
+const TITLE       = "Landlord Checklist: Preparing Your Property to Let"
 const DESCRIPTION = 'A practical landlord checklist from Vale and Mercer. Photography, staging, compliance paperwork, pricing, and what a good letting agent should be doing on your behalf before your property goes to market.'
 
 export const metadata: Metadata = {

@@ -6,7 +6,7 @@ const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
   title: 'Lettings and Sales Fees',
-  description: 'Transparent Vale and Mercer fees for London lettings and residential sales. Tenant Find, Rent Collection and Full Management options with no hidden charges.',
+  description: 'Learn about letting agent fees in London with Vale & Mercer. See clear property management costs and understand what you pay when letting your property.',
   alternates: { canonical: '/fees' },
 }
 

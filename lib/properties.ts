@@ -352,7 +352,7 @@ export const properties: Property[] = [
       { src: '/images/westferry-circus-4078/7.jpeg', label: 'Bedroom' },
       { src: '/images/westferry-circus-4078/5.jpeg', label: 'Bathroom' },
       { src: '/images/westferry-circus-4078/9.jpeg', label: 'Bathroom' },
-      { src: '/images/westferry-circus-4078/16.jpeg' },
+      { src: '/images/westferry-circus-4078/16.jpeg'},
       { src: '/images/westferry-circus-4078/10.jpeg', label: 'Communal Area' },
       { src: '/images/westferry-circus-4078/18.jpeg', label: 'Communal Area' },
       { src: '/images/westferry-circus-4078/2.jpeg', label: 'Communal Area' },

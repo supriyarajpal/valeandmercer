@@ -10,7 +10,7 @@ const SLUG = '/blog/london-rental-market-2026'
 const IMAGE = 'https://images.unsplash.com/photo-1513026705753-bc3fffca8bf4?w=1400&q=85'
 const IMAGE_ALT = 'London city skyline at dawn'
 const DATE_PUBLISHED = '2026-07-08'
-const TITLE       = "London's Rental Market in 2026: What's Actually Happening to Rents"
+const TITLE       = "London Rental Market 2026: What's Happening to Rents"
 const DESCRIPTION = "A calm, data-led look at London rents in mid-2026. UK average rent, London growth compared with other regions, supply, and time-to-let. Practical context from Vale and Mercer for anyone searching now."
 
 export const metadata: Metadata = {

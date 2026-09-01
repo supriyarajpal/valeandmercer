@@ -28,8 +28,16 @@ export async function generateMetadata(
   if (!property) return { title: 'Property not found' }
 
   const shortDesc = `${property.title}, ${property.area}. ${property.rent} · ${property.beds === 0 ? 'Studio' : property.beds + '-bed'}, ${property.baths}-bath. Available ${property.available}.`
+  const bedLabel = property.beds === 0 ? 'Studio' : `${property.beds}-Bed`
+  const featureText = /balcony|terrace|view/i.test(`${property.amenities} ${property.tags.join(' ')}`)
+    ? 'with Balcony'
+    : /interior|design/i.test(property.title)
+      ? 'Interior-Designed'
+      : ''
+  const uniqueTitle = `${property.title}, ${property.area} — ${property.floor ? `${property.floor} Floor ` : ''}${bedLabel} ${property.listingType}${featureText ? ` ${featureText}` : ''}`.trim()
+
   return {
-    title: `${property.title} · ${property.rent}`,
+    title: `${uniqueTitle} | Vale and Mercer`,
     description: shortDesc,
     alternates: { canonical: `/property/${property.slug}` },
     // Draft records lack confirmed EPC + council tax band and should not
@@ -39,7 +47,7 @@ export async function generateMetadata(
       ? { index: false, follow: false }
       : { index: true, follow: true },
     openGraph: {
-      title: `${property.title} · ${property.rent} | Vale and Mercer`,
+      title: `${uniqueTitle} | Vale and Mercer`,
       description: shortDesc,
       url: `${SITE_URL}/property/${property.slug}`,
       type: 'website',

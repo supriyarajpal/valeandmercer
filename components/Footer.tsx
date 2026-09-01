@@ -22,6 +22,15 @@ const legalItems = [
   { label: 'Terms of Use', href: '/terms' },
 ]
 
+const socialLinks = [
+  { label: 'Instagram', href: '#' },
+  { label: 'LinkedIn', href: '#' },
+  { label: 'Facebook', href: '#' },
+]
+
+const SITE_PHONE = '+44 7517 696926'
+const SITE_PHONE_TEL = 'tel:+447517696926'
+
 const linkStyle: React.CSSProperties = {
   fontSize: 11,
   color: 'rgba(242,239,233,0.35)',
@@ -144,6 +153,14 @@ export default function Footer() {
             </StaggerItem>
             <StaggerItem>
               <div style={{ marginBottom: 16 }}>
+                <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(242,239,233,0.2)', marginBottom: 4 }}>Phone</div>
+                <a href={SITE_PHONE_TEL} className="link-underline" style={{ fontSize: 11, color: 'rgba(242,239,233,0.4)', letterSpacing: '0.01em' }}>
+                  {SITE_PHONE}
+                </a>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div style={{ marginBottom: 16 }}>
                 <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(242,239,233,0.2)', marginBottom: 4 }}>Email</div>
                 <a href="mailto:info@valeandmercer.co.uk" className="link-underline" style={{ fontSize: 11, color: 'rgba(242,239,233,0.4)', letterSpacing: '0.01em' }}>
                   info@valeandmercer.co.uk
@@ -154,6 +171,23 @@ export default function Footer() {
               <div>
                 <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(242,239,233,0.2)', marginBottom: 4 }}>Registered Office</div>
                 <p style={{ fontSize: 11, color: 'rgba(242,239,233,0.35)', lineHeight: 1.7 }}>124 City Road, London EC1V 2NX</p>
+              </div>
+            </StaggerItem>
+            <StaggerItem>
+              <div style={{ marginTop: 12 }}>
+                <div style={{ fontSize: 9, textTransform: 'uppercase', color: 'rgba(242,239,233,0.2)', marginBottom: 4 }}>Follow us</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+                  {socialLinks.map(item => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="link-underline"
+                      style={{ fontSize: 11, color: 'rgba(242,239,233,0.4)', letterSpacing: '0.01em' }}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </StaggerItem>
           </Stagger>
