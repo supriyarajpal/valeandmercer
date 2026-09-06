@@ -22,10 +22,22 @@ const legalItems = [
   { label: 'Terms of Use', href: '/terms' },
 ]
 
+const certificateItems = [
+  { label: 'Certificate 1', href: '/certificates/certificate-vm-1.pdf' },
+  { label: 'Certificate 2', href: '/certificates/certificate-vm-2.pdf' },
+]
+
 const linkStyle: React.CSSProperties = {
   fontSize: 11,
   color: 'rgba(242,239,233,0.35)',
   letterSpacing: '0.03em',
+}
+
+const legalLinkStyle: React.CSSProperties = {
+  fontSize: 9,
+  textTransform: 'uppercase',
+  letterSpacing: '0.22em',
+  color: 'rgba(242,239,233,0.25)',
 }
 
 const eyebrowRow: React.CSSProperties = {
@@ -165,9 +177,14 @@ export default function Footer() {
         </p>
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
           {legalItems.map(item => (
-            <Link key={item.label} href={item.href} className="link-underline" style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: '0.22em', color: 'rgba(242,239,233,0.25)' }}>
+            <Link key={item.label} href={item.href} className="link-underline" style={legalLinkStyle}>
               {item.label}
             </Link>
+          ))}
+          {certificateItems.map(item => (
+            <a key={item.label} href={item.href} target="_blank" rel="noreferrer" className="link-underline" style={legalLinkStyle}>
+              {item.label}
+            </a>
           ))}
         </div>
       </div>
