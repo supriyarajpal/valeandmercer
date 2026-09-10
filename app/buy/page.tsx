@@ -4,10 +4,10 @@ import ArrowButton from '@/components/ArrowButton'
 import { Reveal } from '@/components/Reveal'
 import DevelopmentsListing, { type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { developments } from '@/lib/developments'
-import { developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
+import { getDevelopmentAssets, developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
 import { developmentIsPublished, developmentHeading, developmentUnitTypes } from '@/lib/developmentTitle'
 
-// /buy — the New Homes listing. The old "Properties coming soon" teaser block
+// /buy: the New Homes listing. The old "Properties coming soon" teaser block
 // (Canary Wharf / Notting Hill / Chelsea) was removed per instruction; the
 // developments grid is now the page. Server Component: reads the build-time
 // development data (lib/developments.ts is filesystem-backed / server-only) and
@@ -19,15 +19,20 @@ export default function BuyPage() {
   // addressless stub is excluded (and its detail route is likewise not generated).
   const cards: DevelopmentCardData[] = developments
     .filter(developmentIsPublished)
-    .map(dev => ({
-      slug: dev.slug,
-      title: developmentHeading(dev),
-      unitSummary: developmentUnitTypes(dev) ?? undefined,
-      price: dev.price,
-      // Prefer a published data.json gallery; fall back to the asset manifest.
-      heroImage: dev.gallery?.[0] ?? developmentHeroImage(dev.slug),
-      hasPhotos: (dev.gallery?.length ?? 0) > 0 || developmentHasPhotos(dev.slug),
-    }))
+    .map(dev => {
+      const base = getDevelopmentAssets(dev.slug)
+      const gallery = dev.gallery && dev.gallery.length > 0 ? dev.gallery : base.images
+      return {
+        slug: dev.slug,
+        title: developmentHeading(dev),
+        unitSummary: developmentUnitTypes(dev) ?? undefined,
+        price: dev.price,
+        // Prefer a published data.json gallery; fall back to the asset manifest.
+        heroImage: gallery[0] ?? developmentHeroImage(dev.slug),
+        hasPhotos: gallery.length > 0 || developmentHasPhotos(dev.slug),
+        images: gallery,
+      }
+    })
 
   return (
     <>

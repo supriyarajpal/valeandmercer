@@ -46,21 +46,26 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 }
 
-// Up to two "similar" developments (published only) — prefer the same locality,
+// Up to two "similar" developments (published only): prefer the same locality,
 // then fill from the rest, preserving order.
 function similarFor(slug: string, locality?: string): DevelopmentCardData[] {
   const others = developments.filter(d => d.slug !== slug && developmentIsPublished(d))
   const sameCity = locality ? others.filter(d => d.locality === locality) : []
   const rest = others.filter(d => !sameCity.includes(d))
-  return [...sameCity, ...rest].slice(0, 2).map(d => ({
-    slug: d.slug,
-    title: developmentHeading(d),
-    unitSummary: developmentUnitTypes(d) ?? undefined,
-    price: d.price,
-    // Prefer a published data.json gallery; fall back to the asset manifest.
-    heroImage: d.gallery?.[0] ?? developmentHeroImage(d.slug),
-    hasPhotos: (d.gallery?.length ?? 0) > 0 || developmentHasPhotos(d.slug),
-  }))
+  return [...sameCity, ...rest].slice(0, 2).map(d => {
+    const base = getDevelopmentAssets(d.slug)
+    const gallery = d.gallery && d.gallery.length > 0 ? d.gallery : base.images
+    return {
+      slug: d.slug,
+      title: developmentHeading(d),
+      unitSummary: developmentUnitTypes(d) ?? undefined,
+      price: d.price,
+      // Prefer a published data.json gallery; fall back to the asset manifest.
+      heroImage: gallery[0] ?? developmentHeroImage(d.slug),
+      hasPhotos: gallery.length > 0 || developmentHasPhotos(d.slug),
+      images: gallery,
+    }
+  })
 }
 
 export default async function DevelopmentPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -93,15 +98,15 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
 
   // Build the prop handed to the client, stripping fields that must not appear
   // in the output (data.json itself is untouched):
-  //   • `developer` — not rendered anywhere on /buy (per spec), so it's also
+  //   • `developer`: not rendered anywhere on /buy (per spec), so it's also
   //     kept out of the client hydration payload.
-  //   • `unitMix` for Fountain Court — its per-type split is disputed
+  //   • `unitMix` for Fountain Court: its per-type split is disputed
   //     (SUPPRESS_UNITMIX); only the headline totalUnits ("70 apartments") shows.
   const safeDev = {
     ...dev,
     developer: undefined,
     ...(SUPPRESS_UNITMIX.has(slug) ? { unitMix: undefined } : {}),
-    // Completion date is disputed across this development's documents — hide it
+    // Completion date is disputed across this development's documents: hide it
     // from the payload too (see SUPPRESS_COMPLETION for the conflicting values).
     ...(SUPPRESS_COMPLETION.has(slug) ? { completion: undefined } : {}),
   }

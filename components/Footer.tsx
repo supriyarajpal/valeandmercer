@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Stagger, StaggerItem, useInViewSafe } from '@/components/Reveal'
+import { LOGO_FALLBACKS } from '@/lib/logoFallbacks'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -121,14 +122,14 @@ export default function Footer() {
                       they sit as a matched pair alongside the accreditations. */}
                   <div style={{ background: '#fff', padding: '11px 14px', display: 'inline-flex', alignItems: 'center' }}>
                     <img
-                      src="/images/zoopla.jpeg"
+                      src={LOGO_FALLBACKS.zoopla}
                       alt="Zoopla"
                       style={{ height: 22, width: 'auto', display: 'block' }}
                     />
                   </div>
                   <div style={{ background: '#fff', padding: '11px 14px', display: 'inline-flex', alignItems: 'center' }}>
                     <img
-                      src="/images/onthemarket.jpeg"
+                      src={LOGO_FALLBACKS.onthemarket}
                       alt="OnTheMarket"
                       style={{ height: 22, width: 'auto', display: 'block' }}
                     />
@@ -142,7 +143,7 @@ export default function Footer() {
                     display-only; the CMP certificate links to its PDF. */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginBottom: 14 }}>
                   <img
-                    src="/images/certificate-1.png"
+                    src={LOGO_FALLBACKS.certificate1}
                     alt="Certified and accredited by Propertymark"
                     style={{ height: 44, width: 'auto', display: 'block', borderRadius: 3 }}
                   />
@@ -150,12 +151,12 @@ export default function Footer() {
                     href="/certificates/certificate-vm-1.pdf"
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Propertymark Client Money Protection — view certificate"
+                    aria-label="Propertymark Client Money Protection: view certificate"
                     title="View Client Money Protection certificate"
                     style={{ display: 'inline-flex' }}
                   >
                     <img
-                      src="/images/certificate-3.png"
+                      src={LOGO_FALLBACKS.certificate3}
                       alt="Propertymark Client Money Protection (CMP)"
                       style={{ height: 44, width: 'auto', display: 'block', borderRadius: 3 }}
                     />

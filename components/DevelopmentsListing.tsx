@@ -3,7 +3,7 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 import ListingTile, { type ListingTileDetailPart } from '@/components/ListingTile'
 
 // New-homes listing grid on /buy. One card per development, using the shared
-// ListingTile ("Design C") — the same treatment as the lettings cards, with
+// ListingTile ("Design C"): the same treatment as the lettings cards, with
 // buy-specific data: title = the development heading (editorial displayName, else
 // street address + city, else the development's own name; never the developer
 // name), badge = "New Homes", detail = unit types + price (or "Register your
@@ -11,7 +11,7 @@ import ListingTile, { type ListingTileDetailPart } from '@/components/ListingTil
 
 export type DevelopmentCardData = {
   slug: string
-  /** Card heading — displayName, else street + city, else the development name. */
+  /** Card heading: displayName, else street + city, else the development name. */
   title: string
   /** Unit-type phrase, e.g. "1–3 bed apartments"; omitted when not stated. */
   unitSummary?: string
@@ -19,11 +19,13 @@ export type DevelopmentCardData = {
   price?: string
   heroImage: string
   hasPhotos: boolean
+  /** Gallery photos for hover-to-cycle preview. */
+  images?: string[]
 }
 
 export function DevelopmentCard({ dev, loading }: { dev: DevelopmentCardData; loading?: 'lazy' | 'eager' }) {
   const hasPrice = !!dev.price && dev.price.trim() !== 'Register your interest'
-  // Detail line: unit types (if stated) then price — or "Register your interest"
+  // Detail line: unit types (if stated) then price, or "Register your interest"
   // when no figure is stated. Empty parts are dropped by ListingTile.
   const detail: ListingTileDetailPart[] = []
   if (dev.unitSummary) detail.push({ text: dev.unitSummary })
@@ -34,6 +36,7 @@ export function DevelopmentCard({ dev, loading }: { dev: DevelopmentCardData; lo
       href={`/buy/${dev.slug}`}
       image={dev.heroImage}
       imageAlt={dev.hasPhotos ? dev.title : ''}
+      images={dev.images}
       badge="New Homes"
       title={dev.title}
       detail={detail}

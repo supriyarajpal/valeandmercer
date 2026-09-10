@@ -1,5 +1,7 @@
 import { Reveal } from '@/components/Reveal'
 
+import { LOGO_FALLBACKS } from '@/lib/logoFallbacks'
+
 // Homepage trust strip. The same seven footer logos (accreditations,
 // Propertymark certificates and portal partners) reproduced as a seamless,
 // slow right-to-left marquee. All the treatment lives in globals.css (.acc-*):
@@ -13,6 +15,7 @@ import { Reveal } from '@/components/Reveal'
 // the `acc-logo` class so it picks up the tint + hover-to-colour treatment.
 const LOGO_ITEMS: React.ReactNode[] = [
   <svg
+    key="prs"
     className="acc-logo"
     width="86"
     height="30"
@@ -28,12 +31,36 @@ const LOGO_ITEMS: React.ReactNode[] = [
     <text x="28" y="22" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold" fill="#333">Property</text>
     <text x="28" y="36" fontFamily="Arial,sans-serif" fontSize="11" fontWeight="bold" fill="#333">Redress</text>
   </svg>,
-  <img className="acc-logo" src="/images/footer-image.svg" alt="ARLA Propertymark" style={{ height: 24, width: 'auto', display: 'block' }} />,
-  <img className="acc-logo" src="/images/tenancy-deposit.png" alt="Tenancy Deposit Scheme" style={{ height: 32, width: 'auto', display: 'block' }} />,
-  <img className="acc-logo" src="/images/zoopla.jpeg" alt="Zoopla" style={{ height: 20, width: 'auto', display: 'block' }} />,
-  <img className="acc-logo" src="/images/onthemarket.jpeg" alt="OnTheMarket" style={{ height: 20, width: 'auto', display: 'block' }} />,
-  <img className="acc-logo" src="/images/certificate-1.png" alt="Certified and accredited by Propertymark" style={{ height: 36, width: 'auto', display: 'block' }} />,
-  <img className="acc-logo" src="/images/certificate-3.png" alt="Propertymark Client Money Protection (CMP)" style={{ height: 36, width: 'auto', display: 'block' }} />,
+  <img key="arla" className="acc-logo" src="/images/footer-image.svg" alt="ARLA Propertymark" style={{ height: 24, width: 'auto', display: 'block' }} />,
+  <img key="tds" className="acc-logo" src="/images/tenancy-deposit.png" alt="Tenancy Deposit Scheme" style={{ height: 32, width: 'auto', display: 'block' }} />,
+  <img
+    key="zoopla"
+    className="acc-logo"
+    src={LOGO_FALLBACKS.zoopla}
+    alt="Zoopla"
+    style={{ height: 20, width: 'auto', display: 'block' }}
+  />,
+  <img
+    key="otm"
+    className="acc-logo"
+    src={LOGO_FALLBACKS.onthemarket}
+    alt="OnTheMarket"
+    style={{ height: 20, width: 'auto', display: 'block' }}
+  />,
+  <img
+    key="cert1"
+    className="acc-logo"
+    src={LOGO_FALLBACKS.certificate1}
+    alt="Certified and accredited by Propertymark"
+    style={{ height: 36, width: 'auto', display: 'block' }}
+  />,
+  <img
+    key="cert3"
+    className="acc-logo"
+    src={LOGO_FALLBACKS.certificate3}
+    alt="Propertymark Client Money Protection (CMP)"
+    style={{ height: 36, width: 'auto', display: 'block' }}
+  />,
 ]
 
 export default function AccreditationsStrip() {

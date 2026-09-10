@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
 // Shared listing card ("Design C"), used by BOTH the lettings grid (/let) and
 // the new-homes grid (/buy). The visual treatment is identical everywhere:
@@ -10,7 +10,8 @@ import { Fragment, useEffect, useState } from 'react'
 //     line whose price part is gold;
 //   • a badge pill top-left, an optional favourite heart top-right;
 //   • on hover the image zooms a touch and the scrim lifts with the site's slow
-//     ease-out (no snap).
+//     ease-out (no snap). Fine-pointer hover also crossfades through gallery
+//     images; mouseleave snaps back to the cover. Touch does not cycle.
 // Everything that differs between /let and /buy is passed as data props.
 
 export type ListingTileDetailPart = {
@@ -23,6 +24,8 @@ export type ListingTileProps = {
   href: string
   image: string
   imageAlt: string
+  /** Optional extra gallery frames. Cover (`image`) is always first. */
+  images?: string[]
   /** Badge pill text (rendered upper-case), e.g. "To Let" / "New Homes". */
   badge: string
   /** Gold small-caps line above the title (locality). Omitted when absent. */
@@ -39,36 +42,136 @@ export type ListingTileProps = {
   loading?: 'lazy' | 'eager'
 }
 
-export default function ListingTile({ href, image, imageAlt, badge, eyebrow, title, detail, favourite, loading = 'lazy' }: ListingTileProps) {
+const CYCLE_MS = 1350
+
+function uniqueFrames(cover: string, extras?: string[]): string[] {
+  const out: string[] = []
+  const seen = new Set<string>()
+  for (const src of [cover, ...(extras ?? [])]) {
+    if (!src || seen.has(src)) continue
+    seen.add(src)
+    out.push(src)
+  }
+  return out
+}
+
+function canCycleOnHover(): boolean {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia('(hover: hover)').matches
+}
+
+function preload(srcs: string[]): void {
+  for (const src of srcs) {
+    const img = new window.Image()
+    img.src = src
+  }
+}
+
+export default function ListingTile({ href, image, imageAlt, images, badge, eyebrow, title, detail, favourite, loading = 'lazy' }: ListingTileProps) {
   const parts = detail.filter(p => p.text && p.text.trim())
+  const frames = uniqueFrames(image, images)
+  const canCycle = frames.length > 1
+
+  const [idx, setIdx] = useState(0)
+  const [prevIdx, setPrevIdx] = useState(0)
+  const [mounted, setMounted] = useState<number[]>([0])
+  const [lifted, setLifted] = useState(false)
+  const idxRef = useRef(0)
+  const timerRef = useRef<number | null>(null)
+
+  const clearTimer = () => {
+    if (timerRef.current != null) {
+      window.clearInterval(timerRef.current)
+      timerRef.current = null
+    }
+  }
+
+  const revertCover = () => {
+    clearTimer()
+    idxRef.current = 0
+    setIdx(0)
+    setPrevIdx(0)
+    setMounted([0])
+  }
+
+  useEffect(() => () => clearTimer(), [])
+
+  const onMouseEnter = () => {
+    setLifted(true)
+    if (!canCycle || !canCycleOnHover()) return
+    const ahead = [1, 2, 3].filter(i => i < frames.length)
+    preload(ahead.map(i => frames[i]))
+    setMounted(Array.from(new Set([0, ...ahead])))
+    clearTimer()
+    timerRef.current = window.setInterval(() => {
+      const prev = idxRef.current
+      const next = (idxRef.current + 1) % frames.length
+      idxRef.current = next
+      const more = [next, next + 1, next + 2, next + 3].map(i => i % frames.length)
+      preload(more.map(i => frames[i]))
+      setMounted(m => Array.from(new Set([...m, ...more])))
+      setPrevIdx(prev)
+      setIdx(next)
+    }, CYCLE_MS)
+  }
+
+  const onMouseLeave = () => {
+    setLifted(false)
+    revertCover()
+  }
+
+  const visible = new Set(mounted)
+
   return (
     <Link
       href={href}
       style={{ textDecoration: 'none', position: 'relative', display: 'block' }}
-      onMouseEnter={e => {
-        const img = e.currentTarget.querySelector<HTMLImageElement>('img')
-        const scrim = e.currentTarget.querySelector<HTMLDivElement>('[data-scrim]')
-        if (img) img.style.transform = 'scale(1.06)'
-        if (scrim) scrim.style.transform = 'translateY(-10px)'
-      }}
-      onMouseLeave={e => {
-        const img = e.currentTarget.querySelector<HTMLImageElement>('img')
-        const scrim = e.currentTarget.querySelector<HTMLDivElement>('[data-scrim]')
-        if (img) img.style.transform = 'scale(1)'
-        if (scrim) scrim.style.transform = 'translateY(0)'
-      }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
-      {/* Full-bleed 3:4 portrait tile — the image IS the card (no matting),
+      {/* Full-bleed 3:4 portrait tile: the image IS the card (no matting),
           10px radius, uniform ratio so rows always align. */}
       <div style={{ position: 'relative', aspectRatio: '3 / 4', overflow: 'hidden', borderRadius: 10, background: '#26221C', boxShadow: '0 18px 40px -24px rgba(40,35,28,0.5), 0 2px 6px -3px rgba(40,35,28,0.12)' }}>
-        <img
-          src={image}
-          alt={imageAlt}
-          loading={loading}
-          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.9s var(--ease-out-soft)', willChange: 'transform' }}
-        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            transform: lifted ? 'scale(1.06)' : 'scale(1)',
+            transition: 'transform 0.9s var(--ease-out-soft)',
+            willChange: 'transform',
+          }}
+        >
+          {frames.map((src, i) => {
+            if (!visible.has(i)) return null
+            const isCover = i === 0
+            const isCurrent = i === idx
+            const isPrev = i === prevIdx && i !== idx
+            return (
+              <img
+                key={src}
+                src={src}
+                alt={isCover ? imageAlt : ''}
+                loading={isCover ? loading : 'eager'}
+                aria-hidden={!isCover}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  opacity: (isCurrent || isPrev) ? 1 : 0,
+                  transition: isCurrent
+                    ? 'opacity var(--dur-fast) var(--ease-out-soft)'
+                    : 'none',
+                  zIndex: isCurrent ? 2 : (isPrev ? 1 : 0),
+                  pointerEvents: 'none',
+                }}
+              />
+            )
+          })}
+        </div>
 
-        {/* Badge pill — top-left, on the photo. */}
+        {/* Badge pill: top-left, on the photo. */}
         <span style={{ position: 'absolute', top: 12, left: 12, zIndex: 2, fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', background: '#A0845C', color: '#F2EFE9', padding: '5px 12px', borderRadius: 'var(--radius-pill)' }}>
           {badge}
         </span>
@@ -83,8 +186,10 @@ export default function ListingTile({ href, image, imageAlt, badge, eyebrow, tit
             position: 'absolute', left: 0, right: 0, bottom: 0, zIndex: 1,
             padding: 'clamp(18px, 2.2vw, 26px) clamp(16px, 2vw, 20px) clamp(16px, 2vw, 20px)',
             background: 'linear-gradient(to top, rgba(40,35,28,0.9) 0%, rgba(40,35,28,0.82) 46%, rgba(40,35,28,0.34) 82%, rgba(40,35,28,0) 100%)',
+            transform: lifted ? 'translateY(-10px)' : 'translateY(0)',
             transition: 'transform var(--dur-slow) var(--ease-out-soft)',
             willChange: 'transform',
+            pointerEvents: 'none',
           }}
         >
           {eyebrow && (
@@ -112,7 +217,7 @@ export default function ListingTile({ href, image, imageAlt, badge, eyebrow, tit
 }
 
 /* ------------------------------------------------------------------ */
-/* Favourite heart — top-right, on the photo. Outline by default,      */
+/* Favourite heart: top-right, on the photo. Outline by default,       */
 /* fills gold on tap with a pop. Persists favourited slugs in          */
 /* localStorage so the mark survives navigation/reload. Client-only.   */
 /* Clicking it toggles WITHOUT navigating the card.                    */
@@ -136,13 +241,13 @@ function writeFavourites(list: string[]): void {
   try {
     window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(list))
   } catch {
-    /* private-mode / quota — favouriting is best-effort, never fatal */
+    /* private-mode / quota: favouriting is best-effort, never fatal */
   }
 }
 
 function FavoriteHeart({ slug, title }: { slug: string; title: string }) {
   // Starts false on server + first client render (no localStorage at SSR),
-  // then syncs after mount — no hydration mismatch, just a one-frame settle.
+  // then syncs after mount: no hydration mismatch, just a one-frame settle.
   const [fav, setFav] = useState(false)
 
   useEffect(() => {
@@ -190,7 +295,7 @@ function FavoriteHeart({ slug, title }: { slug: string; title: string }) {
       aria-pressed={fav}
       aria-label={fav ? `Remove ${title} from favourites` : `Add ${title} to favourites`}
       style={{
-        // On the photo (top-right) — a small ink glass disc backs the gold
+        // On the photo (top-right): a small ink glass disc backs the gold
         // heart so it stays legible over any image.
         position: 'absolute',
         top: 10,

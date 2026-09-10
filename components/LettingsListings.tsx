@@ -158,6 +158,7 @@ function PropertyCard({ property }: { property: Property }) {
       href={`/property/${property.slug}`}
       image={property.image}
       imageAlt={`${property.title}, ${property.area}`}
+      images={property.gallery?.map(g => g.src)}
       badge={property.listingType}
       eyebrow={property.area}
       title={property.title}
