@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
         destination: '/let',
         permanent: true,
       },
+      // The Student Lettings page was renamed to Sales (/student-lettings →
+      // /sales). Permanent redirect preserves external links, bookmarks, and
+      // stale search-engine results so they never hit a 404.
+      {
+        source: '/student-lettings',
+        destination: '/sales',
+        permanent: true,
+      },
     ]
   },
 }

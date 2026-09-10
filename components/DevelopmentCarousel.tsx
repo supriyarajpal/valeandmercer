@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Reveal } from '@/components/Reveal'
 import DevelopmentLightbox from '@/components/DevelopmentLightbox'
+import DevelopmentGalleryGrid from '@/components/DevelopmentGalleryGrid'
 
 // Full-width carousel showing ONE image at a time, with prev/next arrows and a
 // position counter (e.g. 7 / 24). Used for BOTH the closing photo gallery and
@@ -25,6 +26,7 @@ export default function DevelopmentCarousel({
 }) {
   const [idx, setIdx] = useState(0)
   const [lightbox, setLightbox] = useState<number | null>(null)
+  const [grid, setGrid] = useState(false)
   const count = images.length
   const multi = count > 1
 
@@ -35,13 +37,13 @@ export default function DevelopmentCarousel({
   useEffect(() => {
     if (!multi) return
     const onKey = (e: KeyboardEvent) => {
-      if (lightbox !== null) return
+      if (lightbox !== null || grid) return
       if (e.key === 'ArrowLeft') prev()
       else if (e.key === 'ArrowRight') next()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [multi, prev, next, lightbox])
+  }, [multi, prev, next, lightbox, grid])
 
   if (count === 0) return null
 
@@ -68,26 +70,112 @@ export default function DevelopmentCarousel({
             <img key={images[idx]} src={images[idx]} alt={`${name}, image ${idx + 1} of ${count}`} style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }} />
           </div>
 
+          {/* Warm the browser cache for the adjacent slides so prev/next feels
+              instant. display:none <img> is still fetched by browsers. */}
+          {multi && (
+            <div aria-hidden style={{ display: 'none' }}>
+              <img src={images[(idx + 1) % count]} alt="" />
+              <img src={images[(idx - 1 + count) % count]} alt="" />
+            </div>
+          )}
+
+          {/* Explicit fullscreen affordance — the whole frame is already
+              click-to-open, but this makes the option discoverable. */}
+          <ExpandButton onClick={e => { e.stopPropagation(); setLightbox(idx) }} />
+
           {multi && (
             <>
               <Arrow dir="prev" onClick={e => { e.stopPropagation(); prev() }} />
               <Arrow dir="next" onClick={e => { e.stopPropagation(); next() }} />
+              {/* Bottom-right cluster: an explicit "View gallery" pill (opens
+                  the thumbnail grid) sitting next to the position counter.
+                  Distinct from the circular fullscreen icon top-right. */}
               <div
-                aria-live="polite"
                 onClick={e => e.stopPropagation()}
-                style={{ position: 'absolute', right: 'clamp(16px, 4vw, 40px)', bottom: 16, zIndex: 2, fontSize: 11, letterSpacing: '0.14em', color: '#F2EFE9', background: 'rgba(40,35,28,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid rgba(242,239,233,0.16)' }}
+                style={{ position: 'absolute', right: 'clamp(16px, 4vw, 40px)', bottom: 16, zIndex: 2, display: 'flex', alignItems: 'center', gap: 10 }}
               >
-                {idx + 1} / {count}
+                <ViewGalleryButton onClick={() => setGrid(true)} />
+                <div
+                  aria-live="polite"
+                  style={{ fontSize: 11, letterSpacing: '0.14em', color: '#F2EFE9', background: 'rgba(40,35,28,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid rgba(242,239,233,0.16)' }}
+                >
+                  {idx + 1} / {count}
+                </div>
               </div>
             </>
           )}
         </div>
       </section>
 
+      {/* Thumbnail-grid overview — reachable only via the "View gallery" pill.
+          Selecting a tile syncs the carousel to that image and opens the shared
+          single-image lightbox at that position. */}
+      {grid && (
+        <DevelopmentGalleryGrid
+          images={images}
+          name={name}
+          onClose={() => setGrid(false)}
+          onSelect={i => { setIdx(i); setGrid(false); setLightbox(i) }}
+        />
+      )}
+
       {lightbox !== null && (
         <DevelopmentLightbox images={images} name={name} startIndex={lightbox} onClose={() => setLightbox(null)} />
       )}
     </>
+  )
+}
+
+function ViewGalleryButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label="View gallery"
+      title="View gallery"
+      className="btn-press"
+      style={{
+        display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer',
+        fontSize: 10, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#F2EFE9',
+        background: 'rgba(40,35,28,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+        padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid rgba(242,239,233,0.16)',
+        transition: 'background var(--dur) var(--ease-apple), border-color var(--dur) var(--ease-apple)',
+      }}
+      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(160,132,92,0.85)'; e.currentTarget.style.borderColor = 'rgba(242,239,233,0.4)' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(40,35,28,0.55)'; e.currentTarget.style.borderColor = 'rgba(242,239,233,0.16)' }}
+    >
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinejoin="round" aria-hidden>
+        <rect x="3" y="3" width="7" height="7" rx="1.4" />
+        <rect x="14" y="3" width="7" height="7" rx="1.4" />
+        <rect x="3" y="14" width="7" height="7" rx="1.4" />
+        <rect x="14" y="14" width="7" height="7" rx="1.4" />
+      </svg>
+      View gallery
+    </button>
+  )
+}
+
+function ExpandButton({ onClick }: { onClick: (e: React.MouseEvent) => void }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label="View fullscreen"
+      title="View fullscreen"
+      className="btn-press"
+      style={{
+        position: 'absolute', top: 'clamp(12px, 3vw, 24px)', right: 'clamp(16px, 4vw, 40px)', zIndex: 2,
+        width: 44, height: 44, borderRadius: '50%', cursor: 'zoom-in',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        color: '#F2EFE9', background: 'rgba(40,35,28,0.5)', border: '1px solid rgba(242,239,233,0.2)',
+        backdropFilter: 'blur(12px) saturate(160%)', WebkitBackdropFilter: 'blur(12px) saturate(160%)',
+        transition: 'background var(--dur) var(--ease-apple), border-color var(--dur) var(--ease-apple)',
+      }}
+      onMouseEnter={e => { e.currentTarget.style.background = 'rgba(160,132,92,0.85)'; e.currentTarget.style.borderColor = 'rgba(242,239,233,0.4)' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(40,35,28,0.5)'; e.currentTarget.style.borderColor = 'rgba(242,239,233,0.2)' }}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5" />
+      </svg>
+    </button>
   )
 }
 

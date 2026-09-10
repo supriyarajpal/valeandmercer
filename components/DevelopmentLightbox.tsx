@@ -103,7 +103,9 @@ export default function DevelopmentLightbox({
         <IconButton label="Close gallery" onClick={onClose}><CloseIcon /></IconButton>
       </div>
 
-      {/* Image stage */}
+      {/* Image stage — the photo renders at its native aspect ratio (contain),
+          centered, with no blurred/scaled backdrop or side filler of any kind.
+          The sides are just the overlay's own dark backdrop. */}
       <figure
         onClick={e => e.stopPropagation()}
         style={{ margin: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(48px, 8vh, 96px) clamp(56px, 10vw, 120px)' }}

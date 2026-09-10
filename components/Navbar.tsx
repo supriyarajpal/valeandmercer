@@ -17,7 +17,7 @@ const links = [
   { label: 'Instant Valuation', href: '/instant-valuation' },
 ]
 
-const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/student-lettings']
+const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/sales']
 // Dynamic-route path prefixes whose pages render a dark hero band up
 // against the navbar. Kept as a small array so future routes can be
 // added by prefix rather than needing a one-off `pathname === '/foo'`

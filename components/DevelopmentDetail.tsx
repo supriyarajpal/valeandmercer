@@ -4,12 +4,13 @@ import { Reveal } from '@/components/Reveal'
 import DevelopmentHeroMedia from '@/components/DevelopmentHeroMedia'
 import DevelopmentStory from '@/components/DevelopmentStory'
 import DevelopmentCarousel from '@/components/DevelopmentCarousel'
+import DevelopmentGalleryButton from '@/components/DevelopmentGalleryButton'
 import DevelopmentEnquiryActions from '@/components/DevelopmentEnquiryActions'
 import { DevelopmentCard, type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { submitToWeb3Forms } from '@/lib/web3forms'
-import type { Development, UnitMixRow, SpecSection } from '@/lib/developments'
+import type { Development, SpecSection } from '@/lib/developments'
 import type { DevelopmentAssets } from '@/lib/developmentAssets'
-import { SUPPRESS_UNITMIX, SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
+import { SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
 
 // Single-column development detail page. Enquiry is a full-width section in the
 // main flow (no sticky side card). The page title is the address-based title
@@ -30,8 +31,6 @@ export default function DevelopmentDetail({
   const d = development
   const hasStation = !!(d.nearestStation && d.nearestStation.name)
   const hasLocation = !!(d.locationNotes || hasStation)
-  const suppressUnitMix = SUPPRESS_UNITMIX.has(d.slug)
-  const showUnitMix = !suppressUnitMix && Array.isArray(d.unitMix) && d.unitMix.length > 0
 
   return (
     <main style={{ background: 'var(--surface)', paddingBottom: 'var(--section-y)' }}>
@@ -40,11 +39,12 @@ export default function DevelopmentDetail({
           Title / description / key facts all appear below, on scroll. */}
       <DevelopmentHeroMedia videoSrc={videoSrc} image={assets.images[0]} alt={title} title={title} />
 
-      {/* 2 — Gallery: full-width one-image-at-a-time carousel, immediately after
-          the hero. /let-matched sizing (blurred backfill + fully-visible
-          contain), reusing the shared lightbox. */}
+      {/* 2 — Gallery entry point: no inline preview or carousel in the page
+          flow — just a "View gallery" button that opens the shared full-screen
+          lightbox with every image. (The old inline single-image carousel with
+          arrows / counter / blurred side backdrop was removed.) */}
       {assets.images.length > 0 && (
-        <DevelopmentCarousel images={assets.images} name={title} />
+        <DevelopmentGalleryButton images={assets.images} name={title} />
       )}
 
       <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 var(--gutter)' }}>
@@ -64,25 +64,6 @@ export default function DevelopmentDetail({
 
         {/* 3 — Description: plain flowing text, no images mixed in. */}
         <DevelopmentStory headline={d.headline} text={d.description} />
-
-        {/* 4 — Key facts: unit mix + size */}
-        {(showUnitMix || suppressUnitMix || d.sizeRange) && (
-          <Section eyebrow="Key facts" title="Unit mix & sizes">
-            {suppressUnitMix ? (
-              d.totalUnits != null && (
-                <p style={{ fontSize: 16, color: 'var(--text)' }}><strong style={{ fontWeight: 500 }}>{`${d.totalUnits} apartments`}</strong></p>
-              )
-            ) : (
-              showUnitMix && <UnitMixGrid rows={d.unitMix as UnitMixRow[]} />
-            )}
-            {d.sizeRange && (
-              <p style={{ fontSize: 14, color: 'var(--text-muted)', marginTop: showUnitMix || suppressUnitMix ? 20 : 0 }}>
-                <span style={{ letterSpacing: '0.14em', textTransform: 'uppercase', fontSize: 11, color: 'var(--text-faint)', marginRight: 12 }}>Size range</span>
-                {d.sizeRange}
-              </p>
-            )}
-          </Section>
-        )}
 
         {/* 6 — Collapsible property information (developer NOT rendered) */}
         <PropertyInformation development={d} />
@@ -210,35 +191,6 @@ function EnquirySection({ name, price }: { name: string; price?: string }) {
       {/* Stack the panel's two columns on narrow screens. */}
       <style>{`@media (max-width: 720px){ .vm-enquiry-panel { grid-template-columns: 1fr !important; } }`}</style>
     </Reveal>
-  )
-}
-
-/* ------------------------------------------------------------------ */
-/* 5 — Unit-mix grid                                                   */
-/* ------------------------------------------------------------------ */
-
-function UnitMixGrid({ rows }: { rows: UnitMixRow[] }) {
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-      {rows.map((row, i) => {
-        const unit = row.unit != null ? String(row.unit) : null
-        const count = row.count != null ? Number(row.count) : null
-        const primary = row.type ?? (unit != null ? `Unit ${unit}` : (row.size ?? '—'))
-        const meta: string[] = []
-        if (count != null && !Number.isNaN(count)) meta.push(`${count} ${count === 1 ? 'home' : 'homes'}`)
-        if (row.size && row.size !== primary) meta.push(String(row.size))
-        if (row.price) meta.push(String(row.price))
-        if (unit != null && row.type) meta.push(`Unit ${unit}`)
-        return (
-          <div key={i} style={{ background: 'var(--surface-2)', padding: '16px 18px' }}>
-            <div style={{ fontFamily: 'var(--font-serif)', fontSize: 17, color: 'var(--text)', letterSpacing: '-0.01em' }}>{primary}</div>
-            {meta.length > 0 && (
-              <div style={{ fontSize: 11, letterSpacing: '0.04em', color: 'var(--text-muted)', marginTop: 5, lineHeight: 1.6 }}>{meta.join(' · ')}</div>
-            )}
-          </div>
-        )
-      })}
-    </div>
   )
 }
 

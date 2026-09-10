@@ -29,11 +29,12 @@ export default function DevelopmentHeroMedia({ videoSrc, image, alt, title }: { 
         <img src={image} alt={alt} style={media} />
       ) : null}
 
-      {/* Small street-address title, bottom-left, on every property WITH a video.
-          A subtle scrim confined to just this corner (radial, fading out well
-          before mid-frame) lends contrast without dimming the video itself. The
-          body <h1> remains the semantic title; this is a visual label. */}
-      {videoSrc && title && (
+      {/* Small street-address title, bottom-left, on every property — whether the
+          hero is a video or a static image. A subtle scrim confined to just this
+          corner (radial, fading out well before mid-frame) lends contrast without
+          dimming the media itself. The body <h1> remains the semantic title; this
+          is a visual label. */}
+      {title && (image || videoSrc) && (
         <>
           <div aria-hidden style={{ position: 'absolute', left: 0, bottom: 0, width: 'min(64%, 660px)', height: 'min(46%, 380px)', zIndex: 1, pointerEvents: 'none', background: 'radial-gradient(115% 115% at 0% 100%, rgba(20,17,14,0.55) 0%, rgba(20,17,14,0.22) 34%, rgba(20,17,14,0) 68%)' }} />
           <div style={{ position: 'absolute', left: 'clamp(20px, 4vw, 48px)', bottom: 'clamp(20px, 4vh, 44px)', zIndex: 2, maxWidth: 'min(80%, 620px)' }}>

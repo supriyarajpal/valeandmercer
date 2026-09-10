@@ -221,6 +221,71 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
 }
 
+/* ── Accreditations marquee (homepage trust strip) ──────────────────────
+   A seamless, constant-speed right-to-left logo marquee. The track holds
+   TWO identical copies of the logo set and animates translateX(0 → -50%)
+   with LINEAR timing, so copy 2 lands exactly where copy 1 began — the loop
+   has no seam and no easing (steady speed, no acceleration). Logos are
+   desaturated, softened and multiplied onto the cream band so they sit
+   quietly rather than reading as a colour logo wall; the multiply also drops
+   the white logo backgrounds so nothing shows as a white box. Hovering one
+   logo crossfades it back to true colour (site easing); hovering the strip
+   pauses the scroll. prefers-reduced-motion collapses to a static, centred,
+   wrapping row with no auto-scroll. */
+.acc-marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background: #EFECE6; /* cream backdrop the logos blend (multiply) into */
+}
+.acc-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  /* Same cream as the marquee, so the logos' multiply blend always has a
+     cream backdrop within this (transformed) element's own paint group. */
+  background: #EFECE6;
+  animation: acc-scroll 50s linear infinite;
+  will-change: transform;
+}
+.acc-marquee:hover .acc-track {
+  animation-play-state: paused;
+}
+@keyframes acc-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.acc-item {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  /* Uniform trailing space on EVERY item (not flex `gap`) keeps the two
+     halves identical, which is what makes the -50% translate seamless. */
+  margin-right: 64px;
+}
+.acc-logo {
+  filter: grayscale(1);
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+  transition: filter 0.7s var(--ease-out-soft), opacity 0.7s var(--ease-out-soft);
+}
+.acc-logo:hover {
+  filter: grayscale(0);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .acc-track {
+    animation: none;
+    transform: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px 48px;
+  }
+  .acc-item { margin-right: 0; }
+  .acc-item[data-dup='true'] { display: none; }
+}
+
 /* Link underline-from-left micro-interaction */
 .link-underline {
   position: relative;

@@ -170,7 +170,7 @@ export default function GetInTouch() {
                       <option>Renting a property</option>
                       <option>Selling my property</option>
                       <option>A valuation</option>
-                      <option>Student lettings</option>
+                      <option>Sales</option>
                     </select>
                   </StaggerItem>
                   <StaggerItem>

@@ -8,9 +8,9 @@ import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 const SITE_URL = 'https://valeandmercer.co.uk'
 
 export const metadata: Metadata = {
-  title: 'Student Lettings in London',
+  title: 'Sales in London',
   description: 'Student lettings in Canary Wharf and East London. Vale and Mercer helps students find well-located, furnished rental properties with straightforward referencing and guarantor support.',
-  alternates: { canonical: '/student-lettings' },
+  alternates: { canonical: '/sales' },
 }
 
 const breadcrumb = {
@@ -18,7 +18,7 @@ const breadcrumb = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
-    { '@type': 'ListItem', position: 2, name: 'Student Lettings', item: SITE_URL + '/student-lettings' },
+    { '@type': 'ListItem', position: 2, name: 'Sales', item: SITE_URL + '/sales' },
   ],
 }
 
@@ -41,7 +41,7 @@ const services = [
   },
 ]
 
-export default function StudentLettingsPage() {
+export default function SalesPage() {
   return (
     <>
       <script
@@ -52,12 +52,12 @@ export default function StudentLettingsPage() {
       <Navbar />
       <main>
         <PageHero
-          eyebrow="Student Lettings"
+          eyebrow="Sales"
           image="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=2000&q=85"
           imageAlt="Canary Wharf skyline at dusk"
         >
           <h1 style={{ color: '#F2EFE9', marginBottom: 26, fontSize: 'clamp(36px, 5.6vw, 68px)', textShadow: '0 4px 24px rgba(52,48,43,0.5)' }}>
-            <HeroLine text="Student lettings" delay={1.05} />
+            <HeroLine text="Sales" delay={1.05} />
             <HeroLine text="done without" delay={1.18} />
             <HeroLine text="the runaround." delay={1.31} italic gold />
           </h1>

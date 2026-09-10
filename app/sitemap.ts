@@ -29,7 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: SITE_URL + '/valuations', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: SITE_URL + '/fees',       lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: SITE_URL + '/register',          lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: SITE_URL + '/student-lettings', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: SITE_URL + '/sales', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: SITE_URL + '/blog',       lastModified: now, changeFrequency: 'weekly',  priority: 0.7 },
     { url: SITE_URL + '/privacy',    lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
     { url: SITE_URL + '/cookies',    lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },

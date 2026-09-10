@@ -7,7 +7,7 @@ const EASE = [0.22, 1, 0.36, 1] as const
 
 const navItems = [
   { label: 'Lettings',         href: '/let' },
-  { label: 'Student Lettings', href: '/student-lettings' },
+  { label: 'Sales',            href: '/sales' },
   { label: 'New Homes',        href: '/buy' },
   { label: 'About',            href: '/about' },
   { label: 'Blog',             href: '/blog' },
@@ -22,10 +22,6 @@ const legalItems = [
   { label: 'Terms of Use', href: '/terms' },
 ]
 
-const certificateItems = [
-  { label: 'Certificate 1', href: '/certificates/certificate-vm-1.pdf' },
-  { label: 'Certificate 2', href: '/certificates/certificate-vm-2.pdf' },
-]
 
 const linkStyle: React.CSSProperties = {
   fontSize: 11,
@@ -81,10 +77,10 @@ export default function Footer() {
             </StaggerItem>
             <StaggerItem>
               <div style={{ borderTop: '0.5px solid rgba(242,239,233,0.08)', paddingTop: 16 }}>
-                {/* Accreditation badges sit side by side on one row. Both use
-                    the same white plate + 8px/12px padding and the same 28px
-                    logo height so they read as a matched pair regardless of
-                    each logo's own aspect ratio. */}
+                {/* Accreditation + portal badges sit side by side on one
+                    wrapping row. Each uses the same white plate treatment,
+                    padded so every plate is 44px tall regardless of its logo's
+                    own aspect ratio, so they read as one matched set. */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 18, flexWrap: 'wrap', marginBottom: 10 }}>
                   <a href="https://www.propertyredress.co.uk" target="_blank" rel="noreferrer" style={{ display: 'inline-flex' }}>
                     <div style={{ background: '#fff', padding: '8px 12px', display: 'inline-flex', alignItems: 'center' }}>
@@ -120,6 +116,50 @@ export default function Footer() {
                       style={{ height: 32, width: 'auto', display: 'block' }}
                     />
                   </div>
+                  {/* Portal partners. Same 44px-tall white plate + 11px/14px
+                      padding as the arla badge (both are wide wordmarks), so
+                      they sit as a matched pair alongside the accreditations. */}
+                  <div style={{ background: '#fff', padding: '11px 14px', display: 'inline-flex', alignItems: 'center' }}>
+                    <img
+                      src="/images/zoopla.jpeg"
+                      alt="Zoopla"
+                      style={{ height: 22, width: 'auto', display: 'block' }}
+                    />
+                  </div>
+                  <div style={{ background: '#fff', padding: '11px 14px', display: 'inline-flex', alignItems: 'center' }}>
+                    <img
+                      src="/images/onthemarket.jpeg"
+                      alt="OnTheMarket"
+                      style={{ height: 22, width: 'auto', display: 'block' }}
+                    />
+                  </div>
+                </div>
+                {/* Two propertymark certificates. Both carry their own green
+                    background, so they sit directly on the footer (no white
+                    plate) and are matched to the same 44px height as the three
+                    badge plates above, so the whole block reads as one
+                    symmetric set. Certificate 1 (Certified & Accredited) is
+                    display-only; the CMP certificate links to its PDF. */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap', marginBottom: 14 }}>
+                  <img
+                    src="/images/certificate-1.png"
+                    alt="Certified and accredited by Propertymark"
+                    style={{ height: 44, width: 'auto', display: 'block', borderRadius: 3 }}
+                  />
+                  <a
+                    href="/certificates/certificate-vm-1.pdf"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Propertymark Client Money Protection — view certificate"
+                    title="View Client Money Protection certificate"
+                    style={{ display: 'inline-flex' }}
+                  >
+                    <img
+                      src="/images/certificate-3.png"
+                      alt="Propertymark Client Money Protection (CMP)"
+                      style={{ height: 44, width: 'auto', display: 'block', borderRadius: 3 }}
+                    />
+                  </a>
                 </div>
                 <p style={{ fontSize: 10, color: 'rgba(242,239,233,0.25)', lineHeight: 1.8 }}>
                   Member of Property Redress Scheme<br />
@@ -180,11 +220,6 @@ export default function Footer() {
             <Link key={item.label} href={item.href} className="link-underline" style={legalLinkStyle}>
               {item.label}
             </Link>
-          ))}
-          {certificateItems.map(item => (
-            <a key={item.label} href={item.href} target="_blank" rel="noreferrer" className="link-underline" style={legalLinkStyle}>
-              {item.label}
-            </a>
           ))}
         </div>
       </div>

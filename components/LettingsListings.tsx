@@ -48,7 +48,7 @@ export default function LettingsListings() {
 
   // Top padding uses the standard var(--section-y) so the hero → listings
   // transition matches every other section-after-hero on the site (/sell,
-  // /student-lettings, homepage featured). Previously padding-top was 0 —
+  // /sales, homepage featured). Previously padding-top was 0 —
   // correct when this block followed the landlord section, but it left an
   // inconsistent rhythm once the listings were moved directly under the hero.
   return (
