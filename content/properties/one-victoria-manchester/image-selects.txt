@@ -1,0 +1,18 @@
+# image-selects.tx, ne-victoria-manchester (curated)
+# Order: exterior -> roof garden/lobby (communal) -> living -> kitchen ->
+# bedroom -> bathroom -> floor plans (last).
+# Dropped: blanks (1,23), area/skyline/airport stock (4,5,7,9,10,21),
+# dark bar (6), abstract (8), site-plan diagram (17).
+number7.png
+2.png
+3.png
+16.png
+11.png
+12.png
+22.png
+13.png
+14.png
+15.png
+18.png
+19.png
+20.png

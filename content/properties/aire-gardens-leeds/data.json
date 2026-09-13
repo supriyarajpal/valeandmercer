@@ -11,7 +11,10 @@
   "totalUnits": 98,
   "sizeRange": "431–793 sq ft",
   "unitMix": [
-    { "type": "1 bedroom", "size": "431–793 sq ft" }
+    {
+      "type": "1 bedroom",
+      "size": "431–793 sq ft"
+    }
   ],
   "paymentStructure": "20/80 payment structure",
   "headline": "A collection of design-led city apartments in a rare park-side setting",
@@ -80,7 +83,9 @@
       ]
     }
   ],
-  "nearestStation": { "name": "Leeds Train Station" },
+  "nearestStation": {
+    "name": "Leeds Train Station"
+  },
   "locationNotes": "Nestled between Aire Park and the South Bank regeneration district. Leeds Train Station is a short walk away, and the city's financial district, retail core, dining scene and cultural venues are all within easy walking distance. By rail from Leeds: London 1hr 59min, Manchester 47min, Liverpool 1hr 25min, Newcastle 1hr 25min, Birmingham 1hr 58min, Edinburgh 2hr 50min.",
   "floorplans": [
     "/images/developments/aire-gardens-leeds/floorplans/floorplan-1.png",
@@ -88,6 +93,7 @@
     "/images/developments/aire-gardens-leeds/floorplans/floorplan-3.png"
   ],
   "gallery": [
+    "/images/developments/aire-gardens-leeds/number1.png",
     "/images/developments/aire-gardens-leeds/1.jpg",
     "/images/developments/aire-gardens-leeds/4.jpg",
     "/images/developments/aire-gardens-leeds/5.jpg",

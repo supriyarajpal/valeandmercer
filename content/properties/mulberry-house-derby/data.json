@@ -11,11 +11,31 @@
   "completion": "Complete",
   "totalUnits": 94,
   "unitMix": [
-    { "type": "Studio", "count": 19, "size": "355–431 sq ft" },
-    { "type": "1 bed", "count": 54, "size": "420–549 sq ft" },
-    { "type": "1 bed + study", "count": 3, "size": "667 sq ft" },
-    { "type": "2 bed", "count": 13, "size": "667–779 sq ft" },
-    { "type": "3 bed", "count": 5, "size": "947–1012 sq ft" }
+    {
+      "type": "Studio",
+      "count": 19,
+      "size": "355–431 sq ft"
+    },
+    {
+      "type": "1 bed",
+      "count": 54,
+      "size": "420–549 sq ft"
+    },
+    {
+      "type": "1 bed + study",
+      "count": 3,
+      "size": "667 sq ft"
+    },
+    {
+      "type": "2 bed",
+      "count": 13,
+      "size": "667–779 sq ft"
+    },
+    {
+      "type": "3 bed",
+      "count": 5,
+      "size": "947–1012 sq ft"
+    }
   ],
   "warranty": "Full warranty with EWS1 certification",
   "headline": "Made in Derby",
@@ -49,13 +69,16 @@
       ]
     }
   ],
-  "nearestStation": { "name": "Derby train station" },
+  "nearestStation": {
+    "name": "Derby train station"
+  },
   "locationNotes": "Nestled between Derby train station and Castleward Park, a short stroll from the River Derwent. Walking times: Derbion shopping centre 1 min; Bustler Market 3 min; Derby Theatre 6 min; Showcase Cinema de Lux 6 min. By train from Derby: Nottingham 22 min, Leicester 20 min, Birmingham 34 min, Leeds 77 min, London St Pancras 87 min, Manchester 92 min. East Midlands Airport is under 30 minutes away by road.",
   "floorplans": [
     "/images/developments/mulberry-house-derby/floorplans/floorplan-1.png",
     "/images/developments/mulberry-house-derby/floorplans/floorplan-2.png"
   ],
   "gallery": [
+    "/images/developments/mulberry-house-derby/number6.png",
     "/images/developments/mulberry-house-derby/1.jpg",
     "/images/developments/mulberry-house-derby/2.jpg",
     "/images/developments/mulberry-house-derby/3.jpg",

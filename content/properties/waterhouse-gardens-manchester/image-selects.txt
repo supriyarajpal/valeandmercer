@@ -1,0 +1,30 @@
+# image-selects.tx, aterhouse-gardens-manchester
+#
+# NOTE: this development's live gallery was NOT built from the brochure
+# extraction (extracted-images/). It was published from a hand-curated set of
+# show-apartment photographs supplied separately, kept in ./source-photos/.
+#
+# Published on 2026-08-10 via:
+#   python3 scripts/gallery_publish.py \
+#     content/properties/waterhouse-gardens-manchester/data.json \
+#     public/images/developments/waterhouse-gardens-manchester \
+#     /images/developments/waterhouse-gardens-manchester \
+#     <the source-photos/ files below, in this order>
+#
+# Order follows the site convention: living -> kitchen -> bedroom -> bathroom.
+# Left column = published number (1.jpg..13.jpg); right = source-photos/ file.
+#
+# 1  <- 11.jpeg   living / dining, window
+# 2  <- 9.jpeg    living, sofa + TV
+# 3  <- 14.jpeg   living, burgundy accent + green sofa
+# 4  <- 12.jpeg   open-plan living
+# 5  <- 7.jpeg    kitchen + dining
+# 6  <- 10.jpeg   kitchen + dining (alt angle)
+# 7  <- 8.jpeg    kitchen
+# 8  <- 3.jpeg    principal bedroom
+# 9  <- 4.jpeg    principal bedroom (alt)
+# 10 <- 2.jpeg    bedroom (close)
+# 11 <- 6.jpeg    second bedroom / studio
+# 12 <- 5.jpeg    shower room
+# 13 <- WhatsApp Image 2026-08-07 at 23.03.56.jpeg   bathroom (bath)
+number10.jpeg

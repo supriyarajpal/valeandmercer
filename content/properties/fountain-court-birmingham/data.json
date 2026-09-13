@@ -9,9 +9,21 @@
   "developer": "Elevate Property Group",
   "totalUnits": 70,
   "unitMix": [
-    { "type": "Studio", "count": 8, "size": "535 sq ft" },
-    { "type": "1 bed", "count": 40, "size": "420–584 sq ft" },
-    { "type": "2 bed", "count": 22, "size": "686–935 sq ft" }
+    {
+      "type": "Studio",
+      "count": 8,
+      "size": "535 sq ft"
+    },
+    {
+      "type": "1 bed",
+      "count": 40,
+      "size": "420–584 sq ft"
+    },
+    {
+      "type": "2 bed",
+      "count": 22,
+      "size": "686–935 sq ft"
+    }
   ],
   "headline": "Former Barristers' chambers, steeped in the traditions of the judiciary",
   "description": "Fountain Court is a collection of 70 period-style courtyard apartments — 8 studios, 40 one-beds and 22 two-beds — created within former Barristers' chambers in Birmingham's Steelhouse Lane Conservation Area. Designed in 1963–64 by Holland W Hobbiss & Partners and built in the classical 'Inns of Court' block courtyard style, the building exhibits regal architecture with a majestic Bath-stone cornice and well-preserved period grandeur across five floors, arranged around a central courtyard with terraces, in the Snow Hill and Colmore Business Districts.",
@@ -43,7 +55,10 @@
       ]
     }
   ],
-  "nearestStation": { "name": "Snow Hill Station", "time": "4 min walk" },
+  "nearestStation": {
+    "name": "Snow Hill Station",
+    "time": "4 min walk"
+  },
   "locationNotes": "Aston University: 3 min walk; Snow Hill Station: 4 min walk; Colmore Business District: 4 min walk; HS2 / Curzon Street: 4 min walk; Gun Quarter: 7 min walk; Moor St Station: 8 min walk; Jewellery Quarter: 10 min walk; New Street Station: 12 min walk; Retail (Bullring): 12 min walk.",
   "floorplans": [
     "/images/developments/fountain-court-birmingham/floorplans/floorplan-1.png",
@@ -53,6 +68,7 @@
     "/images/developments/fountain-court-birmingham/floorplans/floorplan-5.png"
   ],
   "gallery": [
+    "/images/developments/fountain-court-birmingham/number4.png",
     "/images/developments/fountain-court-birmingham/1.jpg",
     "/images/developments/fountain-court-birmingham/2.jpg",
     "/images/developments/fountain-court-birmingham/3.jpg",

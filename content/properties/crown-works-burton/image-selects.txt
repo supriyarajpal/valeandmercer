@@ -1,0 +1,17 @@
+# image-selects.tx, rown-works-burton (curated)
+# Order: exterior/communal -> living -> kitchen -> dining -> study -> bedroom.
+# Dropped: blanks (1,16,17), heritage/area B&W (4,5,18,19,26), brewing/venue
+# (22,23,27,28), landmarks (24,25), map (29), lifestyle people (20,21), and
+# near-duplicate living rooms (2,10,31).
+number2.png
+11.png
+3.png
+30.png
+15.png
+6.png
+8.png
+7.png
+14.png
+13.png
+9.png
+12.png

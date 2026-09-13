@@ -1,0 +1,28 @@
+# image-selects.tx, ire-gardens-leeds
+# One approved image per line, in DISPLAY ORDER.
+# Convention: communal -> living -> kitchen -> bedroom -> bathroom -> floor plan LAST.
+# Delete the lines you don't want; reorder the rest. Blank lines and #comments are ignored.
+# Filenames are relative to extracted-images/. Then run: scripts/publish-gallery.sh aire-gardens-leeds
+
+number1.png
+1.png
+2.png
+3.png
+4.png
+5.png
+6.png
+7.png
+8.png
+9.png
+10.png
+11.png
+12.png
+13.png
+14.png
+15.png
+16.png
+17.png
+18.png
+19.png
+20.png
+21.png

@@ -11,9 +11,21 @@
   "completion": "March 2026 (target practical completion; phased handovers)",
   "totalUnits": 34,
   "unitMix": [
-    { "type": "1-Bedroom", "count": 10, "price": "From £282,316" },
-    { "type": "2-Bedroom", "count": 23, "price": "From £403,670" },
-    { "type": "3-Bedroom", "count": 1, "price": "£500,000" }
+    {
+      "type": "1-Bedroom",
+      "count": 10,
+      "price": "From £282,316"
+    },
+    {
+      "type": "2-Bedroom",
+      "count": 23,
+      "price": "From £403,670"
+    },
+    {
+      "type": "3-Bedroom",
+      "count": 1,
+      "price": "£500,000"
+    }
   ],
   "paymentStructure": "£5,000 reservation fee, followed by a 10% deposit. The remaining balance is due on completion.",
   "warranty": "10-year new build warranty (Advantage)",
@@ -73,7 +85,11 @@
       ]
     }
   ],
-  "nearestStation": { "name": "Staines Station", "distance": "0.4 miles", "time": "8 min walk" },
+  "nearestStation": {
+    "name": "Staines Station",
+    "distance": "0.4 miles",
+    "time": "8 min walk"
+  },
   "locationNotes": "Nestled in the heart of Staines-upon-Thames on London Road, linking to the town centre, Staines Station and the River Thames. Within 0.4 miles of Staines Station (direct trains to London Waterloo in approx. 35 minutes), 0.6 miles of Elmsleigh & Two Rivers shopping centres, and 0.7 miles from the River Thames. Quick access to the M25 (Junction 13), A30 and A308. Heathrow Airport is 4.6 miles away (around 12 minutes by car).",
   "floorplans": [
     "/images/developments/elizabeth-house-staines/floorplans/floorplan-1.png",
@@ -83,6 +99,7 @@
     "/images/developments/elizabeth-house-staines/floorplans/floorplan-5.png"
   ],
   "gallery": [
+    "/images/developments/elizabeth-house-staines/number3.png",
     "/images/developments/elizabeth-house-staines/1.jpg",
     "/images/developments/elizabeth-house-staines/2.jpg",
     "/images/developments/elizabeth-house-staines/4.jpg",
