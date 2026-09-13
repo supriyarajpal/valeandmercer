@@ -117,23 +117,6 @@ export default function Footer() {
                       style={{ height: 32, width: 'auto', display: 'block' }}
                     />
                   </div>
-                  {/* Portal partners. Same 44px-tall white plate + 11px/14px
-                      padding as the arla badge (both are wide wordmarks), so
-                      they sit as a matched pair alongside the accreditations. */}
-                  <div style={{ background: '#fff', padding: '11px 14px', display: 'inline-flex', alignItems: 'center' }}>
-                    <img
-                      src={LOGO_FALLBACKS.zoopla}
-                      alt="Zoopla"
-                      style={{ height: 22, width: 'auto', display: 'block' }}
-                    />
-                  </div>
-                  <div style={{ background: '#fff', padding: '11px 14px', display: 'inline-flex', alignItems: 'center' }}>
-                    <img
-                      src={LOGO_FALLBACKS.onthemarket}
-                      alt="OnTheMarket"
-                      style={{ height: 22, width: 'auto', display: 'block' }}
-                    />
-                  </div>
                 </div>
                 {/* Two propertymark certificates. Both carry their own green
                     background, so they sit directly on the footer (no white
