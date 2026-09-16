@@ -1,5 +1,6 @@
 'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { getImageLabel } from '@/lib/imageLabels'
 
 // Full-screen gallery lightbox for the /buy development pages. Opened from the
 // interleaved gallery's "View all" control (or by clicking a tile). Provides
@@ -106,17 +107,57 @@ export default function DevelopmentLightbox({
       {/* Image stage — the photo renders at its native aspect ratio (contain),
           centered, with no blurred/scaled backdrop or side filler of any kind.
           The sides are just the overlay's own dark backdrop. */}
-      <figure
-        onClick={e => e.stopPropagation()}
-        style={{ margin: 0, width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(48px, 8vh, 96px) clamp(56px, 10vw, 120px)' }}
-      >
-        <img
-          key={images[idx]}
-          src={images[idx]}
-          alt={`${name}, image ${idx + 1} of ${count}`}
-          style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', borderRadius: 4 }}
-        />
-      </figure>
+      {(() => {
+        const roomLabel = getImageLabel(images[idx])
+        return (
+          <figure
+            onClick={e => e.stopPropagation()}
+            style={{
+              position: 'relative',
+              margin: 0,
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: 'clamp(48px, 8vh, 96px) clamp(56px, 10vw, 120px)',
+            }}
+          >
+            <div style={{ position: 'relative', maxWidth: '100%', maxHeight: '100%', display: 'inline-flex' }}>
+              <img
+                key={images[idx]}
+                src={images[idx]}
+                alt={`${name}, image ${idx + 1} of ${count}`}
+                style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', borderRadius: 4 }}
+              />
+              {roomLabel && (
+                <span
+                  style={{
+                    position: 'absolute',
+                    bottom: 14,
+                    right: 14,
+                    zIndex: 3,
+                    fontSize: 11,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    background: 'rgba(24,21,17,0.78)',
+                    color: '#F2EFE9',
+                    padding: '5px 12px',
+                    borderRadius: 'var(--radius-pill)',
+                    border: '1px solid rgba(242,239,233,0.2)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
+                    pointerEvents: 'none',
+                  }}
+                >
+                  {roomLabel}
+                </span>
+              )}
+            </div>
+          </figure>
+        )
+      })()}
 
       {multi && (
         <>

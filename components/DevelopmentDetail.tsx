@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { Reveal } from '@/components/Reveal'
-import DevelopmentHeroMedia from '@/components/DevelopmentHeroMedia'
+import DevelopmentHeroSlideshow from '@/components/DevelopmentHeroSlideshow'
 import DevelopmentStory from '@/components/DevelopmentStory'
 import DevelopmentCarousel from '@/components/DevelopmentCarousel'
 import DevelopmentGalleryButton from '@/components/DevelopmentGalleryButton'
@@ -11,6 +11,7 @@ import { submitToWeb3Forms } from '@/lib/web3forms'
 import type { Development, SpecSection } from '@/lib/developments'
 import type { DevelopmentAssets } from '@/lib/developmentAssets'
 import { SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
+import { getHeroSlideImages, getHeroStreetName, getHeroPricingLines } from '@/lib/developmentHeroData'
 
 // Single-column development detail page. Enquiry is a full-width section in the
 // main flow (no sticky side card). The page title is the address-based title
@@ -20,24 +21,43 @@ import { SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
 // intentionally not rendered anywhere (value stays in data.json).
 
 export default function DevelopmentDetail({
-  development, title, assets, similar, videoSrc,
+  development,
+  title,
+  assets,
+  similar,
+  videoSrc,
+  heroSlides,
+  heroTitleLeft,
+  heroPricingLines,
 }: {
   development: Development
   title: string
   assets: DevelopmentAssets
   similar: DevelopmentCardData[]
   videoSrc?: string | null
+  heroSlides?: string[]
+  heroTitleLeft?: string
+  heroPricingLines?: string[]
 }) {
   const d = development
   const hasStation = !!(d.nearestStation && d.nearestStation.name)
   const hasLocation = !!(d.locationNotes || hasStation)
 
+  const slides = heroSlides && heroSlides.length > 0 ? heroSlides : getHeroSlideImages(d.slug, assets.images)
+  const leftTitle = heroTitleLeft || getHeroStreetName(d.slug, d)
+  const pricing = heroPricingLines && heroPricingLines.length > 0 ? heroPricingLines : getHeroPricingLines(d.slug, d)
+
   return (
     <main style={{ background: 'var(--surface)', paddingBottom: 'var(--section-y)' }}>
-      {/* 1 — Full-bleed hero: the video (or, with no video, a static image) fills
-          the whole viewport — no overlay text, no controls, no header content.
-          Title / description / key facts all appear below, on scroll. */}
-      <DevelopmentHeroMedia videoSrc={videoSrc} image={assets.images[0]} alt={title} title={title} />
+      {/* 1 — Full-bleed hero slideshow: auto-advancing photos crossfading every ~4-5s
+          on a continuous loop with two-sided overlay:
+          Left: Street name (or city exception). Right: Starting prices / register interest. */}
+      <DevelopmentHeroSlideshow
+        images={slides}
+        alt={title}
+        titleLeft={leftTitle}
+        pricingLines={pricing}
+      />
 
       {/* 2 — Gallery entry point: no inline preview or carousel in the page
           flow — just a "View gallery" button that opens the shared full-screen

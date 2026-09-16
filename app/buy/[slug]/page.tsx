@@ -10,6 +10,7 @@ import { SUPPRESS_UNITMIX, SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
 import { developments, getDevelopmentBySlug } from '@/lib/developments'
 import { getDevelopmentAssets, developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
 import { developmentIsPublished, developmentTitle, developmentHeading, developmentUnitTypes } from '@/lib/developmentTitle'
+import { getHeroSlideImages, getHeroStreetName, getHeroPricingLines } from '@/lib/developmentHeroData'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
@@ -105,6 +106,7 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
   const safeDev = {
     ...dev,
     developer: undefined,
+    name: undefined,
     ...(SUPPRESS_UNITMIX.has(slug) ? { unitMix: undefined } : {}),
     // Completion date is disputed across this development's documents: hide it
     // from the payload too (see SUPPRESS_COMPLETION for the conflicting values).
@@ -121,6 +123,10 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
     ],
   }
 
+  const heroSlides = getHeroSlideImages(slug, assets.images)
+  const heroTitleLeft = getHeroStreetName(slug, dev)
+  const heroPricingLines = getHeroPricingLines(slug, dev)
+
   return (
     <>
       <script
@@ -129,7 +135,16 @@ export default async function DevelopmentPage({ params }: { params: Promise<{ sl
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
       <Navbar />
-      <DevelopmentDetail development={safeDev} title={title} assets={assets} similar={similar} videoSrc={videoSrc} />
+      <DevelopmentDetail
+        development={safeDev}
+        title={title}
+        assets={assets}
+        similar={similar}
+        videoSrc={videoSrc}
+        heroSlides={heroSlides}
+        heroTitleLeft={heroTitleLeft}
+        heroPricingLines={heroPricingLines}
+      />
       <Footer />
     </>
   )

@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { Fragment, useEffect, useRef, useState } from 'react'
+import { getImageLabel } from '@/lib/imageLabels'
 
 // Shared listing card ("Design C"), used by BOTH the lettings grid (/let) and
 // the new-homes grid (/buy). The visual treatment is identical everywhere:
@@ -122,6 +123,9 @@ export default function ListingTile({ href, image, imageAlt, images, badge, eyeb
 
   const visible = new Set(mounted)
 
+  const currentFrameSrc = frames[idx] || image
+  const roomLabel = getImageLabel(currentFrameSrc)
+
   return (
     <Link
       href={href}
@@ -178,6 +182,35 @@ export default function ListingTile({ href, image, imageAlt, images, badge, eyeb
 
         {favourite && <FavoriteHeart slug={favourite.slug} title={favourite.title} />}
 
+        {/* Room-type label: bottom-right corner of the image, updates on hover-cycle and lifts with scrim */}
+        {roomLabel && (
+          <span
+            style={{
+              position: 'absolute',
+              bottom: 12,
+              right: 12,
+              zIndex: 3,
+              fontSize: 9.5,
+              fontWeight: 500,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              background: 'rgba(24,21,17,0.8)',
+              color: '#F2EFE9',
+              padding: '4px 9px',
+              borderRadius: 'var(--radius-pill)',
+              border: '1px solid rgba(242,239,233,0.18)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+              pointerEvents: 'none',
+              transform: lifted ? 'translateY(-10px)' : 'translateY(0)',
+              transition: 'transform var(--dur-slow) var(--ease-out-soft)',
+            }}
+          >
+            {roomLabel}
+          </span>
+        )}
+
         {/* Ink scrim over the bottom (ink #28231C at ~82%, fading up so its top
             edge melts into the photo). Lifts on hover with the slow ease. */}
         <div
@@ -201,7 +234,7 @@ export default function ListingTile({ href, image, imageAlt, images, badge, eyeb
             {title}
           </h3>
           {parts.length > 0 && (
-            <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px 10px', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.82)' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', flexWrap: 'wrap', gap: '4px 10px', paddingRight: roomLabel ? 76 : 0, fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(242,239,233,0.82)' }}>
               {parts.map((p, i) => (
                 <Fragment key={i}>
                   {i > 0 && <span aria-hidden style={{ opacity: 0.5 }}>·</span>}

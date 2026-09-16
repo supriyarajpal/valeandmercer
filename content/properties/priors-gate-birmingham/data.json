@@ -10,12 +10,19 @@
   "completion": "September 2027",
   "totalUnits": 59,
   "unitMix": [
-    { "type": "1-Bed" },
-    { "type": "2-Bed" }
+    {
+      "type": "1-Bed"
+    },
+    {
+      "type": "2-Bed"
+    }
   ],
   "paymentStructure": "£5,000 reservation fee. 10% deposit on exchange (less reservation fee). A further 5% in March 2027 with remaining balance on due completion.",
   "warranty": "ICW",
-  "developmentAmenities": ["Co-working space", "Bike Store"],
+  "developmentAmenities": [
+    "Co-working space",
+    "Bike Store"
+  ],
   "gallery": [
     "/images/developments/priors-gate-birmingham/2.jpg",
     "/images/developments/priors-gate-birmingham/3.jpg",
@@ -26,5 +33,7 @@
     "/images/developments/priors-gate-birmingham/6.jpg",
     "/images/developments/priors-gate-birmingham/1.jpg",
     "/images/developments/priors-gate-birmingham/8.jpg"
-  ]
+  ],
+  "headline": "Boutique residential living in Birmingham's legal quarter",
+  "description": "An exclusive boutique collection of 59 contemporary one- and two-bedroom apartments located on Steelhouse Lane in central Birmingham. Designed with dedicated resident amenities including co-working spaces and secure cycle storage, the development offers seamless access to the Snow Hill and Colmore business districts and major transit connections. Typical rental yields in this market range from 5-8%, offering strong potential for long-term investors."
 }
