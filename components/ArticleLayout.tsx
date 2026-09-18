@@ -10,11 +10,12 @@ type Props = {
   meta: string
   image: string
   imageAlt: string
-  sections: Section[]
+  sections?: Section[]
   signoff: string
+  children?: React.ReactNode
 }
 
-export default function ArticleLayout({ category, title, meta, image, imageAlt, sections, signoff }: Props) {
+export default function ArticleLayout({ category, title, meta, image, imageAlt, sections, signoff, children }: Props) {
   return (
     <main style={{ background: 'var(--surface)', paddingTop: 160, paddingBottom: 'var(--section-y)' }}>
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 var(--gutter)' }}>
@@ -51,7 +52,7 @@ export default function ArticleLayout({ category, title, meta, image, imageAlt, 
           </div>
         </Reveal>
 
-        {sections.map((section, i) => (
+        {sections && sections.map((section, i) => (
           <Reveal key={section.h} y={28} delay={i === 0 ? 0 : 0} amount={0.25}>
             <div style={{ marginBottom: 40 }}>
               <h2 style={{ color: 'var(--text)', marginBottom: 14, fontSize: 28, lineHeight: 1.2 }}>{section.h}</h2>
@@ -59,6 +60,8 @@ export default function ArticleLayout({ category, title, meta, image, imageAlt, 
             </div>
           </Reveal>
         ))}
+
+        {children}
 
         <Reveal y={20} amount={0.3}>
           <div style={{ borderTop: '0.5px solid var(--border)', paddingTop: 32, marginTop: 56 }}>
