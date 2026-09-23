@@ -1,171 +1,171 @@
 {
-  "aire-gardens-leeds": {
+  "leeds": {
     "images": [
-      "/images/developments/aire-gardens-leeds/number1.png",
-      "/images/developments/aire-gardens-leeds/1.jpg",
-      "/images/developments/aire-gardens-leeds/2.jpg",
-      "/images/developments/aire-gardens-leeds/3.jpg",
-      "/images/developments/aire-gardens-leeds/4.jpg",
-      "/images/developments/aire-gardens-leeds/5.jpg",
-      "/images/developments/aire-gardens-leeds/6.jpg",
-      "/images/developments/aire-gardens-leeds/7.jpg",
-      "/images/developments/aire-gardens-leeds/8.jpg",
-      "/images/developments/aire-gardens-leeds/9.jpg",
-      "/images/developments/aire-gardens-leeds/10.jpg",
-      "/images/developments/aire-gardens-leeds/11.jpg",
-      "/images/developments/aire-gardens-leeds/12.jpg",
-      "/images/developments/aire-gardens-leeds/13.jpg",
-      "/images/developments/aire-gardens-leeds/14.jpg"
+      "/images/developments/leeds/number1.png",
+      "/images/developments/leeds/1.jpg",
+      "/images/developments/leeds/2.jpg",
+      "/images/developments/leeds/3.jpg",
+      "/images/developments/leeds/4.jpg",
+      "/images/developments/leeds/5.jpg",
+      "/images/developments/leeds/6.jpg",
+      "/images/developments/leeds/7.jpg",
+      "/images/developments/leeds/8.jpg",
+      "/images/developments/leeds/9.jpg",
+      "/images/developments/leeds/10.jpg",
+      "/images/developments/leeds/11.jpg",
+      "/images/developments/leeds/12.jpg",
+      "/images/developments/leeds/13.jpg",
+      "/images/developments/leeds/14.jpg"
     ],
-    "floorplan": "/images/developments/aire-gardens-leeds/floorplan.jpg",
-    "brochure": "/brochures/aire-gardens-leeds.pdf"
+    "floorplan": "/images/developments/leeds/floorplan.jpg",
+    "brochure": "/brochures/leeds.pdf"
   },
-  "crown-works-burton": {
+  "burton-on-trent": {
     "images": [
-      "/images/developments/crown-works-burton/number2.png"
+      "/images/developments/burton-on-trent/number2.png"
     ],
     "floorplan": null,
-    "brochure": "/brochures/crown-works-burton.pdf"
+    "brochure": "/brochures/burton-on-trent.pdf"
   },
-  "elizabeth-house-staines": {
+  "london-rd-staines": {
     "images": [
-      "/images/developments/elizabeth-house-staines/number3.png",
-      "/images/developments/elizabeth-house-staines/1.jpg",
-      "/images/developments/elizabeth-house-staines/2.jpg",
-      "/images/developments/elizabeth-house-staines/3.jpg",
-      "/images/developments/elizabeth-house-staines/4.jpg",
-      "/images/developments/elizabeth-house-staines/5.jpg",
-      "/images/developments/elizabeth-house-staines/6.jpg",
-      "/images/developments/elizabeth-house-staines/7.jpg",
-      "/images/developments/elizabeth-house-staines/8.jpg",
-      "/images/developments/elizabeth-house-staines/9.jpg",
-      "/images/developments/elizabeth-house-staines/10.jpg",
-      "/images/developments/elizabeth-house-staines/11.jpg",
-      "/images/developments/elizabeth-house-staines/12.jpg",
-      "/images/developments/elizabeth-house-staines/13.jpg",
-      "/images/developments/elizabeth-house-staines/14.jpg",
-      "/images/developments/elizabeth-house-staines/15.jpg",
-      "/images/developments/elizabeth-house-staines/16.jpg",
-      "/images/developments/elizabeth-house-staines/17.jpg",
-      "/images/developments/elizabeth-house-staines/18.jpg",
-      "/images/developments/elizabeth-house-staines/19.jpg",
-      "/images/developments/elizabeth-house-staines/20.jpg",
-      "/images/developments/elizabeth-house-staines/21.jpg",
-      "/images/developments/elizabeth-house-staines/22.jpg",
-      "/images/developments/elizabeth-house-staines/23.jpg",
-      "/images/developments/elizabeth-house-staines/24.jpg"
+      "/images/developments/london-rd-staines/number3.png",
+      "/images/developments/london-rd-staines/1.jpg",
+      "/images/developments/london-rd-staines/2.jpg",
+      "/images/developments/london-rd-staines/3.jpg",
+      "/images/developments/london-rd-staines/4.jpg",
+      "/images/developments/london-rd-staines/5.jpg",
+      "/images/developments/london-rd-staines/6.jpg",
+      "/images/developments/london-rd-staines/7.jpg",
+      "/images/developments/london-rd-staines/8.jpg",
+      "/images/developments/london-rd-staines/9.jpg",
+      "/images/developments/london-rd-staines/10.jpg",
+      "/images/developments/london-rd-staines/11.jpg",
+      "/images/developments/london-rd-staines/12.jpg",
+      "/images/developments/london-rd-staines/13.jpg",
+      "/images/developments/london-rd-staines/14.jpg",
+      "/images/developments/london-rd-staines/15.jpg",
+      "/images/developments/london-rd-staines/16.jpg",
+      "/images/developments/london-rd-staines/17.jpg",
+      "/images/developments/london-rd-staines/18.jpg",
+      "/images/developments/london-rd-staines/19.jpg",
+      "/images/developments/london-rd-staines/20.jpg",
+      "/images/developments/london-rd-staines/21.jpg",
+      "/images/developments/london-rd-staines/22.jpg",
+      "/images/developments/london-rd-staines/23.jpg",
+      "/images/developments/london-rd-staines/24.jpg"
     ],
-    "floorplan": "/images/developments/elizabeth-house-staines/floorplan.jpg",
-    "brochure": "/brochures/elizabeth-house-staines.pdf"
+    "floorplan": "/images/developments/london-rd-staines/floorplan.jpg",
+    "brochure": "/brochures/london-rd-staines.pdf"
   },
-  "fountain-court-birmingham": {
+  "5-steelhouse-ln-birmingham": {
     "images": [
-      "/images/developments/fountain-court-birmingham/number4.png",
-      "/images/developments/fountain-court-birmingham/1.jpg",
-      "/images/developments/fountain-court-birmingham/2.jpg",
-      "/images/developments/fountain-court-birmingham/3.jpg",
-      "/images/developments/fountain-court-birmingham/4.jpg",
-      "/images/developments/fountain-court-birmingham/5.jpg",
-      "/images/developments/fountain-court-birmingham/6.jpg",
-      "/images/developments/fountain-court-birmingham/7.jpg",
-      "/images/developments/fountain-court-birmingham/8.jpg",
-      "/images/developments/fountain-court-birmingham/9.jpg",
-      "/images/developments/fountain-court-birmingham/10.jpg",
-      "/images/developments/fountain-court-birmingham/11.jpg",
-      "/images/developments/fountain-court-birmingham/12.jpg",
-      "/images/developments/fountain-court-birmingham/13.jpg",
-      "/images/developments/fountain-court-birmingham/14.jpg",
-      "/images/developments/fountain-court-birmingham/15.jpg",
-      "/images/developments/fountain-court-birmingham/16.jpg",
-      "/images/developments/fountain-court-birmingham/17.jpg",
-      "/images/developments/fountain-court-birmingham/18.jpg",
-      "/images/developments/fountain-court-birmingham/19.jpg",
-      "/images/developments/fountain-court-birmingham/20.jpg",
-      "/images/developments/fountain-court-birmingham/21.jpg",
-      "/images/developments/fountain-court-birmingham/22.jpg",
-      "/images/developments/fountain-court-birmingham/23.jpg",
-      "/images/developments/fountain-court-birmingham/24.jpg"
+      "/images/developments/5-steelhouse-ln-birmingham/number4.png",
+      "/images/developments/5-steelhouse-ln-birmingham/1.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/2.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/3.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/4.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/5.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/6.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/7.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/8.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/9.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/10.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/11.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/12.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/13.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/14.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/15.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/16.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/17.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/18.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/19.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/20.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/21.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/22.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/23.jpg",
+      "/images/developments/5-steelhouse-ln-birmingham/24.jpg"
     ],
-    "floorplan": "/images/developments/fountain-court-birmingham/floorplan.jpg",
-    "brochure": "/brochures/fountain-court-birmingham.pdf"
+    "floorplan": "/images/developments/5-steelhouse-ln-birmingham/floorplan.jpg",
+    "brochure": "/brochures/5-steelhouse-ln-birmingham.pdf"
   },
-  "graduation-house-nottingham": {
+  "nottingham": {
     "images": [
-      "/images/developments/graduation-house-nottingham/number5.png"
-    ],
-    "floorplan": null,
-    "brochure": "/brochures/graduation-house-nottingham.pdf"
-  },
-  "mulberry-house-derby": {
-    "images": [
-      "/images/developments/mulberry-house-derby/number6.png",
-      "/images/developments/mulberry-house-derby/1.jpg",
-      "/images/developments/mulberry-house-derby/2.jpg",
-      "/images/developments/mulberry-house-derby/3.jpg",
-      "/images/developments/mulberry-house-derby/4.jpg",
-      "/images/developments/mulberry-house-derby/5.jpg",
-      "/images/developments/mulberry-house-derby/6.jpg",
-      "/images/developments/mulberry-house-derby/7.jpg",
-      "/images/developments/mulberry-house-derby/8.jpg",
-      "/images/developments/mulberry-house-derby/9.jpg",
-      "/images/developments/mulberry-house-derby/10.jpg",
-      "/images/developments/mulberry-house-derby/11.jpg",
-      "/images/developments/mulberry-house-derby/12.jpg",
-      "/images/developments/mulberry-house-derby/13.jpg",
-      "/images/developments/mulberry-house-derby/14.jpg",
-      "/images/developments/mulberry-house-derby/15.jpg",
-      "/images/developments/mulberry-house-derby/16.jpg",
-      "/images/developments/mulberry-house-derby/17.jpg"
-    ],
-    "floorplan": "/images/developments/mulberry-house-derby/floorplan.jpg",
-    "brochure": "/brochures/mulberry-house-derby.pdf"
-  },
-  "one-victoria-manchester": {
-    "images": [
-      "/images/developments/one-victoria-manchester/number7.png"
+      "/images/developments/nottingham/number5.png"
     ],
     "floorplan": null,
-    "brochure": "/brochures/one-victoria-manchester.pdf"
+    "brochure": "/brochures/nottingham.pdf"
   },
-  "piccadilly-wharf-manchester": {
+  "31-castleward-blvd-derby": {
     "images": [
-      "/images/developments/piccadilly-wharf-manchester/number8.png",
-      "/images/developments/piccadilly-wharf-manchester/1.jpg",
-      "/images/developments/piccadilly-wharf-manchester/2.jpg",
-      "/images/developments/piccadilly-wharf-manchester/3.jpg",
-      "/images/developments/piccadilly-wharf-manchester/4.jpg",
-      "/images/developments/piccadilly-wharf-manchester/5.jpg"
+      "/images/developments/31-castleward-blvd-derby/number6.png",
+      "/images/developments/31-castleward-blvd-derby/1.jpg",
+      "/images/developments/31-castleward-blvd-derby/2.jpg",
+      "/images/developments/31-castleward-blvd-derby/3.jpg",
+      "/images/developments/31-castleward-blvd-derby/4.jpg",
+      "/images/developments/31-castleward-blvd-derby/5.jpg",
+      "/images/developments/31-castleward-blvd-derby/6.jpg",
+      "/images/developments/31-castleward-blvd-derby/7.jpg",
+      "/images/developments/31-castleward-blvd-derby/8.jpg",
+      "/images/developments/31-castleward-blvd-derby/9.jpg",
+      "/images/developments/31-castleward-blvd-derby/10.jpg",
+      "/images/developments/31-castleward-blvd-derby/11.jpg",
+      "/images/developments/31-castleward-blvd-derby/12.jpg",
+      "/images/developments/31-castleward-blvd-derby/13.jpg",
+      "/images/developments/31-castleward-blvd-derby/14.jpg",
+      "/images/developments/31-castleward-blvd-derby/15.jpg",
+      "/images/developments/31-castleward-blvd-derby/16.jpg",
+      "/images/developments/31-castleward-blvd-derby/17.jpg"
+    ],
+    "floorplan": "/images/developments/31-castleward-blvd-derby/floorplan.jpg",
+    "brochure": "/brochures/31-castleward-blvd-derby.pdf"
+  },
+  "great-ducie-street-manchester": {
+    "images": [
+      "/images/developments/great-ducie-street-manchester/number7.png"
     ],
     "floorplan": null,
-    "brochure": "/brochures/piccadilly-wharf-manchester.pdf"
+    "brochure": "/brochures/great-ducie-street-manchester.pdf"
   },
-  "priors-gate-birmingham": {
+  "store-street-manchester": {
     "images": [
-      "/images/developments/priors-gate-birmingham/1.jpg",
-      "/images/developments/priors-gate-birmingham/2.jpg",
-      "/images/developments/priors-gate-birmingham/3.jpg",
-      "/images/developments/priors-gate-birmingham/4.png",
-      "/images/developments/priors-gate-birmingham/5.jpg",
-      "/images/developments/priors-gate-birmingham/6.jpg",
-      "/images/developments/priors-gate-birmingham/7.jpg",
-      "/images/developments/priors-gate-birmingham/8.jpg",
-      "/images/developments/priors-gate-birmingham/9.jpg"
-    ],
-    "floorplan": "/images/developments/priors-gate-birmingham/floorplan.jpg",
-    "brochure": "/brochures/priors-gate-birmingham.pdf"
-  },
-  "st-georges-terrace-york": {
-    "images": [
-      "/images/developments/st-georges-terrace-york/number9.jpg"
-    ],
-    "floorplan": "/images/developments/st-georges-terrace-york/floorplan.jpg",
-    "brochure": "/brochures/st-georges-terrace-york.pdf"
-  },
-  "waterhouse-gardens-manchester": {
-    "images": [
-      "/images/developments/waterhouse-gardens-manchester/number10.jpeg"
+      "/images/developments/store-street-manchester/number8.png",
+      "/images/developments/store-street-manchester/1.jpg",
+      "/images/developments/store-street-manchester/2.jpg",
+      "/images/developments/store-street-manchester/3.jpg",
+      "/images/developments/store-street-manchester/4.jpg",
+      "/images/developments/store-street-manchester/5.jpg"
     ],
     "floorplan": null,
-    "brochure": "/brochures/waterhouse-gardens-manchester.pdf"
+    "brochure": "/brochures/store-street-manchester.pdf"
+  },
+  "42-44-steelhouse-lane-birmingham": {
+    "images": [
+      "/images/developments/42-44-steelhouse-lane-birmingham/1.jpg",
+      "/images/developments/42-44-steelhouse-lane-birmingham/2.jpg",
+      "/images/developments/42-44-steelhouse-lane-birmingham/3.jpg",
+      "/images/developments/42-44-steelhouse-lane-birmingham/4.png",
+      "/images/developments/42-44-steelhouse-lane-birmingham/5.jpg",
+      "/images/developments/42-44-steelhouse-lane-birmingham/6.jpg",
+      "/images/developments/42-44-steelhouse-lane-birmingham/7.jpg",
+      "/images/developments/42-44-steelhouse-lane-birmingham/8.jpg",
+      "/images/developments/42-44-steelhouse-lane-birmingham/9.jpg"
+    ],
+    "floorplan": "/images/developments/42-44-steelhouse-lane-birmingham/floorplan.jpg",
+    "brochure": "/brochures/42-44-steelhouse-lane-birmingham.pdf"
+  },
+  "mill-street-york": {
+    "images": [
+      "/images/developments/mill-street-york/number9.jpg"
+    ],
+    "floorplan": "/images/developments/mill-street-york/floorplan.jpg",
+    "brochure": "/brochures/mill-street-york.pdf"
+  },
+  "dutton-street-manchester": {
+    "images": [
+      "/images/developments/dutton-street-manchester/number10.jpeg"
+    ],
+    "floorplan": null,
+    "brochure": "/brochures/dutton-street-manchester.pdf"
   }
 }

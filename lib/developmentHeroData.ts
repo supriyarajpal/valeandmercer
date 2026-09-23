@@ -6,17 +6,17 @@
 import type { Development } from './developments'
 
 export const HERO_STREET_NAMES: Record<string, string> = {
-  'aire-gardens-leeds': 'Leeds',
-  'crown-works-burton': 'New Street',
-  'elizabeth-house-staines': 'London Road',
-  'fountain-court-birmingham': 'Steelhouse Lane',
-  'graduation-house-nottingham': 'Nottingham',
-  'mulberry-house-derby': 'Castleward Boulevard',
-  'one-victoria-manchester': 'Great Ducie Street',
-  'piccadilly-wharf-manchester': 'Store Street',
-  'priors-gate-birmingham': 'Steelhouse Lane',
-  'st-georges-terrace-york': 'Mill Street',
-  'waterhouse-gardens-manchester': 'Dutton Street',
+  'leeds': 'Leeds',
+  'burton-on-trent': 'New Street',
+  'london-rd-staines': 'London Road',
+  '5-steelhouse-ln-birmingham': 'Steelhouse Lane',
+  'nottingham': 'Nottingham',
+  '31-castleward-blvd-derby': 'Castleward Boulevard',
+  'great-ducie-street-manchester': 'Great Ducie Street',
+  'store-street-manchester': 'Store Street',
+  '42-44-steelhouse-lane-birmingham': 'Steelhouse Lane',
+  'mill-street-york': 'Mill Street',
+  'dutton-street-manchester': 'Dutton Street',
 }
 
 export function getHeroStreetName(slug: string, dev?: Development): string {
@@ -33,7 +33,7 @@ export function getHeroStreetName(slug: string, dev?: Development): string {
 }
 
 export function getHeroPricingLines(slug: string, dev?: Development): string[] {
-  if (slug === 'elizabeth-house-staines') {
+  if (slug === 'london-rd-staines') {
     return [
       '1 bed apartments from £282,316',
       '2 bed apartments from £403,670',
@@ -41,43 +41,43 @@ export function getHeroPricingLines(slug: string, dev?: Development): string[] {
     ]
   }
 
-  if (slug === 'graduation-house-nottingham') {
+  if (slug === 'nottingham') {
     return ['Student living quarters from £99,995']
   }
 
-  if (slug === 'aire-gardens-leeds') {
+  if (slug === 'leeds') {
     return ['1 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'crown-works-burton') {
+  if (slug === 'burton-on-trent') {
     return ['1 & 2 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'fountain-court-birmingham') {
+  if (slug === '5-steelhouse-ln-birmingham') {
     return ['Studio, 1 & 2 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'mulberry-house-derby') {
+  if (slug === '31-castleward-blvd-derby') {
     return ['Studio, 1, 2 & 3 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'one-victoria-manchester') {
+  if (slug === 'great-ducie-street-manchester') {
     return ['1, 2 & 3 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'piccadilly-wharf-manchester') {
+  if (slug === 'store-street-manchester') {
     return ['1 & 2 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'priors-gate-birmingham') {
+  if (slug === '42-44-steelhouse-lane-birmingham') {
     return ['1 & 2 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'st-georges-terrace-york') {
+  if (slug === 'mill-street-york') {
     return ['1, 2 & 3 bed apartments', 'Register your interest']
   }
 
-  if (slug === 'waterhouse-gardens-manchester') {
+  if (slug === 'dutton-street-manchester') {
     return ['Apartments, duplexes & penthouses', 'Register your interest']
   }
 
@@ -88,82 +88,82 @@ export function getHeroPricingLines(slug: string, dev?: Development): string[] {
 // Curated 5-photo sequences per development matching:
 // exterior -> living room -> kitchen -> bedroom -> bathroom / communal
 export const CURATED_HERO_SLIDES: Record<string, string[]> = {
-  'aire-gardens-leeds': [
-    '/images/developments/aire-gardens-leeds/4.jpg',
-    '/images/developments/aire-gardens-leeds/number1.png',
-    '/images/developments/aire-gardens-leeds/2.jpg',
-    '/images/developments/aire-gardens-leeds/3.jpg',
-    '/images/developments/aire-gardens-leeds/1.jpg',
+  'leeds': [
+    '/images/developments/leeds/4.jpg',
+    '/images/developments/leeds/number1.png',
+    '/images/developments/leeds/2.jpg',
+    '/images/developments/leeds/3.jpg',
+    '/images/developments/leeds/1.jpg',
   ],
-  'crown-works-burton': [
-    '/images/developments/crown-works-burton/1.jpg',
-    '/images/developments/crown-works-burton/number2.png',
-    '/images/developments/crown-works-burton/3.jpg',
-    '/images/developments/crown-works-burton/4.jpg',
-    '/images/developments/crown-works-burton/6.jpg',
+  'burton-on-trent': [
+    '/images/developments/burton-on-trent/1.jpg',
+    '/images/developments/burton-on-trent/number2.png',
+    '/images/developments/burton-on-trent/3.jpg',
+    '/images/developments/burton-on-trent/4.jpg',
+    '/images/developments/burton-on-trent/6.jpg',
   ],
-  'elizabeth-house-staines': [
-    '/images/developments/elizabeth-house-staines/1.jpg',
-    '/images/developments/elizabeth-house-staines/number3.png',
-    '/images/developments/elizabeth-house-staines/5.jpg',
-    '/images/developments/elizabeth-house-staines/6.jpg',
-    '/images/developments/elizabeth-house-staines/7.jpg',
+  'london-rd-staines': [
+    '/images/developments/london-rd-staines/1.jpg',
+    '/images/developments/london-rd-staines/number3.png',
+    '/images/developments/london-rd-staines/5.jpg',
+    '/images/developments/london-rd-staines/6.jpg',
+    '/images/developments/london-rd-staines/7.jpg',
   ],
-  'fountain-court-birmingham': [
-    '/images/developments/fountain-court-birmingham/1.jpg',
-    '/images/developments/fountain-court-birmingham/number4.png',
-    '/images/developments/fountain-court-birmingham/9.jpg',
-    '/images/developments/fountain-court-birmingham/5.jpg',
-    '/images/developments/fountain-court-birmingham/12.jpg',
+  '5-steelhouse-ln-birmingham': [
+    '/images/developments/5-steelhouse-ln-birmingham/1.jpg',
+    '/images/developments/5-steelhouse-ln-birmingham/number4.png',
+    '/images/developments/5-steelhouse-ln-birmingham/9.jpg',
+    '/images/developments/5-steelhouse-ln-birmingham/5.jpg',
+    '/images/developments/5-steelhouse-ln-birmingham/12.jpg',
   ],
-  'graduation-house-nottingham': [
-    '/images/developments/graduation-house-nottingham/1.jpg',
-    '/images/developments/graduation-house-nottingham/5.jpg',
-    '/images/developments/graduation-house-nottingham/8.jpg',
-    '/images/developments/graduation-house-nottingham/9.jpg',
-    '/images/developments/graduation-house-nottingham/13.jpg',
+  'nottingham': [
+    '/images/developments/nottingham/1.jpg',
+    '/images/developments/nottingham/5.jpg',
+    '/images/developments/nottingham/8.jpg',
+    '/images/developments/nottingham/9.jpg',
+    '/images/developments/nottingham/13.jpg',
   ],
-  'mulberry-house-derby': [
-    '/images/developments/mulberry-house-derby/1.jpg',
-    '/images/developments/mulberry-house-derby/7.jpg',
-    '/images/developments/mulberry-house-derby/13.jpg',
-    '/images/developments/mulberry-house-derby/8.jpg',
-    '/images/developments/mulberry-house-derby/10.jpg',
+  '31-castleward-blvd-derby': [
+    '/images/developments/31-castleward-blvd-derby/1.jpg',
+    '/images/developments/31-castleward-blvd-derby/7.jpg',
+    '/images/developments/31-castleward-blvd-derby/13.jpg',
+    '/images/developments/31-castleward-blvd-derby/8.jpg',
+    '/images/developments/31-castleward-blvd-derby/10.jpg',
   ],
-  'one-victoria-manchester': [
-    '/images/developments/one-victoria-manchester/3.jpg',
-    '/images/developments/one-victoria-manchester/5.jpg',
-    '/images/developments/one-victoria-manchester/7.jpg',
-    '/images/developments/one-victoria-manchester/8.jpg',
-    '/images/developments/one-victoria-manchester/number7.png',
+  'great-ducie-street-manchester': [
+    '/images/developments/great-ducie-street-manchester/3.jpg',
+    '/images/developments/great-ducie-street-manchester/5.jpg',
+    '/images/developments/great-ducie-street-manchester/7.jpg',
+    '/images/developments/great-ducie-street-manchester/8.jpg',
+    '/images/developments/great-ducie-street-manchester/number7.png',
   ],
-  'piccadilly-wharf-manchester': [
-    '/images/developments/piccadilly-wharf-manchester/1.jpg',
-    '/images/developments/piccadilly-wharf-manchester/number8.png',
-    '/images/developments/piccadilly-wharf-manchester/4.jpg',
-    '/images/developments/piccadilly-wharf-manchester/5.jpg',
-    '/images/developments/piccadilly-wharf-manchester/3.jpg',
+  'store-street-manchester': [
+    '/images/developments/store-street-manchester/1.jpg',
+    '/images/developments/store-street-manchester/number8.png',
+    '/images/developments/store-street-manchester/4.jpg',
+    '/images/developments/store-street-manchester/5.jpg',
+    '/images/developments/store-street-manchester/3.jpg',
   ],
-  'priors-gate-birmingham': [
-    '/images/developments/priors-gate-birmingham/1.jpg',
-    '/images/developments/priors-gate-birmingham/3.jpg',
-    '/images/developments/priors-gate-birmingham/9.jpg',
-    '/images/developments/priors-gate-birmingham/5.jpg',
-    '/images/developments/priors-gate-birmingham/2.jpg',
+  '42-44-steelhouse-lane-birmingham': [
+    '/images/developments/42-44-steelhouse-lane-birmingham/1.jpg',
+    '/images/developments/42-44-steelhouse-lane-birmingham/3.jpg',
+    '/images/developments/42-44-steelhouse-lane-birmingham/9.jpg',
+    '/images/developments/42-44-steelhouse-lane-birmingham/5.jpg',
+    '/images/developments/42-44-steelhouse-lane-birmingham/2.jpg',
   ],
-  'st-georges-terrace-york': [
-    '/images/developments/st-georges-terrace-york/1.jpg',
-    '/images/developments/st-georges-terrace-york/5.jpg',
-    '/images/developments/st-georges-terrace-york/4.jpg',
-    '/images/developments/st-georges-terrace-york/6.jpg',
-    '/images/developments/st-georges-terrace-york/7.jpg',
+  'mill-street-york': [
+    '/images/developments/mill-street-york/1.jpg',
+    '/images/developments/mill-street-york/5.jpg',
+    '/images/developments/mill-street-york/4.jpg',
+    '/images/developments/mill-street-york/6.jpg',
+    '/images/developments/mill-street-york/7.jpg',
   ],
-  'waterhouse-gardens-manchester': [
-    '/images/developments/waterhouse-gardens-manchester/number10.jpeg',
-    '/images/developments/waterhouse-gardens-manchester/2.jpg',
-    '/images/developments/waterhouse-gardens-manchester/5.jpg',
-    '/images/developments/waterhouse-gardens-manchester/8.jpg',
-    '/images/developments/waterhouse-gardens-manchester/12.jpg',
+  'dutton-street-manchester': [
+    '/images/developments/dutton-street-manchester/number10.jpeg',
+    '/images/developments/dutton-street-manchester/2.jpg',
+    '/images/developments/dutton-street-manchester/5.jpg',
+    '/images/developments/dutton-street-manchester/8.jpg',
+    '/images/developments/dutton-street-manchester/12.jpg',
   ],
 }
 
