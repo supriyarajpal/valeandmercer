@@ -40,6 +40,30 @@ export interface NearestStation {
   time?: string
 }
 
+/** A short enquiry prompt rendered inside the Location section, with the phone
+ *  and email as click-to-action links. The connective wording ("or sending a
+ *  message to") and trailing punctuation are supplied by the renderer so the
+ *  data only carries the parts that vary. */
+export interface LocationCta {
+  lead: string
+  phone: string
+  email: string
+  closing?: string
+}
+
+/** A titled prose block (e.g. a Lifestyle or market-context section). `body`
+ *  may contain blank-line-separated paragraphs. */
+export interface ProseSection {
+  heading: string
+  body: string
+}
+
+/** One frequently-asked question and its answer. */
+export interface FaqItem {
+  q: string
+  a: string
+}
+
 /**
  * A single sales development.
  *
@@ -81,6 +105,14 @@ export interface Development {
   specification?: SpecSection[]
   nearestStation?: NearestStation
   locationNotes?: string
+  // An enquiry prompt (phone/email) rendered inside the Location section.
+  locationCta?: LocationCta
+  // A "Lifestyle" prose section (e.g. "Life around <street>").
+  lifestyle?: ProseSection
+  // A local property-market / context prose section.
+  marketDetails?: ProseSection
+  // Frequently-asked questions rendered as a stacked Q&A block.
+  faqs?: FaqItem[]
   // Published gallery image paths (e.g. "/images/developments/<slug>/1.png"),
   // written by scripts/publish-gallery.sh. When present this is the authoritative
   // ordered gallery for the /buy pages; otherwise they fall back to whatever is

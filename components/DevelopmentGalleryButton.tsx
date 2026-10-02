@@ -46,7 +46,7 @@ function GalleryButton({ count, onClick }: { count: number; onClick: () => void 
       type="button"
       onClick={onClick}
       className="btn-press"
-      aria-label={`View gallery — ${count} ${count === 1 ? 'photo' : 'photos'}`}
+      aria-label={`View gallery, ${count} ${count === 1 ? 'photo' : 'photos'}`}
       style={{
         position: 'relative', display: 'inline-flex', alignItems: 'center', gap: 12,
         fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', cursor: 'zoom-in',

@@ -20,9 +20,16 @@
     }
   ],
   "headline": "A new pulse in the city",
-  "description": "A commanding new landmark, this residential-led development is surrounded by landscaped public spaces, boutique traders and independent eateries. A community of high-spec apartments, duplexes and penthouses are coupled with a private clubhouse offering high-end amenities and services to residents. It sits at the centre of a three-acre estate of 556 high-spec residential units across five towers. Typical rental yields in this market range from 5-8%, offering strong potential for long-term investors.",
+  "description": "This residential-led development, with an imposing new landmark, is encircled by independent restaurants, boutiques, and manicured public areas. A private clubhouse with upscale amenities and services is connected to a community of exclusive apartments, duplexes, and penthouses. It is located in the middle of a three-acre estate with five towers housing 556 luxurious residential units.\n\nExplore the benefits and facilities of living here!",
+  "highlightedFeatures": [
+    "Amenity provision more typical of a London scheme than a Manchester development",
+    "Genuinely walkable location, a few minutes or more from both Victoria and Piccadilly mainline stations",
+    "Three acres of landscaped public realm for residents and the wider neighbourhood",
+    "A mix of apartments, duplexes and penthouses, suited to different budgets and life stages",
+    "On-site wellness space covering fitness, spa and quiet relaxation in one place"
+  ],
   "developmentAmenities": [
-    "Private residents' clubhouse",
+    "The Club, private residents' clubhouse",
     "Concierge",
     "Co-working lounge and adaptable meeting room",
     "Private dining",
@@ -67,7 +74,66 @@
       ]
     }
   ],
-  "locationNotes": "Situated a short distance from central Manchester, connecting the popular Greengate and N.O.M.A neighbourhoods with the historic Medieval Quarter.",
+  "locationNotes": "This development sits on Dutton Street, moments from Manchester city centre and within easy walking distance of both Manchester Victoria and Manchester Piccadilly stations.\n\nThis gives buyers direct rail connections across the North West and to London in around two hours. The development bridges the fast-growing Greengate and N.O.M.A. neighbourhoods, while the cobbled lanes of the Medieval Quarter and Chetham's are just a short stroll away.\n\nMetrolink trams run nearby, linking residents to Spinningfields, the Northern Quarter and MediaCityUK within minutes. The M60 and M602 are close by for wider Greater Manchester travel. Angel Meadow Park and the River Irwell towpath are both within easy reach too.",
+  "nearestStation": {
+    "name": "Manchester Victoria"
+  },
+  "locationCta": {
+    "lead": "Curious how commute times stack up for you? Enquire now by calling",
+    "phone": "+44 7517 696926",
+    "email": "enquiry@valeandmercer.co.uk",
+    "closing": "Our Manchester team will talk you through it."
+  },
+  "lifestyle": {
+    "heading": "Life around Dutton Street",
+    "body": "Dutton Street puts residents at the heart of Manchester's northern city-centre renewal, an area increasingly known for independent coffee shops, craft breweries and street food traders rather than chain retail.\n\nN.O.M.A.'s food halls and Greengate's riverside bars are both a short walk away, while the Northern Quarter's vintage shops and live music venues sit just beyond. Weekday mornings bring a steady flow of professionals heading to Deansgate and Spinningfields' office district, both under twenty minutes on foot or by tram.\n\nAt weekends, Manchester Arena and the Printworks entertainment complex are close enough to reach without a car, and Manchester Cathedral gardens offer a quieter green pocket nearby.\n\nFor families, the wider Greater Manchester area includes well-regarded state and independent schools, with school-run logistics made easier by the development's proximity to the inner ring road and Metrolink network."
+  },
+  "marketDetails": {
+    "heading": "Manchester's Property Market",
+    "body": "Manchester's property market spans everything from Victorian terraces to brand-new towers. Before browsing 1 bedroom houses for sale in Manchester, or any other type of house, we suggest weighing up the lifestyle trade-offs of new-build apartment living.\n\nThis development offers an alternative worth considering: concierge service, a private clubhouse and round-the-clock security, without the maintenance demands of an older house.\n\nDownsizers who might otherwise look for a bungalow for sale in Manchester often find that a ground-floor or lift-served apartment here delivers similar single-level convenience, minus the garden upkeep."
+  },
+  "faqs": [
+    {
+      "q": "How much deposit is needed to reserve an apartment here?",
+      "a": "Reservation deposits on Manchester new-build developments typically start around 5%, with the balance due on exchange; confirm exact terms with our sales team."
+    },
+    {
+      "q": "Is this development leasehold or freehold?",
+      "a": "Apartments here, like most Manchester city-centre developments, are sold on a long leasehold basis; full lease length details are confirmed at enquiry stage."
+    },
+    {
+      "q": "Can I get a mortgage on an off-plan apartment here?",
+      "a": "Yes, most major lenders offer mortgages for new-build apartments, though criteria vary. We can introduce independent mortgage advisers familiar with Manchester developments."
+    },
+    {
+      "q": "Is there a service charge, and what does it cover?",
+      "a": "Yes, an annual service charge covers the upkeep of communal spaces and building maintenance. We will confirm costs once availability and pricing are released."
+    },
+    {
+      "q": "Are pets allowed here?",
+      "a": "Pet policies vary by development and are set by the managing agent; prospective buyers should confirm pet allowances directly with our agents at Vale and Mercer before reserving."
+    },
+    {
+      "q": "Does the development include parking or a car club?",
+      "a": "Parking provision depends on the block and unit; some developments include car club membership instead, so ask our team about options for this development."
+    },
+    {
+      "q": "When is this development expected to be completed?",
+      "a": "Completion dates depend on construction phase and unit availability; register your interest with Vale and Mercer for the latest build timeline and release schedule."
+    },
+    {
+      "q": "Is this a good option for buy-to-let investors?",
+      "a": "City-centre new-builds near strong transport links and employment hubs typically attract steady rental demand; speak to our team about investment potential and expected yields."
+    },
+    {
+      "q": "How does this development compare with searching for houses or a bungalow in Manchester?",
+      "a": "Buyers researching bungalows or houses for sale in Manchester gain lift access, concierge, and amenities that period houses and bungalows rarely offer."
+    },
+    {
+      "q": "Can ground-floor apartments suit buyers who can't find bungalows in Manchester?",
+      "a": "Yes. Buyers who can't find bungalows for sale in Manchester near the centre often choose ground-floor or lift-served apartments here instead."
+    }
+  ],
   "gallery": [
     "/images/developments/dutton-street-manchester/number10.jpeg",
     "/images/developments/dutton-street-manchester/1.jpg",

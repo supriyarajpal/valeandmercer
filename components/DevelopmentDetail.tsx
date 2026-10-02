@@ -8,7 +8,7 @@ import DevelopmentGalleryButton from '@/components/DevelopmentGalleryButton'
 import DevelopmentEnquiryActions from '@/components/DevelopmentEnquiryActions'
 import { DevelopmentCard, type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { submitToWeb3Forms } from '@/lib/web3forms'
-import type { Development, SpecSection } from '@/lib/developments'
+import type { Development, SpecSection, LocationCta, FaqItem } from '@/lib/developments'
 import type { DevelopmentAssets } from '@/lib/developmentAssets'
 import { SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
 import { getHeroSlideImages, getHeroStreetName, getHeroPricingLines } from '@/lib/developmentHeroData'
@@ -41,7 +41,7 @@ export default function DevelopmentDetail({
 }) {
   const d = development
   const hasStation = !!(d.nearestStation && d.nearestStation.name)
-  const hasLocation = !!(d.locationNotes || hasStation)
+  const hasLocation = !!(d.locationNotes || hasStation || d.locationCta)
 
   const slides = heroSlides && heroSlides.length > 0 ? heroSlides : getHeroSlideImages(d.slug, assets.images)
   const leftTitle = heroTitleLeft || getHeroStreetName(d.slug, d)
@@ -125,12 +125,14 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 14 — Location */}
+        {/* 14 — Location (multi-paragraph notes, nearest-station chip, enquiry CTA) */}
         {hasLocation && (
           <Section eyebrow="Location" title="Getting around">
-            {d.locationNotes && <p style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85 }}>{d.locationNotes}</p>}
+            {d.locationNotes && splitParagraphs(d.locationNotes).map((para, i) => (
+              <p key={i} style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85, marginBottom: 14 }}>{para}</p>
+            ))}
             {hasStation && (
-              <div style={{ marginTop: 24, display: 'inline-flex', alignItems: 'center', gap: 16, padding: '16px 22px', borderRadius: 'var(--radius-md)', background: 'var(--surface-2)', border: '0.5px solid var(--border)' }}>
+              <div style={{ marginTop: 10, display: 'inline-flex', alignItems: 'center', gap: 16, padding: '16px 22px', borderRadius: 'var(--radius-md)', background: 'var(--surface-2)', border: '0.5px solid var(--border)' }}>
                 <StationIcon />
                 <div>
                   <div style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 4 }}>Nearest station</div>
@@ -141,6 +143,16 @@ export default function DevelopmentDetail({
                 </div>
               </div>
             )}
+            {d.locationCta && <LocationCtaBlock cta={d.locationCta} />}
+          </Section>
+        )}
+
+        {/* 14b — Lifestyle */}
+        {d.lifestyle && d.lifestyle.body && (
+          <Section eyebrow="Lifestyle" title={d.lifestyle.heading}>
+            {splitParagraphs(d.lifestyle.body).map((para, i) => (
+              <p key={i} style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85, marginBottom: 16 }}>{para}</p>
+            ))}
           </Section>
         )}
 
@@ -150,6 +162,22 @@ export default function DevelopmentDetail({
             <div style={{ display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
               {d.specification.map(sec => <SpecBlock key={sec.heading} section={sec} />)}
             </div>
+          </Section>
+        )}
+
+        {/* 15b — Local property market / context */}
+        {d.marketDetails && d.marketDetails.body && (
+          <Section eyebrow="Market" title={d.marketDetails.heading}>
+            {splitParagraphs(d.marketDetails.body).map((para, i) => (
+              <p key={i} style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.85, marginBottom: 16 }}>{para}</p>
+            ))}
+          </Section>
+        )}
+
+        {/* 15c — FAQs (stacked Q&A, matching the site's FAQ convention) */}
+        {d.faqs && d.faqs.length > 0 && (
+          <Section eyebrow="FAQs" title="Frequently asked questions">
+            <FaqList faqs={d.faqs} />
           </Section>
         )}
       </div>
@@ -328,7 +356,7 @@ function SpeakToTeam() {
                 Considering this <span style={{ color: '#A0845C', fontStyle: 'italic' }}>development?</span>
               </h2>
               <p style={{ fontSize: 14.5, lineHeight: 1.85, color: 'rgba(242,239,233,0.7)', marginTop: 16, maxWidth: 460 }}>
-                We&rsquo;ll talk you through availability, pricing and the buying process — no pressure.
+                We&rsquo;ll talk you through availability, pricing and the buying process, no pressure.
               </p>
             </div>
             <button type="button" onClick={() => scrollToId('enquiry-form')} className="btn-press" style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: 12, fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: '#28231C', background: '#A0845C', border: '1px solid #A0845C', padding: '15px 28px', borderRadius: 'var(--radius-pill)', cursor: 'pointer' }}>
@@ -425,7 +453,7 @@ function EnquiryForm({ developmentName, slug }: { developmentName: string; slug:
             <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', cursor: 'pointer' }}>
               <input type="checkbox" checked={form.consent} onChange={e => { setForm({ ...form, consent: e.target.checked }); if (e.target.checked) setConsentError(false) }} aria-invalid={consentError} style={{ marginTop: 3, width: 16, height: 16, accentColor: '#A0845C', flexShrink: 0, cursor: 'pointer' }} />
               <span style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.8, letterSpacing: '0.01em' }}>
-                I agree to Vale &amp; Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
+                I agree to Vale and Mercer contacting me about this enquiry and, optionally, with property updates. Unsubscribe anytime.{' '}
                 <a href="/privacy" className="link-underline" style={{ color: '#A0845C' }}>Privacy Notice</a>.
               </span>
             </label>
@@ -504,5 +532,48 @@ function StationIcon() {
       <rect x="6" y="4" width="12" height="12" rx="2" />
       <path d="M6 12h12M9 20l-2 1M15 20l2 1M9 16v2m6-2v2" />
     </svg>
+  )
+}
+
+// Split prose on blank lines into trimmed paragraphs (single-paragraph copy
+// returns a one-element array).
+function splitParagraphs(text: string): string[] {
+  return text.trim().split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
+}
+
+/* ------------------------------------------------------------------ */
+/* Location enquiry CTA (phone/email prompt inside the Location block) */
+/* ------------------------------------------------------------------ */
+
+function LocationCtaBlock({ cta }: { cta: LocationCta }) {
+  const telHref = `tel:${cta.phone.replace(/[^+\d]/g, '')}`
+  const linkStyle: React.CSSProperties = { color: '#A0845C', fontWeight: 500 }
+  return (
+    <div style={{ marginTop: 24, padding: '20px 24px', borderRadius: 'var(--radius-md)', background: 'var(--surface-2)', borderLeft: '3px solid #A0845C' }}>
+      <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text)', marginBottom: cta.closing ? 10 : 0 }}>
+        {cta.lead}{' '}
+        <a href={telHref} className="link-underline" style={linkStyle}>{cta.phone}</a>
+        {' '}or sending a message to{' '}
+        <a href={`mailto:${cta.email}`} className="link-underline" style={linkStyle}>{cta.email}</a>.
+      </p>
+      {cta.closing && <p style={{ fontSize: 15, lineHeight: 1.85, color: 'var(--text)', opacity: 0.85, marginBottom: 0 }}>{cta.closing}</p>}
+    </div>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* FAQs — stacked Q&A blocks                                           */
+/* ------------------------------------------------------------------ */
+
+function FaqList({ faqs }: { faqs: FaqItem[] }) {
+  return (
+    <div style={{ display: 'grid', gap: 14 }}>
+      {faqs.map((f, i) => (
+        <div key={i} style={{ background: 'var(--surface-2)', borderRadius: 'var(--radius-md)', padding: '22px 24px', border: '0.5px solid var(--border)' }}>
+          <h3 style={{ fontSize: 16.5, color: 'var(--text)', marginBottom: 8, fontWeight: 600, lineHeight: 1.4 }}>{f.q}</h3>
+          <p style={{ fontSize: 14.5, lineHeight: 1.8, color: 'var(--text-muted)', marginBottom: 0 }}>{f.a}</p>
+        </div>
+      ))}
+    </div>
   )
 }

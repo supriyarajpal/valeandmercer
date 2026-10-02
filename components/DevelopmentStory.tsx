@@ -9,13 +9,19 @@ const COLUMN = '65ch'
 export default function DevelopmentStory({ headline, text, eyebrow = 'Overview' }: { headline?: string; text?: string; eyebrow?: string }) {
   if (!text || !text.trim()) return null
 
+  // Split on blank lines so multi-paragraph copy renders as distinct paragraphs.
+  // Single-paragraph descriptions are unaffected (one entry → one <p>).
+  const paragraphs = text.trim().split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
+
   return (
     <Reveal y={24} amount={0.15}>
       <section style={{ marginTop: 40, borderTop: '0.5px solid var(--border)', paddingTop: 42 }}>
         <div style={{ maxWidth: COLUMN }}>
           <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>{eyebrow}</p>
           {headline && <h2 style={{ color: 'var(--text)', fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.2, marginBottom: 26 }}>{headline}</h2>}
-          <p style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.86 }}>{text.trim()}</p>
+          {paragraphs.map((p, i) => (
+            <p key={i} style={{ fontSize: 15.5, lineHeight: 1.95, color: 'var(--text)', opacity: 0.86, marginBottom: i < paragraphs.length - 1 ? 18 : 0 }}>{p}</p>
+          ))}
         </div>
       </section>
     </Reveal>
