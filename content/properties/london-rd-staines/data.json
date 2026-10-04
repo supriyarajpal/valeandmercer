@@ -100,8 +100,6 @@
   ],
   "gallery": [
     "/images/developments/london-rd-staines/number3.png",
-    "/images/developments/london-rd-staines/1.jpg",
-    "/images/developments/london-rd-staines/2.jpg",
     "/images/developments/london-rd-staines/4.jpg",
     "/images/developments/london-rd-staines/8.jpg",
     "/images/developments/london-rd-staines/10.jpg",
@@ -123,6 +121,8 @@
     "/images/developments/london-rd-staines/14.jpg",
     "/images/developments/london-rd-staines/15.jpg",
     "/images/developments/london-rd-staines/16.jpg",
-    "/images/developments/london-rd-staines/7.jpg"
+    "/images/developments/london-rd-staines/7.jpg",
+    "/images/developments/london-rd-staines/1.jpg",
+    "/images/developments/london-rd-staines/2.jpg"
   ]
 }

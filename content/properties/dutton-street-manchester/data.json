@@ -135,7 +135,6 @@
     }
   ],
   "gallery": [
-    "/images/developments/dutton-street-manchester/number10.jpeg",
     "/images/developments/dutton-street-manchester/1.jpg",
     "/images/developments/dutton-street-manchester/2.jpg",
     "/images/developments/dutton-street-manchester/3.jpg",
@@ -148,6 +147,7 @@
     "/images/developments/dutton-street-manchester/10.jpg",
     "/images/developments/dutton-street-manchester/11.jpg",
     "/images/developments/dutton-street-manchester/12.jpg",
-    "/images/developments/dutton-street-manchester/13.jpg"
+    "/images/developments/dutton-street-manchester/13.jpg",
+    "/images/developments/dutton-street-manchester/number10.jpeg"
   ]
 }

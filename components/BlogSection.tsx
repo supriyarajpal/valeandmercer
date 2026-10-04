@@ -2,38 +2,15 @@
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Reveal, useInViewSafe } from '@/components/Reveal'
+import { BLOG_POSTS, type BlogPost } from '@/lib/blogPosts'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-const posts = [
-  {
-    slug: 'london-property-market-2025',
-    category: 'Market Insight',
-    title: 'The London property market in 2026',
-    excerpt: 'Supply is up, rates have settled a little, and buyers are moving again. Here is what we are seeing.',
-    date: 'May 2026',
-    readTime: '4 min',
-    image: 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=1400&q=85',
-  },
-  {
-    slug: 'landlord-checklist-preparing-to-let',
-    category: 'For Landlords',
-    title: "Getting your property ready to let: a landlord's checklist",
-    excerpt: 'Photography, staging, compliance paperwork, honest pricing, and what a good agent should be doing before you list.',
-    date: 'July 2026',
-    readTime: '5 min',
-    image: 'https://images.unsplash.com/photo-1595846519845-68e298c2edd8?w=1400&q=85',
-  },
-  {
-    slug: 'student-lettings-london-guide',
-    category: 'Student Living',
-    title: 'Renting in London as a student',
-    excerpt: 'What nobody tells you before you start. A straight guide to renting in London as a student.',
-    date: 'March 2026',
-    readTime: '5 min',
-    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1400&q=85',
-  },
-]
+// Pull straight from the shared blog source (same data the /blog index reads),
+// newest first, so a new post never needs a homepage edit. Shows the three most
+// recent posts, matching the count this section has always displayed.
+const HOMEPAGE_POST_COUNT = 3
+const posts = BLOG_POSTS.slice(0, HOMEPAGE_POST_COUNT)
 
 export default function BlogSection() {
   return (
@@ -59,7 +36,7 @@ export default function BlogSection() {
   )
 }
 
-function BlogCard({ post, index }: { post: typeof posts[number]; index: number }) {
+function BlogCard({ post, index }: { post: BlogPost; index: number }) {
   const reduce = useReducedMotion()
   const direction = index % 2 === 0 ? -1 : 1
   const { ref, inView } = useInViewSafe<HTMLElement>(0.2)
@@ -105,9 +82,8 @@ function BlogCard({ post, index }: { post: typeof posts[number]; index: number }
           />
         </div>
         <div style={{ padding: '24px 26px 28px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+          <div style={{ marginBottom: 12 }}>
             <span style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: '#A0845C' }}>{post.category}</span>
-            <span style={{ fontSize: 10, color: 'var(--text-faint)' }}>{post.readTime}</span>
           </div>
           <h3 style={{ color: 'var(--text)', marginBottom: 12, fontSize: 'clamp(18px, 4vw, 22px)', lineHeight: 1.25 }}>{post.title}</h3>
           <p style={{ fontSize: 13, lineHeight: 1.85, color: 'var(--text-muted)', marginBottom: 18 }}>{post.excerpt}</p>

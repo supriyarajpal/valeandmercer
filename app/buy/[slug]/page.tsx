@@ -28,9 +28,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const title = developmentTitle(dev)
   const where = dev.locality ? ` in ${dev.locality}` : ''
   const desc = (dev.description || dev.headline || `New homes${where} from Vale and Mercer.`).slice(0, 180)
-  // Prefer the reordered data.json gallery lead image (a communal/exterior shot
-  // under the photo-order convention) over the raw manifest first image, so the
-  // social-share card never leads with, e.g., a bathroom.
+  // Prefer the reordered data.json gallery lead image over the raw manifest
+  // first image. Under the current photo-order convention the gallery leads with
+  // an interior (a living space or bedroom), so the social-share card leads with
+  // a room shot rather than, e.g., a bare exterior.
   const hero = dev.gallery?.[0] ?? developmentHeroImage(slug)
 
   return {

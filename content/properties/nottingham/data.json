@@ -93,10 +93,6 @@
   ],
   "gallery": [
     "/images/developments/nottingham/number5.png",
-    "/images/developments/nottingham/1.jpg",
-    "/images/developments/nottingham/2.jpg",
-    "/images/developments/nottingham/3.jpg",
-    "/images/developments/nottingham/4.jpg",
     "/images/developments/nottingham/5.jpg",
     "/images/developments/nottingham/6.jpg",
     "/images/developments/nottingham/7.jpg",
@@ -104,7 +100,11 @@
     "/images/developments/nottingham/9.jpg",
     "/images/developments/nottingham/10.jpg",
     "/images/developments/nottingham/11.jpg",
-    "/images/developments/nottingham/12.jpg",
-    "/images/developments/nottingham/13.jpg"
+    "/images/developments/nottingham/13.jpg",
+    "/images/developments/nottingham/1.jpg",
+    "/images/developments/nottingham/2.jpg",
+    "/images/developments/nottingham/3.jpg",
+    "/images/developments/nottingham/4.jpg",
+    "/images/developments/nottingham/12.jpg"
   ]
 }

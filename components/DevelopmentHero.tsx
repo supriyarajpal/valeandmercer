@@ -4,14 +4,15 @@ import type { DevelopmentAssets } from '@/lib/developmentAssets'
 import type { NearestStation } from '@/lib/developments'
 
 // Full-bleed development hero: the gallery image spans edge-to-edge for impact,
-// with the Gallery / Floorplan / Location tab strip and the thumbnail row aligned
+// with the Gallery / Location tab strip and the thumbnail row aligned
 // to the content width above/below it. Every surface reads from the theme tokens
 // (light in light mode, dark in dark mode). Overlays (arrows, counter) are
 // absolutely positioned INSIDE the media frame (position:relative +
 // overflow:hidden) so they can never escape onto the page. (The brochure download
 // was removed site-wide.)
 
-type HeroTab = 'gallery' | 'floorplan' | 'location'
+// Floor plans were removed site-wide, so the hero no longer offers a Floorplan tab.
+type HeroTab = 'gallery' | 'location'
 
 const CONTAINER: React.CSSProperties = { maxWidth: 1240, margin: '0 auto', padding: '0 var(--gutter)' }
 
@@ -27,10 +28,9 @@ export default function DevelopmentHero({
   const tabs = useMemo(() => {
     const t: HeroTab[] = []
     if (assets.images.length > 0) t.push('gallery')
-    if (assets.floorplans.length > 0) t.push('floorplan')
     if (locationNotes || hasStation) t.push('location')
     return t
-  }, [assets.images.length, assets.floorplans.length, locationNotes, hasStation])
+  }, [assets.images.length, locationNotes, hasStation])
 
   const [tab, setTab] = useState<HeroTab>(tabs[0] ?? 'gallery')
   const [idx, setIdx] = useState(0)
@@ -41,30 +41,19 @@ export default function DevelopmentHero({
   const prev = useCallback(() => go(idx - 1), [go, idx])
   const next = useCallback(() => go(idx + 1), [go, idx])
 
-  // Floorplan tab has its own sequential gallery (same next/prev pattern).
-  const floorplans = assets.floorplans
-  const [fpIdx, setFpIdx] = useState(0)
-  const fpMulti = floorplans.length > 1
-  const goFp = useCallback((i: number) => setFpIdx(((i % floorplans.length) + floorplans.length) % floorplans.length), [floorplans.length])
-  const prevFp = useCallback(() => goFp(fpIdx - 1), [goFp, fpIdx])
-  const nextFp = useCallback(() => goFp(fpIdx + 1), [goFp, fpIdx])
-
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (tab === 'gallery' && multi) {
         if (e.key === 'ArrowLeft') prev()
         else if (e.key === 'ArrowRight') next()
-      } else if (tab === 'floorplan' && fpMulti) {
-        if (e.key === 'ArrowLeft') prevFp()
-        else if (e.key === 'ArrowRight') nextFp()
       }
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [tab, multi, fpMulti, prev, next, prevFp, nextFp])
+  }, [tab, multi, prev, next])
 
   if (tabs.length === 0) return null
-  const label: Record<HeroTab, string> = { gallery: 'Gallery', floorplan: 'Floorplan', location: 'Location' }
+  const label: Record<HeroTab, string> = { gallery: 'Gallery', location: 'Location' }
 
   // Full-bleed media band. Matches the /let hero exactly: a min-height: 72vh
   // container (was a fixed clamp(420px,66vh,760px) height) so the sharp,
@@ -141,21 +130,6 @@ export default function DevelopmentHero({
             </div>
           )}
         </>
-      )}
-
-      {tab === 'floorplan' && floorplans.length > 0 && (
-        <div style={{ ...bandStyle, background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(16px, 3vw, 40px)' }}>
-          <img key={floorplans[fpIdx]} src={floorplans[fpIdx]} alt={`${name} floor plan ${fpIdx + 1} of ${floorplans.length}`} style={{ maxWidth: '100%', maxHeight: '100%', height: 'auto', display: 'block' }} />
-          {fpMulti && (
-            <>
-              <HeroArrow dir="prev" onClick={prevFp} />
-              <HeroArrow dir="next" onClick={nextFp} />
-              <div aria-live="polite" style={{ position: 'absolute', right: 'clamp(16px, 4vw, 40px)', bottom: 16, zIndex: 2, fontSize: 11, letterSpacing: '0.14em', color: '#F2EFE9', background: 'rgba(40,35,28,0.55)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', padding: '6px 12px', borderRadius: 'var(--radius-pill)', border: '1px solid rgba(242,239,233,0.16)' }}>
-                {fpIdx + 1} / {floorplans.length}
-              </div>
-            </>
-          )}
-        </div>
       )}
 
       {tab === 'location' && (locationNotes || hasStation) && (

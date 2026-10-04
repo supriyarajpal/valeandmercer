@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { Reveal } from '@/components/Reveal'
 import DevelopmentHeroSlideshow from '@/components/DevelopmentHeroSlideshow'
 import DevelopmentStory from '@/components/DevelopmentStory'
-import DevelopmentCarousel from '@/components/DevelopmentCarousel'
 import DevelopmentGalleryButton from '@/components/DevelopmentGalleryButton'
 import DevelopmentEnquiryActions from '@/components/DevelopmentEnquiryActions'
 import { DevelopmentCard, type DevelopmentCardData } from '@/components/DevelopmentsListing'
@@ -89,7 +88,7 @@ export default function DevelopmentDetail({
         <PropertyInformation development={d} />
 
         {/* 7 — Quick links */}
-        <QuickLinks assets={assets} />
+        <QuickLinks />
 
         {/* 8 — Share row */}
         <ShareRow name={title} slug={d.slug} />
@@ -156,7 +155,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 15 — Specification (floor plans render as their own carousel below) */}
+        {/* 15 — Specification */}
         {d.specification && d.specification.length > 0 && (
           <Section eyebrow="Specification" title="Finish & fittings">
             <div style={{ display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
@@ -182,12 +181,9 @@ export default function DevelopmentDetail({
         )}
       </div>
 
-      {/* Floor plans as their OWN gallery — the same full-width carousel/lightbox
-          as the closing gallery (one plan filling the frame, arrows, counter),
-          on a white frame with no blurred backfill so the drawing reads cleanly. */}
-      {assets.floorplans.length > 0 && (
-        <DevelopmentCarousel id="floorplan-specs" images={assets.floorplans} name={`${title} floor plan`} eyebrow="Floor plans" frameBackground="#FFFFFF" blurredBackfill={false} />
-      )}
+      {/* Floor plans removed site-wide: no floor-plan section, carousel, or tab
+          on any /buy detail page. The `floorplans` data stays in data.json / the
+          asset manifest for internal reference but is intentionally never rendered. */}
 
       {/* 13 — Speak to our team banner */}
       <SpeakToTeam />
@@ -286,11 +282,12 @@ function PropertyInformation({ development }: { development: Development }) {
 /* 7 — Quick links                                                     */
 /* ------------------------------------------------------------------ */
 
-function QuickLinks({ assets }: { assets: DevelopmentAssets }) {
-  const links: Array<{ label: string; onClick?: () => void; href?: string }> = []
-  // The "Floor plan" jump targets the floor-plan carousel (id floorplan-specs).
-  if (assets.floorplans.length > 0) links.push({ label: 'Floor plan', onClick: () => scrollToId('floorplan-specs') })
-  links.push({ label: 'Enquire', onClick: () => scrollToId('enquiry-form') })
+function QuickLinks() {
+  // Floor plans were removed site-wide, so the only quick link is the jump to
+  // the enquiry form.
+  const links: Array<{ label: string; onClick?: () => void; href?: string }> = [
+    { label: 'Enquire', onClick: () => scrollToId('enquiry-form') },
+  ]
 
   return (
     <Reveal y={16} amount={0.2}>
