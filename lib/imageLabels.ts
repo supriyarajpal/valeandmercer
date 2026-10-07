@@ -39,35 +39,6 @@ export const IMAGE_ROOM_LABELS: Record<string, string> = {
   '/images/developments/burton-on-trent/11.jpg': 'Study',
 
   // ===========================================================================
-  // 3. Elizabeth House, Staines (25 images)
-  // ===========================================================================
-  '/images/developments/london-rd-staines/number3.png': 'Living Room',
-  '/images/developments/london-rd-staines/1.jpg': 'Exterior',
-  '/images/developments/london-rd-staines/2.jpg': 'Exterior',
-  '/images/developments/london-rd-staines/3.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/4.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/5.jpg': 'Kitchen',
-  '/images/developments/london-rd-staines/6.jpg': 'Bedroom',
-  '/images/developments/london-rd-staines/7.jpg': 'Bathroom',
-  '/images/developments/london-rd-staines/8.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/9.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/10.jpg': 'Kitchen',
-  '/images/developments/london-rd-staines/11.jpg': 'Bedroom',
-  '/images/developments/london-rd-staines/12.jpg': 'Bedroom',
-  '/images/developments/london-rd-staines/13.jpg': 'Bedroom',
-  '/images/developments/london-rd-staines/14.jpg': 'Bedroom',
-  '/images/developments/london-rd-staines/15.jpg': 'Bedroom',
-  '/images/developments/london-rd-staines/16.jpg': 'Bedroom',
-  '/images/developments/london-rd-staines/17.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/18.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/19.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/20.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/21.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/22.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/23.jpg': 'Living Room',
-  '/images/developments/london-rd-staines/24.jpg': 'Living Room',
-
-  // ===========================================================================
   // 4. Fountain Court, Birmingham (25 images)
   // ===========================================================================
   '/images/developments/5-steelhouse-ln-birmingham/number4.png': 'Living Room',

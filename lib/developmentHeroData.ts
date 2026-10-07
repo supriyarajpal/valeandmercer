@@ -8,7 +8,6 @@ import type { Development } from './developments'
 export const HERO_STREET_NAMES: Record<string, string> = {
   'leeds': 'Leeds',
   'burton-on-trent': 'New Street',
-  'london-rd-staines': 'London Road',
   '5-steelhouse-ln-birmingham': 'Steelhouse Lane',
   'nottingham': 'Nottingham',
   '31-castleward-blvd-derby': 'Castleward Boulevard',
@@ -33,14 +32,6 @@ export function getHeroStreetName(slug: string, dev?: Development): string {
 }
 
 export function getHeroPricingLines(slug: string, dev?: Development): string[] {
-  if (slug === 'london-rd-staines') {
-    return [
-      '1 bed apartments from £282,316',
-      '2 bed apartments from £403,670',
-      '3 bed apartments from £500,000',
-    ]
-  }
-
   if (slug === 'nottingham') {
     return ['Student living quarters from £99,995']
   }
@@ -101,13 +92,6 @@ export const CURATED_HERO_SLIDES: Record<string, string[]> = {
     '/images/developments/burton-on-trent/3.jpg',
     '/images/developments/burton-on-trent/4.jpg',
     '/images/developments/burton-on-trent/6.jpg',
-  ],
-  'london-rd-staines': [
-    '/images/developments/london-rd-staines/1.jpg',
-    '/images/developments/london-rd-staines/number3.png',
-    '/images/developments/london-rd-staines/5.jpg',
-    '/images/developments/london-rd-staines/6.jpg',
-    '/images/developments/london-rd-staines/7.jpg',
   ],
   '5-steelhouse-ln-birmingham': [
     '/images/developments/5-steelhouse-ln-birmingham/1.jpg',

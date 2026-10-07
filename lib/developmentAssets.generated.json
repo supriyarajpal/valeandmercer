@@ -27,37 +27,6 @@
     "floorplan": null,
     "brochure": "/brochures/burton-on-trent.pdf"
   },
-  "london-rd-staines": {
-    "images": [
-      "/images/developments/london-rd-staines/number3.png",
-      "/images/developments/london-rd-staines/1.jpg",
-      "/images/developments/london-rd-staines/2.jpg",
-      "/images/developments/london-rd-staines/3.jpg",
-      "/images/developments/london-rd-staines/4.jpg",
-      "/images/developments/london-rd-staines/5.jpg",
-      "/images/developments/london-rd-staines/6.jpg",
-      "/images/developments/london-rd-staines/7.jpg",
-      "/images/developments/london-rd-staines/8.jpg",
-      "/images/developments/london-rd-staines/9.jpg",
-      "/images/developments/london-rd-staines/10.jpg",
-      "/images/developments/london-rd-staines/11.jpg",
-      "/images/developments/london-rd-staines/12.jpg",
-      "/images/developments/london-rd-staines/13.jpg",
-      "/images/developments/london-rd-staines/14.jpg",
-      "/images/developments/london-rd-staines/15.jpg",
-      "/images/developments/london-rd-staines/16.jpg",
-      "/images/developments/london-rd-staines/17.jpg",
-      "/images/developments/london-rd-staines/18.jpg",
-      "/images/developments/london-rd-staines/19.jpg",
-      "/images/developments/london-rd-staines/20.jpg",
-      "/images/developments/london-rd-staines/21.jpg",
-      "/images/developments/london-rd-staines/22.jpg",
-      "/images/developments/london-rd-staines/23.jpg",
-      "/images/developments/london-rd-staines/24.jpg"
-    ],
-    "floorplan": "/images/developments/london-rd-staines/floorplan.jpg",
-    "brochure": "/brochures/london-rd-staines.pdf"
-  },
   "5-steelhouse-ln-birmingham": {
     "images": [
       "/images/developments/5-steelhouse-ln-birmingham/number4.png",

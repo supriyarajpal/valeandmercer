@@ -9,7 +9,6 @@ import type { NextConfig } from 'next'
 const BUY_SLUG_REDIRECTS: Array<[oldSlug: string, newSlug: string]> = [
   ['aire-gardens-leeds',            'leeds'],
   ['crown-works-burton',            'burton-on-trent'],
-  ['elizabeth-house-staines',       'london-rd-staines'],
   ['fountain-court-birmingham',     '5-steelhouse-ln-birmingham'],
   ['graduation-house-nottingham',   'nottingham'],
   ['mulberry-house-derby',          '31-castleward-blvd-derby'],
@@ -28,6 +27,20 @@ const nextConfig: NextConfig = {
         destination: `/buy/${newSlug}`,
         permanent: true,
       })),
+      // Elizabeth House / Staines was removed from /buy entirely. Its current
+      // slug (london-rd-staines) and its original slug (elizabeth-house-staines)
+      // both now redirect to the /buy listing instead of a deleted page, so
+      // neither legacy URL 404s or points at a broken link.
+      {
+        source: '/buy/elizabeth-house-staines',
+        destination: '/buy',
+        permanent: true,
+      },
+      {
+        source: '/buy/london-rd-staines',
+        destination: '/buy',
+        permanent: true,
+      },
       // The Rentals route (/rent) was merged into the Lettings page (/let).
       // Permanent redirect preserves any external links, bookmarks, or
       // stale search-engine results so they never hit a 404.
