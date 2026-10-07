@@ -4,11 +4,13 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 import { submitToWeb3Forms } from '@/lib/web3forms'
+import { useFormGuard } from '@/lib/formGuard'
 
 export default function RegisterPage() {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', interest: 'Renting', budget: '', consent: false })
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error' | 'rate-limited'>('idle')
   const [consentError, setConsentError] = useState(false)
+  const { honeypotField, precheck } = useFormGuard()
 
   const handleSubmit = async () => {
     if (!form.consent) {
@@ -17,6 +19,12 @@ export default function RegisterPage() {
     }
     setConsentError(false)
     setStatus('sending')
+    // Invisible anti-spam gate (honeypot + min-time + server-side rate limit)
+    // runs before any lead is sent. A tripped bot gets a silent fake-success;
+    // a rate-limited IP gets a generic notice. Genuine submits fall through.
+    const verdict = await precheck('Property Alert Registration')
+    if (verdict === 'spam') { setStatus('sent'); return }
+    if (verdict === 'rate-limited') { setStatus('rate-limited'); return }
     // Client-side submission to Web3Forms (its free tier is browser-only).
     // The access key resolves via lib/web3forms — env var when set, public
     // fallback otherwise — so it never depends on a build-time Vercel var.
@@ -137,6 +145,10 @@ export default function RegisterPage() {
               {status === 'error' && (
                 <p style={{ fontSize: 13, color: '#c0392b' }}>Something went wrong. Please try again.</p>
               )}
+              {status === 'rate-limited' && (
+                <p style={{ fontSize: 13, color: '#c0392b' }}>Too many submissions. Please try again in a few minutes.</p>
+              )}
+              {honeypotField}
               <StaggerItem>
                 <ConsentCheckbox
                   checked={form.consent}

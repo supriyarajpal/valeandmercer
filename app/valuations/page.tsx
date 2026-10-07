@@ -5,13 +5,15 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { Reveal, Stagger, StaggerItem } from '@/components/Reveal'
 import { submitToWeb3Forms } from '@/lib/web3forms'
+import { useFormGuard } from '@/lib/formGuard'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
 export default function ValuationsPage() {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '', postcode: '', propertyType: 'Flat', bedrooms: '2', reason: 'Looking to sell', consent: false })
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error' | 'rate-limited'>('idle')
   const [consentError, setConsentError] = useState(false)
+  const { honeypotField, precheck } = useFormGuard()
 
   const heroRef = useRef<HTMLElement>(null)
   const reduce = useReducedMotion()
@@ -26,6 +28,12 @@ export default function ValuationsPage() {
     }
     setConsentError(false)
     setStatus('sending')
+    // Invisible anti-spam gate (honeypot + min-time + server-side rate limit)
+    // runs before any lead is sent. A tripped bot gets a silent fake-success;
+    // a rate-limited IP gets a generic notice. Genuine submits fall through.
+    const verdict = await precheck('Valuation Request')
+    if (verdict === 'spam') { setStatus('sent'); return }
+    if (verdict === 'rate-limited') { setStatus('rate-limited'); return }
     // Client-side submission to Web3Forms (its free tier is browser-only).
     // The access key resolves via lib/web3forms — env var when set, public
     // fallback otherwise — so it never depends on a build-time Vercel var.
@@ -229,6 +237,8 @@ export default function ValuationsPage() {
                 <Reveal y={20} amount={0.2}>
                   <div style={{ borderTop: '0.5px solid var(--border)', paddingTop: 22 }}>
                     {status === 'error' && <p style={{ fontSize: 12, color: '#c0392b', marginBottom: 18 }}>Something went wrong. Please try again or call us directly.</p>}
+                    {status === 'rate-limited' && <p style={{ fontSize: 12, color: '#c0392b', marginBottom: 18 }}>Too many submissions. Please try again in a few minutes.</p>}
+                    {honeypotField}
                     <div style={{ marginBottom: 22 }}>
                       <ConsentCheckbox
                         checked={form.consent}

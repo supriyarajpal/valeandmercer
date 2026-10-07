@@ -7,6 +7,7 @@ import DevelopmentGalleryButton from '@/components/DevelopmentGalleryButton'
 import DevelopmentEnquiryActions from '@/components/DevelopmentEnquiryActions'
 import { DevelopmentCard, type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { submitToWeb3Forms } from '@/lib/web3forms'
+import { useFormGuard } from '@/lib/formGuard'
 import type { Development, SpecSection, LocationCta, FaqItem } from '@/lib/developments'
 import type { DevelopmentAssets } from '@/lib/developmentAssets'
 import { SUPPRESS_COMPLETION } from '@/lib/developmentDisplay'
@@ -372,13 +373,20 @@ function SpeakToTeam() {
 
 function EnquiryForm({ developmentName, slug }: { developmentName: string; slug: string }) {
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', phone: '', message: '', consent: false })
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error' | 'rate-limited'>('idle')
   const [consentError, setConsentError] = useState(false)
+  const { honeypotField, precheck } = useFormGuard()
 
   const handleSubmit = async () => {
     if (!form.consent) { setConsentError(true); return }
     setConsentError(false)
     setStatus('sending')
+    // Invisible anti-spam gate (honeypot + min-time + server-side rate limit)
+    // runs before any lead is sent. A tripped bot gets a silent fake-success;
+    // a rate-limited IP gets a generic notice. Genuine submits fall through.
+    const verdict = await precheck('New Homes Enquiry')
+    if (verdict === 'spam') { setStatus('sent'); return }
+    if (verdict === 'rate-limited') { setStatus('rate-limited'); return }
     const fullName = [form.firstName, form.lastName].filter(Boolean).join(' ').trim() || 'Unknown'
     try {
       const ok = await submitToWeb3Forms({
@@ -446,6 +454,8 @@ function EnquiryForm({ developmentName, slug }: { developmentName: string; slug:
             <textarea rows={4} style={{ ...inp, resize: 'vertical' }} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} onFocus={onFocus} onBlur={onBlur} />
           </div>
           {status === 'error' && <p style={{ fontSize: 13, color: '#c0392b' }}>Something went wrong. Please try again.</p>}
+          {status === 'rate-limited' && <p style={{ fontSize: 13, color: '#c0392b' }}>Too many submissions. Please try again in a few minutes.</p>}
+          {honeypotField}
           <div>
             <label style={{ display: 'flex', gap: 12, alignItems: 'flex-start', cursor: 'pointer' }}>
               <input type="checkbox" checked={form.consent} onChange={e => { setForm({ ...form, consent: e.target.checked }); if (e.target.checked) setConsentError(false) }} aria-invalid={consentError} style={{ marginTop: 3, width: 16, height: 16, accentColor: '#A0845C', flexShrink: 0, cursor: 'pointer' }} />

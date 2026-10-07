@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Reveal, Stagger, StaggerItem, useInViewSafe } from '@/components/Reveal'
 import { submitToWeb3Forms } from '@/lib/web3forms'
+import { useFormGuard } from '@/lib/formGuard'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -10,8 +11,9 @@ export default function GetInTouch() {
   const reduce = useReducedMotion()
   const { ref: headlineRef, inView: headlineInView } = useInViewSafe<HTMLHeadingElement>(0.3)
   const [form, setForm] = useState({ firstName: '', lastName: '', email: '', interest: 'Lettings enquiry', message: '', consent: false })
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error' | 'rate-limited'>('idle')
   const [consentError, setConsentError] = useState(false)
+  const { honeypotField, precheck } = useFormGuard()
 
   const handleSubmit = async () => {
     if (!form.consent) {
@@ -20,6 +22,12 @@ export default function GetInTouch() {
     }
     setConsentError(false)
     setStatus('sending')
+    // Invisible anti-spam gate (honeypot + min-time + server-side rate limit)
+    // runs before any lead is sent. A tripped bot gets a silent fake-success;
+    // a rate-limited IP gets a generic notice. Genuine submits fall through.
+    const verdict = await precheck('Homepage Enquiry')
+    if (verdict === 'spam') { setStatus('sent'); return }
+    if (verdict === 'rate-limited') { setStatus('rate-limited'); return }
     // Client-side submission to Web3Forms (its free tier is browser-only).
     // The access key resolves via lib/web3forms — env var when set, public
     // fallback otherwise — so it never depends on a build-time Vercel var.
@@ -183,6 +191,10 @@ export default function GetInTouch() {
                   {status === 'error' && (
                     <p style={{ fontSize: 13, color: '#c0392b' }}>Something went wrong. Please try again.</p>
                   )}
+                  {status === 'rate-limited' && (
+                    <p style={{ fontSize: 13, color: '#c0392b' }}>Too many submissions. Please try again in a few minutes.</p>
+                  )}
+                  {honeypotField}
                   <StaggerItem>
                     <ConsentCheckbox
                       checked={form.consent}
@@ -239,7 +251,7 @@ function ConsentCheckbox({ checked, onChange, error }: { checked: boolean; onCha
   )
 }
 
-function SubmitButton({ onClick, status }: { onClick: () => void; status: 'idle' | 'sending' | 'sent' | 'error' }) {
+function SubmitButton({ onClick, status }: { onClick: () => void; status: 'idle' | 'sending' | 'sent' | 'error' | 'rate-limited' }) {
   const disabled = status === 'sending'
   return (
     <button
