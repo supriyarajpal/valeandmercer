@@ -57,6 +57,26 @@ const nextConfig: NextConfig = {
         destination: '/sales',
         permanent: true,
       },
+      // The legal pages were republished at fuller, more descriptive routes
+      // carrying the current document versions (Privacy Notice v2.1, Cookie
+      // Policy v1.2, Terms of Use v1.1). The former short routes permanently
+      // redirect to the new canonical URLs so existing links, bookmarks, and
+      // indexed results resolve to the live versions instead of the older pages.
+      {
+        source: '/privacy',
+        destination: '/privacy-notice',
+        permanent: true,
+      },
+      {
+        source: '/cookies',
+        destination: '/cookie-policy',
+        permanent: true,
+      },
+      {
+        source: '/terms',
+        destination: '/website-terms-of-use',
+        permanent: true,
+      },
     ]
   },
 }

@@ -17,10 +17,11 @@ const navItems = [
 ]
 
 const legalItems = [
-  { label: 'Privacy Notice', href: '/privacy' },
-  { label: 'Cookie Policy', href: '/cookies' },
+  { label: 'Privacy Notice', href: '/privacy-notice' },
+  { label: 'Cookie Policy', href: '/cookie-policy' },
   { label: 'Complaints Policy', href: '/complaints' },
-  { label: 'Terms of Use', href: '/terms' },
+  { label: 'Terms of Use', href: '/website-terms-of-use' },
+  { label: 'Cookie Settings', href: '/cookie-policy' },
 ]
 
 

@@ -1,0 +1,231 @@
+import type { Metadata } from 'next'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+
+export const metadata: Metadata = {
+  title: 'Cookie Policy',
+  description: 'Details of every cookie used on the Vale and Mercer website, how to manage your preferences, and how to withdraw consent at any time.',
+  alternates: { canonical: '/cookie-policy' },
+}
+
+export default function CookiePolicyPage() {
+  const tableStyle:React.CSSProperties = {width:'100%',borderCollapse:'collapse',fontSize:'13px',marginBottom:'16px'}
+  const thStyle:React.CSSProperties = {padding:'10px 12px',textAlign:'left',background:'var(--border)',color:'var(--text)',fontWeight:500,borderBottom:'1px solid var(--border-strong)'}
+  const tdStyle:React.CSSProperties = {padding:'10px 12px',color:'var(--text-muted)',borderBottom:'0.5px solid var(--border)',verticalAlign:'top',lineHeight:1.7}
+  const h2Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'22px',fontWeight:300,color:'var(--text)',marginBottom:'14px',marginTop:'0'}
+  const h3Style:React.CSSProperties = {fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'18px',fontWeight:300,color:'var(--text)',marginBottom:'10px',marginTop:'20px'}
+  const pStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'12px'}
+  const liStyle:React.CSSProperties = {fontSize:'14px',lineHeight:1.9,color:'var(--text-muted)',marginBottom:'4px'}
+  const sectionStyle:React.CSSProperties = {marginBottom:'40px',paddingBottom:'40px',borderBottom:'0.5px solid var(--border)'}
+  const codeStyle:React.CSSProperties = {fontFamily:'monospace',fontSize:'12px',background:'var(--border)',padding:'2px 5px',borderRadius:'2px',color:'var(--text)'}
+
+  return (
+    <>
+      <Navbar />
+      <main style={{background:'var(--surface)',paddingTop:'120px',paddingBottom:'80px'}}>
+        <div style={{maxWidth:'860px',margin:'0 auto',padding:'0 20px'}}>
+          <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Legal</p>
+          <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'var(--text)',marginBottom:'8px'}}>Cookie Policy</h1>
+          <p style={{fontSize:'12px',color:'var(--text-faint)',marginBottom:'32px'}}>VM-CP-001 | Version 1.2 | October 2026 | Company Registration No: 17212434</p>
+
+          <div style={{background:'var(--border)',padding:'14px 20px',marginBottom:'40px',fontSize:'12px',color:'var(--text-muted)',lineHeight:1.8}}>
+            <p style={{fontWeight:500,color:'var(--text)',marginBottom:'6px',fontSize:'12px'}}>Jump to section:</p>
+            <div style={{display:'flex',flexWrap:'wrap',gap:'8px'}}>
+              {[['1','What Are Cookies'],['2','Who We Are'],['3','Legal Framework'],['4','Cookies We Use'],['5','Third Party Cookies'],['6','Managing Preferences'],['7','Consent and Withdrawal'],['8','International Transfers'],['9','Changes to This Policy'],['10','Contact and Complaints']].map(([id,label])=>(
+                <a key={id} href={'#cp-'+id} style={{fontSize:'11px',color:'#A0845C',textDecoration:'none',borderBottom:'1px solid #A0845C',paddingBottom:'1px'}}>{label}</a>
+              ))}
+            </div>
+          </div>
+
+          <div id="cp-1" style={sectionStyle}>
+            <h2 style={h2Style}>1. What Are Cookies?</h2>
+            <p style={pStyle}>A cookie is a small text file that is downloaded onto your device (computer, smartphone, or tablet) when you visit a website. Cookies allow the website to recognise your device on subsequent visits and to store certain information about your preferences or past actions on the site.</p>
+            <p style={pStyle}>Cookies and similar technologies, including tracking pixels, web storage, and device fingerprinting, are regulated in the United Kingdom by the <strong>Privacy and Electronic Communications Regulations 2003 (PECR)</strong>, as amended by the <strong>Data (Use and Access) Act 2025 (DUAA 2025)</strong>, alongside the <strong>UK General Data Protection Regulation (UK GDPR)</strong> and the <strong>Data Protection Act 2018</strong>.</p>
+            <p style={pStyle}>Vale and Mercer Ltd is committed to full compliance with these laws and to being transparent about every cookie or similar technology used on this website.</p>
+          </div>
+
+          <div id="cp-2" style={sectionStyle}>
+            <h2 style={h2Style}>2. Who We Are</h2>
+            <div style={{overflowX:'auto'}}>
+              <table style={tableStyle}>
+                <tbody>
+                  {[['Company','Vale and Mercer Ltd'],['Company Registration No','17212434'],['Data Controller','Vale and Mercer Ltd, registered with the ICO under UK GDPR'],['ICO Registration No','ZC155397'],['Cookie enquiries','privacy@valeandmercer.co.uk']].map(([k,v])=>(
+                    <tr key={k}><th style={{...thStyle,width:'35%'}}>{k}</th><td style={tdStyle}>{k==='Cookie enquiries'?<a href="mailto:privacy@valeandmercer.co.uk" style={{color:'#A0845C'}}>{v}</a>:v}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="cp-3" style={sectionStyle}>
+            <h2 style={h2Style}>3. The Legal Framework: What the Law Requires</h2>
+            <p style={pStyle}>Under Regulation 6 of PECR, Vale and Mercer Ltd must:</p>
+            <ol style={{paddingLeft:'20px',marginBottom:'12px'}}>
+              <li style={liStyle}><strong>Tell you</strong> that cookies are present on this website</li>
+              <li style={liStyle}><strong>Explain clearly</strong> what each cookie does and why</li>
+              <li style={liStyle}><strong>Obtain your prior consent</strong> before setting any cookie that is not strictly necessary for the website to function</li>
+            </ol>
+            <p style={pStyle}>The DUAA 2025, which came into force on 5 February 2026, introduced a limited exemption for qualifying first-party analytics cookies. Where Vale and Mercer Ltd rely on this exemption, it is stated explicitly in the cookie table below. Where it does not apply, in particular for all advertising and marketing cookies, <strong>explicit prior consent is mandatory, and no cookie is set until that consent is given.</strong></p>
+            <p style={pStyle}>Consent must be:</p>
+            <ul style={{paddingLeft:'20px',marginBottom:'12px'}}>
+              <li style={liStyle}><strong>Freely given:</strong> not pre-ticked, not bundled with Terms and Conditions, and with no service withheld if you decline</li>
+              <li style={liStyle}><strong>Specific:</strong> given for each non-essential cookie category separately</li>
+              <li style={liStyle}><strong>Informed:</strong> this Cookie Policy constitutes the required information</li>
+              <li style={liStyle}><strong>Unambiguous:</strong> a clear positive action (clicking "Accept Analytics" or "Accept Marketing" on the banner)</li>
+              <li style={liStyle}><strong>As easy to withdraw as to give:</strong> via the "Cookie Settings" link in the footer of every page</li>
+            </ul>
+            <div style={{background:'var(--border)',padding:'16px 20px',borderLeft:'3px solid #A0845C',marginTop:'12px'}}>
+              <p style={{...pStyle,marginBottom:'4px'}}><strong>Advertising and Marketing Cookies: Important Notice</strong></p>
+              <p style={{...pStyle,marginBottom:0}}>Vale and Mercer Ltd uses the Meta Pixel to measure its advertising and may run Google Ads campaigns. All advertising and remarketing cookies require your <strong>explicit prior consent</strong> under PECR. These cookies are <strong>blocked by default</strong> and only activated if you click "Accept Marketing" on the consent banner. If you decline, we set no Meta or Google advertising cookie. You may still see advertising, but it will not be personalised based on your previous visits to this website.</p>
+            </div>
+          </div>
+
+          <div id="cp-4" style={sectionStyle}>
+            <h2 style={h2Style}>4. Cookies Used on This Website</h2>
+            <p style={pStyle}>The cookies on the Vale and Mercer Ltd website fall into four categories. Only strictly necessary cookies are set without prior consent.</p>
+
+            <h3 style={h3Style}>4.1 Strictly Necessary Cookies</h3>
+            <p style={pStyle}>These cookies are essential for this website to function. They cannot be disabled. No consent is required. Blocking these cookies will prevent the website from working correctly.</p>
+            <div style={{overflowX:'auto',marginBottom:'16px'}}>
+              <table style={{...tableStyle,minWidth:'600px'}}>
+                <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Data Collected</th><th style={thStyle}>Duration</th></tr></thead>
+                <tbody>
+                  {[['__vercel_live_token','Vercel Inc (website platform)','Enables the website to be served correctly and securely from Vercel\'s infrastructure','Technical routing data only (no personal data identifiable to you)','Session (deleted on browser close)'],['_vercel_jwt','Vercel Inc','Authentication and security token for protected deployments','Encrypted token (no readable personal data)','Session'],['cookie_consent','Vale and Mercer Ltd','Stores your cookie consent preferences (what you accepted/declined) so you are not asked again on every page visit','Your consent choices: Accept/Decline per category; timestamp of consent','1 year']].map(([name,by,purpose,data,dur],i)=>(
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={tdStyle}>{data}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={pStyle}><strong>Vercel Note:</strong> Vale and Mercer Ltd's website is built and hosted using Vercel. As the infrastructure provider, Vercel may set technical cookies to deliver the website. Vercel operates as a data processor under a signed Data Processing Agreement. See <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>vercel.com/legal/privacy-policy</a> for Vercel's own data practices.</p>
+
+            <h3 style={h3Style}>4.2 Analytics Cookies</h3>
+            <p style={pStyle}>These cookies help Vale and Mercer Ltd understand how visitors use this website, for example, which pages are most visited, how long visitors stay, and whether they encountered any errors. This information is used solely to improve the website and the quality of service provided. It is never sold or shared with third parties for their own purposes.</p>
+            <p style={pStyle}><strong>DUAA 2025 Position:</strong> Vale and Mercer Ltd configure Google Analytics 4 to seek qualification for the DUAA 2025 analytics cookie exemption (Google Signals disabled, no cross-site tracking, no third-party data sharing, IP anonymisation enabled, minimum data retention). However, as the ICO has not yet issued finalised guidance for small businesses on this exemption, Vale and Mercer Ltd adopts the cautious approach and continues to obtain consent via the cookie banner as an additional compliance safeguard.</p>
+            <p style={pStyle}>If the law changes or ICO guidance confirms a broader exemption, this policy will be updated and, where appropriate, non-essential analytics cookies may be placed without consent strictly in line with that guidance.</p>
+            <div style={{overflowX:'auto',marginBottom:'16px'}}>
+              <table style={{...tableStyle,minWidth:'680px'}}>
+                <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Data Collected</th><th style={thStyle}>Duration</th><th style={thStyle}>Consent Required?</th></tr></thead>
+                <tbody>
+                  {[['_ga','Google Analytics 4 (Google LLC)','Distinguishes unique website visitors using a randomly generated identifier','Randomly generated visitor ID (not your name or email); pages visited; time spent; browser type; approximate city-level location (country/region, not precise address); device type','2 years','Yes: via banner'],['_ga_[ID]','Google Analytics 4','Stores and counts page views for this specific Vale and Mercer GA4 property','Session count; page view count; campaign source (if you arrived from a link)','2 years','Yes: via banner']].map(([name,by,purpose,data,dur,consent],i)=>(
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={tdStyle}>{data}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div style={{background:'var(--border)',padding:'14px 18px',marginBottom:'16px'}}>
+              <p style={{...pStyle,fontWeight:500,marginBottom:'6px'}}>GA4 Privacy Configuration applied by Vale and Mercer Ltd:</p>
+              <ul style={{paddingLeft:'18px',margin:0}}>
+                {['Google Signals: Disabled (no cross-device tracking)','Data sharing with Google products and services: Disabled','Data retention period: 2 months minimum (deleted automatically)','IP anonymisation: Enabled (your precise IP address is never stored)','Demographic and interest reporting: Disabled'].map(item=>(
+                  <li key={item} style={{...liStyle,marginBottom:'2px'}}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <h3 style={h3Style}>4.3 Advertising and Marketing Cookies</h3>
+            <p style={pStyle}>Vale and Mercer Ltd uses the Meta Pixel on this website to measure the results of its advertising and to show relevant Vale and Mercer Ltd advertisements to people who have visited this website when they use Facebook and Instagram ("remarketing"). If Vale and Mercer Ltd runs Google Ads campaigns, the Google cookies listed below are used for the same purposes on Google's advertising network.</p>
+            <div style={{background:'var(--border)',padding:'14px 18px',marginBottom:'12px',borderLeft:'3px solid #A0845C'}}>
+              <p style={{...pStyle,fontWeight:500,marginBottom:'4px'}}>Status</p>
+              <p style={{...pStyle,marginBottom:0}}>The Meta Pixel cookies described in this section are active on this website and are set only after you give consent. The Google Ads cookies described in this section are not currently active on this website and will only be used if and when Google Ads campaigns are launched. This Cookie Policy will be updated before any Google Ads cookie is activated, and where required by law, your consent will be obtained first.</p>
+            </div>
+            <p style={pStyle}><strong>These cookies are set only if you click "Accept Marketing" on the cookie consent banner. They are blocked by default.</strong> You may withdraw consent at any time via "Cookie Settings" in the footer.</p>
+            <div style={{overflowX:'auto',marginBottom:'16px'}}>
+              <table style={{...tableStyle,minWidth:'680px'}}>
+                <thead><tr><th style={thStyle}>Cookie Name</th><th style={thStyle}>Set By</th><th style={thStyle}>Purpose</th><th style={thStyle}>Data Collected</th><th style={thStyle}>Duration</th><th style={thStyle}>Consent Required?</th></tr></thead>
+                <tbody>
+                  {[['_fbp','Meta Pixel (Meta Platforms Ireland Limited)','Identifies your browser so that Meta can measure advertising performance and provide advertising and analytics services','Random browser identifier; pages visited and actions taken on this site (for example page views and form submissions); browser and device details','3 months','Yes: explicit consent required'],['_fbc','Meta Pixel (Meta Platforms Ireland Limited)','Set only if you arrive from a Facebook or Instagram advertisement. Stores the ad click identifier so we can measure which advertisements lead to an enquiry','Ad click identifier; timestamp of click','3 months','Yes: explicit consent required'],['_gcl_au','Google Ads (Google LLC)','Conversion tracking: links a click on a Vale and Mercer Ltd Google Ad to a subsequent action taken on this website (e.g. submitting a contact form or calling the number)','Click ID; timestamp of click; page where conversion occurred; anonymised conversion type','3 months','Yes: explicit consent required'],['IDE','Google LLC (DoubleClick)','Remarketing: records that you visited this website so that Google can show you Vale and Mercer Ltd advertisements when you visit other websites in the Google Display Network','Pseudonymous advertising ID linked to your browser or device; pages visited on this site; whether you interacted with a Vale and Mercer ad','13 months','Yes: explicit consent required'],['DSID','Google LLC (DoubleClick)','Used in conjunction with IDE to sync your advertising ID across Google\'s ad platforms','Advertising ID synchronisation data (no name, email, or address)','2 weeks','Yes: explicit consent required'],['__gads / __gpi','Google LLC','Stores advertising preferences and prevents the same ad from being shown too many times ("frequency capping")','Ad display history (pseudonymous; not linked to your name)','13 months','Yes: explicit consent required'],['_gac_[ID]','Google Ads (Google LLC)','Links Google Ads campaign data to conversions recorded in GA4, to measure which campaigns generate enquiries','Campaign identifier; click ID; timestamp','90 days','Yes: explicit consent required']].map(([name,by,purpose,data,dur,consent],i)=>(
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={tdStyle}><code style={codeStyle}>{name}</code></td><td style={tdStyle}>{by}</td><td style={tdStyle}>{purpose}</td><td style={tdStyle}>{data}</td><td style={{...tdStyle,color:'#A0845C'}}>{dur}</td><td style={{...tdStyle,fontWeight:500,color:'#A0845C'}}>{consent}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p style={pStyle}><strong>What the Google advertising cookies do NOT collect:</strong> They do not collect your name, email address, telephone number, postal address, property search history, or financial information. The identifiers they use are pseudonymous and linked to your browser or device, not to your identity, unless you have separately signed into a Google account. The Meta Pixel works differently. It records the pages you view and the actions you take on this website, such as submitting an enquiry form, and sends this to Meta with your browser identifier and IP address. If you are logged in to Facebook or Instagram, Meta may link this data to your account. Meta acts as a joint controller with us for this data.</p>
+            <p style={pStyle}><strong>Your right to opt out of Google's advertising personalisation entirely</strong> (across all websites, not just this one) can be exercised at <a href="https://myaccount.google.com/data-and-privacy" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>myaccount.google.com/data-and-privacy</a>, then select "Ad settings."</p>
+
+            <h3 style={h3Style}>4.4 Functionality Cookies</h3>
+            <p style={pStyle}><strong>Current status:</strong> No functionality cookies beyond the consent preference cookie (Section 4.1) are currently in use. This section will be updated if functionality cookies are introduced. Any future functionality cookies will be listed in an updated version of this policy and, where required by law, will only be set after you have given consent.</p>
+          </div>
+
+          <div id="cp-5" style={sectionStyle}>
+            <h2 style={h2Style}>5. Cookies Set by Third Parties</h2>
+            <p style={pStyle}>Some cookies are set by third-party organisations whose services are integrated into this website. Vale and Mercer Ltd does not control these third parties' broader cookie practices. The relevant third parties are:</p>
+            <div style={{overflowX:'auto'}}>
+              <table style={tableStyle}>
+                <thead><tr><th style={thStyle}>Third Party</th><th style={thStyle}>Role on This Site</th><th style={thStyle}>Their Privacy and Cookie Policy</th></tr></thead>
+                <tbody>
+                  {[['Google LLC','Analytics (GA4) and, if activated, advertising (Google Ads, DoubleClick)',['policies.google.com/privacy']],['Meta Platforms Ireland Limited','Advertising measurement and remarketing (Meta Pixel)',['facebook.com/privacy/policy','facebook.com/policies/cookies']],['Vercel Inc','Website infrastructure and hosting',['vercel.com/legal/privacy-policy']]].map(([party,role,links],i)=>(
+                    <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}><td style={{...tdStyle,fontWeight:500}}>{party as string}</td><td style={tdStyle}>{role as string}</td><td style={tdStyle}>{(links as string[]).map((link,j)=>(<span key={link}>{j>0?' and ':''}<a href={'https://'+link} target="_blank" rel="noreferrer" style={{color:'#A0845C',fontSize:'12px'}}>{link}</a></span>))}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div id="cp-6" style={sectionStyle}>
+            <h2 style={h2Style}>6. How to Manage Your Cookie Preferences</h2>
+            <h3 style={h3Style}>Via the Cookie Consent Banner</h3>
+            <p style={pStyle}>When you first visit the Vale and Mercer Ltd website, a cookie consent banner will be displayed. You can accept or decline each category of non-essential cookie separately. You can change your preferences at any time using the <strong>"Cookie Settings"</strong> link in the footer of every page on this website.</p>
+            <h3 style={h3Style}>Via Your Browser Settings</h3>
+            <p style={pStyle}>You can manage or delete cookies at any time through your browser settings. See your browser's help documentation for instructions.</p>
+            <p style={pStyle}>Deleting cookies will remove your stored consent preferences: the cookie consent banner will reappear on your next visit.</p>
+            <h3 style={h3Style}>Opting Out of Google Analytics</h3>
+            <p style={pStyle}>Install the <strong>Google Analytics Opt-Out Browser Add-on</strong> (free, provided by Google): <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>tools.google.com/dlpage/gaoptout</a>. This prevents your visits from being included in Google Analytics data across all websites that use GA.</p>
+            <h3 style={h3Style}>Opting Out of Google Advertising Personalisation</h3>
+            <p style={pStyle}>Visit <a href="https://myaccount.google.com/data-and-privacy" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>myaccount.google.com/data-and-privacy</a> and select "Ad settings" to turn off personalised advertising across Google's entire network, not just this website.</p>
+            <h3 style={h3Style}>Opting Out of Meta Advertising Personalisation</h3>
+            <p style={pStyle}>Visit <a href="https://facebook.com/adpreferences" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>facebook.com/adpreferences</a> and review your ad settings, or use the ad preferences in your Facebook or Instagram account to limit how Meta uses your activity for advertising. This applies across Meta's services, not just this website.</p>
+          </div>
+
+          <div id="cp-7" style={sectionStyle}>
+            <h2 style={h2Style}>7. Consent Record and Withdrawal</h2>
+            <p style={pStyle}>Vale and Mercer Ltd records your cookie consent choice via the <code style={codeStyle}>cookie_consent</code> cookie. This ensures you are not asked again on every visit.</p>
+            <p style={pStyle}><strong>To withdraw consent at any time:</strong></p>
+            <ul style={{paddingLeft:'20px',marginBottom:'12px'}}>
+              <li style={liStyle}>Click <strong>"Cookie Settings"</strong> in the footer and change your preferences: non-essential cookies will be deactivated immediately, or</li>
+              <li style={liStyle}>Clear all cookies in your browser settings, or</li>
+              <li style={liStyle}>Email <a href="mailto:privacy@valeandmercer.co.uk" style={{color:'#A0845C'}}>privacy@valeandmercer.co.uk</a> and we will arrange removal.</li>
+            </ul>
+            <p style={pStyle}>Withdrawing cookie consent does not affect any prior processing carried out while consent was in place.</p>
+          </div>
+
+          <div id="cp-8" style={sectionStyle}>
+            <h2 style={h2Style}>8. International Data Transfers</h2>
+            <p style={pStyle}>Google Analytics data (and Google Ads data, if activated) is processed by Google LLC, which is based in the United States of America. This transfer takes place under <strong>Standard Contractual Clauses (SCCs) with a UK Addendum</strong> approved by the Information Commissioner's Office, in accordance with UK GDPR Article 46(2)(c).</p>
+            <p style={pStyle}>Vercel Inc and Meta Platforms Ireland Limited (together with its United States group companies) may also process data in the United States, under equivalent approved transfer safeguards, including the UK-US data bridge where the recipient is certified.</p>
+            <p style={pStyle}>No other cookie-related personal data is transferred outside the United Kingdom.</p>
+          </div>
+
+          <div id="cp-9" style={sectionStyle}>
+            <h2 style={h2Style}>9. Changes to This Cookie Policy</h2>
+            <p style={pStyle}>Vale and Mercer Ltd will update this Cookie Policy before:</p>
+            <ul style={{paddingLeft:'20px',marginBottom:'12px'}}>
+              {['Any new cookie or tracking technology is added to the website','The purpose or duration of an existing cookie changes','A new advertising campaign is launched, or a new advertising tool, cookie or pixel is added','The law changes (including further ICO guidance under the DUAA 2025)'].map(item=>(
+                <li key={item} style={liStyle}>{item}</li>
+              ))}
+            </ul>
+            <p style={pStyle}>The version number and date at the top of this policy show when it was last updated. Where changes are material (e.g. a new category of cookie is added), the cookie consent banner will re-appear on your next visit to request updated consent.</p>
+          </div>
+
+          <div id="cp-10" style={sectionStyle}>
+            <h2 style={h2Style}>10. Contact and Complaints</h2>
+            <p style={pStyle}><strong>Data Protection enquiries and cookie questions:</strong><br/>Email: <a href="mailto:privacy@valeandmercer.co.uk" style={{color:'#A0845C'}}>privacy@valeandmercer.co.uk</a></p>
+            <p style={pStyle}><strong>Right to complain to the ICO:</strong></p>
+            <p style={pStyle}>If you believe Vale and Mercer Ltd has not handled your cookie data correctly, you have the right to lodge a complaint with the Information Commissioner's Office:</p>
+            <div style={{background:'var(--border)',padding:'16px 20px',fontSize:'13px',color:'var(--text-muted)',lineHeight:1.9}}>
+              <p>Website: <a href="https://ico.org.uk/make-a-complaint" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>ico.org.uk/make-a-complaint</a></p>
+              <p>Telephone: 0303 123 1113</p>
+              <p>Post: Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</p>
+            </div>
+          </div>
+
+          <div style={{borderTop:'0.5px solid var(--border)',paddingTop:'24px',fontSize:'11px',color:'var(--text-faint)',lineHeight:1.8}}>
+            <p>Vale and Mercer Ltd, Registered in England and Wales</p>
+            <p>Company Registration No: 17212434 | ICO Registration No: ZC155397</p>
+            <p>Document Reference: VM-CP-001 | Version 1.2 | October 2026</p>
+            <p>Legal basis: PECR 2003 (as amended), Data (Use and Access) Act 2025, UK GDPR Art. 6(1)(a), DPA 2018</p>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  )
+}
