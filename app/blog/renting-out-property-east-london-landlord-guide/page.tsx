@@ -194,7 +194,7 @@ export default function RentingEastLondonLandlordGuidePost() {
               ['Typical void period', 'Short; well-priced, well-presented flats can let within days given consistent demand'],
             ]}
           />
-          <p style={pStyle}>Furore, people also choose this area to move in because of:</p>
+          <p style={pStyle}>Furthermore, people also choose this area to move in because of:</p>
           <ul style={{ paddingLeft: 20, marginBottom: 24 }}>
             <li style={liStyle}>Zone 2 connectivity via the Elizabeth Line, Jubilee Line and DLR</li>
             <li style={liStyle}>Riverside amenities, retail, and leisure driving lifestyle appeal beyond commuting</li>
@@ -227,7 +227,7 @@ export default function RentingEastLondonLandlordGuidePost() {
             ]}
           />
           <Callout label="Tip">
-            Always request a full written fee schedule before instructing an agent. Ask specificallabout renewal fees, inventory costs, and EPC or gas safety certificate charges; these extras can add hundreds of pounds beyond the headline management percentage.
+            Always request a full written fee schedule before instructing an agent. Ask specifically about renewal fees, inventory costs, and EPC or gas safety certificate charges; these extras can add hundreds of pounds beyond the headline management percentage.
           </Callout>
         </Reveal>
 
@@ -275,7 +275,7 @@ export default function RentingEastLondonLandlordGuidePost() {
             Choosing between a long-term and short-term letting comes down to balancing flexible yields against local compliance limits. In London, short lets are strictly governed by the 90-night annual cap under the Deregulation Act 2015.
           </p>
           <p style={pStyle}>
-            Local authorities like Tower Hamlets actively monitor platforms and respond to breaches, making strict adherence essential. Consequently, landlords considering short-let apartments in Canary  should plan around the 90-night threshold before it becomes a compliance issue.
+            Local authorities like Tower Hamlets actively monitor platforms and respond to breaches, making strict adherence essential. Consequently, landlords considering short-let apartments in Canary Wharf should plan around the 90-night threshold before it becomes a compliance issue.
           </p>
           <p style={tableLabelStyle}>Table 3: Long Let vs Short Let in Canary Wharf</p>
           <Table

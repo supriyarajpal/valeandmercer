@@ -162,7 +162,8 @@ export default function E14DocklandsBuyerGuidePost() {
           <div style={calloutStyle}>
             <p style={{ fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', color: '#A0845C', fontWeight: 600, marginBottom: 10 }}>Key Takeaways</p>
             <ul style={{ paddingLeft: 20, margin: 0 }}>
-              <li style={liStyle}><strong>Location Permanence:</strong> Cosmetic interior flaws can be renovated, but a property&rsquo;s postcode permanently dictates daily commute times, school admissions, and resale liquidity. <strong>Peak-Hour Auditing:</strong> Always evaluate transit links, traffic congestion, and noise levels across three distinct windows: weekday morning rush hour, weekday evening, and weekend afternoon.</li>
+              <li style={liStyle}><strong>Location Permanence:</strong> Cosmetic interior flaws can be renovated, but a property&rsquo;s postcode permanently dictates daily commute times, school admissions, and resale liquidity.</li>
+              <li style={liStyle}><strong>Peak-Hour Auditing:</strong> Always evaluate transit links, traffic congestion, and noise levels across three distinct windows: weekday morning rush hour, weekday evening, and weekend afternoon.</li>
               <li style={liStyle}><strong>Valuation Drivers:</strong> Floor level, aspect views, remaining lease length (minimum 80+ years), and building service charges impact property valuation far more than raw square footage.</li>
             </ul>
           </div>
@@ -237,7 +238,7 @@ export default function E14DocklandsBuyerGuidePost() {
             <li style={liStyle}><strong>Annual Zone-Boundary Differential:</strong> Crossing from Zone 2 to Zone 3 can add over £350/year to an adult TfL Travelcard. Always verify whether your target station sits on a zone boundary before offering.</li>
           </ol>
           <Callout label="Tip">
-            Visit your shortlisted area at three different times: a weekday morning rush, a weekday evening, and a weekend afternoon. Traffic, noise, and footfall shift dramatically across these windows; a street that feels perfect on Sunday can feel v different on Monday at 8am. Never rely solely on mapping applications or estate agent brochures. Check active routes directly on the TfL Elizabeth Line Travel Guide or National Rail Enquiries.
+            Visit your shortlisted area at three different times: a weekday morning rush, a weekday evening, and a weekend afternoon. Traffic, noise, and footfall shift dramatically across these windows; a street that feels perfect on Sunday can feel very different on Monday at 8 am. Never rely solely on mapping applications or estate agent brochures. Check active routes directly on the TfL Elizabeth Line Travel Guide or National Rail Enquiries.
           </Callout>
         </Reveal>
 
@@ -299,7 +300,7 @@ export default function E14DocklandsBuyerGuidePost() {
             *Leases under 80 years historically trigger marriage value and mortgage restrictions; check remaining lease terms and post-2024 reform implications before offering.*
           </p>
           <Callout label="Use Case">
-            A buyer comparing two similar one-bed flats near Canary Wharf found a £40,000 valuation gap explained almost entirely by floor level and view, one overlooked the dock, the other faced a service yar. The higher floor also let faster.
+            A buyer comparing two similar one-bed flats near Canary Wharf found a £40,000 valuation gap explained almost entirely by floor level and view, one overlooked the dock, the other faced a service yard. The higher floor also let faster.
           </Callout>
         </Reveal>
 
