@@ -1,0 +1,7 @@
+# image-selects.tx, riors-gate-birmingham
+# One approved image per line, in DISPLAY ORDER.
+# Convention: communal -> living -> kitchen -> bedroom -> bathroom -> floor plan LAST.
+# Delete the lines you don't want; reorder the rest. Blank lines and #comments are ignored.
+# Filenames are relative to extracted-images/. Then run: scripts/publish-gallery.sh priors-gate-birmingham
+
+1.png

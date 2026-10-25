@@ -1,0 +1,18 @@
+Fix the scroll-triggered gallery grid (below the hero) on all /buy detail pages.
+
+1. IMAGE FIT. Stop force-cropping every tile to one shape. Use a masonry or
+   variable-height grid where each tile keeps close to the source image's
+   real aspect rati: SS columns or a grid with row-span sized to image
+   dimensions. No object-fit: cover cropping the subject out of a photo.
+
+2. INTERACTIVITY. Every tile in this grid opens the SAME lightbox built for
+   the hero gallery (prev/next, keyboard arrows, fullscreen, Esc/close,
+   position counter, scroll-position restore, licking any tile opens that
+   image already selected, not always image 1. Add a subtle hover state
+   (slight scale or brightness shift, the site's existing slow easing) so it
+   reads as clickable before the click.
+
+3. "VIEW ALL" stays, opening the same lightbox from image 1.
+
+Palette and easing unchanged. Reuse the same lightbox component built for the
+hero gallery rather than building a second one. Verify /let is unaffected.

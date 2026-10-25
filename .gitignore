@@ -41,3 +41,18 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# content/properties: raw source marketing binaries (brochures, CGIs, photos,
+# videos, drive-export zips) and the image-processing output. These are local
+# source material only, processed by scripts/ into public/images + the
+# developmentAssets manifest, which ARE committed. Recursive globs catch these
+# at any nesting depth / folder name (Images/, Show Apartment/, Drone Footage/,
+# Brochure-Investment Deck/, extracted-images/, ...). The small per-development
+# listing data (data.json, *.txt, *.md) stays tracked.
+content/properties/**/*.pdf
+content/properties/**/*.png
+content/properties/**/*.jpg
+content/properties/**/*.jpeg
+content/properties/**/*.zip
+content/properties/**/*.mp4
+content/properties/extracted/
