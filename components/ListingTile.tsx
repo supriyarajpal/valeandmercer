@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { getImageLabel } from '@/lib/imageLabels'
+import { altFor } from '@/lib/altText'
 
 // Shared listing card ("Design C"), used by BOTH the lettings grid (/let) and
 // the new-homes grid (/buy). The visual treatment is identical everywhere:
@@ -154,7 +155,7 @@ export default function ListingTile({ href, image, imageAlt, images, badge, eyeb
               <img
                 key={src}
                 src={src}
-                alt={isCover ? imageAlt : ''}
+                alt={altFor(src, isCover ? imageAlt : '')}
                 loading={isCover ? loading : 'eager'}
                 aria-hidden={!isCover}
                 style={{

@@ -9,7 +9,7 @@ const IMAGE = 'https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=14
 const DATE_PUBLISHED = '2026-05-01'
 
 export const metadata: Metadata = {
-  title: 'The London Property Market in 2026',
+  title: 'London Property Market 2026: Full Outlook and Trends',
   description: 'Vale and Mercer on the London property market in 2026. Supply is up, rates have settled, and buyers are moving again across prime London.',
   alternates: { canonical: SLUG },
   openGraph: {

@@ -2,6 +2,7 @@
 import Link from 'next/link'
 import { Reveal } from '@/components/Reveal'
 import { getPropertyBySlug, type Property } from '@/lib/properties'
+import { altFor } from '@/lib/altText'
 
 // The homepage showcase is a curated teaser, NOT the full inventory — three
 // hand-picked live listings that then hand off to /let. Selected by explicit
@@ -146,7 +147,7 @@ function FeaturedCard({ property, image, large }: { property: Property; image: s
       className={`vm-feat-card card-lift${large ? ' vm-feat-lg' : ''}`}
       aria-label={`${property.title}, ${property.area}`}
     >
-      <img className="vm-feat-img" src={image} alt={`${property.title}, ${property.area}`} loading="lazy" />
+      <img className="vm-feat-img" src={image} alt={altFor(image, `${property.title}, ${property.area}`)} loading="lazy" />
 
       {/* Minimal bottom-only scrim — just enough for the resting name to read,
           not the heavy double vignette used elsewhere. */}

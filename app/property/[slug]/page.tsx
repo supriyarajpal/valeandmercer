@@ -80,6 +80,7 @@ export default async function PropertyDetailPage(
         usingPlaceholder={isUsingPlaceholder(property.image)}
         title={property.title}
         area={property.area}
+        h1={property.seoH1}
         propertyRef={property.ref}
         listingType={property.listingType}
         rent={property.rent}

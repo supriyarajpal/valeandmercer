@@ -14,7 +14,7 @@ const TITLE       = "London's Rental Market in 2026: What's Actually Happening t
 const DESCRIPTION = "A calm, data-led look at London rents in mid-2026. UK average rent, London growth compared with other regions, supply, and time-to-let. Practical context from Vale and Mercer for anyone searching now."
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: "London Rental Market 2026: What's Happening to Rents",
   description: DESCRIPTION,
   alternates: { canonical: SLUG },
   openGraph: {

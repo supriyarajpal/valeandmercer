@@ -45,7 +45,7 @@ export default function ValuationStrip() {
         <div className="vm-ken-burns" style={{ position: 'absolute', inset: '-6%' }}>
           <img
             src="https://images.unsplash.com/photo-1573424334948-83945a5b2fa0?w=2000&q=85"
-            alt=""
+            alt="London Docklands Riverside Waterfront View"
             loading="lazy"
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', opacity: 0.45 }}
           />

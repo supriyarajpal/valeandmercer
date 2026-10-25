@@ -14,7 +14,7 @@ const TITLE       = "Getting Your Property Ready to Let: A Landlord's Checklist"
 const DESCRIPTION = 'A practical landlord checklist from Vale and Mercer. Photography, staging, compliance paperwork, pricing, and what a good letting agent should be doing on your behalf before your property goes to market.'
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: 'Landlord Checklist: Preparing Your Property to Let',
   description: DESCRIPTION,
   alternates: { canonical: SLUG },
   openGraph: {

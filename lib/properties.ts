@@ -50,6 +50,12 @@ export type Property = {
   status: PublicationStatus
   ref: string
   title: string
+  // Optional SEO heading override. When set, the property detail page
+  // renders this as its <h1> instead of the default `${title} · ${area}`
+  // composition. Used to give pages that would otherwise share an
+  // identical H1 a distinct, descriptive heading. Does NOT affect the
+  // card title, meta title, or the collapsed hero label.
+  seoH1?: string
   rent: string
   rentPW: string
   beds: number
@@ -299,6 +305,7 @@ export const properties: Property[] = [
     status: 'live',
     ref: '30967',
     title: 'Westferry Circus',
+    seoH1: 'Westferry Circus, E14 - 3rd Floor Two-Bed with Balcony',
     rent: '£4,078pcm',
     rentPW: '£941pw',
     beds: 2,
@@ -371,6 +378,7 @@ export const properties: Property[] = [
     status: 'live',
     ref: '30968',
     title: 'Westferry Circus',
+    seoH1: 'Westferry Circus, E14 - 10th Floor Two-Bed with Balcony',
     rent: '£4,160pcm',
     rentPW: '£960pw',
     beds: 2,
@@ -459,6 +467,7 @@ export const properties: Property[] = [
     status: 'live',
     ref: '31039',
     title: 'Westferry Circus',
+    seoH1: 'Westferry Circus, E14 - Interior-Designed 10th Floor Two-Bed',
     rent: '£4,377pcm',
     rentPW: '£1,010pw',
     beds: 2,

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { Reveal } from '@/components/Reveal'
 import { AREA_MAPS } from '@/components/areaMaps'
+import { altFor } from '@/lib/altText'
 
 // The neighbourhoods we actually operate in — the seven the /let listings
 // group by (see lib/properties.ts area fields: "E14 · Millwall",
@@ -144,8 +145,7 @@ function AreaPhoto({ image }: { image: string }) {
       {!failed && (
         <img
           src={image}
-          alt=""
-          aria-hidden
+          alt={altFor(image)}
           loading="lazy"
           onError={() => setFailed(true)}
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}

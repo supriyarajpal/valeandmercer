@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import type { GalleryPhoto } from '@/lib/properties'
+import { altFor } from '@/lib/altText'
 
 // Shared drop-shadow — every text element in the hero needs this so it
 // stays legible across bright/dark photographs. Mirrors the pattern used
@@ -34,6 +35,11 @@ export interface PropertyHeroCarouselProps {
   usingPlaceholder: boolean
   title: string
   area: string
+  // Optional explicit page H1. When set, it replaces the default
+  // `${title} · ${area}` composition in the <h1> only (the collapsed
+  // bottom-left label still uses title · area). Used to give otherwise
+  // duplicate-H1 pages a distinct, descriptive heading.
+  h1?: string
   propertyRef: string
   listingType: string
   rent: string
@@ -48,7 +54,7 @@ export interface PropertyHeroCarouselProps {
 export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
   const {
     heroImage, heroLabel, gallery, usingPlaceholder,
-    title, area, propertyRef, listingType, rent, rentPW,
+    title, area, h1, propertyRef, listingType, rent, rentPW,
     beds, baths, sqft, floor, available,
   } = props
 
@@ -175,7 +181,7 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
                 <img
                   src={img.src}
-                  alt={isCurrent && !usingPlaceholder ? `${title}, ${area}` : ''}
+                  alt={altFor(img.src, isCurrent && !usingPlaceholder ? `${title}, ${area}` : '')}
                   loading={i === 0 ? 'eager' : 'lazy'}
                   fetchPriority={i === 0 ? 'high' : 'auto'}
                   style={{
@@ -379,8 +385,12 @@ export default function PropertyHeroCarousel(props: PropertyHeroCarouselProps) {
                   textShadow: HERO_TEXT_SHADOW,
                 }}
               >
-                {title}
-                <span style={{ color: '#A0845C', fontStyle: 'italic' }}> · {area}</span>
+                {h1 ? h1 : (
+                  <>
+                    {title}
+                    <span style={{ color: '#A0845C', fontStyle: 'italic' }}> · {area}</span>
+                  </>
+                )}
               </h1>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '18px 28px', marginBottom: 14 }}>
