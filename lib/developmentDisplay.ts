@@ -22,7 +22,9 @@ export const SUPPRESS_UNITMIX = new Set<string>(['5-steelhouse-ln-birmingham'])
 // silently shipping a disputed date. Both figures are recorded here for the
 // record:
 //   • leeds — Q2 2028 (brochure) vs Q1 2028 (investor deck + spec sheet)
+//   • cuba-street-london, Q3 2029 to Q1 2030 (brochure) vs Q4 2029 to Q1 2030 (agent email)
 // Remove a slug here once the developer confirms the true completion date.
 export const SUPPRESS_COMPLETION = new Set<string>([
   'leeds',
+  'cuba-street-london',
 ])

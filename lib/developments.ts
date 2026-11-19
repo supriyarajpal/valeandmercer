@@ -98,6 +98,12 @@ export interface Development {
   unitMix?: UnitMixRow[]
   paymentStructure?: string
   warranty?: string
+  // Ongoing costs and purchase terms, rendered as Property Information rows when
+  // present (same omit-if-absent rule as every other field). Stored as free-text
+  // strings exactly as the source states them, never inferred.
+  serviceCharge?: string
+  groundRent?: string
+  reservationFee?: string
   headline?: string
   description?: string
   highlightedFeatures?: string[]

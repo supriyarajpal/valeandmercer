@@ -251,6 +251,9 @@ function PropertyInformation({ development }: { development: Development }) {
   // Completion hidden where the source documents disagree on the date.
   if (d.completion && !SUPPRESS_COMPLETION.has(d.slug)) rows.push({ label: 'Completion', value: String(d.completion) })
   if (d.totalUnits != null) rows.push({ label: 'Total units', value: String(d.totalUnits) })
+  if (d.serviceCharge) rows.push({ label: 'Service charge', value: d.serviceCharge })
+  if (d.groundRent) rows.push({ label: 'Ground rent', value: d.groundRent })
+  if (d.reservationFee) rows.push({ label: 'Reservation fee', value: d.reservationFee })
   if (d.paymentStructure) rows.push({ label: 'Payment structure', value: d.paymentStructure })
   if (d.warranty) rows.push({ label: 'Warranty', value: d.warranty })
 
