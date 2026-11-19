@@ -10,7 +10,7 @@
 #   content/properties/<slug>/extracted-images/contact-sheet.html   (review these)
 #   content/properties/<slug>/image-selects.txt                     (edit, then publish)
 #
-# Nothing is published to the live site here — that's publish-gallery.sh, run
+# Nothing is published to the live site here, that's publish-gallery.sh, run
 # after you've reviewed the contact sheet and pruned image-selects.txt.
 #
 set -euo pipefail
@@ -41,7 +41,7 @@ mkdir -p "$ROOT/content/properties/$slug"
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
-echo "→ $slug — extracting raster images from $(basename "$pdf")…"
+echo "→ $slug, extracting raster images from $(basename "$pdf")…"
 # -png: write every embedded image as PNG (soft masks composited into alpha),
 # so the filter below works on one consistent, lossless format.
 pdfimages -png "$pdf" "$tmp/img"

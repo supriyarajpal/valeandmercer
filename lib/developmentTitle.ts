@@ -1,14 +1,14 @@
 // Titles and publish-visibility for the New Homes pages.
 //
 // A development's public title is resolved in three tiers:
-//   1. an editorial `displayName` (data.json override), used verbatim — e.g.
+//   1. an editorial `displayName` (data.json override), used verbatim, e.g.
 //      "LS11 Leeds City Park";
-//   2. otherwise its street address + city + unit type — e.g.
+//   2. otherwise its street address + city + unit type, e.g.
 //      "8-10 Burton Street, Manchester · 1 bed apartments";
 //   3. otherwise its own `name` (e.g. "St. George's Terrace") for a development
 //      that has neither an override nor a street address.
 // Only a development with NONE of the three (no displayName, no address, no
-// name — in practice a nameless stub) is excluded from the site.
+// name, in practice a nameless stub) is excluded from the site.
 //
 // Pure functions of the Development record, so this module is safe to import
 // from both Server and Client Components.
@@ -31,7 +31,7 @@ function displayNameOf(dev: Development): string | null {
 // A development is published (gets a card and a detail page) when it has any
 // resolvable title: an editorial displayName, a street address, or at least its
 // own name. This replaces the old address-only gate so developments named by
-// hand — or carrying only their brochure name — still appear on the site.
+// hand, or carrying only their brochure name, still appear on the site.
 export function developmentIsPublished(dev: Development): boolean {
   return !!(displayNameOf(dev) || developmentHasAddress(dev) || (dev.name && dev.name.trim()))
 }
@@ -47,8 +47,8 @@ function bedsFromType(type?: string): number | null {
   return m ? parseInt(m[1], 10) : null
 }
 
-// The "unit type" phrase, e.g. "1 bed apartments", "studio–3 bed apartments",
-// or "apartments, duplexes & penthouses" — or NULL when the unitMix carries no
+// The "unit type" phrase, e.g. "1 bed apartments", "studio-3 bed apartments",
+// or "apartments, duplexes & penthouses", or NULL when the unitMix carries no
 // usable type/bedroom data (e.g. only raw sizes). Callers that need to OMIT the
 // field when empty (the listing card) use this directly; callers that need a
 // guaranteed string (the combined page title) use developmentUnitSummary below.
@@ -59,8 +59,8 @@ export function developmentUnitTypes(dev: Development): string | null {
     const min = Math.min(...beds)
     const max = Math.max(...beds)
     if (min === max) return `${min === 0 ? 'studio' : `${min} bed`} apartments`
-    if (min === 0) return `studio–${max} bed apartments`
-    return `${min}–${max} bed apartments`
+    if (min === 0) return `studio-${max} bed apartments`
+    return `${min}-${max} bed apartments`
   }
   // Non-bedroom unit types (e.g. Apartments / Duplexes / Penthouses).
   const types = [...new Set(rows.map(r => r.type).filter((t): t is string => !!t).map(t => t.toLowerCase()))]

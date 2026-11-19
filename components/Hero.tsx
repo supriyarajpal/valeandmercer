@@ -14,7 +14,7 @@ export default function Hero() {
   const firstLoad = useFirstLoad()
 
   // On first paint we sync with the curtain split (1.4s). On client-side
-  // navigation back to home, there's no curtain — fire immediately.
+  // navigation back to home, there's no curtain, fire immediately.
   const ENTER_DELAY = firstLoad ? 0.9 : 0.1
 
   // Single scroll progress bound to the hero. Progress = 0 when the
@@ -27,7 +27,7 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  // Depth layers, derived from the same progress — image L0 (barely
+  // Depth layers, derived from the same progress, image L0 (barely
   // moves), overlay L1, text block L2, CTA L3 (sticks then exits first).
   const parallaxMult = isMobile || reduce ? 0 : 1
   const RANGE = 360
@@ -57,7 +57,7 @@ export default function Hero() {
         flexDirection: 'column',
       }}
     >
-      {/* Layer 0 — background image. The world. */}
+      {/* Layer 0, background image. The world. */}
       <motion.div
         style={{
           position: 'absolute',
@@ -83,7 +83,7 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Layer 1 — atmospheric overlays. Pinned to the section so the
+      {/* Layer 1, atmospheric overlays. Pinned to the section so the
           warm tint always covers the image regardless of scroll. */}
       <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(52,48,43,0.58)' }} />
       <div
@@ -95,7 +95,7 @@ export default function Hero() {
         }}
       />
 
-      {/* Layer 2 — content block. Everything (eyebrow, headline, divider,
+      {/* Layer 2, content block. Everything (eyebrow, headline, divider,
           subtitle, tagline) sits as one cluster at the bottom, just above
           the CTA row. flex-end pushes the cluster down. */}
       <motion.div
@@ -109,7 +109,7 @@ export default function Hero() {
           width: '100%',
           // Top padding clears the fixed navbar using its real measured
           // height (--nav-total-height, set by Navbar.tsx) rather than a
-          // guessed vh value — a fixed guess fell short on short/wide
+          // guessed vh value, a fixed guess fell short on short/wide
           // viewports (e.g. 1280x720), letting the headline creep up
           // underneath the bar.
           padding: 'calc(var(--nav-total-height, 150px) + 24px) clamp(20px, 4vw, 40px) 24px',
@@ -155,7 +155,7 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Layer 3 — CTA. In flex flow under the content, never absolute.
+      {/* Layer 3, CTA. In flex flow under the content, never absolute.
           That way the content and the CTA can't overlap on any viewport,
           regardless of headline height or mobile browser chrome. */}
       <motion.div

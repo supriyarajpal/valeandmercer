@@ -5,11 +5,11 @@ usage: gallery_publish.py <data.json> <dest-dir> <url-prefix> <src1> <src2> ...
 
 For each source image, in order, writes a web-optimised copy to
 <dest-dir>/<N>.jpg (downscaled so the longest side is <= MAX px, re-encoded as
-sRGB JPEG so anything the browser couldn't render — CMYK/16-bit PNGs — becomes
+sRGB JPEG so anything the browser couldn't render, CMYK/16-bit PNGs, becomes
 displayable and much smaller). Then sets the property's data.json "gallery"
 array to the published paths, preserving every other field and key order.
 
-Called by publish-gallery.sh — not meant to be run by hand.
+Called by publish-gallery.sh, not meant to be run by hand.
 """
 import json
 import os

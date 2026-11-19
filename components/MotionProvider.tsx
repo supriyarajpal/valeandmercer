@@ -57,7 +57,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
-    // No explicit scrollTo here — it races with the user's first wheel/touch
+    // No explicit scrollTo here, it races with the user's first wheel/touch
     // input. Browser already loads at scroll 0 on fresh visits, and the
     // 'manual' flag stops auto-restore on future refreshes.
     const t = setTimeout(() => setFirstLoad(false), reduceMotion ? 0 : 800)
@@ -110,7 +110,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
       )}
 
       {/*
-        IMPORTANT — do NOT add `y`, `x`, `scale`, `rotate`, or any
+        IMPORTANT, do NOT add `y`, `x`, `scale`, `rotate`, or any
         transform-driven animate value to this wrapper. The descendant
         <Navbar> uses `backdrop-filter: blur(...)` for its frosted glass
         in the scrolled state, and per the CSS backdrop-filter spec a
@@ -119,7 +119,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
         / `animate={{ scale }}` etc. as inline `transform: ...` on the
         element, even when the value is the identity (`y: 0`). The
         previous `animate={{ opacity: 1, y: 0 }}` here is exactly what
-        broke the navbar's blur for Phases 9b→12 — the cream tint
+        broke the navbar's blur for Phases 9b→12, the cream tint
         rendered but the blur was a no-op, so cream-on-cream sections
         let the page text read straight through the bar. Opacity is
         safe; transform-axis properties are not.

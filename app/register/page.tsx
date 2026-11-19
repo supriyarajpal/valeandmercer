@@ -26,8 +26,8 @@ export default function RegisterPage() {
     if (verdict === 'spam') { setStatus('sent'); return }
     if (verdict === 'rate-limited') { setStatus('rate-limited'); return }
     // Client-side submission to Web3Forms (its free tier is browser-only).
-    // The access key resolves via lib/web3forms — env var when set, public
-    // fallback otherwise — so it never depends on a build-time Vercel var.
+    // The access key resolves via lib/web3forms, env var when set, public
+    // fallback otherwise, so it never depends on a build-time Vercel var.
     const fullName = [form.firstName, form.lastName].filter(Boolean).join(' ').trim() || 'Unknown'
     try {
       const ok = await submitToWeb3Forms({

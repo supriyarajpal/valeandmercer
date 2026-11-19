@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 // Full-bleed hero for /buy detail pages. The video (autoplay, muted, loop,
 // playsInline) fills the entire viewport; with no video, a full-bleed static
 // image gets the exact same treatment. No overlay text, no controls, no header
-// content — a clean cinematic first frame. The street-address title, description
+// content, a clean cinematic first frame. The street-address title, description
 // and key facts all live BELOW this, in the scrolling body.
 export default function DevelopmentHeroMedia({ videoSrc, image, alt, title }: { videoSrc?: string | null; image?: string; alt: string; title?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -29,7 +29,7 @@ export default function DevelopmentHeroMedia({ videoSrc, image, alt, title }: { 
         <img src={image} alt={alt} style={media} />
       ) : null}
 
-      {/* Small street-address title, bottom-left, on every property — whether the
+      {/* Small street-address title, bottom-left, on every property, whether the
           hero is a video or a static image. A subtle scrim confined to just this
           corner (radial, fading out well before mid-frame) lends contrast without
           dimming the media itself. The body <h1> remains the semantic title; this

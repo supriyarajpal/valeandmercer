@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
-// Inline disclosure pattern lifted from Navbar's mobile menu — same useState
+// Inline disclosure pattern lifted from Navbar's mobile menu, same useState
 // toggle + AnimatePresence + aria-expanded shape, scaled down to a
 // per-button flyout list. Kept inline (not a positioned popover) so mobile
 // tap behaviour is glitch-free and no positioning math is needed.
@@ -22,7 +22,7 @@ const AGENT_WA      = '447517696926'                          // wa.me uses coun
 
 // Stricter encoder for mailto: query params. encodeURIComponent by itself
 // leaves `!*'()` unencoded (they're "sub-delims" in RFC 3986), which some
-// mail clients — Outlook / Windows Mail in particular — refuse to parse.
+// mail clients, Outlook / Windows Mail in particular, refuse to parse.
 // Explicitly percent-encode those characters so the mailto works on every
 // mail app we've ever seen.
 function encodeMailtoParam(value: string): string {
@@ -36,8 +36,8 @@ function encodeMailtoParam(value: string): string {
 
 function buildMessage(intent: Intent, title: string, propertyRef: string, rent: string) {
   const noun          = intent === 'viewing' ? 'book a viewing for'          : 'make an offer on'
-  const subjectPrefix = intent === 'viewing' ? 'Book a Viewing'              : 'Enquiry – Make an Offer'
-  const subject = `${subjectPrefix} – ${title}, Ref ${propertyRef}`
+  const subjectPrefix = intent === 'viewing' ? 'Book a Viewing'              : 'Enquiry - Make an Offer'
+  const subject = `${subjectPrefix} - ${title}, Ref ${propertyRef}`
   // CRLF (\r\n) per RFC 6068 for mailto: body newlines. LF-only worked in
   // Chrome + macOS Mail but was silently dropped by some Outlook builds.
   const body    = `Hi, I'd like to ${noun} ${title} (Ref ${propertyRef}, ${rent}).\r\n\r\n`
@@ -118,7 +118,7 @@ function EnquiryDisclosure({
 
   const { subject, body } = buildMessage(intent, title, propertyRef, rent)
   const mailtoHref = `mailto:${AGENT_EMAIL}?subject=${encodeMailtoParam(subject)}&body=${encodeMailtoParam(body)}`
-  // wa.me uses ordinary URL encoding — strict mailto rules do not apply.
+  // wa.me uses ordinary URL encoding, strict mailto rules do not apply.
   const waHref     = `https://wa.me/${AGENT_WA}?text=${encodeURIComponent(body)}`
 
   const btnBase = {

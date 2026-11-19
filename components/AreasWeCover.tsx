@@ -5,7 +5,7 @@ import { Reveal } from '@/components/Reveal'
 import { AREA_MAPS } from '@/components/areaMaps'
 import { altFor } from '@/lib/altText'
 
-// The neighbourhoods we actually operate in — the seven the /let listings
+// The neighbourhoods we actually operate in, the seven the /let listings
 // group by (see lib/properties.ts area fields: "E14 · Millwall",
 // "E14 · Cubitt Town", "E16 · Canning Town", Canary Wharf, Royal Docks,
 // plus "E16 · Canning Town"/Jude Street and "E14 · Blackwall"/Newport Avenue).
@@ -29,7 +29,7 @@ const AREAS: Area[] = [
 const CYCLE_MS = 1700
 
 // A single COMPACT module (photo tile + colour panel side by side) that
-// auto-cycles through all seven areas in place — no longer seven full-height
+// auto-cycles through all seven areas in place, no longer seven full-height
 // scrolling rows. Both tiles crossfade to the next area together on a timer;
 // auto-advance pauses on hover and after manual navigation, and is disabled
 // entirely for prefers-reduced-motion (dots still work). All seven layers are
@@ -41,8 +41,7 @@ export default function AreasWeCover() {
 
   useEffect(() => {
     if (reduce || hovered) return
-    // `active` is in the dep list so the interval restarts on every advance —
-    // which also means a manual dot click resets the countdown (pause-then-
+    // `active` is in the dep list so the interval restarts on every advance,     // which also means a manual dot click resets the countdown (pause-then-
     // resume) rather than jumping again a fraction of a second later.
     const id = window.setInterval(() => setActive(a => (a + 1) % AREAS.length), CYCLE_MS)
     return () => window.clearInterval(id)
@@ -81,7 +80,7 @@ export default function AreasWeCover() {
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
           >
-            {/* Photo tile — seven crossfading layers. */}
+            {/* Photo tile, seven crossfading layers. */}
             <div className="vm-areas-tile">
               {AREAS.map((area, i) => (
                 <div key={area.slug} className="vm-areas-layer" aria-hidden={i !== active} style={{ opacity: i === active ? 1 : 0, zIndex: i === active ? 1 : 0 }}>
@@ -90,7 +89,7 @@ export default function AreasWeCover() {
               ))}
             </div>
 
-            {/* Colour panel tile — seven crossfading layers (colour + content). */}
+            {/* Colour panel tile, seven crossfading layers (colour + content). */}
             <div className="vm-areas-tile">
               {AREAS.map((area, i) => (
                 <div key={area.slug} className="vm-areas-layer" aria-hidden={i !== active} style={{ opacity: i === active ? 1 : 0, zIndex: i === active ? 1 : 0 }}>
@@ -100,7 +99,7 @@ export default function AreasWeCover() {
             </div>
           </div>
 
-          {/* Manual navigation — one dot per area, matching the site's dot
+          {/* Manual navigation, one dot per area, matching the site's dot
               indicators. Clicking jumps directly and resets the timer. */}
           <div style={{ display: 'flex', justifyContent: 'center', gap: 10, marginTop: 24 }}>
             {AREAS.map((area, i) => (
@@ -130,7 +129,7 @@ export default function AreasWeCover() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Photo side — a real photo drops in at /images/areas/[slug].[ext]     */
+/* Photo side, a real photo drops in at /images/areas/[slug].[ext]     */
 /* (matched by filename). Until then a clean solid-ink placeholder      */
 /* shows (no broken-image icon, no layout shift).                       */
 /* ------------------------------------------------------------------ */
@@ -156,7 +155,7 @@ function AreaPhoto({ image }: { image: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Colour panel side — area name (small caps, gold tick), the real      */
+/* Colour panel side, area name (small caps, gold tick), the real      */
 /* street-map fragment centred, and the tagline in light italic serif.  */
 /* ------------------------------------------------------------------ */
 
@@ -182,7 +181,7 @@ function AreaPanel({ area }: { area: Area }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* Street-map fragment — REAL OpenStreetMap road geometry for the area, */
+/* Street-map fragment, REAL OpenStreetMap road geometry for the area, */
 /* projected and simplified into SVG paths at author time (see          */
 /* components/areaMaps.ts, generated from the Overpass API). Thin light  */
 /* strokes so it reads as a minimal map, but every line position/angle   */

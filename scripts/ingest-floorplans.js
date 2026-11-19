@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //
-// ingest-floorplans.js — repeatable floor-plan ingestion.
+// ingest-floorplans.js, repeatable floor-plan ingestion.
 //
 // Workflow: drop floor-plan images into a property folder named
 //   floorplan_image_1.png, floorplan_image_2.png, …   (or floorplans_image_N.*)
@@ -10,8 +10,8 @@
 // treated as that property's COMPLETE floor-plan set and:
 //   1. sorted by trailing number,
 //   2. MOVED to content/properties/<slug>/images/floorplans/floorplan-N.<ext>
-//      (renumbered 1..N; the original extension is preserved — lossless),
-//   3. PUBLISHED to public/images/developments/<slug>/floorplans/ — ONLY public/
+//      (renumbered 1..N; the original extension is preserved, lossless),
+//   3. PUBLISHED to public/images/developments/<slug>/floorplans/, ONLY public/
 //      is web-served, so this is what the site actually loads,
 //   4. written into that property's data.json as the "floorplans" array.
 // A property with no floorplan_image_* files at its root is left untouched.
@@ -39,7 +39,7 @@ for (const slug of fs.readdirSync(CONTENT)) {
   if (slug === 'extracted' || !fs.statSync(dir).isDirectory()) continue
 
   const found = fs.readdirSync(dir).filter(f => RE.test(f)).sort((a, b) => trailing(a) - trailing(b))
-  if (found.length === 0) continue // nothing new dropped here — leave as-is
+  if (found.length === 0) continue // nothing new dropped here, leave as-is
 
   const srcDir = path.join(dir, 'images', 'floorplans')
   const pubDir = path.join(PUBLIC, slug, 'floorplans')
@@ -78,5 +78,5 @@ for (const slug of fs.readdirSync(CONTENT)) {
   touched++
 }
 console.log(touched
-  ? `Done — ${touched} propert${touched === 1 ? 'y' : 'ies'} updated. Now run \`npm run build\` (or restart the dev server) to see them.`
-  : 'No new floorplan_image_* / floorplans_image_* files found at any property root — nothing to ingest (existing floor plans are unchanged).')
+  ? `Done, ${touched} propert${touched === 1 ? 'y' : 'ies'} updated. Now run \`npm run build\` (or restart the dev server) to see them.`
+  : 'No new floorplan_image_* / floorplans_image_* files found at any property root, nothing to ingest (existing floor plans are unchanged).')

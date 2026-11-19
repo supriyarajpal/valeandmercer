@@ -2,13 +2,13 @@
 // contact, /register, /valuations).
 //
 // MUST run client-side. Web3Forms' FREE tier only accepts submissions from
-// a browser — a server-side POST is rejected with HTTP 403 "This method is
+// a browser, a server-side POST is rejected with HTTP 403 "This method is
 // not allowed. Use our API in client side ... (Pro plan is required)". So
 // these forms fetch Web3Forms directly from the browser; do NOT move this
 // behind a Route Handler unless the account is upgraded to Pro and the
 // server IP is allow-listed.
 //
-// The access key is NOT a secret — Web3Forms access keys are public routing
+// The access key is NOT a secret, Web3Forms access keys are public routing
 // IDs and their own docs put the key straight into the client HTML. We read
 // NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY when it's present (so it can be rotated
 // via env without a code change) but fall back to the literal below.
@@ -18,11 +18,11 @@
 // vars are inlined into the client bundle at build time, so a missing var
 // shipped `undefined` to the browser and the submit handler bailed before
 // making any request. Because the key is public anyway, hardcoding a
-// fallback removes that entire failure mode — the form works whether or not
+// fallback removes that entire failure mode, the form works whether or not
 // the Vercel env var is set.
 //
 // ROTATION WARNING: if this key is ever rotated (e.g. for security), update
-// this hardcoded fallback TOO, not just the Vercel env var — otherwise the
+// this hardcoded fallback TOO, not just the Vercel env var, otherwise the
 // old key below silently keeps handling requests and the rotation only
 // appears to have taken effect.
 export const WEB3FORMS_ACCESS_KEY =

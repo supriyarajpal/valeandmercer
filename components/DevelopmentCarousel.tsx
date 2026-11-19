@@ -60,12 +60,12 @@ export default function DevelopmentCarousel({
           onClick={() => setLightbox(idx)}
           style={{ position: 'relative', width: '100%', height: 'clamp(420px, 66vh, 760px)', overflow: 'hidden', background: frameBackground, cursor: 'zoom-in' }}
         >
-          {/* Blurred cover backfill — fills the frame with a soft glow of the
+          {/* Blurred cover backfill, fills the frame with a soft glow of the
               photo so the contained foreground never sits on a flat band. */}
           {blurredBackfill && (
             <img src={images[idx]} alt="" aria-hidden style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'blur(36px) brightness(0.82)', transform: 'scale(1.1)' }} />
           )}
-          {/* Sharp foreground — the WHOLE image, uncropped (contain via auto w/h). */}
+          {/* Sharp foreground, the WHOLE image, uncropped (contain via auto w/h). */}
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: blurredBackfill ? 0 : 'clamp(12px, 2.5vw, 36px)' }}>
             <img key={images[idx]} src={images[idx]} alt={`${name}, image ${idx + 1} of ${count}`} style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }} />
           </div>
@@ -79,7 +79,7 @@ export default function DevelopmentCarousel({
             </div>
           )}
 
-          {/* Explicit fullscreen affordance — the whole frame is already
+          {/* Explicit fullscreen affordance, the whole frame is already
               click-to-open, but this makes the option discoverable. */}
           <ExpandButton onClick={e => { e.stopPropagation(); setLightbox(idx) }} />
 
@@ -107,7 +107,7 @@ export default function DevelopmentCarousel({
         </div>
       </section>
 
-      {/* Thumbnail-grid overview — reachable only via the "View gallery" pill.
+      {/* Thumbnail-grid overview, reachable only via the "View gallery" pill.
           Selecting a tile syncs the carousel to that image and opens the shared
           single-image lightbox at that position. */}
       {grid && (

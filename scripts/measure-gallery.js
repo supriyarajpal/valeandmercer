@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //
-// measure-gallery.js — bake gallery image aspect ratios into a manifest.
+// measure-gallery.js, bake gallery image aspect ratios into a manifest.
 //
 // The /buy masonry (components/DevelopmentGallery.tsx) needs each image's real
 // aspect ratio to size tiles and pick 1- vs 2-column spans. Measuring in the

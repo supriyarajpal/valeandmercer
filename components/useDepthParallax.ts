@@ -2,14 +2,14 @@
 import { useEffect, useState, type RefObject } from 'react'
 import { useScroll, useTransform, useReducedMotion, type MotionValue } from 'framer-motion'
 
-// Depth speed multipliers — the further away, the slower it moves
+// Depth speed multipliers, the further away, the slower it moves
 // against the user's scroll. The differential is what makes it feel
 // like physical space rather than a sliding page.
 export const DEPTH = {
-  L0: 0.15, // sky / background — barely moves
+  L0: 0.15, // sky / background, barely moves
   L1: 0.35, // landscape / atmospheric overlay
   L2: 0.60, // subject / foreground content
-  L3: 1.00, // UI / text — sticks to scroll (reference frame)
+  L3: 1.00, // UI / text, sticks to scroll (reference frame)
 } as const
 
 export type DepthLayer = keyof typeof DEPTH

@@ -1,7 +1,7 @@
 'use client'
 import { Reveal } from '@/components/Reveal'
 
-// The development's description as PLAIN flowing text — no images inside the copy.
+// The development's description as PLAIN flowing text, no images inside the copy.
 // Sits in a fixed, left-aligned ~65ch column. (Photos live in the gallery
 // carousel near the top of the page, not in the description.)
 const COLUMN = '65ch'

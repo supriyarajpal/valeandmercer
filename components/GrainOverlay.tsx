@@ -1,7 +1,7 @@
 'use client'
 import { useIsMobile } from './useDepthParallax'
 
-// Film-grain overlay. Pure SVG via feTurbulence + data URI — no PNG fetch,
+// Film-grain overlay. Pure SVG via feTurbulence + data URI, no PNG fetch,
 // no JS, no canvas loop. Fixed full-viewport, ignores pointer events.
 //
 // PERFORMANCE NOTE

@@ -69,15 +69,14 @@ export interface FaqItem {
  *
  * Only `slug` (derived from the folder name) is guaranteed. Every content field
  * is optional by design: the ingestion pipeline OMITS any field the brochure
- * does not explicitly state — nothing is inferred, estimated, or back-filled —
- * so consumers must treat all content fields as possibly-absent.
+ * does not explicitly state, nothing is inferred, estimated, or back-filled,  * so consumers must treat all content fields as possibly-absent.
  */
 export interface Development {
   slug: string
   name?: string
   // Editorial override for the public title, hand-set in data.json. When present
   // it is used verbatim on the card and detail page INSTEAD of the address-based
-  // title (e.g. "LS11 Leeds City Park", "Mayfield City Centre — 1 & 2 Bedroom
+  // title (e.g. "LS11 Leeds City Park", "Mayfield City Centre, 1 & 2 Bedroom
   // Apartments"). Unlike the brochure-derived fields, this is a deliberate manual
   // name, so a development with a displayName is published even without an address.
   displayName?: string
@@ -86,7 +85,7 @@ export interface Development {
   locality?: string
   // UK county / region for the address line, e.g. "Surrey", "Staffordshire",
   // "Greater Manchester". Rendered as the third part of "[Street], [City],
-  // [County/Region]". Populated ONLY when a source document states it — never
+  // [County/Region]". Populated ONLY when a source document states it, never
   // inferred. There is deliberately no US-style "state" field in this model.
   region?: string
   price?: string
@@ -138,7 +137,7 @@ function loadDevelopments(): Development[] {
   try {
     entries = fs.readdirSync(PROPERTIES_DIR, { withFileTypes: true })
   } catch {
-    // content/properties/ absent (e.g. nothing ingested yet) — no developments.
+    // content/properties/ absent (e.g. nothing ingested yet), no developments.
     return []
   }
 
@@ -152,7 +151,7 @@ function loadDevelopments(): Development[] {
     try {
       raw = fs.readFileSync(dataPath, 'utf8')
     } catch {
-      continue // folder has no data.json yet — awaiting structuring, not an error
+      continue // folder has no data.json yet, awaiting structuring, not an error
     }
 
     const parsed = JSON.parse(raw) as Omit<Development, 'slug'>

@@ -11,7 +11,7 @@ const links = [
   { label: 'New Homes', href: '/buy' },
   { label: 'Blog', href: '/blog' },
   // Instant Valuation (automated online estimate) sits last so it pairs
-  // with the Book Valuation CTA that follows it — the two valuation
+  // with the Book Valuation CTA that follows it, the two valuation
   // actions (instant estimate vs. booking a full in-person valuation)
   // read as a group. Also mirrored into the mobile menu below via ...links.
   { label: 'Instant Valuation', href: '/instant-valuation' },
@@ -39,8 +39,8 @@ export default function Navbar() {
   const [hideEyebrow, setHideEyebrow] = useState(false)
   const [mobile, setMobile] = useState(true)
   // Tracks the active colour theme. In dark mode the page background behind
-  // a transparent (un-scrolled) navbar is dark on EVERY route — not just the
-  // darkHeroPages — so the "over cream → dark text" branch below would leave
+  // a transparent (un-scrolled) navbar is dark on EVERY route, not just the
+  // darkHeroPages, so the "over cream → dark text" branch below would leave
   // the wordmark/links invisible. Mirroring the <html data-theme> attribute
   // here lets those branches switch to light text. Reactive via a
   // MutationObserver so a ThemeToggle flip repaints the bar immediately.
@@ -50,7 +50,7 @@ export default function Navbar() {
   const firstLoad = useFirstLoad()
 
   const isDarkHero = pathIsDarkHero(pathname)
-  // The site eyebrow ("Est. London") is homepage-exclusive — it belongs to
+  // The site eyebrow ("Est. London") is homepage-exclusive, it belongs to
   // the home hero marque only. On individual property pages the eyebrow row
   // is repurposed as an inline "Back to Lettings" link (page back-nav). On
   // every other route the eyebrow row is not rendered at all.
@@ -88,7 +88,7 @@ export default function Navbar() {
   // Publishes the nav's real rendered height (nav rows + eyebrow,
   // whichever combination is currently showing) as a CSS var. Hero and
   // the pinned property showcase read it to reserve exactly enough
-  // clearance — a fixed px/vh guess drifts out of sync as the eyebrow
+  // clearance, a fixed px/vh guess drifts out of sync as the eyebrow
   // collapses on scroll.
   useEffect(() => {
     const el = navRef.current
@@ -113,7 +113,7 @@ export default function Navbar() {
   //
   // - When `scrolled` the navbar paints its own cream tint (navBg below)
   //   and provides contrast itself, so the backdrop is effectively cream
-  //   from the wordmark's point of view — text must be dark.
+  //   from the wordmark's point of view, text must be dark.
   // - When NOT scrolled the navbar is transparent, so we see whatever is
   //   behind it: the dark hero on dark-hero pages, the dark mobile-menu
   //   overlay if the menu is open, or the light page top otherwise.
@@ -129,13 +129,13 @@ export default function Navbar() {
   //
   // Set inline on <motion.nav> below (owned here, not in globals.css).
   // The dark tint reads correctly over both light sections and the dark
-  // hero — the backdrop is dark in both cases from the wordmark's point
+  // hero, the backdrop is dark in both cases from the wordmark's point
   // of view, so text stays LIGHT in the scrolled state regardless of
   // which section is behind the bar.
   //
   // Blur render requirement: no ancestor of <motion.nav> may hold a
   // lingering `transform`, `filter`, `will-change`, `perspective`, or
-  // `contain` at rest — those disable backdrop-filter on descendants
+  // `contain` at rest, those disable backdrop-filter on descendants
   // per spec. Phase 13 removed the ancestor `animate={{ y: 0 }}` in
   // MotionProvider that was breaking this. See the block comment above
   // that wrapper for the do-not-reintroduce warning.
@@ -146,7 +146,7 @@ export default function Navbar() {
   // Phase 15 target reads better over the blurred charcoal than the
   // Phase 7 values did over the raw dark hero photograph). Do NOT
   // collapse this back to a single boolean unless you also unify the
-  // values — top-of-page behaviour must remain byte-identical.
+  // values, top-of-page behaviour must remain byte-identical.
   // Glass depth: an inner top highlight (light catching the top edge) plus
   // a soft ambient drop shadow, so the scrolled bar reads as a pane of
   // frosted glass rather than a flat tint.
@@ -198,7 +198,7 @@ export default function Navbar() {
         <div style={{ padding: '18px var(--gutter)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           {/*
-            MAIN ROW — fixed-height (44px) flex with alignItems:'center'.
+            MAIN ROW, fixed-height (44px) flex with alignItems:'center'.
             Logo Link + right cluster/hamburger both centre on the row's
             cross-axis, so they sit on one shared horizontal line with
             equal space above and below the line. The 44px is the iOS
@@ -214,7 +214,7 @@ export default function Navbar() {
             scroll states, the eyebrow block has been lifted out to a
             sibling row below this one (see the EYEBROW ROW comment
             further down). Its content, collapse animation, and visible
-            position are all preserved — only its parent changes.
+            position are all preserved, only its parent changes.
           */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 44 }}>
             <motion.div initial={reduce ? false : { opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: enterDelay - 0.05, ease: [0.22, 1, 0.36, 1] }} style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -245,7 +245,7 @@ export default function Navbar() {
                 // The button is exactly 44 tall (border-box) and the bar stack
                 // is centred inside the button's content box via
                 // justifyContent:'center', so the bar stack's vertical centre
-                // sits on the row's vertical centre — same axis the logo Link
+                // sits on the row's vertical centre, same axis the logo Link
                 // (also alignItems:'center') is centred on. No marginTop hack
                 // needed; the older Phase 8 −12px pull-up has been removed.
               }}
@@ -266,7 +266,7 @@ export default function Navbar() {
               // cluster (≈ 38.7px tall, dominated by the Book Valuation pill)
               // and the logo Link (≈ 20.4px tall) both centre on the row's
               // cross-axis automatically. Earlier marginTop:-9 lift removed
-              // — no longer needed now that the eyebrow is a sibling row.
+              //, no longer needed now that the eyebrow is a sibling row.
             }}>
               {links.map(link => (
                 <motion.div key={link.href} variants={item}>
@@ -287,7 +287,7 @@ export default function Navbar() {
           )}
           </div>
           {/*
-            EYEBROW ROW — was previously the 2nd child of the logo column;
+            EYEBROW ROW, was previously the 2nd child of the logo column;
             lifted out so it doesn't drag on the main row's centring. Block
             content (gold bar + "Est. London" text) and collapse animation
             are byte-for-byte preserved; only the parent changed and the
@@ -295,7 +295,7 @@ export default function Navbar() {
             that no longer exists. Visible position from viewport top:
               old = 18 (nav pad) + 20.4 (logo) + 14 (col gap) + 32 = 84.4
               new = 18 (nav pad) + 44 (main row) + 22 (eyebrow mt) = 84
-            Off by 0.4px — within imperceptible. Left edge stays at
+            Off by 0.4px, within imperceptible. Left edge stays at
             var(--gutter) because both rows share the same padded wrapper.
           */}
           {/* Eyebrow row: homepage shows the "Est. London" marque; property

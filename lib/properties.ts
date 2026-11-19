@@ -35,7 +35,7 @@ export type Coordinates = {
 
 // A single gallery frame plus the room/area it shows. `label` drives the
 // bottom-left caption in the hero carousel (PropertyHeroCarousel) once the
-// gallery is opened — e.g. "Bedroom", "Kitchen". Omit it for shots that
+// gallery is opened, e.g. "Bedroom", "Kitchen". Omit it for shots that
 // don't cleanly fit one category (hallways-mid-shot, detail crops) rather
 // than guessing; the caption simply doesn't render for that frame.
 export type GalleryPhoto = {
@@ -77,12 +77,12 @@ export type Property = {
   nearby: NearbyPoint[]
   income: IncomeRequirements
   // `image` is the hero/first frame; `gallery` is every subsequent frame.
-  // PHOTO ORDER CONVENTION — order images (hero first, then gallery) by
+  // PHOTO ORDER CONVENTION, order images (hero first, then gallery) by
   // room in this fixed sequence so every property reads consistently:
   //   1. Living room  2. Kitchen  3. Bedroom  4. Bathroom/washroom
   //   5. Any other shots (private balcony/terrace, views, internal halls)
   //   6. Communal / building amenities (lobby, gym, pool, exterior)
-  //   7. Floor plan — ALWAYS last
+  //   7. Floor plan, ALWAYS last
   // Skip any category a property doesn't have; keep the rest in order.
   // (PropertyHeroCarousel also force-pushes floor-plan filenames last as a
   // safety net, but the array itself should already follow this order.)
@@ -94,12 +94,12 @@ export type Property = {
   teaser?: string
   featured?: boolean
   // Approximate street-level coordinates for the /let listings map. Not the
-  // exact door — coarse enough to feel appropriate for a rental listing.
+  // exact door, coarse enough to feel appropriate for a rental listing.
   coordinates?: Coordinates
 }
 
 // Property-page enquiry contact. Consumed only by the property detail
-// page / PropertyEnquiryActions — do NOT reuse for site-wide contact
+// page / PropertyEnquiryActions, do NOT reuse for site-wide contact
 // surfaces (footer, /about, etc.), which still route through
 // info@valeandmercer.co.uk. Personal name intentionally omitted from
 // the sidebar UI; role label ("Lettings · Vale and Mercer") carries
@@ -115,7 +115,7 @@ export const RENT_TERMS = {
   proofOfIncome: 'Required.',
 } as const
 
-// href="#" placeholders — swap in real hosted PDFs when the client provides them.
+// href="#" placeholders, swap in real hosted PDFs when the client provides them.
 export const RENT_GUIDES = [
   { label: 'How to Rent Guide', href: '#' },
   { label: "Renters' Rights Act Information Sheet", href: '#' },
@@ -125,7 +125,7 @@ const PLACEHOLDER_IMAGE = '/images/property-placeholder.svg'
 
 export const properties: Property[] = [
   // PUBLISHED per client override on 2026-07-08. Compliance data (EPC
-  // rating + council tax band) still outstanding — revisit with the
+  // rating + council tax band) still outstanding, revisit with the
   // landlord and fill in the `compliance` block once confirmed.
   {
     id: '33405',
@@ -145,7 +145,7 @@ export const properties: Property[] = [
     securityDeposit: '£6,875',
     sqft: null,
     floor: null,
-    epc: '—',
+    epc: '-',
     tags: [
       'Furnished', '3 beds', '3 baths', 'Concierge', 'Modern', 'Pool',
       'Great View', 'Gym', 'Open Plan Kitchen', 'Air Conditioning',
@@ -198,11 +198,11 @@ export const properties: Property[] = [
     featured: true,
   },
   // Added per client 2026-07-16. SEPARATE unit from the 3-bed marsh-wall-3bed-5958
-  // above — same street (Marsh Wall), different building/locality. The structured
+  // above, same street (Marsh Wall), different building/locality. The structured
   // header locality is E14 · Cubitt Town (authoritative), even though the body copy
   // loosely refers to Canary Wharf. Room order below is verified against the actual
   // uploaded photos, not the source filenames (the folder had 11 "bedroom*" files
-  // for a 2-bed — all confirmed genuine bedroom angles by eye). One photo (31.jpeg,
+  // for a 2-bed, all confirmed genuine bedroom angles by eye). One photo (31.jpeg,
   // originally "communal area.jpeg") is the local DLR/Underground station, not a
   // building communal area, so its label is intentionally omitted.
   {
@@ -231,11 +231,11 @@ export const properties: Property[] = [
       'Dishwasher', 'Freezer',
     ],
     headline: '2-Bedroom Flat to Rent in Cubitt Town | Marsh Wall, London | Available 21st August | 842 sq. ft. | 18th Floor | EPC: B | Council Tax Band: F',
-    description: 'This well-presented 2-bedroom, 2-bathroom flat is available to rent on Marsh Wall, moments from Canary Wharf. Occupying 842 sq. ft. on the 18th floor, the modern property benefits from big windows that draw in plenty of natural light, generous built-in storage and a private balcony with far-reaching views. It comes with air conditioning — a rare feature in London — and an open-plan kitchen fitted with integrated appliances including a dishwasher, freezer and washer/dryer. Residents further benefit from a gym, concierge, lift access and 24-hour secure facilities, and the flat sits just moments from Canary Wharf Underground station.',
+    description: 'This well-presented 2-bedroom, 2-bathroom flat is available to rent on Marsh Wall, moments from Canary Wharf. Occupying 842 sq. ft. on the 18th floor, the modern property benefits from big windows that draw in plenty of natural light, generous built-in storage and a private balcony with far-reaching views. It comes with air conditioning, a rare feature in London, and an open-plan kitchen fitted with integrated appliances including a dishwasher, freezer and washer/dryer. Residents further benefit from a gym, concierge, lift access and 24-hour secure facilities, and the flat sits just moments from Canary Wharf Underground station.',
     amenities: 'Air conditioning, a rare feature in London. Open-plan kitchen with integrated appliances including a dishwasher, freezer and washer/dryer. Private balcony/terrace. Lift access. Gym, concierge and 24-hour security.',
     keyFeatures: [
       'Private balcony with far-reaching views',
-      'Air conditioning — a rare feature in London',
+      'Air conditioning, a rare feature in London',
       'Open-plan kitchen with integrated dishwasher, freezer and washer/dryer',
     ],
     compliance: {
@@ -424,7 +424,7 @@ export const properties: Property[] = [
     // into the gallery. Renamed to westferry-circus-4160-6..26.jpeg and
     // added below; every label here (including 1-5) is transcribed from
     // actually viewing the photo, not guessed. #2 was previously mislabelled
-    // "Communal Area" — it's actually the riverside walk, moved into View.
+    // "Communal Area", it's actually the riverside walk, moved into View.
     // Order: living(6,7,8,9,10) · kitchen(11) · bedroom(12,13) · bath(14,15) ·
     // hallway(16,17) · view(18,2,19,20) · exterior(21,22) · communal(1,3,4,23-26)
     image: '/images/westferry-circus-4160/westferry-circus-4160-5.jpeg',
@@ -509,11 +509,11 @@ export const properties: Property[] = [
     },
     // Order below is verified against the actual photos, not the earlier
     // "Order: ..." comment, which turned out badly scrambled on re-check
-    // (e.g. it called 6.jpeg "living" — it's the floor plan; it called
-    // 4.jpeg the floor plan — it's a balcony shot; several "communal"
+    // (e.g. it called 6.jpeg "living", it's the floor plan; it called
+    // 4.jpeg the floor plan, it's a balcony shot; several "communal"
     // entries were actually bedrooms/exteriors/a view). #13, #21 and #23
     // are the same building-exterior photo uploaded three times; #17 and
-    // #25 are the same cinema-room shot twice — kept as-is since the
+    // #25 are the same cinema-room shot twice, kept as-is since the
     // duplicates were already in the source upload, not introduced here.
     // Order: living(18,19,8,3) · kitchen(12) · bedroom(1,2,7,11,14) ·
     // bath(10) · balcony(4,16) · hallway(9) · view(20,27) ·
@@ -555,7 +555,7 @@ export const properties: Property[] = [
   },
   // Added per client 2026-07-11. Room order below is verified against the
   // actual uploaded photos (not the original pre-upload plan, which
-  // turned out stale from image 4 onward — e.g. it claimed no floor plan
+  // turned out stale from image 4 onward, e.g. it claimed no floor plan
   // was supplied, but 14.jpeg is one).
   {
     id: '30717',
@@ -636,7 +636,7 @@ export const properties: Property[] = [
   },
   // Added per client 2026-07-11. Room order below is verified against the
   // actual uploaded photos (not the original pre-upload plan, which
-  // turned out stale from image 3 onward — e.g. it placed the floor plan
+  // turned out stale from image 3 onward, e.g. it placed the floor plan
   // at 8, but it's actually 9).
   {
     id: '30752',
@@ -664,10 +664,10 @@ export const properties: Property[] = [
     ],
     headline: '2-Bedroom Flat to Rent in Royal Docks | Silvertown Square, London | Available 2nd September | 786 sq. ft. | EPC: B | Council Tax Band: B',
     description: 'This well-presented 2-bedroom, 2-bathroom flat is available to rent in the Royal Docks on Silvertown Square. Occupying 786 sq. ft., the modern property benefits from big windows, high ceilings and generous built-in storage. It comes with a private balcony and a fully fitted open-plan kitchen with integrated appliances, and sits just moments from Canning Town Underground station.',
-    amenities: 'Fully fitted open-plan kitchen with integrated dishwasher, freezer and washer/dryer. Private balcony. Lift access. HMO licence in place — student-friendly.',
+    amenities: 'Fully fitted open-plan kitchen with integrated dishwasher, freezer and washer/dryer. Private balcony. Lift access. HMO licence in place, student-friendly.',
     keyFeatures: [
       'Private balcony',
-      'HMO licence — student-friendly',
+      'HMO licence, student-friendly',
       'Open-plan kitchen with integrated dishwasher, freezer and washer/dryer',
     ],
     compliance: {
@@ -712,7 +712,7 @@ export const properties: Property[] = [
   // (authoritative structured header), forming its own neighbourhood group on
   // /let; the body copy loosely refers to Poplar (adjacent E14). Size not
   // supplied in the source, so sqft is intentionally left null (not guessed).
-  // Deposits follow the site-wide convention — holding = 1 week's rent (£577),
+  // Deposits follow the site-wide convention, holding = 1 week's rent (£577),
   // security = 5 weeks' rent (£2,885). Photo order verified against the actual
   // uploaded folder: living → kitchen → bedroom → bathroom → hallway →
   // building exterior; no floor plan supplied.
@@ -785,17 +785,17 @@ export const properties: Property[] = [
       { src: '/images/newport-avenue-2bed-2500/13.jpeg', label: 'Hallway' },
       { src: '/images/newport-avenue-2bed-2500/14.jpeg', label: 'Building Exterior' },
     ],
-    teaser: 'Furnished 2-bed in Blackwall with large windows, high ceilings, concierge and parking — moments from Westferry DLR and Canary Wharf.',
+    teaser: 'Furnished 2-bed in Blackwall with large windows, high ceilings, concierge and parking, moments from Westferry DLR and Canary Wharf.',
   },
   // Added per client 2026-07-17. Ref 30678. Locality is E16 · Canning Town
-  // (Canning Town South ward) — the same neighbourhood group as Bywell Place
+  // (Canning Town South ward), the same neighbourhood group as Bywell Place
   // on /let, so both list together under one "Canning Town" heading (the
   // grouping key is the segment after "·"). The source header didn't print a
   // locality name, but Custom House/Canning Town South is confirmed by the
   // Jude Street, E16 geocode. Security deposit was garbled in the source brief;
   // derived from the site-wide convention (5 weeks' rent = £3,400; holding =
   // 1 week = £680, as supplied). The uploaded folder DOES include a floor plan
-  // (contradicting the pre-upload note of "no floor plan") — placed last per
+  // (contradicting the pre-upload note of "no floor plan"), placed last per
   // convention. One exterior shot in the folder was an exact duplicate and
   // was dropped.
   {
@@ -869,7 +869,7 @@ export const properties: Property[] = [
       { src: '/images/jude-street-2bed-2947/14.jpeg', label: 'Building Exterior' },
       { src: '/images/jude-street-2bed-2947/15.jpeg', label: 'Floor Plan' },
     ],
-    teaser: 'Furnished 2-bed on the third floor with a private balcony, open-plan kitchen, lift and concierge — moments from Canning Town station.',
+    teaser: 'Furnished 2-bed on the third floor with a private balcony, open-plan kitchen, lift and concierge, moments from Canning Town station.',
   },
 ]
 
@@ -877,7 +877,7 @@ export function getPropertyBySlug(slug: string): Property | undefined {
   return properties.find(p => p.slug === slug)
 }
 
-// generateStaticParams uses this — draft pages still get an SSG detail
+// generateStaticParams uses this, draft pages still get an SSG detail
 // page so an internal preview URL exists, they're just hidden from the
 // public listing grid via `getLiveProperties()` below.
 export function getAllPropertySlugs(): string[] {

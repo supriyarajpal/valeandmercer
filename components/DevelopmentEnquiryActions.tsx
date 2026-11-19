@@ -4,8 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 
 // New-homes enquiry actions. This is the SAME call/email/WhatsApp disclosure
 // pattern used on the lettings property page (components/PropertyEnquiryActions):
-// identical flyout mechanics, contact channels, encoding rules and styling —
-// only the button copy and the pre-filled message are tuned for a development
+// identical flyout mechanics, contact channels, encoding rules and styling, // only the button copy and the pre-filled message are tuned for a development
 // sale rather than a rental. Kept as its own component so the lettings one is
 // untouched. As on the lettings pages, only the public agency number is shown;
 // no personal/direct number is ever exposed.
@@ -32,13 +31,13 @@ function buildMessage(intent: Intent, name: string, price?: string) {
   const priceNote = price && price.trim() && price.trim() !== 'Register your interest' ? ` (${price})` : ''
   if (intent === 'viewing') {
     return {
-      subject: `Book a Viewing – ${name}`,
+      subject: `Book a Viewing - ${name}`,
       // CRLF per RFC 6068 for mailto: body newlines.
       body: `Hi, I'd like to book a viewing at ${name}${priceNote}.\r\n\r\n`,
     }
   }
   return {
-    subject: `New Homes Enquiry – ${name}`,
+    subject: `New Homes Enquiry - ${name}`,
     body: `Hi, I'd like more information about ${name}${priceNote}.\r\n\r\n`,
   }
 }

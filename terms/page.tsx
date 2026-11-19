@@ -65,7 +65,7 @@ export default function TermsPage() {
 
           <div id="s6" style={sectionStyle}>
             <h2 style={h2Style}>6. Intellectual Property</h2>
-            <p style={pStyle}>All content on this website — including text, photographs, property descriptions, graphics, and the Vale and Mercer Ltd name and branding — is owned by or licensed to Vale and Mercer Ltd and is protected by copyright and other intellectual property laws.</p>
+            <p style={pStyle}>All content on this website, including text, photographs, property descriptions, graphics, and the Vale and Mercer Ltd name and branding, is owned by or licensed to Vale and Mercer Ltd and is protected by copyright and other intellectual property laws.</p>
             <p style={pStyle}>You may view and print pages from this website for your own personal, non-commercial use only. You must not copy, reproduce, republish, or distribute any content from this website for commercial purposes without our prior written permission.</p>
           </div>
 
@@ -112,7 +112,7 @@ export default function TermsPage() {
           </div>
 
           <div style={{borderTop:'0.5px solid #DDD7CC',paddingTop:'24px',fontSize:'11px',color:'#9A9188',lineHeight:1.8}}>
-            <p>Vale and Mercer Ltd — Registered in England and Wales</p>
+            <p>Vale and Mercer Ltd, Registered in England and Wales</p>
             <p>Company Registration No: 17212434 | ICO Registration No: ZC155397</p>
           </div>
         </div>

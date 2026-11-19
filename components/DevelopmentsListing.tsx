@@ -13,7 +13,7 @@ export type DevelopmentCardData = {
   slug: string
   /** Card heading: displayName, else street + city, else the development name. */
   title: string
-  /** Unit-type phrase, e.g. "1–3 bed apartments"; omitted when not stated. */
+  /** Unit-type phrase, e.g. "1-3 bed apartments"; omitted when not stated. */
   unitSummary?: string
   /** Price figure, or "Register your interest" / undefined where none is stated. */
   price?: string

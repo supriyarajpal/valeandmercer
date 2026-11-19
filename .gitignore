@@ -58,3 +58,7 @@ content/properties/**/*.jpeg
 content/properties/**/*.zip
 content/properties/**/*.mp4
 content/properties/extracted/
+
+# City landing source images (originals + credits). Converted to WebP under
+# public/images/cities/ by scripts/build-city-images.mjs, which IS committed.
+content/city-images/

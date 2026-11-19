@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 
 // Full-bleed autoplay video hero for /buy detail pages whose property has a
 // video (public/videos/<slug>.mp4). Rendered INSTEAD of the static image hero
-// (DevelopmentHero) as the first thing on the page; the rest of the page — incl.
-// the scroll gallery — follows unchanged. Muted + playsInline so mobile browsers
+// (DevelopmentHero) as the first thing on the page; the rest of the page, incl.
+// the scroll gallery, follows unchanged. Muted + playsInline so mobile browsers
 // permit autoplay. Palette/easing use existing tokens only.
 
 const HERO_TEXT_SHADOW = '0 2px 18px rgba(20,17,14,0.75), 0 1px 3px rgba(20,17,14,0.55)'
@@ -41,7 +41,7 @@ export default function DevelopmentVideoHero({ src, title, poster }: { src: stri
         playsInline
         preload="auto"
         poster={poster}
-        aria-label={`${title} — video tour`}
+        aria-label={`${title}, video tour`}
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
       >
         <source src={src} type="video/mp4" />

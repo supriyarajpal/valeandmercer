@@ -56,7 +56,7 @@ export default function AboutStrip() {
   )
 }
 
-// Arc entrance — translateY from below + slight rotate that eases to 0.
+// Arc entrance, translateY from below + slight rotate that eases to 0.
 // Each card arrives along a small arc, like settling into place.
 function ArcCard({ title, href, desc, index }: { title: string; href: string; desc: string; index: number }) {
   const reduce = useReducedMotion()

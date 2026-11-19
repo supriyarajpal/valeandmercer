@@ -1,0 +1,33 @@
+{
+  "h1": "Discover Exceptional Living in London.",
+  "intro": "Our London development is on the Isle of Dogs, 7 minutes on foot from Canary Wharf station.",
+  "cta": "Explore Properties in London",
+  "about": [
+    "Once purely a financial district, Canary Wharf has grown into a residential neighbourhood with parks, riverside walks, schools, and a retail centre.",
+    "It has strong amenity density with supermarkets, a growing restaurant scene, gyms, and green squares within a genuinely walkable estate.",
+    "The Elizabeth line made travelling to the West End and Heathrow quicker."
+  ],
+  "around": {
+    "heading": "Around the Isle of Dogs",
+    "items": [
+      { "place": "Canary Wharf Estate", "note": "The first buildings, around Canada Square, with the easiest reach of the office." },
+      { "place": "Wood Wharf", "note": "The newest district in the estate, with buildings opening in phases from 2019." },
+      { "place": "South Quay and Marsh Wall", "note": "A mix of established and newer towers just south of the estate." },
+      { "place": "Millwall and Cubitt Town", "note": "Quieter, more residential Isle of Dogs streets, a short walk or DLR ride from the Wharf." },
+      { "place": "Canning Town", "note": "On the opposite side of the river, reachable by the Jubilee line and DLR." }
+    ]
+  },
+  "why": {
+    "heading": "The London Lifestyle",
+    "label": "from Canary Wharf, door to door",
+    "items": [
+      { "title": "Liverpool Street", "text": "Elizabeth line, 6 min" },
+      { "title": "London Bridge", "text": "Jubilee line, 6 min" },
+      { "title": "Bank", "text": "DLR, 11 min" },
+      { "title": "Tottenham Court Road", "text": "Elizabeth line, 11 min" },
+      { "title": "London City Airport", "text": "DLR, 14 min" },
+      { "title": "Heathrow Terminals 2 and 3", "text": "Elizabeth line, 45 min" }
+    ]
+  },
+  "finalHeading": "Find Your Place in London."
+}

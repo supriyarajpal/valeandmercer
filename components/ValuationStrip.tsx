@@ -5,7 +5,7 @@ import { Reveal, useInViewSafe } from '@/components/Reveal'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-// Ken Burns CSS animation — scoped via a unique class so it only runs
+// Ken Burns CSS animation, scoped via a unique class so it only runs
 // here. 12-second loop, completely independent of scroll.
 const KEN_BURNS_CSS = `
 @keyframes vm-ken-burns {
@@ -37,7 +37,7 @@ export default function ValuationStrip() {
     >
       <style dangerouslySetInnerHTML={{ __html: KEN_BURNS_CSS }} />
 
-      {/* Solid dark cocoon — hard edges. The merging into neighbour
+      {/* Solid dark cocoon, hard edges. The merging into neighbour
           sections is handled by dark fades in those sections, so the
           boundary is dark→dark with no visible lighter strip. */}
       <div aria-hidden style={{ position: 'absolute', inset: 0, background: '#34302B', zIndex: 0 }} />
@@ -66,7 +66,7 @@ export default function ValuationStrip() {
           <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 28, opacity: 0.9 }}>Free Valuation</p>
         </Reveal>
 
-        {/* Big cinematic headline — forces a pause */}
+        {/* Big cinematic headline, forces a pause */}
         <h2 style={{
           color: '#F2EFE9',
           fontSize: 'clamp(44px, 8vw, 108px)',
@@ -109,7 +109,7 @@ function DriftWord({ text, delay, fromX, italic, gold }: { text: string; delay: 
       style={{
         display: 'inline-block',
         verticalAlign: 'baseline',
-        // No overflow clip — italic glyphs (?, f, h) extend above
+        // No overflow clip, italic glyphs (?, f, h) extend above
         // the line-box and the entry animation uses opacity to mask
         // the drift-in, so we don't need a hard clip.
       }}

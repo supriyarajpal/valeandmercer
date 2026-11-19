@@ -3,7 +3,7 @@
 // This is deliberately thin: it knows how to authenticate, how to attach a
 // bearer token to a request, and how to hit the one search endpoint we care
 // about right now (PublishedListings). It makes NO assumptions about the
-// shape of the data Rex returns — responses are typed as `unknown` by default
+// shape of the data Rex returns, responses are typed as `unknown` by default
 // so callers are forced to look at the real payload before mapping anything.
 // (See scripts/rex-dry-run.ts, which exists purely to print that raw shape.)
 //
@@ -71,7 +71,7 @@ export class RexClient {
     }
     if (authenticated) {
       if (!this.token) {
-        throw new Error('RexClient: not authenticated — call login() first')
+        throw new Error('RexClient: not authenticated, call login() first')
       }
       headers.Authorization = `Bearer ${this.token}`
     }
@@ -126,7 +126,7 @@ export class RexClient {
    * Search published listings. POST /v1/rex/PublishedListings/search.
    * `criteria` is the raw request body passed straight through to Rex (e.g.
    * `{ limit: 5 }`, or `{ criteria: [...], order_by: {...} }`). Typed as
-   * `unknown` by default — inspect the real response before mapping fields.
+   * `unknown` by default, inspect the real response before mapping fields.
    */
   async searchPublishedListings<T = unknown>(
     criteria: Record<string, unknown> = {},

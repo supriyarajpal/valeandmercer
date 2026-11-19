@@ -6,18 +6,18 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 // itself stays client-side against Web3Forms (free-tier requirement); this hook
 // layers the three invisible checks on top:
 //
-//   1. HONEYPOT    — a hidden, off-screen "website" input no real user fills.
-//   2. RATE LIMIT  — delegated to the server guard at /api/forms/guard.
-//   3. MIN TIME    — submissions completed in under 3s are treated as bots.
+//   1. HONEYPOT, a hidden, off-screen "website" input no real user fills.
+//   2. RATE LIMIT, delegated to the server guard at /api/forms/guard.
+//   3. MIN TIME, submissions completed in under 3s are treated as bots.
 //
 // Protections 1 and 3 run here so a tripped bot gets a silent fake-success
 // (the caller sets status 'sent' without ever POSTing the lead). Protection 2
 // is the one that MUST be server-side, so it lives behind the Route Handler.
 
 export type GuardVerdict =
-  | 'ok' // genuine-looking submission — proceed to Web3Forms
-  | 'spam' // honeypot filled or submitted too fast — caller should fake success silently
-  | 'rate-limited' // server guard blocked this IP — caller should show a generic error
+  | 'ok' // genuine-looking submission, proceed to Web3Forms
+  | 'spam' // honeypot filled or submitted too fast, caller should fake success silently
+  | 'rate-limited' // server guard blocked this IP, caller should show a generic error
 
 // Shortest time a human plausibly needs to complete any of our multi-field
 // forms. Bots fill and submit near-instantly.
@@ -36,13 +36,13 @@ export function useFormGuard() {
 
   const precheck = useCallback(
     async (formType: string): Promise<GuardVerdict> => {
-      // 1 — honeypot: any value means a field invisible to humans got filled.
+      // 1, honeypot: any value means a field invisible to humans got filled.
       if (honeypot.trim() !== '') return 'spam'
-      // 3 — minimum time-on-form. A null timestamp means the mount effect has
+      // 3, minimum time-on-form. A null timestamp means the mount effect has
       // not run yet (i.e. essentially t=0), which is also too fast.
       const started = renderedAt.current
       if (started === null || Date.now() - started < MIN_FILL_MS) return 'spam'
-      // 2 — server-side rate limit. Fail OPEN on any network/guard error so a
+      // 2, server-side rate limit. Fail OPEN on any network/guard error so a
       // guard outage never silently drops a genuine lead; Web3Forms remains the
       // source of truth for delivery.
       try {
@@ -53,7 +53,7 @@ export function useFormGuard() {
         })
         if (res.status === 429) return 'rate-limited'
       } catch {
-        /* network error reaching the guard — fail open */
+        /* network error reaching the guard, fail open */
       }
       return 'ok'
     },

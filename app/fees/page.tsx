@@ -42,7 +42,7 @@ export default function FeesPage() {
           <p style={{fontSize:'10px',letterSpacing:'0.28em',textTransform:'uppercase',color:'#A0845C',marginBottom:'12px'}}>Transparency</p>
           <h1 style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'clamp(32px,5vw,48px)',fontWeight:300,color:'var(--text)',marginBottom:'8px'}}>Services and Fees</h1>
           <p style={{fontSize:'12px',color:'var(--text-faint)',marginBottom:'8px'}}>Vale and Mercer Ltd. Straightforward, transparent pricing. No hidden charges, no surprises.</p>
-          <p style={{fontSize:'12px',color:'var(--text-faint)',marginBottom:'32px',fontStyle:'italic'}}>All fees stated on this page are not subject to VAT. Vale and Mercer Ltd is not currently VAT registered. This page will be updated promptly if our VAT status changes.</p>
+          <p style={{fontSize:'12px',color:'var(--text-faint)',marginBottom:'32px',fontStyle:'italic'}}>All fees stated on this page are subject to VAT at the standard rate of 20%.</p>
 
           <div style={sectionStyle}>
             <h2 style={h2Style}>Landlord Services</h2>
@@ -66,6 +66,7 @@ export default function FeesPage() {
                 </tbody>
               </table>
             </div>
+            <p style={{...pStyle,fontStyle:'italic',fontSize:'12px',color:'var(--text-faint)'}}>20% VAT will be added</p>
 
             <h3 style={h3Style}>Tenant Find Only</h3>
             <p style={pStyle}>For landlords who are confident managing their own tenancy once a quality tenant is in place.</p>
@@ -104,6 +105,7 @@ export default function FeesPage() {
                 </tbody>
               </table>
             </div>
+            <p style={{...pStyle,fontStyle:'italic',fontSize:'12px',color:'var(--text-faint)'}}>20% VAT will be added</p>
             <p style={{...pStyle,fontStyle:'italic',fontSize:'12px',color:'var(--text-faint)'}}>Certificate fees cover arranging the inspection, the contractor&apos;s work, and issuing the certificate.</p>
 
             <h3 style={h3Style}>Additional Landlord Services</h3>
@@ -117,7 +119,7 @@ export default function FeesPage() {
                     ['Check-out report','Independent condition report at the end of a tenancy','from £100'],
                     ['Refurbishment and works management','Overseeing works between tenancies, from sourcing contractors to sign-off','10% of works value'],
                     ['Non-resident landlord handling','Managing HMRC returns and annual certificate for landlords living overseas','£100 per year'],
-                    ['Rent protection and legal expenses cover','Optional cover against tenant rent arrears, including legal costs for possession','By enquiry — please contact us'],
+                    ['Rent protection and legal expenses cover','Optional cover against tenant rent arrears, including legal costs for possession','By enquiry, please contact us'],
                   ].map(([s,d,f],i)=>(
                     <tr key={i} style={{background:i%2===0?'var(--surface)':'var(--surface-3)'}}>
                       <td style={{...tdStyle,fontWeight:500}}>{s}</td>
@@ -128,6 +130,7 @@ export default function FeesPage() {
                 </tbody>
               </table>
             </div>
+            <p style={{...pStyle,fontStyle:'italic',fontSize:'12px',color:'var(--text-faint)'}}>20% VAT will be added</p>
           </div>
 
           <div style={sectionStyle}>
@@ -135,7 +138,7 @@ export default function FeesPage() {
             <div style={{background:'#34302B',padding:'20px 24px',marginBottom:'16px',display:'inline-block',borderRadius:'var(--radius-lg)'}}>
               <p style={{fontSize:'13px',color:'rgba(242,239,233,0.6)',marginBottom:'4px'}}>Fee</p>
               <p style={{fontFamily:'Cormorant Garamond,Georgia,serif',fontSize:'28px',fontWeight:300,color:'#F2EFE9'}}>1.5% of the agreed sale price (indicative; please contact us to discuss)</p>
-              <p style={{fontSize:'11px',color:'rgba(242,239,233,0.4)',marginTop:'4px'}}>Not subject to VAT</p>
+              <p style={{fontSize:'11px',color:'rgba(242,239,233,0.4)',marginTop:'4px'}}>20% VAT will be added</p>
             </div>
             <p style={pStyle}>Vale and Mercer Ltd accepts residential sales instructions on a selective basis. Please contact us to discuss your requirements.</p>
           </div>
@@ -177,7 +180,7 @@ export default function FeesPage() {
                 </tbody>
               </table>
             </div>
-            <p style={pStyle}><strong style={{fontWeight:500,color:'var(--text)'}}>Ending your tenancy.</strong> All assured tenancies are now periodic — there is no fixed term. You may end your tenancy at any time by giving at least two months&apos; written notice. Rent remains payable to the end of your notice period. We do not charge any fee for ending a tenancy.</p>
+            <p style={pStyle}><strong style={{fontWeight:500,color:'var(--text)'}}>Ending your tenancy.</strong> All assured tenancies are now periodic, there is no fixed term. You may end your tenancy at any time by giving at least two months&apos; written notice. Rent remains payable to the end of your notice period. We do not charge any fee for ending a tenancy.</p>
             <p style={{...pStyle,fontStyle:'italic',fontSize:'12px',color:'var(--text-faint)'}}>All other fees including referencing, credit checks, administration, check-out, and renewal fees are prohibited under the Tenant Fees Act 2019. Vale and Mercer Ltd does not charge tenants for any of these.</p>
           </div>
 

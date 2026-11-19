@@ -11,7 +11,7 @@ function neighbourhoodOf(area: string): string {
   return parts[parts.length - 1] || area
 }
 
-// Live lettings browse experience — an area-grouped listing grid of the
+// Live lettings browse experience, an area-grouped listing grid of the
 // currently-available rentals. (Previously the standalone /rent page, folded
 // into /let. The location map and the "coming soon" teaser cards were removed.)
 export default function LettingsListings() {
@@ -25,7 +25,7 @@ export default function LettingsListings() {
   //
   // Grouping key is the neighbourhood (segment after "·"), EXCEPT the two
   // client-added listings below, which are shown as their own street-named
-  // groups per explicit client request — so Jude Street stays separate from
+  // groups per explicit client request, so Jude Street stays separate from
   // Bywell Place's "Canning Town" group instead of merging into it, and Newport
   // Avenue reads as "Newport Avenue" rather than its "Blackwall" locality. Each
   // card still carries its own locality tag (e.g. "E14 · Blackwall") regardless.
@@ -48,13 +48,12 @@ export default function LettingsListings() {
 
   // Top padding uses the standard var(--section-y) so the hero → listings
   // transition matches every other section-after-hero on the site (/sell,
-  // /sales, homepage featured). Previously padding-top was 0 —
-  // correct when this block followed the landlord section, but it left an
+  // /sales, homepage featured). Previously padding-top was 0,   // correct when this block followed the landlord section, but it left an
   // inconsistent rhythm once the listings were moved directly under the hero.
   return (
     <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-        {/* Area-grouped grid — real active listings from lib/properties. */}
+        {/* Area-grouped grid, real active listings from lib/properties. */}
         {availableNow.length > 0 && (
           <section>
             <Reveal y={20} amount={0.2}>
@@ -73,7 +72,7 @@ export default function LettingsListings() {
 
             {/* Non-Canary-Wharf groups: each a small-caps heading + listing
                 count directly above its card(s), laid out SIDE BY SIDE as grid
-                columns (auto-fill minmax(320px)) — the heading row runs
+                columns (auto-fill minmax(320px)), the heading row runs
                 horizontally, one label per column, rather than stacking. This
                 is the single, canonical render of these listings. */}
             {otherGroups.length > 0 && (
@@ -140,7 +139,7 @@ export default function LettingsListings() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Lettings card — the shared ListingTile with lettings data:          */
+/* Lettings card, the shared ListingTile with lettings data:          */
 /* eyebrow = locality, title = property name, badge = "To Let", detail  */
 /* = beds · baths · rent (rent in gold), plus the favourite heart.      */
 /* ------------------------------------------------------------------ */

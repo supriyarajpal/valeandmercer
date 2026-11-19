@@ -104,7 +104,7 @@ export default function DevelopmentLightbox({
         <IconButton label="Close gallery" onClick={onClose}><CloseIcon /></IconButton>
       </div>
 
-      {/* Image stage — the photo renders at its native aspect ratio (contain),
+      {/* Image stage, the photo renders at its native aspect ratio (contain),
           centered, with no blurred/scaled backdrop or side filler of any kind.
           The sides are just the overlay's own dark backdrop. */}
       {(() => {
@@ -163,7 +163,7 @@ export default function DevelopmentLightbox({
         <>
           <Arrow dir="prev" onClick={e => { e.stopPropagation(); prev() }} />
           <Arrow dir="next" onClick={e => { e.stopPropagation(); next() }} />
-          {/* Position counter — matches the hero gallery counter style */}
+          {/* Position counter, matches the hero gallery counter style */}
           <div
             aria-live="polite"
             onClick={e => e.stopPropagation()}

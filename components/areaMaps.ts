@@ -1,9 +1,9 @@
-// AUTO-GENERATED — real OpenStreetMap street geometry, simplified to SVG paths.
+// AUTO-GENERATED, real OpenStreetMap street geometry, simplified to SVG paths.
 // Source: Overpass API (overpass-api.de), query per area:
 //   [out:json];way[highway](S,W,N,E around area centre, ~500m);out geom;
 // Filtered to road classes (no footways/service), projected (aspect-ratio
-// preserved, equirectangular w/ cos-lat), Douglas–Peucker simplified, and
-// capped to the 110 longest ways. Static data — no runtime API call.
+// preserved, equirectangular w/ cos-lat), Douglas-Peucker simplified, and
+// capped to the 110 longest ways. Static data, no runtime API call.
 // Regenerate with scratchpad/build-area-maps.mjs against fresh Overpass JSON.
 
 export type AreaMap = { viewBox: string; paths: string[] }

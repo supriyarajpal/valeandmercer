@@ -3,14 +3,14 @@
  * Downscale + recompress oversized published gallery images in place.
  *
  * The gallery publish pipeline copies full-resolution source photos (often
- * 5000–8000px, 10–30MB CGIs) straight into public/images/developments. Served
+ * 5000-8000px, 10-30MB CGIs) straight into public/images/developments. Served
  * raw via <img>, those multi-MB files make the /buy galleries render slowly.
  * This pass caps the long edge at MAX_EDGE and re-encodes at QUALITY so each
  * photo drops to a few hundred KB with no visible loss at display or fullscreen
  * size. Originals remain untouched under content/properties/<slug>/… so the
  * public copies can always be regenerated (or restored with `git checkout`).
  *
- * Idempotent: images already within budget are skipped. Only downscales — never
+ * Idempotent: images already within budget are skipped. Only downscales, never
  * upscales. Floor-plan drawings are left alone (line/text art we don't want to
  * touch); only downscaled if truly huge.
  *
@@ -24,7 +24,7 @@ const sharp = require('sharp')
 
 const ROOT = path.join(__dirname, '..', 'public', 'images', 'developments')
 const MAX_EDGE = 2560          // cap the long edge (covers fullscreen on retina)
-const QUALITY = 82             // mozjpeg quality — crisp, small
+const QUALITY = 82             // mozjpeg quality, crisp, small
 const SIZE_BUDGET = 1_500_000  // recompress anything above ~1.5MB even if narrow
 const DRY = process.argv.includes('--dry-run')
 
@@ -66,7 +66,7 @@ async function main() {
     const ext = path.extname(file).toLowerCase()
     let pipe = sharp(file).rotate() // respect EXIF orientation before stripping it
     if (needsResize) pipe = pipe.resize({ width: edgeCap, height: edgeCap, fit: 'inside', withoutEnlargement: true })
-    // PNG: lossless re-encode only (no palette quantization — many of these are
+    // PNG: lossless re-encode only (no palette quantization, many of these are
     // photographic CGIs saved as PNG and would band badly at 256 colours). The
     // "only write if smaller" guard below means a PNG that can't shrink is left
     // untouched. JPEGs get mozjpeg at QUALITY; that's where the real savings are.

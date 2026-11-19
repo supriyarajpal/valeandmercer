@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 #
-# extract-brochures.sh — repeatable MULTI-DOCUMENT text ingestion (standing default).
+# extract-brochures.sh, repeatable MULTI-DOCUMENT text ingestion (standing default).
 #
 # For every content/properties/<slug>/ folder this discovers EVERY PDF in the
-# folder (recursively) — not just the one matched as "brochure" — including spec
+# folder (recursively), not just the one matched as "brochure", including spec
 # sheets, fact sheets / fact-finds, investor decks, additional brochures, rental
 # letters and floorplan PDFs, and extracts each to a layout-preserving text file
 # under content/properties/extracted/:
@@ -15,8 +15,8 @@
 # idempotent: a document whose .txt already exists is skipped, so a re-run only
 # picks up newly-added documents. Pass --force to re-extract everything.
 #
-# IMPORTANT — authoring data.json: merge facts across ALL of a property's texts.
-# When two documents conflict on the same fact, DO NOT silently pick one — record
+# IMPORTANT, authoring data.json: merge facts across ALL of a property's texts.
+# When two documents conflict on the same fact, DO NOT silently pick one, record
 # both with their source document and flag it (the same display-suppression
 # approach used for Fountain Court's disputed unit split; see
 # lib/developmentDisplay.ts / SUPPRESS_UNITMIX). Nothing is inferred or
@@ -35,7 +35,7 @@ EXTRACT_DIR="$PROPS_DIR/extracted"
 
 # --- Ensure poppler-utils (pdftotext + pdfimages) is installed ---------------
 if ! command -v pdftotext >/dev/null 2>&1 || ! command -v pdfimages >/dev/null 2>&1; then
-  echo "poppler-utils not found — attempting to install…"
+  echo "poppler-utils not found, attempting to install…"
   if command -v brew >/dev/null 2>&1; then
     brew install poppler
   elif command -v apt-get >/dev/null 2>&1; then
@@ -51,7 +51,7 @@ if ! command -v pdftotext >/dev/null 2>&1 || ! command -v pdfimages >/dev/null 2
 fi
 
 if [ ! -d "$PROPS_DIR" ]; then
-  echo "No $PROPS_DIR directory found — nothing to extract."
+  echo "No $PROPS_DIR directory found, nothing to extract."
   exit 0
 fi
 mkdir -p "$EXTRACT_DIR"
@@ -76,7 +76,7 @@ for dir in "$PROPS_DIR"/*/; do
 
     h="$(md5of "$pdf")"
     if printf '%s\n' "$seen_md5" | grep -qxF "$h"; then
-      echo "·  $slug — duplicate content, skipping: ${pdf#$dir}"
+      echo "·  $slug, duplicate content, skipping: ${pdf#$dir}"
       dupe=$((dupe + 1)); total_dupe=$((total_dupe + 1)); continue
     fi
     seen_md5="$seen_md5"$'\n'"$h"
@@ -90,14 +90,14 @@ for dir in "$PROPS_DIR"/*/; do
     fi
 
     if [ "$FORCE" -eq 0 ] && [ -f "$out" ]; then
-      echo "·  $slug — already extracted: $(basename "$out")"
+      echo "·  $slug, already extracted: $(basename "$out")"
       skipped=$((skipped + 1)); total_skipped=$((total_skipped + 1)); continue
     fi
 
-    echo "→  $slug — ${pdf#$dir}  →  $(basename "$out")"
+    echo "→  $slug, ${pdf#$dir}  →  $(basename "$out")"
     # A single malformed PDF must not abort the whole run (set -e); skip it.
     if ! pdftotext -layout "$pdf" "$out" 2>/dev/null; then
-      echo "!  $slug — pdftotext FAILED (corrupt/unreadable), skipping: ${pdf#$dir}"
+      echo "!  $slug, pdftotext FAILED (corrupt/unreadable), skipping: ${pdf#$dir}"
       rm -f "$out"
       total_failed=$((total_failed + 1)); continue
     fi
@@ -109,8 +109,8 @@ for dir in "$PROPS_DIR"/*/; do
     fi
   done < <(find "$dir" -type f -iname '*.pdf' -print0)
 
-  echo "   $slug: $found pdf(s) — $extracted extracted, $skipped already-done, $dupe duplicate(s)"
+  echo "   $slug: $found pdf(s), $extracted extracted, $skipped already-done, $dupe duplicate(s)"
 done
 
 echo ""
-echo "Done — $total_docs pdf(s) scanned: $total_extracted extracted, $total_skipped already-done, $total_dupe duplicate(s), $total_failed unreadable."
+echo "Done, $total_docs pdf(s) scanned: $total_extracted extracted, $total_skipped already-done, $total_dupe duplicate(s), $total_failed unreadable."

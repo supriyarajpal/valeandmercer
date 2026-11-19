@@ -1,11 +1,11 @@
-// rex-dry-run.ts — reconnaissance only.
+// rex-dry-run.ts, reconnaissance only.
 //
 // Logs into Rex and prints the RAW JSON for the first 5 published listings to
 // the console. That's it. This exists so we can see Rex's real field names and
 // data shape BEFORE writing any mapping code.
 //
 //   • Reads REX_EMAIL / REX_PASSWORD (and optional REX_API_BASE) from .env.
-//     .env is NOT committed — put real credentials there, never in this file.
+//     .env is NOT committed, put real credentials there, never in this file.
 //   • Prints to stdout ONLY.
 //   • Does NOT write to data.json. Does NOT touch any existing property.
 //     Read-only against our codebase; it only reads from Rex.
@@ -27,7 +27,7 @@ function loadDotEnv(): void {
   try {
     raw = readFileSync(join(process.cwd(), '.env'), 'utf8')
   } catch {
-    return // no .env file — rely on the real environment
+    return // no .env file, rely on the real environment
   }
   for (const line of raw.split('\n')) {
     const trimmed = line.trim()
@@ -67,7 +67,7 @@ async function main(): Promise<void> {
   console.error('→ Authenticated. Fetching first 5 published listings …\n')
 
   // Ask Rex for just the first 5. `limit` is the documented top-level param;
-  // if the real response ignores it we'll see that here — which is the point.
+  // if the real response ignores it we'll see that here, which is the point.
   const listings = await client.searchPublishedListings({ limit: 5 })
 
   // Raw dump. This is the whole deliverable: the real shape, unmapped.

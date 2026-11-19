@@ -4,15 +4,15 @@ import { Reveal } from '@/components/Reveal'
 import DevelopmentLightbox from '@/components/DevelopmentLightbox'
 import DIMS from '@/lib/galleryImageDims.generated.json'
 
-// Baked aspect ratios (width/height) per public image path — see
+// Baked aspect ratios (width/height) per public image path, see
 // scripts/measure-gallery.js. Deterministic + correct on first paint, so tile
 // sizing never depends on (unreliable) in-browser image load timing.
 const AR_MAP = DIMS as Record<string, number>
 
 // Pinterest-style masonry gallery for the /buy detail pages.
 //
-// Real irregularity (not a row-height grid): tiles vary in WIDTH — a wide/
-// landscape photo spans 2 columns, everything else spans 1 — AND in HEIGHT, each
+// Real irregularity (not a row-height grid): tiles vary in WIDTH, a wide/
+// landscape photo spans 2 columns, everything else spans 1, AND in HEIGHT, each
 // tile sized to its source image's true aspect ratio (no cropping of the
 // subject). Placement uses CSS grid with a fine row unit + `grid-auto-flow:
 // dense`, so tiles pack into gaps and rows never line up across columns. Gutters
@@ -22,8 +22,8 @@ const AR_MAP = DIMS as Record<string, number>
 // shared DevelopmentLightbox at that image's index; "View all" opens it at 1;
 // hover = slight scale + brightness lift on the site's slow soft easing.
 
-const GUTTER = 16   // px — the one gutter, used horizontally AND vertically
-const ROW = 8       // px — grid-auto-rows unit; tile heights quantise to this
+const GUTTER = 16   // px, the one gutter, used horizontally AND vertically
+const ROW = 8       // px, grid-auto-rows unit; tile heights quantise to this
 const DEFAULT_AR = 1.4
 
 export default function DevelopmentGallery({ images, name, pullQuote }: { images: string[]; name: string; pullQuote: string | null }) {
@@ -48,7 +48,7 @@ export default function DevelopmentGallery({ images, name, pullQuote }: { images
 
   // A tile's column + row span. WIDTH variety: very wide panoramas, plus a
   // distributed ~1-in-3 of the landscape-ish images, become 2-column "feature"
-  // tiles — never a tall portrait (which would balloon). This guarantees a
+  // tiles, never a tall portrait (which would balloon). This guarantees a
   // mix of 1- and 2-col tiles on every gallery, whatever its aspect mix. HEIGHT
   // always tracks the image's real aspect ratio, so nothing is cropped.
   function spanFor(ar: number, imgIndex: number) {
@@ -129,7 +129,7 @@ export default function DevelopmentGallery({ images, name, pullQuote }: { images
           <style>{`
             /* Tile height is set by its grid row-span (matched to the image's real
                aspect ratio), so object-fit:cover fills it with, at most, a sub-row
-               trim — the subject is never cropped out. */
+               trim, the subject is never cropped out. */
             .vm-mtile {
               display: block; padding: 0; cursor: pointer; overflow: hidden;
               border-radius: var(--radius-md); background: var(--surface-3); border: 1px solid var(--border);

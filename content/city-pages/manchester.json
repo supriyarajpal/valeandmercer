@@ -1,0 +1,30 @@
+{
+  "h1": "Discover a New Way of Living in Manchester.",
+  "intro": "Three developments in Manchester city centre, with direct rail to London in around two hours.",
+  "cta": "Explore Manchester Properties",
+  "about": [
+    "Manchester's property market spans everything from Victorian terraces to brand-new towers.",
+    "The northern city centre is in the middle of a renewal, increasingly known for independent coffee shops, craft breweries and street food traders rather than chain retail.",
+    "Metrolink trams link the city centre to Spinningfields, the Northern Quarter and MediaCityUK."
+  ],
+  "around": {
+    "heading": "Around Dutton Street",
+    "items": [
+      { "place": "N.O.M.A.", "note": "Food halls, a short walk away." },
+      { "place": "Greengate", "note": "Riverside bars, a short walk away." },
+      { "place": "Northern Quarter", "note": "Vintage shops and live music venues, just beyond." },
+      { "place": "Deansgate and Spinningfields", "note": "The office district, under twenty minutes on foot or by tram." },
+      { "place": "Medieval Quarter", "note": "Cobbled lanes and Chetham's, a short stroll away." }
+    ]
+  },
+  "why": {
+    "heading": "Living in Manchester",
+    "items": [
+      { "title": "Transport", "text": "Manchester Victoria and Manchester Piccadilly are both within easy walking distance of Dutton Street, with direct rail to London in around two hours." },
+      { "title": "Roads", "text": "The M60 and M602 are close by for wider Greater Manchester travel." },
+      { "title": "Entertainment", "text": "Manchester Arena and the Printworks entertainment complex are close enough to reach without a car." },
+      { "title": "Green space", "text": "Angel Meadow Park, the River Irwell towpath and Manchester Cathedral gardens are close by." }
+    ]
+  },
+  "finalHeading": "Find Your Place in Manchester."
+}

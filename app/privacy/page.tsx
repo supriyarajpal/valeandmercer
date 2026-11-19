@@ -190,7 +190,7 @@ export default function PrivacyPage() {
             <p style={pStyle}>If you are not satisfied with our response, you have the right to lodge a complaint with the <strong>Information Commissioner's Office (ICO)</strong>:</p>
             <div style={{background:'var(--border)',padding:'16px 20px',fontSize:'13px',color:'var(--text-muted)',lineHeight:1.9}}>
               <p>Website: <a href="https://ico.org.uk/make-a-complaint" target="_blank" rel="noreferrer" style={{color:'#A0845C'}}>ico.org.uk/make-a-complaint</a></p>
-              <p>Telephone: 0303 123 1113 (Monday to Friday, 9am–5pm)</p>
+              <p>Telephone: 0303 123 1113 (Monday to Friday, 9am-5pm)</p>
               <p>Post: Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</p>
             </div>
             <p style={{...pStyle,marginTop:'12px'}}>You also have the right to seek judicial remedy through the courts.</p>

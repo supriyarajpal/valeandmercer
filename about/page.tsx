@@ -34,7 +34,7 @@ export default function AboutPage() {
               Vale &amp; Mercer exists for clients who care not only about the outcome, but about the way the process is handled. We are a team, working closely, keeping clients informed with clarity and discretion, and managing the detail properly in the background.
             </p>
             <p style={{fontSize:'15px',lineHeight:2.1,color:'#6B6258',marginBottom:'20px'}}>
-              Whether you are a landlord, a tenant, a first-time buyer or someone who has done this before and wants it done properly this time — the standard should be the same. Attentive, straight, and personal from first call to final key.
+              Whether you are a landlord, a tenant, a first-time buyer or someone who has done this before and wants it done properly this time, the standard should be the same. Attentive, straight, and personal from first call to final key.
             </p>
           </div>
         </section>

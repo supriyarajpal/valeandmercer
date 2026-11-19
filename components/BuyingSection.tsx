@@ -20,7 +20,7 @@ export default function BuyingSection() {
   const reduce = useReducedMotion()
   const isMobile = useIsMobile()
 
-  // Section progress drives the clip-path expand — image "opens" as you arrive
+  // Section progress drives the clip-path expand, image "opens" as you arrive
   const { scrollYProgress: sectionProgress } = useScroll({
     target: sectionRef,
     offset: ['start 0.85', 'start 0.25'],
@@ -28,7 +28,7 @@ export default function BuyingSection() {
   const inset = useTransform(sectionProgress, [0, 1], [8, 0])
   const clipPath = useTransform(inset, v => `inset(${v}% round 10px)`)
 
-  // Inner image pan — looking through a window while moving
+  // Inner image pan, looking through a window while moving
   const { scrollYProgress: imageProgress } = useScroll({
     target: imageRef,
     offset: ['start end', 'end start'],
@@ -100,7 +100,7 @@ export default function BuyingSection() {
   )
 }
 
-// Slow reveal — like reading a plaque on a wall as you walk toward it
+// Slow reveal, like reading a plaque on a wall as you walk toward it
 function SlowReveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const reduce = useReducedMotion()
   const { ref, inView } = useInViewSafe<HTMLDivElement>(0.3)

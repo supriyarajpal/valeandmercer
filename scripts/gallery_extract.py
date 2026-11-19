@@ -6,12 +6,12 @@ PNG in --src, drops non-photo assets, deduplicates, and writes the survivors to
 --out numbered sequentially, plus a contact sheet and a pre-filled selects file.
 
 Filters (in order):
-  1. Size      — reject anything under MIN_SHORT px on its shorter side.
-  2. Aspect    — reject anything more extreme than MAX_ASPECT:1 (banner strips,
+  1. Size, reject anything under MIN_SHORT px on its shorter side.
+  2. Aspect, reject anything more extreme than MAX_ASPECT:1 (banner strips,
                  hairlines, rules).
-  3. Recurring — reject every copy of any image that is byte-identical to
+  3. Recurring, reject every copy of any image that is byte-identical to
                  another (logos/icons recur across pages; real photos don't).
-  4. Near-dup  — collapse near-identical images (same photo embedded at several
+  4. Near-dup, collapse near-identical images (same photo embedded at several
                  resolutions/crops) via a perceptual dHash, keeping the
                  highest-resolution copy of each group.
 """
@@ -33,7 +33,7 @@ RESAMPLE = Image.Resampling.LANCZOS if hasattr(Image, "Resampling") else Image.L
 
 
 def dhash(img, size=8):
-    """64-bit difference hash — robust to scaling, so the same photo at different
+    """64-bit difference hash, robust to scaling, so the same photo at different
     embedded resolutions hashes to (near-)identical values."""
     g = img.convert("L").resize((size + 1, size), RESAMPLE)
     px = list(g.getdata())
@@ -96,7 +96,7 @@ def main():
             continue
         survivors.append(r)
 
-    # Number in document (extraction) order — the natural top-to-bottom brochure
+    # Number in document (extraction) order, the natural top-to-bottom brochure
     # order, easiest to review; the reviewer reorders in image-selects.txt.
     order = {f: i for i, f in enumerate(raw)}
     survivors.sort(key=lambda r: order[r["file"]])
@@ -133,7 +133,7 @@ def write_contact_sheet(path, slug, written):
         )
     doc = f"""<!doctype html>
 <meta charset="utf-8">
-<title>Contact sheet — {html.escape(slug)}</title>
+<title>Contact sheet, {html.escape(slug)}</title>
 <style>
   body {{ font-family: -apple-system, system-ui, sans-serif; background:#1b1712; color:#ece7df; margin:0; padding:24px; }}
   h1 {{ font-weight:400; font-size:18px; letter-spacing:.02em; margin:0 0 4px; }}
@@ -145,7 +145,7 @@ def write_contact_sheet(path, slug, written):
   figcaption span {{ color:#8b8175; }}
   a {{ color:inherit; text-decoration:none; }}
 </style>
-<h1>{html.escape(slug)} — {len(written)} images survived the filter</h1>
+<h1>{html.escape(slug)}, {len(written)} images survived the filter</h1>
 <p class="sub">Review these, then delete the ones you don't want from image-selects.txt (and order the rest for display) before running publish-gallery.sh.</p>
 <div class="grid">
 {os.linesep.join(cells)}
@@ -160,7 +160,7 @@ def write_selects(path, slug, written):
     if os.path.exists(path):
         shutil.copy(path, path + ".bak")
     lines = [
-        f"# image-selects.txt — {slug}",
+        f"# image-selects.txt, {slug}",
         "# One approved image per line, in DISPLAY ORDER.",
         "# Convention: communal -> living -> kitchen -> bedroom -> bathroom -> floor plan LAST.",
         "# Delete the lines you don't want; reorder the rest. Blank lines and #comments are ignored.",

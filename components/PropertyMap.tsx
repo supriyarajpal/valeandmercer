@@ -22,7 +22,7 @@
 //   inView=true, parent re-renders, effect A's cleanup runs before
 //   Leaflet has resolved, effect B starts a second import, and the
 //   belt-and-braces `invalidateSize` timers from run A have already
-//   been cleared by the time the surviving map instance exists — so
+//   been cleared by the time the surviving map instance exists, so
 //   Leaflet grabs the container size a beat too early and half the
 //   tile grid stays blank.
 //   The fix here: dep on a memoised `propertiesKey` string, keep the
@@ -31,7 +31,7 @@
 //   `window.resize` + a chained rAF / setTimeout ladder) plus an
 //   OpenStreetMap fallback tile layer that kicks in on repeated CARTO
 //   tile errors, and a loading skeleton overlay that only clears on
-//   an actual `tileload`. Don't collapse these back — each one covers
+//   an actual `tileload`. Don't collapse these back, each one covers
 //   a real failure mode we've seen.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -39,7 +39,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 // and at the page level on routes that host a map (app/let/page.tsx; see
 // also components/PropertyLocationMap.tsx).
 // Importing it here alone is not enough when this component is loaded
-// via `next/dynamic({ ssr: false })` — Next bundles the CSS but does
+// via `next/dynamic({ ssr: false })`, Next bundles the CSS but does
 // not always link it into the parent page's initial CSS bundle, and
 // the map renders blank tiles as a result. This import stays as a
 // safety net for anyone using PropertyMap in a non-dynamic context.
@@ -195,12 +195,12 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
     // no-op via optional chaining) and after the map is torn down.
     const bumpSize = () => mapRef.current?.invalidateSize()
 
-    // (1) Container size changes — parent grid reflow, sidebar sticky
+    // (1) Container size changes, parent grid reflow, sidebar sticky
     //     transition, fullscreen enter/exit, mobile keyboard, etc.
     const ro = new ResizeObserver(bumpSize)
     ro.observe(container)
 
-    // (2) Container visibility — the map might be inside a
+    // (2) Container visibility, the map might be inside a
     //     Reveal wrapper that starts at opacity 0 (still laid-out),
     //     or in the future inside a lazy/conditionally-mounted
     //     section. IO catches the "first time this thing crossed
@@ -227,7 +227,7 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
     const t400   = window.setTimeout(bumpSize, 400)
     const t1200  = window.setTimeout(bumpSize, 1200)
 
-    // Skeleton safety timeout — never leave the overlay stuck.
+    // Skeleton safety timeout, never leave the overlay stuck.
     const skeletonSafety = window.setTimeout(() => setTilesLoaded(true), SKELETON_SAFETY_MS)
 
     import('leaflet').then(mod => {
@@ -256,7 +256,7 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
       // Primary layer starts attached. If it emits enough tileerror
       // events without a matching tileload, we swap in the OSM layer
       // so the map never stays blank because of a CARTO outage.
-      // `tileload` on either layer clears the skeleton overlay — the
+      // `tileload` on either layer clears the skeleton overlay, the
       // user just needs to see real tiles, not any specific provider.
       const primary = L.tileLayer(CARTO_URL, {
         subdomains: 'abcd',
@@ -273,7 +273,7 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
       const swapToFallback = (reason: string) => {
         if (switched) return
         switched = true
-        // Diagnostic breadcrumb — visible in the browser DevTools
+        // Diagnostic breadcrumb, visible in the browser DevTools
         // console so a user reporting a blank-tile bug can send us
         // exactly what triggered the swap. Info-level to avoid
         // scaring anyone who opens the console for other reasons.
@@ -383,7 +383,7 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
     }
     // Depending on `propertiesKey` (a content-based string) instead of
     // `properties` (a reference-unstable array) is intentional and the
-    // whole point of the reliability fix above — every parent produces
+    // whole point of the reliability fix above, every parent produces
     // fresh array references on re-render, which used to tear this
     // effect down mid-init. See file-top comment.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -450,9 +450,9 @@ export default function PropertyMap({ properties, onMarkerFocus, height, initial
       <div ref={wrapperRef} style={wrapperStyle}>
         <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
 
-        {/* Loading skeleton overlay — sits ABOVE the Leaflet container
+        {/* Loading skeleton overlay, sits ABOVE the Leaflet container
             (zIndex 30, higher than the map's own panes but below the
-            fullscreen button at 20 within this wrapper — see zIndex 30
+            fullscreen button at 20 within this wrapper, see zIndex 30
             vs 20; the button remains keyboard-reachable because it's
             positioned above the overlay only visually, and the overlay
             is pointer-events:none). Fades out once the first tileload

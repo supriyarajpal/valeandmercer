@@ -2,23 +2,31 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ArrowButton from '@/components/ArrowButton'
 import { Reveal } from '@/components/Reveal'
+import BuyCityCards from '@/components/BuyCityCards'
 import DevelopmentsListing, { type DevelopmentCardData } from '@/components/DevelopmentsListing'
 import { developments } from '@/lib/developments'
 import { getDevelopmentAssets, developmentHeroImage, developmentHasPhotos } from '@/lib/developmentAssets'
 import { developmentIsPublished, developmentHeading, developmentUnitTypes } from '@/lib/developmentTitle'
+import { developmentHasCityPage } from '@/lib/cityLanding'
 
-// /buy: the New Homes listing. The old "Properties coming soon" teaser block
-// (Canary Wharf / Notting Hill / Chelsea) was removed per instruction; the
-// developments grid is now the page. Server Component: reads the build-time
+// /buy: the New Homes listing. The page leads with a wide gateway card per city
+// that has a /new-homes page (BuyCityCards), then lists every OTHER published
+// development under an "Elsewhere in the UK" heading in the shared ListingTile
+// grid. A development whose city has a page is shown on that city page, not
+// here, so nothing is listed twice. Server Component: reads the build-time
 // development data (lib/developments.ts is filesystem-backed / server-only) and
 // hands plain, serialisable card data to the client grid.
 
 export default function BuyPage() {
-  // Every published development gets a card. The heading is its editorial
-  // displayName, else its street + city, else its own name; only a nameless,
-  // addressless stub is excluded (and its detail route is likewise not generated).
+  // Every published development gets a card, EXCEPT those whose city has its own
+  // /new-homes page: those move onto that city page (see lib/cityLanding.ts) so
+  // they are not listed twice. A development whose city has no page keeps its
+  // card here. The heading is its editorial displayName, else its street + city,
+  // else its own name; only a nameless, addressless stub is excluded (and its
+  // detail route is likewise not generated).
   const cards: DevelopmentCardData[] = developments
     .filter(developmentIsPublished)
+    .filter(dev => !developmentHasCityPage(dev))
     .map(dev => {
       const base = getDevelopmentAssets(dev.slug)
       const gallery = dev.gallery && dev.gallery.length > 0 ? dev.gallery : base.images
@@ -51,9 +59,22 @@ export default function BuyPage() {
               <ArrowButton href="/register" label="Register Your Interest" variant="dark" />
             </div>
           </Reveal>
+
+          {/* Gateway cards: one per city that has a /new-homes page. */}
+          <BuyCityCards />
+
+          {/* The remaining developments (cities without a page). Heading and grid
+              are omitted entirely when there are none. */}
+          {cards.length > 0 && (
+            <Reveal y={24} amount={0.2}>
+              <h2 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(28px, 4vw, 48px)', lineHeight: 1.08, color: 'var(--text)', margin: 'clamp(56px, 8vw, 96px) 0 0' }}>
+                Elsewhere <span style={{ color: '#A0845C', fontStyle: 'italic' }}>in the UK</span>
+              </h2>
+            </Reveal>
+          )}
         </div>
 
-        <DevelopmentsListing developments={cards} />
+        {cards.length > 0 && <DevelopmentsListing developments={cards} />}
       </main>
       <Footer />
     </>

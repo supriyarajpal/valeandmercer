@@ -5,9 +5,9 @@ import MotionProvider from '@/components/MotionProvider'
 import './globals.css'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
-// Meta (Facebook) Pixel ID. Not sensitive — handled like the Web3Forms key.
+// Meta (Facebook) Pixel ID. Not sensitive, handled like the Web3Forms key.
 const META_PIXEL_ID = '1051400940780137'
-// Google Analytics 4 Measurement ID. Single source of truth — referenced by
+// Google Analytics 4 Measurement ID. Single source of truth, referenced by
 // both the gtag loader and the config call below so it's rotated in one place.
 const GA4_ID = 'G-8G3390QJ82'
 const OG_IMAGE = 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&h=630&fit=crop&q=85'
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
 }
 
 // One RealEstateAgent record for the whole site so every page carries
-// the entity graph — Google prefers a single specific type over
+// the entity graph, Google prefers a single specific type over
 // duplicated Organization + RealEstateAgent. Facts only: all fields
 // below are verifiable from Footer / Companies House / Property Redress.
 const orgJsonLd = {
@@ -91,7 +91,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         {/* End Google Tag Manager */}
-        {/* Theme bootstrap — runs synchronously BEFORE first paint so the
+        {/* Theme bootstrap, runs synchronously BEFORE first paint so the
             correct light/dark palette is applied with no flash. Reads the
             saved choice, falling back to the OS preference. Kept as a tiny
             raw inline script (not next/script) precisely so it executes
@@ -113,7 +113,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           data-blockingmode="auto"
           strategy="afterInteractive"
         />
-        {/* Meta (Facebook) Pixel — `afterInteractive` so the tracker loads
+        {/* Meta (Facebook) Pixel, `afterInteractive` so the tracker loads
             after hydration and never blocks initial paint. Fires a PageView
             on every route because it lives in the root layout. */}
         <Script id="meta-pixel" strategy="afterInteractive">
@@ -130,7 +130,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             fbq('track', 'PageView');
           `}
         </Script>
-        {/* Google Analytics 4 — same `afterInteractive` strategy as the Meta
+        {/* Google Analytics 4, same `afterInteractive` strategy as the Meta
             Pixel above so it loads after hydration without blocking paint. The
             gtag loader and the config call share GA4_ID; `gtag('config', …)`
             sends one page_view per load, and route changes are auto-tracked by

@@ -30,8 +30,8 @@ extracted="$ROOT/content/properties/$slug/extracted-images"
 dest="$ROOT/public/images/developments/$slug"
 data="$ROOT/content/properties/$slug/data.json"
 
-[ -f "$selects" ]   || { echo "ERROR: no image-selects.txt for $slug — run extract-gallery.sh first." >&2; exit 1; }
-[ -d "$extracted" ] || { echo "ERROR: no extracted-images/ for $slug — run extract-gallery.sh first." >&2; exit 1; }
+[ -f "$selects" ]   || { echo "ERROR: no image-selects.txt for $slug, run extract-gallery.sh first." >&2; exit 1; }
+[ -d "$extracted" ] || { echo "ERROR: no extracted-images/ for $slug, run extract-gallery.sh first." >&2; exit 1; }
 [ -f "$data" ]      || { echo "ERROR: no data.json for $slug." >&2; exit 1; }
 
 # Read approved filenames in order (skip blank lines and #comments).
@@ -53,7 +53,7 @@ if [ "${#approved[@]}" -eq 0 ]; then
   exit 1
 fi
 
-echo "→ $slug — publishing ${#approved[@]} approved image(s)…"
+echo "→ $slug, publishing ${#approved[@]} approved image(s)…"
 mkdir -p "$dest"
 
 # Replace this slug's prior published GALLERY photos (numbered files) while
@@ -72,4 +72,4 @@ done
 # "gallery" to the published paths. data.json is otherwise untouched.
 python3 "$SCRIPT_DIR/gallery_publish.py" "$data" "$dest" "/images/developments/$slug" "${srcs[@]}"
 
-echo "✓ $slug — published ${#approved[@]} image(s) to public/images/developments/$slug/ and updated data.json gallery."
+echo "✓ $slug, published ${#approved[@]} image(s) to public/images/developments/$slug/ and updated data.json gallery."

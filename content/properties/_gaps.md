@@ -1,6 +1,6 @@
-# Developments — data gaps
+# Developments, data gaps
 
-One row per development, listing every schema field **left empty** because the brochure did not state it. Nothing here was inferred — these are the fields to chase from each developer to complete the listing. Generated from the `content/properties/<slug>/data.json` files.
+One row per development, listing every schema field **left empty** because the brochure did not state it. Nothing here was inferred, these are the fields to chase from each developer to complete the listing. Generated from the `content/properties/<slug>/data.json` files.
 
 `price` is never blank: where no figure was stated it defaults to "Register your interest" and is flagged below as **(price: no figure stated)**.
 
@@ -22,30 +22,30 @@ One row per development, listing every schema field **left empty** because the b
 
 ## Field coverage matrix
 
-✓ = extracted from brochure · — = not stated (gap)
+✓ = extracted from brochure ·, = not stated (gap)
 
 | Field | aire&#8209;gardens&#8209;leeds | crown&#8209;works&#8209;burton | elizabeth&#8209;house&#8209;staines | fountain&#8209;court&#8209;birmingham | graduation&#8209;house&#8209;nottingham | mulberry&#8209;house&#8209;derby | one&#8209;victoria&#8209;manchester | piccadilly&#8209;wharf&#8209;manchester | priors&#8209;gate&#8209;birmingham | st&#8209;georges&#8209;terrace&#8209;york | waterhouse&#8209;gardens&#8209;manchester |
 | --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | name | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| address | — | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | ✓ | — | ✓ |
-| postcode | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | ✓ | — | ✓ |
+| address |, | ✓ | ✓ | ✓ |, | ✓ | ✓ |, | ✓ |, | ✓ |
+| postcode | ✓ | ✓ | ✓ | ✓ |, | ✓ | ✓ |, | ✓ |, | ✓ |
 | locality | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | price | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| tenure | ✓ | — | ✓ | — | — | — | — | ✓ | ✓ | — | — |
-| developer | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | ✓ |
-| completion | ✓ | — | ✓ | — | — | — | — | ✓ | ✓ | — | — |
-| totalUnits | ✓ | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| sizeRange | ✓ | — | — | — | — | — | — | — | — | — | — |
+| tenure | ✓ |, | ✓ |, |, |, |, | ✓ | ✓ |, |, |
+| developer | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |, |, | ✓ | ✓ |
+| completion | ✓ |, | ✓ |, |, |, |, | ✓ | ✓ |, |, |
+| totalUnits | ✓ |, | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| sizeRange | ✓ |, |, |, |, |, |, |, |, |, |, |
 | unitMix | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
-| paymentStructure | ✓ | — | ✓ | — | ✓ | — | — | ✓ | ✓ | — | — |
-| warranty | — | — | ✓ | — | — | — | ✓ | — | ✓ | — | — |
-| headline | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | ✓ |
-| description | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | ✓ |
-| highlightedFeatures | ✓ | — | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | ✓ | — |
-| developmentAmenities | ✓ | — | ✓ | — | ✓ | — | ✓ | ✓ | ✓ | — | ✓ |
-| specification | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ | — | — | ✓ | ✓ |
-| nearestStation | ✓ | — | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | — | — |
-| locationNotes | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | — | ✓ | ✓ |
+| paymentStructure | ✓ |, | ✓ |, | ✓ |, |, | ✓ | ✓ |, |, |
+| warranty |, |, | ✓ |, |, |, | ✓ |, | ✓ |, |, |
+| headline | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |, |, | ✓ | ✓ |
+| description | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |, |, | ✓ | ✓ |
+| highlightedFeatures | ✓ |, | ✓ | ✓ | ✓ | ✓ | ✓ |, |, | ✓ |, |
+| developmentAmenities | ✓ |, | ✓ |, | ✓ |, | ✓ | ✓ | ✓ |, | ✓ |
+| specification | ✓ | ✓ | ✓ | ✓ |, | ✓ | ✓ |, |, | ✓ | ✓ |
+| nearestStation | ✓ |, | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |, |, |, |
+| locationNotes | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |, | ✓ | ✓ |
 
 ## Completeness
 

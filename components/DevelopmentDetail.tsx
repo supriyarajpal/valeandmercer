@@ -49,7 +49,7 @@ export default function DevelopmentDetail({
 
   return (
     <main style={{ background: 'var(--surface)', paddingBottom: 'var(--section-y)' }}>
-      {/* 1 — Full-bleed hero slideshow: auto-advancing photos crossfading every ~4-5s
+      {/* 1, Full-bleed hero slideshow: auto-advancing photos crossfading every ~4-5s
           on a continuous loop with two-sided overlay:
           Left: Street name (or city exception). Right: Starting prices / register interest. */}
       <DevelopmentHeroSlideshow
@@ -59,8 +59,8 @@ export default function DevelopmentDetail({
         pricingLines={pricing}
       />
 
-      {/* 2 — Gallery entry point: no inline preview or carousel in the page
-          flow — just a "View gallery" button that opens the shared full-screen
+      {/* 2, Gallery entry point: no inline preview or carousel in the page
+          flow, just a "View gallery" button that opens the shared full-screen
           lightbox with every image. (The old inline single-image carousel with
           arrows / counter / blurred side backdrop was removed.) */}
       {assets.images.length > 0 && (
@@ -68,7 +68,7 @@ export default function DevelopmentDetail({
       )}
 
       <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 var(--gutter)' }}>
-        {/* 2 — ENTRY POINT (below the hero): street-address title, price, badges */}
+        {/* 2, ENTRY POINT (below the hero): street-address title, price, badges */}
         <Reveal y={24} amount={0.2}>
           <header style={{ paddingTop: 'clamp(48px, 7vw, 88px)', maxWidth: 900 }}>
             <h1 style={{ color: 'var(--text)', fontSize: 'clamp(30px, 4.4vw, 50px)', lineHeight: 1.08, marginBottom: 20 }}>{title}</h1>
@@ -82,22 +82,22 @@ export default function DevelopmentDetail({
           </header>
         </Reveal>
 
-        {/* 3 — Description: plain flowing text, no images mixed in. */}
+        {/* 3, Description: plain flowing text, no images mixed in. */}
         <DevelopmentStory headline={d.headline} text={d.description} />
 
-        {/* 6 — Collapsible property information (developer NOT rendered) */}
+        {/* 6, Collapsible property information (developer NOT rendered) */}
         <PropertyInformation development={d} />
 
-        {/* 7 — Quick links */}
+        {/* 7, Quick links */}
         <QuickLinks />
 
-        {/* 8 — Share row */}
+        {/* 8, Share row */}
         <ShareRow name={title} slug={d.slug} />
 
-        {/* 9 — Enquiry: full-width section in the main flow (no side box) */}
+        {/* 9, Enquiry: full-width section in the main flow (no side box) */}
         <EnquirySection name={title} price={d.price} />
 
-        {/* 11 — Highlighted features */}
+        {/* 11, Highlighted features */}
         {d.highlightedFeatures && d.highlightedFeatures.length > 0 && (
           <Section eyebrow="Highlighted Features" title="What stands out">
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: 12 }}>
@@ -111,7 +111,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 11b — Development amenities (renders whenever data.json supplies them) */}
+        {/* 11b, Development amenities (renders whenever data.json supplies them) */}
         {d.developmentAmenities && d.developmentAmenities.length > 0 && (
           <Section eyebrow="Amenities" title="Development amenities">
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 12 }}>
@@ -125,7 +125,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 14 — Location (multi-paragraph notes, nearest-station chip, enquiry CTA) */}
+        {/* 14, Location (multi-paragraph notes, nearest-station chip, enquiry CTA) */}
         {hasLocation && (
           <Section eyebrow="Location" title="Getting around">
             {d.locationNotes && splitParagraphs(d.locationNotes).map((para, i) => (
@@ -147,7 +147,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 14b — Lifestyle */}
+        {/* 14b, Lifestyle */}
         {d.lifestyle && d.lifestyle.body && (
           <Section eyebrow="Lifestyle" title={d.lifestyle.heading}>
             {splitParagraphs(d.lifestyle.body).map((para, i) => (
@@ -156,7 +156,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 15 — Specification */}
+        {/* 15, Specification */}
         {d.specification && d.specification.length > 0 && (
           <Section eyebrow="Specification" title="Finish & fittings">
             <div style={{ display: 'grid', gap: 1, background: 'var(--border)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
@@ -165,7 +165,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 15b — Local property market / context */}
+        {/* 15b, Local property market / context */}
         {d.marketDetails && d.marketDetails.body && (
           <Section eyebrow="Market" title={d.marketDetails.heading}>
             {splitParagraphs(d.marketDetails.body).map((para, i) => (
@@ -174,7 +174,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 15c — FAQs (stacked Q&A, matching the site's FAQ convention) */}
+        {/* 15c, FAQs (stacked Q&A, matching the site's FAQ convention) */}
         {d.faqs && d.faqs.length > 0 && (
           <Section eyebrow="FAQs" title="Frequently asked questions">
             <FaqList faqs={d.faqs} />
@@ -186,11 +186,11 @@ export default function DevelopmentDetail({
           on any /buy detail page. The `floorplans` data stays in data.json / the
           asset manifest for internal reference but is intentionally never rendered. */}
 
-      {/* 13 — Speak to our team banner */}
+      {/* 13, Speak to our team banner */}
       <SpeakToTeam />
 
       <div style={{ maxWidth: 1160, margin: '0 auto', padding: '0 var(--gutter)' }}>
-        {/* 16 — Similar developments */}
+        {/* 16, Similar developments */}
         {similar.length > 0 && (
           <Section eyebrow="Similar" title="Other developments">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '48px 36px', alignItems: 'start' }}>
@@ -199,7 +199,7 @@ export default function DevelopmentDetail({
           </Section>
         )}
 
-        {/* 17 — Enquiry form (Web3Forms) */}
+        {/* 17, Enquiry form (Web3Forms) */}
         <EnquiryForm developmentName={title} slug={d.slug} />
       </div>
     </main>
@@ -207,7 +207,7 @@ export default function DevelopmentDetail({
 }
 
 /* ------------------------------------------------------------------ */
-/* 9 — Enquiry section (full-width, in the main flow)                  */
+/* 9, Enquiry section (full-width, in the main flow)                  */
 /* ------------------------------------------------------------------ */
 
 function EnquirySection({ name, price }: { name: string; price?: string }) {
@@ -240,7 +240,7 @@ function EnquirySection({ name, price }: { name: string; price?: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 6 — Collapsible property information (developer intentionally omitted) */
+/* 6, Collapsible property information (developer intentionally omitted) */
 /* ------------------------------------------------------------------ */
 
 function PropertyInformation({ development }: { development: Development }) {
@@ -283,7 +283,7 @@ function PropertyInformation({ development }: { development: Development }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 7 — Quick links                                                     */
+/* 7, Quick links                                                     */
 /* ------------------------------------------------------------------ */
 
 function QuickLinks() {
@@ -307,7 +307,7 @@ function QuickLinks() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 8 — Share row                                                       */
+/* 8, Share row                                                       */
 /* ------------------------------------------------------------------ */
 
 function ShareRow({ name, slug }: { name: string; slug: string }) {
@@ -327,7 +327,7 @@ function ShareRow({ name, slug }: { name: string; slug: string }) {
       <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
         <span style={{ fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>Share</span>
         <button type="button" onClick={copy} style={{ ...chipStyle, cursor: 'pointer' }} onMouseEnter={chipOn} onMouseLeave={chipOff}>{copied ? 'Link copied' : 'Copy link'}</button>
-        <a href={`https://wa.me/?text=${encodeURIComponent(`${name} — ${shareUrl()}`)}`} target="_blank" rel="noopener noreferrer" style={chipStyle} onMouseEnter={chipOn} onMouseLeave={chipOff}>WhatsApp</a>
+        <a href={`https://wa.me/?text=${encodeURIComponent(`${name}, ${shareUrl()}`)}`} target="_blank" rel="noopener noreferrer" style={chipStyle} onMouseEnter={chipOn} onMouseLeave={chipOff}>WhatsApp</a>
         <a href={`mailto:?subject=${encodeURIComponent(name)}&body=${encodeURIComponent(shareUrl())}`} style={chipStyle} onMouseEnter={chipOn} onMouseLeave={chipOff}>Email</a>
         <button type="button" onClick={nativeShare} style={{ ...chipStyle, cursor: 'pointer' }} onMouseEnter={chipOn} onMouseLeave={chipOff}>Share…</button>
       </div>
@@ -336,12 +336,12 @@ function ShareRow({ name, slug }: { name: string; slug: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 10 — Read more / less                                               */
+/* 10, Read more / less                                               */
 /* ------------------------------------------------------------------ */
 
 
 /* ------------------------------------------------------------------ */
-/* 13 — Speak to our team banner (deliberate dark accent)              */
+/* 13, Speak to our team banner (deliberate dark accent)              */
 /* ------------------------------------------------------------------ */
 
 function SpeakToTeam() {
@@ -371,7 +371,7 @@ function SpeakToTeam() {
 }
 
 /* ------------------------------------------------------------------ */
-/* 17 — Enquiry form (Web3Forms)                                       */
+/* 17, Enquiry form (Web3Forms)                                       */
 /* ------------------------------------------------------------------ */
 
 function EnquiryForm({ developmentName, slug }: { developmentName: string; slug: string }) {
@@ -572,7 +572,7 @@ function LocationCtaBlock({ cta }: { cta: LocationCta }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* FAQs — stacked Q&A blocks                                           */
+/* FAQs, stacked Q&A blocks                                           */
 /* ------------------------------------------------------------------ */
 
 function FaqList({ faqs }: { faqs: FaqItem[] }) {

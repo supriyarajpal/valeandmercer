@@ -62,7 +62,7 @@ export default function DevelopmentHero({
 
   return (
     <section style={{ background: 'var(--surface)', padding: '140px 0 0' }}>
-      {/* Tab strip — aligned to content width, themed chips */}
+      {/* Tab strip, aligned to content width, themed chips */}
       <div style={{ ...CONTAINER, marginBottom: 18 }}>
         <div role="tablist" aria-label="Development media" style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
           {tabs.map(t => {
@@ -95,10 +95,10 @@ export default function DevelopmentHero({
         <>
           <div style={bandStyle}>
             {/* Blurred object-fit:cover backfill so any gap around the photo is a
-                soft glow of the image itself (not a flat band) — identical to the
+                soft glow of the image itself (not a flat band), identical to the
                 /let hero. */}
             <img src={images[idx]} alt="" aria-hidden loading="eager" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', filter: 'blur(36px) brightness(0.82)', transform: 'scale(1.1)' }} />
-            {/* Sharp, object-fit:contain foreground — the whole photo, uncropped. */}
+            {/* Sharp, object-fit:contain foreground, the whole photo, uncropped. */}
             <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img key={images[idx]} src={images[idx]} alt={`${name}, image ${idx + 1} of ${images.length}`} style={{ display: 'block', maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }} />
             </div>
@@ -139,7 +139,7 @@ export default function DevelopmentHero({
             {locationNotes && <p style={{ fontSize: 'clamp(15px, 1.7vw, 18px)', lineHeight: 1.9, color: 'var(--text)', opacity: 0.85, maxWidth: 820 }}>{locationNotes}</p>}
             {hasStation && (
               <div style={{ marginTop: 20, fontSize: 13, letterSpacing: '0.04em', color: 'var(--text-muted)' }}>
-                Nearest station — <span style={{ color: 'var(--text)' }}>{nearestStation!.name}</span>
+                Nearest station, <span style={{ color: 'var(--text)' }}>{nearestStation!.name}</span>
                 {(nearestStation!.time || nearestStation!.distance) && <span style={{ color: '#A0845C' }}> · {nearestStation!.time || nearestStation!.distance}</span>}
               </div>
             )}

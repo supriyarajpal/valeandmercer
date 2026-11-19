@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 
 // Thumbnail-grid overview of a development's gallery. Reachable ONLY via the
-// carousel's explicit "View gallery" button — the default view stays the
+// carousel's explicit "View gallery" button, the default view stays the
 // single-image carousel. Clicking a thumbnail hands its index back to the
 // carousel, which opens the shared single-image lightbox at that position.
 //
@@ -47,7 +47,7 @@ export default function DevelopmentGalleryGrid({
       ref={rootRef}
       role="dialog"
       aria-modal="true"
-      aria-label={`${name} — all photos`}
+      aria-label={`${name}, all photos`}
       tabIndex={-1}
       onClick={onClose}
       style={{

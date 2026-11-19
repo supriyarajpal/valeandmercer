@@ -1,7 +1,7 @@
 // Single source of truth for blog posts, consumed by BOTH the blog index
 // (app/blog/page.tsx) and the homepage "Insight and advice" section
 // (components/BlogSection.tsx). Add a new post to this array and it appears in
-// both places automatically — no homepage edit is ever required.
+// both places automatically, no homepage edit is ever required.
 //
 // Pure data, no filesystem access, so it is safe to import into Client
 // Components (both consumers are 'use client').
@@ -35,6 +35,8 @@ export function blogDateValue(date: string): number {
 // Maintained roughly newest-first by hand; the exported list is sorted below so
 // order never depends on insertion position.
 const POSTS: BlogPost[] = [
+  { slug: 'new-homes-in-stratford', category: 'Area Guide', title: 'New Homes in Stratford', excerpt: 'Stratford is one of the most demanding areas in East London.', date: 'November 2026', image: '/Royal Victoria Dock cable car.jpeg' },
+  { slug: 'new-homes-in-birmingham', category: 'Area Guide', title: 'New Homes in Birmingham', excerpt: 'Steelhouse Lane offers great developments in the heart of Birmingham, perfect for every individual.', date: 'November 2026', image: '/images/cities/birmingham/hero-1920.webp' },
   { slug: 'renting-out-property-east-london-landlord-guide', category: 'For Landlords', title: "Renting Out Property in East London - A Landlord's Guide", excerpt: 'Learn how to rent out property in East London, including letting agent fees, rental valuations, tenant demand and key considerations for Canary Wharf landlords.', date: 'September 2026', image: '/Royal Victoria Dock cable car.jpeg' },
   { slug: 'london-new-homes-e14-docklands-2026', category: 'Area Guide', title: 'New Homes in London: E14 & Docklands Buyer Guide 2026', excerpt: 'Find the ideal location for a new home in London with this 2026 guide to E14 and Docklands, covering connectivity, amenities and local appeal.', date: 'September 2026', image: '/Jubilee Park Canary Wharf.jpg' },
   { slug: 'choosing-new-build-home-canary-wharf-2026', category: 'Sales Advice', title: 'Choosing the Right New-Build Home in Canary Wharf in 2026', excerpt: 'Planning to buy a new-build home in Canary Wharf? Learn what to consider, including location, transport links, amenities, pricing, developers, and long-term value.', date: 'September 2026', image: '/Island Gardens Greenwich foot tunnel.jpg' },

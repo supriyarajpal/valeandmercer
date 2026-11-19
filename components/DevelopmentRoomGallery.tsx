@@ -9,7 +9,7 @@ export type Room = {
 
 // Alternating editorial room gallery. Each row pairs ONE image with ONE text
 // block, and the pair swaps sides every row (image-left/text-right, then
-// image-right/text-left, …). Generic — pass any array of rooms; nothing about
+// image-right/text-left, …). Generic, pass any array of rooms; nothing about
 // room types is hardcoded, so it works the moment gallery images are tagged by
 // room (see Part B). Rows have generous vertical rhythm and reveal in on scroll
 // with the site's existing slow soft easing; collapses to a single column on

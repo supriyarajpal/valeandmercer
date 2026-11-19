@@ -9,11 +9,11 @@
   "developer": "Hilton Developments (part of Sekhon Group)",
   "completion": "Q2 2028 (anticipated)",
   "totalUnits": 98,
-  "sizeRange": "431–793 sq ft",
+  "sizeRange": "431-793 sq ft",
   "unitMix": [
     {
       "type": "1 bedroom",
-      "size": "431–793 sq ft"
+      "size": "431-793 sq ft"
     }
   ],
   "paymentStructure": "20/80 payment structure",

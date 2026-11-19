@@ -4,7 +4,7 @@ import { Reveal } from '@/components/Reveal'
 import DevelopmentLightbox from '@/components/DevelopmentLightbox'
 
 // Gallery entry point for /buy detail pages. Replaces the old inline
-// single-image carousel: no preview image in the page flow — just a labelled
+// single-image carousel: no preview image in the page flow, just a labelled
 // button at the same position that opens the shared full-screen lightbox with
 // every image (starting at the first). Palette + easing are existing tokens;
 // the button mirrors the ArrowButton "dark" treatment (ink #34302B fill sliding

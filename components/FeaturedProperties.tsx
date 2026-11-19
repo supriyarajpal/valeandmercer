@@ -4,11 +4,11 @@ import { Reveal } from '@/components/Reveal'
 import { getPropertyBySlug, type Property } from '@/lib/properties'
 import { altFor } from '@/lib/altText'
 
-// The homepage showcase is a curated teaser, NOT the full inventory — three
+// The homepage showcase is a curated teaser, NOT the full inventory, three
 // hand-picked live listings that then hand off to /let. Selected by explicit
 // slug (independent of the lib `featured` flag) so the exact set and order are
 // unambiguous. The FIRST entry is the large/flagship slot. An optional `image`
-// overrides that card's hero photo on the HOMEPAGE ONLY — the property's own
+// overrides that card's hero photo on the HOMEPAGE ONLY, the property's own
 // default image (first / living-room frame) is untouched everywhere else.
 const FEATURED: { slug: string; image?: string }[] = [
   // Bywell Place uses its 8th photo (8.jpeg, a living-room shot) as the card
@@ -34,7 +34,7 @@ function neighbourhoodOf(area: string): string {
   return parts[parts.length - 1] || area
 }
 
-// Bespoke, homepage-only "Available now" trio — a deliberately quiet,
+// Bespoke, homepage-only "Available now" trio, a deliberately quiet,
 // minimalist-luxury treatment that is NOT the /let card:
 //   • Resting state shows only the photograph + the property name (regular
 //     serif street name, italic-gold neighbourhood), nothing else.
@@ -42,7 +42,7 @@ function neighbourhoodOf(area: string): string {
 //     (~400ms ease-out) revealing locality, beds/baths, price + arrow and
 //     availability, while the image scales a touch (1.03) for depth.
 //   • Asymmetric editorial layout: the first (flagship) card runs tall down
-//     the left, the other two stack on the right — not a uniform 3-box grid.
+//     the left, the other two stack on the right, not a uniform 3-box grid.
 // All hover/reveal motion is pure CSS (see the scoped <style>), with a
 // (hover:none) fallback so touch devices show the panel and keyboard focus
 // reveals it too.
@@ -136,7 +136,7 @@ export default function FeaturedProperties() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Bespoke featured card — photo + name at rest, glass panel on hover. */
+/* Bespoke featured card, photo + name at rest, glass panel on hover. */
 /* ------------------------------------------------------------------ */
 
 function FeaturedCard({ property, image, large }: { property: Property; image: string; large?: boolean }) {
@@ -149,7 +149,7 @@ function FeaturedCard({ property, image, large }: { property: Property; image: s
     >
       <img className="vm-feat-img" src={image} alt={altFor(image, `${property.title}, ${property.area}`)} loading="lazy" />
 
-      {/* Minimal bottom-only scrim — just enough for the resting name to read,
+      {/* Minimal bottom-only scrim, just enough for the resting name to read,
           not the heavy double vignette used elsewhere. */}
       <span aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(20,17,14,0.5) 0%, rgba(20,17,14,0.12) 28%, transparent 52%)' }} />
 

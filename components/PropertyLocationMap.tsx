@@ -6,8 +6,8 @@
 //      component (`app/property/[slug]/page.tsx` is an async server
 //      component). This file provides that client entry point.
 //   2. Leaflet's stylesheet must be linked into the parent page's
-//      initial CSS bundle. Importing it here — from a real client
-//      component that the server page renders — keeps the CSS pinned to
+//      initial CSS bundle. Importing it here, from a real client
+//      component that the server page renders, keeps the CSS pinned to
 //      the property route's bundle the same way `app/let/page.tsx`
 //      does for the grid map.
 

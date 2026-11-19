@@ -25,7 +25,7 @@ const breadcrumb = {
 const services = [
   {
     title: 'Furnished properties',
-    body: 'All our student lettings are fully or part-furnished. Move in with your essentials — everything else is already there.',
+    body: 'All our student lettings are fully or part-furnished. Move in with your essentials, everything else is already there.',
   },
   {
     title: 'Guarantor-friendly',
@@ -33,7 +33,7 @@ const services = [
   },
   {
     title: 'Transport connections',
-    body: 'Our properties sit within walking distance of Canary Wharf, Crossrail, the DLR, and the Jubilee line — making your commute to university manageable from day one.',
+    body: 'Our properties sit within walking distance of Canary Wharf, Crossrail, the DLR, and the Jubilee line, making your commute to university manageable from day one.',
   },
   {
     title: 'Honest referencing',
@@ -62,7 +62,7 @@ export default function SalesPage() {
             <HeroLine text="the runaround." delay={1.31} italic gold />
           </h1>
           <HeroSubtext delay={1.5}>
-            Well-connected, furnished rentals in East London — with guarantor support included as standard.
+            Well-connected, furnished rentals in East London, with guarantor support included as standard.
           </HeroSubtext>
           <div>
             <ArrowButton href="/register" label="Register Your Interest" variant="gold" />

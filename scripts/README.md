@@ -25,8 +25,8 @@ drop brochure.pdf into content/properties/<slug>/
    the /buy card + detail page now show the approved gallery.
 ```
 
-Nothing reaches the live site until step 3. Steps 1–2 only write inside
-`content/properties/<slug>/`, which is not committed to the repo — it's the raw
+Nothing reaches the live site until step 3. Steps 1-2 only write inside
+`content/properties/<slug>/`, which is not committed to the repo, it's the raw
 source/working area.
 
 ## 1. extract-gallery.sh
@@ -40,21 +40,21 @@ then filters them down to review-worthy photographs and writes the survivors,
 numbered in brochure order, to `content/properties/<slug>/extracted-images/`,
 along with:
 
-- **`contact-sheet.html`** — a single page showing every survivor as a
+- **`contact-sheet.html`**: a single page showing every survivor as a
   thumbnail with its filename and pixel dimensions. Open it in a browser to
   review.
-- **`image-selects.txt`** — pre-filled with every survivor (one per line). This
+- **`image-selects.txt`**: pre-filled with every survivor (one per line). This
   is what you edit in step 2. (A prior version is backed up to
   `image-selects.txt.bak` on re-run.)
 
 **Filters applied** (see `gallery_extract.py` for the thresholds):
 
-1. **Too small** — anything under **400px on its shorter side** is dropped.
-2. **Extreme aspect** — anything more extreme than **3:1** (banner strips,
+1. **Too small**: anything under **400px on its shorter side** is dropped.
+2. **Extreme aspect**: anything more extreme than **3:1** (banner strips,
    rules, hairlines) is dropped.
-3. **Recurring identical** — any image that is **byte-identical to another** is
+3. **Recurring identical**: any image that is **byte-identical to another** is
    dropped entirely (logos and icons recur across pages; real photos don't).
-4. **Near-duplicate** — the same photo embedded at several
+4. **Near-duplicate**: the same photo embedded at several
    resolutions/crops is collapsed via a perceptual hash, **keeping the
    highest-resolution copy**.
 
@@ -66,7 +66,7 @@ Open `content/properties/<slug>/extracted-images/contact-sheet.html`. In
 - **Delete** the lines for images you don't want (partial floor plans, awkward
   crops, anything with a logo baked in, stock/lifestyle shots you'd rather not
   use).
-- **Order** the remaining lines in the site's photo-order convention — the
+- **Order** the remaining lines in the site's photo-order convention, the
   publish step renders them in exactly this order:
 
   > **communal → living → kitchen → bedroom → bathroom → floor plan (last)**
@@ -85,13 +85,13 @@ Reads `image-selects.txt` and, for the approved lines **in order**:
 - publishes each image from `extracted-images/` into
   `public/images/developments/<slug>/` renumbered `1.jpg … N.jpg`,
   **web-optimised** on the way (downscaled so the longest side is ≤ 2000px and
-  re-encoded as sRGB JPEG — matching the rest of the site's imagery and keeping
+  re-encoded as sRGB JPEG, matching the rest of the site's imagery and keeping
   the repo small; this also fixes CMYK/16-bit PNGs a browser couldn't display);
 - points that property's `data.json` **`gallery`** array at the new files.
 
 It publishes **only** what's listed in `image-selects.txt`. It replaces this
 slug's own previously-published gallery photos (leaving `floorplan.*` and
-anything non-numbered in place) and touches nothing else — no other property,
+anything non-numbered in place) and touches nothing else, no other property,
 and no file that isn't part of the approved set.
 
 The `/buy` pages read `data.json.gallery` when present (authoritative, ordered);
@@ -101,12 +101,12 @@ with no code change.
 
 ## Requirements
 
-- **poppler-utils** (`pdfimages`) — `brew install poppler`
-- **Python 3** with **Pillow** — `pip3 install Pillow`
+- **poppler-utils** (`pdfimages`), `brew install poppler`
+- **Python 3** with **Pillow**: `pip3 install Pillow`
 
 ## Related
 
-- `extract-brochures.sh` — the older, separate ingestion pass that runs
+- `extract-brochures.sh`, the older, separate ingestion pass that runs
   `pdftotext` + `pdfimages` over each `brochure.pdf` into
   `content/properties/extracted/` for copywriting reference. That's for reading
   the brochure's text/spec; this gallery pipeline is for choosing and publishing

@@ -3,7 +3,7 @@ h1: "Dutton Street, Manchester"
 new_listing: true
 ---
 
-## Overview — "A new pulse in the city"
+## Overview, "A new pulse in the city"
 This residential-led development, with an imposing new landmark,
 is encircled by independent restaurants, boutiques, and manicured public
 areas. A private clubhouse with upscale amenities and services is connected
@@ -13,7 +13,7 @@ luxurious residential units.
 
 Explore the benefits and facilities of living here!
 
-## Highlighted features — "What stands out"
+## Highlighted features, "What stands out"
 - Amenity provision more typical of a London scheme than a Manchester development
 - Genuinely walkable location, a few minutes or more from both Victoria and Piccadilly mainline stations
 - Three acres of landscaped public resigned for residents and the wider neighbourhood
@@ -39,7 +39,7 @@ in Manchester, most of our listed spaces offer the following amenities:
 - Mailboxes
 - Residents' library
 
-## Location — "Getting around"
+## Location, "Getting around"
 This developmeits on Dutton Street, moments from Manchester
 city centre and within easy walking distance of both Manchester Victoria and
 Manchester Piccadilly stations.
@@ -62,7 +62,7 @@ Curious how commute times stack up for you? Enquire now by calling
 
 Our Manchester team will talk you through it.
 
-## Lifestyle — "Life around Dutton Street"
+## Lifestyle, "Life around Dutton Street"
 Dutton Street putsesidents at the heart of Manchester's northern
 city-centre renewal, an area increasingly known for independent coffee
 shops, craft breweries and street food traders rather than chain retail.
@@ -81,7 +81,7 @@ For families, the wider Greater Manchester area includes well-regarded
 state and independent schools, with school-run logistics made easier by the
 development's proximity to the inner ring road and Metrolink network.
 
-## Specification — "Finish & fittings"
+## Specification, "Finish & fittings"
 Living space:
 - Recessed downlighting
 - Laminate wood flooring
@@ -100,7 +100,7 @@ Bathrooms:
 - Bath and shower with bath screen and control valve
 - Tiling to bathroom and en-suites
 
-## Market details — "Manchester's Property Market"
+## Market details, "Manchester's Property Market"
 Manchester's property market spans everything from Victorian terraces to
 brand-new towers. Before browsing 1 bedroom houses for sale in Manchester,
 or any other type of house, we suggest weighing up the lifestyle trade-offs

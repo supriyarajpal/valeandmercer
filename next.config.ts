@@ -5,7 +5,7 @@ import type { NextConfig } from 'next'
 // (308) redirect to the new one, so existing bookmarks, shared links, and
 // already-indexed search results still resolve instead of 404ing. The sitemap
 // lists only the NEW URLs (see app/sitemap.ts) to avoid duplicate-content
-// signals — these redirects are just a safety net for the old paths.
+// signals, these redirects are just a safety net for the old paths.
 const BUY_SLUG_REDIRECTS: Array<[oldSlug: string, newSlug: string]> = [
   ['aire-gardens-leeds',            'leeds'],
   ['crown-works-burton',            'burton-on-trent'],

@@ -1,0 +1,29 @@
+{
+  "intro": "Three mainline stations, a central business district and two developments on Steelhouse Lane, within walking distance of all of it.",
+  "cta": "Explore Properties",
+  "about": [
+    "Birmingham is the second largest city in the UK, home to the Colmore Business District, Aston University and three mainline stations.",
+    "Our two developments on Steelhouse Lane sit in the heart of the city, a few minutes' walk from Snow Hill station.",
+    "Most of what you need is within a short walk."
+  ],
+  "around": {
+    "heading": "Around Steelhouse Lane",
+    "label": "on foot",
+    "items": [
+      { "place": "Aston University", "minutes": 3 },
+      { "place": "Colmore Business District", "minutes": 4 },
+      { "place": "Gun Quarter", "minutes": 7 },
+      { "place": "Jewellery Quarter", "minutes": 10 },
+      { "place": "Bullring and New Street", "minutes": 12 }
+    ]
+  },
+  "why": {
+    "heading": "Why Choose Birmingham?",
+    "items": [
+      { "title": "Transport", "text": "Snow Hill is 4 minutes on foot, Moor Street 8 and New Street 12." },
+      { "title": "Business", "text": "Colmore Business District is 4 minutes from Steelhouse Lane." },
+      { "title": "Education", "text": "Aston University is 3 minutes on foot." },
+      { "title": "Lifestyle", "text": "The Jewellery Quarter is 10 minutes away and the Bullring 12." }
+    ]
+  }
+}

@@ -1,7 +1,7 @@
 // Server-side rate-limit guard for the site's enquiry forms.
 //
 // WHY THIS EXISTS SEPARATELY FROM THE SUBMISSION: the actual lead still POSTs
-// to Web3Forms from the BROWSER — Web3Forms' free tier rejects server-side
+// to Web3Forms from the BROWSER, Web3Forms' free tier rejects server-side
 // submissions (HTTP 403, Pro-plan required), so we cannot move the submit
 // itself behind a Route Handler (see lib/web3forms.ts). Instead this endpoint
 // is a lightweight gate the client must clear BEFORE it submits, so "more than
@@ -10,7 +10,7 @@
 //
 // STORAGE: an in-memory sliding window keyed by IP. On Vercel Fluid Compute a
 // warm instance keeps this Map across requests, so burst spam from a single IP
-// is caught. It is deliberately best-effort, NOT a distributed store — traffic
+// is caught. It is deliberately best-effort, NOT a distributed store, traffic
 // spread across cold/parallel instances could exceed the limit. For hard,
 // cross-instance guarantees swap `hits` for a shared store (e.g. Upstash Redis
 // via the Vercel Marketplace); the window/limit logic below stays identical.

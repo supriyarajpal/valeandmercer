@@ -2,13 +2,16 @@ import type { MetadataRoute } from 'next'
 import { getLiveProperties } from '@/lib/properties'
 import { developments } from '@/lib/developments'
 import { developmentIsPublished } from '@/lib/developmentTitle'
+import { CITY_PAGES } from '@/lib/cityPages'
 
 const SITE_URL = 'https://valeandmercer.co.uk'
 
 // If you add a new blog article (a new directory under /app/blog/<slug>),
 // add it to BLOG_POSTS below with its real publication date. Sitemap
-// lastModified is used by Google to gauge freshness — do not fake it.
+// lastModified is used by Google to gauge freshness, do not fake it.
 const BLOG_POSTS: Array<{ slug: string; published: string }> = [
+  { slug: 'new-homes-in-stratford',  published: '2026-11-06' },
+  { slug: 'new-homes-in-birmingham', published: '2026-11-05' },
   { slug: 'renting-out-property-east-london-landlord-guide', published: '2026-09-03' },
   { slug: 'london-new-homes-e14-docklands-2026',            published: '2026-09-02' },
   { slug: 'choosing-new-build-home-canary-wharf-2026',      published: '2026-09-01' },
@@ -63,7 +66,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  // New-homes development detail pages (/buy/<slug>) — every published
+  // New-homes development detail pages (/buy/<slug>), every published
   // development gets a page (only a nameless, addressless stub is excluded).
   const developmentRoutes: MetadataRoute.Sitemap = developments.filter(developmentIsPublished).map(d => ({
     url: SITE_URL + '/buy/' + d.slug,
@@ -72,5 +75,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...propertyRoutes, ...developmentRoutes, ...blogRoutes]
+  // New-homes city pages (/new-homes/<city>).
+  const cityRoutes: MetadataRoute.Sitemap = CITY_PAGES.map(c => ({
+    url: SITE_URL + '/new-homes/' + c.slug,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }))
+
+  return [...staticRoutes, ...cityRoutes, ...propertyRoutes, ...developmentRoutes, ...blogRoutes]
 }

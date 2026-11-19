@@ -8,7 +8,7 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 // still results in visible content:
 //   (1) on mount, if the element is already overlapping the viewport, show
 //   (2) IntersectionObserver (normal path)
-//   (3) safety timeout after 1800ms — show regardless of observer state
+//   (3) safety timeout after 1800ms, show regardless of observer state
 export function useInViewSafe<T extends Element>(amount = 0.2, once = true) {
   const ref = useRef<T | null>(null)
   const [inView, setInView] = useState(false)
@@ -72,8 +72,7 @@ export function Reveal({
   children,
   delay = 0,
   y = 32,
-  // Slowed from 0.7 → 0.9s for a more deliberate, premium section reveal —
-  // paired with the ease-out curve below so each element decelerates in
+  // Slowed from 0.7 → 0.9s for a more deliberate, premium section reveal,   // paired with the ease-out curve below so each element decelerates in
   // rather than arriving briskly. Callers can still override per-instance.
   duration = 0.9,
   once = true,

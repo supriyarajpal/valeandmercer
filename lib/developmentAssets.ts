@@ -3,7 +3,7 @@
 // The manifest (developmentAssets.generated.json) is produced by the asset
 // pipeline that copies content/properties/<slug>/images → public and renders
 // floor-plan previews (see scripts / the build report). It is plain JSON, so
-// this module is safe to import from BOTH Server and Client Components — unlike
+// this module is safe to import from BOTH Server and Client Components, unlike
 // lib/developments.ts, which reads the filesystem and is server-only.
 //
 // To refresh it after adding/removing development images or brochures, re-run
@@ -28,8 +28,7 @@ type RawAssets = { images: string[]; floorplan: string | null; brochure: string 
 const MAP = manifest as Record<string, RawAssets>
 const EMPTY: DevelopmentAssets = { images: [], floorplans: [], brochure: null }
 
-// Shared SVG shown on cards for a development that has no photographs yet —
-// the same placeholder the lettings side uses, so the two grids read alike.
+// Shared SVG shown on cards for a development that has no photographs yet, // the same placeholder the lettings side uses, so the two grids read alike.
 export const DEVELOPMENT_PLACEHOLDER = '/images/property-placeholder.svg'
 
 export function getDevelopmentAssets(slug: string): DevelopmentAssets {

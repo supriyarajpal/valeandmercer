@@ -116,7 +116,7 @@ function isUsingPlaceholder(image: string): boolean {
 function PropertyBody({ property }: { property: Property }) {
   return (
     // Top padding is deliberately smaller than `--section-y` to tighten
-    // the gap under the hero carousel — combined with the carousel's own
+    // the gap under the hero carousel, combined with the carousel's own
     // reduced bottom padding, this lands the hero-to-Overview transition
     // at roughly one normal section gap instead of two.
     <main style={{ background: 'var(--surface)', padding: '40px var(--gutter) var(--section-y)' }}>
@@ -187,7 +187,7 @@ function PropertyBody({ property }: { property: Property }) {
         <PropertySidebar property={property} />
       </div>
 
-      {/* Small-screen fallback — flatten to one column below 900px.
+      {/* Small-screen fallback, flatten to one column below 900px.
           Inline stylesheet is safe here: scoped by unique class name. */}
       <style>{`
         @media (max-width: 900px) {
@@ -207,7 +207,7 @@ function PropertySidebar({ property }: { property: Property }) {
   return (
     // `alignSelf: 'start'` is inherited from the parent grid's
     // `alignItems: 'start'`, so `position: sticky` still works. Adding
-    // the map below the Enquire card makes the sidebar taller — on
+    // the map below the Enquire card makes the sidebar taller, on
     // shorter viewports the tail can clip while stuck, but the section
     // is short enough overall that the containing block unsticks it
     // near the end of the body copy on the left. Trade-off preserved
@@ -218,7 +218,7 @@ function PropertySidebar({ property }: { property: Property }) {
           {/* Backdrop scoped ONLY to this card: a small blurred gold/bronze/
               ink blob clipped to the card's own rounded box, giving the
               panel's backdrop-filter real texture to frost. It cannot leak
-              onto the page — overflow:hidden + inset:0 keep it card-sized. */}
+              onto the page, overflow:hidden + inset:0 keep it card-sized. */}
           <div aria-hidden style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
             <div style={{ position: 'absolute', inset: '-15%', filter: 'blur(22px)', background: 'radial-gradient(45% 35% at 24% 18%, rgba(160,132,92,0.75), transparent 68%), radial-gradient(52% 42% at 88% 84%, rgba(122,96,62,0.65), transparent 70%), radial-gradient(50% 40% at 60% 52%, rgba(40,35,28,0.55), transparent 72%)' }} />
           </div>

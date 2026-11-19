@@ -24,7 +24,7 @@ const config: Config = {
       },
       // Mirror the design tokens from globals.css so Tailwind utility
       // classes (rounded-lg, ease-apple, etc.) resolve to the same values
-      // as the CSS variables — one source of truth for the design system.
+      // as the CSS variables, one source of truth for the design system.
       borderRadius: {
         sm: 'var(--radius-sm)',
         md: 'var(--radius-md)',

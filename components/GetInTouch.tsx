@@ -29,8 +29,8 @@ export default function GetInTouch() {
     if (verdict === 'spam') { setStatus('sent'); return }
     if (verdict === 'rate-limited') { setStatus('rate-limited'); return }
     // Client-side submission to Web3Forms (its free tier is browser-only).
-    // The access key resolves via lib/web3forms — env var when set, public
-    // fallback otherwise — so it never depends on a build-time Vercel var.
+    // The access key resolves via lib/web3forms, env var when set, public
+    // fallback otherwise, so it never depends on a build-time Vercel var.
     const fullName = [form.firstName, form.lastName].filter(Boolean).join(' ').trim() || 'Unknown'
     try {
       const ok = await submitToWeb3Forms({
@@ -84,7 +84,7 @@ export default function GetInTouch() {
 
   return (
     <section style={{ background: 'transparent', padding: 'var(--section-y) var(--gutter)', position: 'relative' }}>
-      {/* Warmth wash — soft radial glow that says "you have arrived" */}
+      {/* Warmth wash, soft radial glow that says "you have arrived" */}
       <div aria-hidden style={{
         position: 'absolute',
         inset: 0,
@@ -95,12 +95,12 @@ export default function GetInTouch() {
       <div style={{ position: 'relative', maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 64, alignItems: 'flex-start' }}>
           <div>
-            {/* Subtext + email arrive first — the room is set up */}
+            {/* Subtext + email arrive first, the room is set up */}
             <Reveal as="div" delay={0.1} y={20} amount={0.2}>
               <p className="eyebrow" style={{ color: '#A0845C', marginBottom: 14 }}>Get in Touch</p>
             </Reveal>
 
-            {/* Headline arrives LAST — like a welcome sign you see when
+            {/* Headline arrives LAST, like a welcome sign you see when
                 you pull into a town. Slow, deliberate, large. */}
             <motion.h2
               ref={headlineRef}

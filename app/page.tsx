@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 }
 
 // WebSite schema exposes a SearchAction to Google's rich results / sitelinks
-// searchbox. Only real facts — no invented values.
+// searchbox. Only real facts, no invented values.
 const webSiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',

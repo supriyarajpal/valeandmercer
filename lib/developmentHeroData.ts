@@ -26,7 +26,7 @@ export function getHeroStreetName(slug: string, dev?: Development): string {
     // Extract first component of address (before first comma)
     const street = dev.address.split(',')[0]?.trim()
     // Strip leading street numbers like "56-60 "
-    return street.replace(/^\d+([–-]\d+)?\s+/, '')
+    return street.replace(/^\d+(-\d+)?\s+/, '')
   }
   return dev?.locality || 'New Homes'
 }
