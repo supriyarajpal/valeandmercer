@@ -41,6 +41,19 @@ const nextConfig: NextConfig = {
         destination: '/buy',
         permanent: true,
       },
+      // The "New Homes in Birmingham" and "New Homes in Stratford" blog posts
+      // were removed. Their routes permanently redirect to the blog index so
+      // shared or already-indexed links still resolve instead of 404ing.
+      {
+        source: '/blog/new-homes-in-birmingham',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/blog/new-homes-in-stratford',
+        destination: '/blog',
+        permanent: true,
+      },
       // The Rentals route (/rent) was merged into the Lettings page (/let).
       // Permanent redirect preserves any external links, bookmarks, or
       // stale search-engine results so they never hit a 404.

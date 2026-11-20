@@ -10,8 +10,6 @@ const SITE_URL = 'https://valeandmercer.co.uk'
 // add it to BLOG_POSTS below with its real publication date. Sitemap
 // lastModified is used by Google to gauge freshness, do not fake it.
 const BLOG_POSTS: Array<{ slug: string; published: string }> = [
-  { slug: 'new-homes-in-stratford',  published: '2026-11-06' },
-  { slug: 'new-homes-in-birmingham', published: '2026-11-05' },
   { slug: 'renting-out-property-east-london-landlord-guide', published: '2026-09-03' },
   { slug: 'london-new-homes-e14-docklands-2026',            published: '2026-09-02' },
   { slug: 'choosing-new-build-home-canary-wharf-2026',      published: '2026-09-01' },
