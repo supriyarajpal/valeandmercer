@@ -25,7 +25,10 @@ const darkHeroPages = ['/', '/sell', '/let', '/about', '/valuations', '/sales']
 // and deliberately are NOT in this list.
 // '/buy/' = a New Homes DETAIL page (full-bleed video/image hero). The '/buy'
 // LISTING page is not matched (no trailing segment), so it keeps the cream nav.
-const darkHeroPathPrefixes = ['/property/', '/buy/']
+// '/new-homes/' = a city landing page: its full-bleed photo hero should run
+// edge to edge under a transparent navbar with light text, the same in light
+// and dark mode, so the bar is consistent across the city pages.
+const darkHeroPathPrefixes = ['/property/', '/buy/', '/new-homes/']
 
 function pathIsDarkHero(pathname: string): boolean {
   return darkHeroPages.includes(pathname)

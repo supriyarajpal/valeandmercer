@@ -9,6 +9,14 @@ import { UK_MAP, CITY_PINS, type CityLanding as CityLandingData } from '@/lib/ci
 // image and the only image loaded before scroll; Around cards and property photos
 // are lazy. All copy comes from data.json; the H1, homes heading and enquiry
 // heading are templated from the city name.
+//
+// Seamless page colour: a single fixed layer (.vm-bg) sits behind everything and
+// drifts through the deep-brown palette with page scroll (a registered <color>
+// animated on scroll(root)): espresso at the hero, through umber and walnut, a
+// mocha warm-glow at the numerals, and back to espresso, with no section edges.
+// The page is all dark brown in BOTH themes (the dark theme tokens are forced on
+// .vm-city), so text is always ivory. Every section background is transparent;
+// text uses --page-fg / --page-muted / --page-gold.
 
 const INK = '#28231C'
 const GOLD = '#A0845C'
@@ -30,30 +38,47 @@ export default function CityLanding({ data }: { data: CityLandingData }) {
   const cityGallery = [hero, ...around.map(a => a.image)].filter(Boolean).map(img => `${img!.base}-1920.webp`).slice(0, 24)
 
   return (
-    <main style={{ background: 'var(--surface)' }}>
-      {/* 1, Hero */}
-      <section style={{ position: 'relative', height: '100svh', minHeight: 520, overflow: 'hidden', background: INK }}>
-        {hero ? (
-          <div className="vm-hero-par" style={{ position: 'absolute', inset: '-6% 0' }}>
-            <img
-              className="vm-hero-img"
-              src={`${hero.base}-1920.webp`}
-              srcSet={srcSet(hero.base)}
-              sizes={HERO_SIZES}
-              alt={`${name} skyline`}
-              /* the one priority image */
-              fetchPriority="high"
-              decoding="async"
-              /* hero copy sits over the photo, so dim this copy of the image
-                 (the /buy gateway card uses the same file at full brightness) */
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'brightness(0.7)' }}
-            />
-          </div>
-        ) : (
-          // Missing hero: ink with a slow gold radial glow.
-          <div className="vm-hero-glow" aria-hidden style={{ position: 'absolute', inset: 0, background: INK }} />
-        )}
-        <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(20,17,14,0.5) 0%, rgba(20,17,14,0.12) 36%, rgba(20,17,14,0.3) 66%, rgba(20,17,14,0.82) 100%)' }} />
+    <main className="vm-city">
+      {/* Two fixed full-viewport layers behind the page: the scroll-driven deep
+          brown colour, and a faint gold radial glow that peaks at the numerals
+          (and sits behind the map card) for depth (see CSS). */}
+      <div className="vm-bg" aria-hidden />
+      <div className="vm-glow" aria-hidden />
+
+      {/* 1, Hero: the photo and its scrim share one masked wrapper so the lower
+          third dissolves into the page background instead of ending on an edge.
+          The heading and CTA are siblings outside the mask, so they stay solid. */}
+      <section style={{ position: 'relative', height: '100svh', minHeight: 520, overflow: 'hidden' }}>
+        <div className="vm-hero-media">
+          {hero ? (
+            <div className="vm-hero-par" style={{ position: 'absolute', inset: '-6% 0' }}>
+              <img
+                className="vm-hero-img"
+                src={`${hero.base}-1920.webp`}
+                srcSet={srcSet(hero.base)}
+                sizes={HERO_SIZES}
+                alt={`${name} skyline`}
+                /* the one priority image */
+                fetchPriority="high"
+                decoding="async"
+                /* hero copy sits over the photo, so dim this copy of the image
+                   (the /buy gateway card uses the same file at full brightness) */
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', filter: 'brightness(0.7)' }}
+              />
+            </div>
+          ) : (
+            // Missing hero: ink with a slow gold radial glow.
+            <div className="vm-hero-glow" aria-hidden style={{ position: 'absolute', inset: 0, background: INK }} />
+          )}
+          {/* Warm brown multiply tint so the photo sits in the dark palette. */}
+          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'rgba(42,33,26,0.25)', mixBlendMode: 'multiply' }} />
+          {/* Scrim: a deep-brown wash, strongest through the headline band for
+              legible white copy (no light overlay anywhere). */}
+          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(26,19,13,0.55) 0%, rgba(26,19,13,0.16) 32%, rgba(26,19,13,0.34) 58%, rgba(26,19,13,0.2) 76%, rgba(26,19,13,0) 100%)' }} />
+          {/* Bottom melt: the lower 42% fades to solid espresso (the exact page
+              background colour) so the photo dissolves into the page, no seam. */}
+          <div aria-hidden style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 58%, var(--p-espresso) 92%, var(--p-espresso) 100%)' }} />
+        </div>
 
         {/* Content shares the navbar's geometry (var(--gutter) outer, maxWidth
             1280 inner), so the H1 left edge lines up with the Vale and Mercer
@@ -81,11 +106,11 @@ export default function CityLanding({ data }: { data: CityLandingData }) {
       </section>
 
       {/* 2, About + UK map (map always shows; the three lines show when present) */}
-      <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)' }}>
+      <section style={{ padding: 'var(--section-y) var(--gutter)' }}>
         <div style={{ maxWidth: 1160, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 'clamp(36px, 6vw, 80px)', alignItems: 'center' }}>
           <div style={{ display: 'grid', gap: 20 }}>
             {(copy.about ?? []).map((line, i) => (
-              <p key={i} className="vm-about-line" style={{ ['--i' as string]: i, margin: 0, fontSize: 'clamp(17px, 2.1vw, 23px)', lineHeight: 1.6, color: 'var(--text)', fontFamily: 'var(--font-serif)', fontWeight: 300 }}>{line}</p>
+              <p key={i} className="vm-about-line" style={{ ['--i' as string]: i, margin: 0, fontSize: 'clamp(17px, 2.1vw, 23px)', lineHeight: 1.6, color: 'var(--page-fg)', fontFamily: 'var(--font-serif)', fontWeight: 300 }}>{line}</p>
             ))}
           </div>
           <UkMapCard slug={slug} name={name} />
@@ -94,9 +119,9 @@ export default function CityLanding({ data }: { data: CityLandingData }) {
 
       {/* 3, Around <street> (omitted when no card image exists) */}
       {around.length > 0 && (
-        <section style={{ background: 'var(--surface)', padding: '0 var(--gutter) var(--section-y)' }}>
+        <section style={{ padding: '0 var(--gutter) var(--section-y)' }}>
           <div style={{ maxWidth: 1240, margin: '0 auto' }}>
-            {copy.around?.heading && <h2 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(26px, 3.4vw, 42px)', color: 'var(--text)', marginBottom: 28 }}>{copy.around.heading}</h2>}
+            {copy.around?.heading && <h2 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(26px, 3.4vw, 42px)', color: 'var(--page-fg)', marginBottom: 28 }}>{copy.around.heading}</h2>}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 230px), 1fr))', gap: 20 }}>
               {around.map((c, i) => (
                 <article key={c.place} className="vm-around-card" style={{ ['--i' as string]: i, position: 'relative', aspectRatio: '4 / 5', overflow: 'hidden', borderRadius: 'var(--radius-md)', background: INK }}>
@@ -114,12 +139,15 @@ export default function CityLanding({ data }: { data: CityLandingData }) {
         </section>
       )}
 
-      {/* 4, Why choose <city> (ink band; omitted when no copy) */}
+      {/* 4, Why choose <city>: the numerals section. The page colour reaches its
+          mocha warm-glow here (see the scroll journey in CSS); the band fill is
+          gone (the fixed layer provides the colour), and the gold and text use
+          --page-gold / --page-fg. */}
       {copy.why?.items && copy.why.items.length > 0 && (
-        <section style={{ background: INK, color: CREAM, padding: 'var(--section-y) var(--gutter)' }}>
+        <section className="vm-numerals" style={{ padding: 'var(--section-y) var(--gutter)' }}>
           <div style={{ maxWidth: 1160, margin: '0 auto' }}>
-            {copy.why.heading && <h2 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(26px, 3.4vw, 42px)', color: CREAM, marginBottom: copy.why.label ? 10 : 40 }}>{copy.why.heading}</h2>}
-            {copy.why.label && <p style={{ margin: '0 0 40px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: GOLD }}>{copy.why.label}</p>}
+            {copy.why.heading && <h2 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(26px, 3.4vw, 42px)', color: 'var(--page-fg)', marginBottom: copy.why.label ? 10 : 40 }}>{copy.why.heading}</h2>}
+            {copy.why.label && <p style={{ margin: '0 0 40px', fontSize: 12, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--page-gold)' }}>{copy.why.label}</p>}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 'clamp(28px, 4vw, 56px)' }}>
               {copy.why.items.map((it, i) => {
                 // Gold numeral only where the line states a journey time in
@@ -128,9 +156,9 @@ export default function CityLanding({ data }: { data: CityLandingData }) {
                 const num = (it.text.match(/(\d+)\s*min/) || [])[1]
                 return (
                   <div key={it.title} className="vm-why-col" style={{ ['--i' as string]: i }}>
-                    {num && <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, color: GOLD, fontSize: 'clamp(46px, 6vw, 72px)', lineHeight: 1 }}>{num}<span style={{ fontSize: 16, marginLeft: 6 }}>min</span></div>}
-                    <h3 style={{ margin: '16px 0 8px', fontSize: 13, letterSpacing: '0.16em', textTransform: 'uppercase', color: GOLD }}>{it.title}</h3>
-                    <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.7, color: 'rgba(242,239,233,0.78)' }}>{it.text}</p>
+                    {num && <div style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, color: 'var(--page-gold)', fontSize: 'clamp(46px, 6vw, 72px)', lineHeight: 1 }}>{num}<span style={{ fontSize: 16, marginLeft: 6 }}>min</span></div>}
+                    <h3 style={{ margin: '16px 0 8px', fontSize: 13, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--page-gold)' }}>{it.title}</h3>
+                    <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.7, color: 'var(--page-muted)' }}>{it.text}</p>
                   </div>
                 )
               })}
@@ -144,9 +172,9 @@ export default function CityLanding({ data }: { data: CityLandingData }) {
 
       {/* 6, Final heading (city word gold italic), omitted when none is set */}
       {copy.finalHeading && (
-        <section style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter) 0', textAlign: 'center' }}>
-          <h2 className="vm-final" style={{ margin: 0, fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(30px, 5vw, 60px)', lineHeight: 1.08, letterSpacing: '-0.015em', color: 'var(--text)' }}>
-            <GoldWords text={copy.finalHeading} city={name} />
+        <section style={{ padding: 'var(--section-y) var(--gutter) 0', textAlign: 'center' }}>
+          <h2 className="vm-final" style={{ margin: 0, fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(30px, 5vw, 60px)', lineHeight: 1.08, letterSpacing: '-0.015em', color: 'var(--page-fg)' }}>
+            <GoldWords text={copy.finalHeading} city={name} accent="var(--page-gold)" />
           </h2>
         </section>
       )}
@@ -186,7 +214,7 @@ function GoldWords({ text, city, animate = false, accent = GOLD }: { text: strin
 function UkMapCard({ slug, name }: { slug: string; name: string }) {
   const pin = CITY_PINS[slug]
   return (
-    <div style={{ justifySelf: 'center', width: 'min(100%, 380px)', aspectRatio: '1 / 1', borderRadius: 28, background: INK, border: '1px solid rgba(160,132,92,0.4)', position: 'relative', overflow: 'hidden' }}>
+    <div className="vm-map-card" style={{ justifySelf: 'center', width: 'min(100%, 380px)', aspectRatio: '1 / 1', borderRadius: 28, background: '#1F1812', border: '1px solid rgba(160,132,92,0.4)', position: 'relative', overflow: 'hidden' }}>
       <svg viewBox={UK_MAP.viewBox} width="100%" height="100%" style={{ display: 'block', padding: '12%' }} role="img" aria-label={`${name} on a map of Great Britain`}>
         {UK_MAP.path && <path className="vm-uk-path" pathLength={1} d={UK_MAP.path} fill="none" stroke="rgba(160,132,92,0.6)" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />}
         {pin && (
@@ -203,6 +231,114 @@ function UkMapCard({ slug, name }: { slug: string; name: string }) {
 }
 
 const CSS = `
+/* ---- Scroll-driven page colour: an all-dark brown journey ----------------
+   These pages stay in the deep-brown family in BOTH themes: no ivory, cream,
+   linen or white background anywhere. The fixed .vm-bg layer drifts with page
+   scroll: espresso at the hero, umber through About, walnut toward the
+   numerals, a mocha warm-glow at the numerals centre (~33%), then back down to
+   espresso by the enquiry. A faint gold radial glow (.vm-glow) rides the same
+   timeline behind the map card and numerals. Text is always ivory, gold always
+   bright, so contrast holds (walnut/mocha are the tightest stops). */
+@property --vm-bg { syntax: '<color>'; inherits: true; initial-value: #2A211A; }
+
+.vm-city {
+  position: relative;
+  /* Own stacking context above the site's global AtmosphereLayer (a fixed
+     var(--surface) fill at z-index -1): the .vm-bg / .vm-glow layers below use
+     negative z WITHIN this context, so they sit above the AtmosphereLayer but
+     behind the page content, and the light site background never shows. */
+  z-index: 0;
+  background: transparent;
+  /* Deep-brown palette (used everywhere on these pages, both themes). */
+  --p-espresso: #2A211A;     /* base + hero fade target */
+  --p-umber: #3A2C20;
+  --p-walnut: #4B3826;
+  --p-mocha: #5C4330;        /* lightest background allowed; the numerals glow */
+  --p-gold: #A0845C;
+  --p-gold-bright: #C9A56F;
+  --vm-bg: var(--p-espresso);
+  --page-fg: #F5F0E8;                                   /* ivory text */
+  --page-muted: color-mix(in oklch, #F5F0E8 68%, transparent);
+  --page-gold: var(--p-gold-bright);
+  /* Force the dark theme tokens on these pages so the untouched enquiry form,
+     filter chips and gallery button stay dark in light mode too: the page is
+     identical in both themes and never shows a light background. */
+  --surface: var(--p-espresso);
+  --surface-2: #332519;
+  --surface-3: #3A2C20;
+  --text: #F5F0E8;
+  --text-muted: color-mix(in oklch, #F5F0E8 68%, transparent);
+  --text-faint: color-mix(in oklch, #F5F0E8 48%, transparent);
+  --border: rgba(245,240,232,0.14);
+  --border-strong: rgba(245,240,232,0.24);
+  color-scheme: dark;
+}
+
+.vm-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: var(--vm-bg);
+}
+/* Faint gold radial glow for depth behind the map card and numerals; its
+   opacity rides the timeline, peaking at the numerals (the mocha moment). */
+.vm-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(62% 48% at 50% 40%, rgba(201,165,111,0.08), rgba(201,165,111,0) 72%);
+  opacity: 0;
+}
+
+/* Fallback without scroll-driven animations: a static espresso -> walnut ->
+   espresso vertical gradient (all dark). */
+@supports not (animation-timeline: scroll()) {
+  .vm-bg { background: linear-gradient(to bottom, var(--p-espresso) 0%, var(--p-walnut) 45%, var(--p-espresso) 100%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .vm-city { animation: vmBg both; animation-timeline: scroll(root); animation-timing-function: ease-in-out; }
+    .vm-glow { animation: vmGoldGlow both; animation-timeline: scroll(root); animation-timing-function: ease-in-out; }
+  }
+}
+
+/* The brown journey, keyed to the real section positions (page scroll): espresso
+   hero -> umber About -> walnut -> mocha at the numerals centre (~33%) -> walnut
+   -> umber Homes -> espresso enquiry. Smooth eases, no steps, held plateaus. */
+@keyframes vmBg {
+  0%, 8%    { --vm-bg: var(--p-espresso); }
+  18%       { --vm-bg: var(--p-umber); }
+  27%       { --vm-bg: var(--p-walnut); }
+  33%       { --vm-bg: var(--p-mocha); }
+  42%       { --vm-bg: var(--p-walnut); }
+  53%       { --vm-bg: var(--p-umber); }
+  68%, 100% { --vm-bg: var(--p-espresso); }
+}
+/* Gold glow behind the map card + numerals (page ~15-45%), peaking at ~33%. */
+@keyframes vmGoldGlow { 0%, 12% { opacity: 0 } 22% { opacity: 0.7 } 33% { opacity: 1 } 44% { opacity: 0.5 } 56%, 100% { opacity: 0 } }
+
+/* Map card: keep its ink look, lifted to #1F1812 with a faint light border so it
+   separates from the walnut and mocha stops (the page is always dark). */
+.vm-map-card { box-shadow: inset 0 0 0 1px rgba(245,240,232,0.10); }
+
+/* Reduced motion: no scroll coupling, a flat static espresso page, no glow. */
+@media (prefers-reduced-motion: reduce) {
+  .vm-bg { background: var(--p-espresso); }
+  .vm-glow { opacity: 0; }
+}
+
+/* ---- Hero: a warm brown multiply tint sits the photo in the palette; a solid
+   espresso gradient paints over the lower 40% (so even the photo's light haze
+   melts to espresso), ending on exactly the page background colour, no seam. */
+.vm-hero-media {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+}
+
 /* Hero load motion (settle + sequential word rise), scroll parallax, cue. */
 @media (prefers-reduced-motion: no-preference) {
   .vm-hero-img { animation: vmSettle 1.9s var(--ease-out-soft) both; }

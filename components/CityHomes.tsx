@@ -31,11 +31,11 @@ export default function CityHomes({ city, cards, devCount, showFilters }: { city
   }
 
   return (
-    <section id="homes" style={{ background: 'var(--surface)', padding: 'var(--section-y) var(--gutter)', contentVisibility: 'auto', containIntrinsicSize: '1px 1400px' }}>
+    <section id="homes" style={{ background: 'transparent', padding: 'var(--section-y) var(--gutter)', contentVisibility: 'auto', containIntrinsicSize: '1px 1400px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(28px, 4vw, 48px)', color: 'var(--text)', margin: 0 }}>Homes in {city}</h2>
-          <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{devCount} {devCount === 1 ? 'development' : 'developments'}</span>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontWeight: 300, fontSize: 'clamp(28px, 4vw, 48px)', color: 'var(--page-fg, var(--text))', margin: 0 }}>Homes in {city}</h2>
+          <span style={{ fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--page-muted, var(--text-faint))' }}>{devCount} {devCount === 1 ? 'development' : 'developments'}</span>
         </div>
 
         {showFilters && (bedOpts.length > 0 || typeOpts.length > 0) && (
